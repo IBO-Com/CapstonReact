@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Router, BrowserRouter } from 'react-router-dom';
 import Test from './Test';
 import NotFound from './NotFound';
 import Nav from './nav/nav';
-
-import "./css/app.css";
+import "./css/main.css";
 
 const App = () => {
 	return (
-		<div className='App'>
+		<div className='mainApp'>
+		<BrowserRouter>
+			<div className='mainNavBox'>
+          		<Nav />
+        	</div>
 
-			<BrowserRouter className="AppRouter">
-        <div>
-          <Nav />
-        </div>
-        
+			<div className='mainContetnsBox'>
 				<Routes>
-					<Route path="/1" element={<Test />}></Route>
+					<Route path="/" element={<Test />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Routes>
+			</div>
 			</BrowserRouter>
 		</div>
 	);

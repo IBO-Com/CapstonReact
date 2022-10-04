@@ -1,0 +1,13 @@
+.mainApp {
+    display: flex;
+    flex-direction: row;
+}
+
+.mainNavBox {
+    height: 100vh;
+}
+
+.mainContetnsBox {
+    width: 100%;
+    height: 100vh;
+}
