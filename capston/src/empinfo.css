@@ -8,7 +8,9 @@ body {
 }
 
 .empInfo {
-	margin: 20px 0px 0px 50px;
+	min-width: 1000px;
+	width: 98%;
+	background-color: white;
 }
 
 .wrapimg {
