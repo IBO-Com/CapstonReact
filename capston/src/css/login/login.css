@@ -1,17 +1,20 @@
 @import
 	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
+body {
+	background-color: #EEF1F6;
+}
+
 .LoginApp {
 	font-family: 'Noto Sans KR', sans-serif;
 	overflow: auto;
-	background-color: #EEF1F6;
 	display: flex;
 }
 
 .left_ibo {
-	margin: 160px 0px 0px 470px;
-	width: 500px;
-	height: 600px;
+	margin: 160px 0px 0px 520px;
+	width: 50vh;
+	height: 65vh;
 	background-color: #515966;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -22,7 +25,7 @@
 	font-size: 18px;
 }
 
-h2 {
+.com_name {
 	text-align: center;
 	color: #B2BFC5;
 }

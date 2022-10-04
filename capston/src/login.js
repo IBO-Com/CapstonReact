@@ -8,7 +8,7 @@ const App = () => {
 		<div className='LoginApp'>
         <div class="left_ibo">
           <img class="logo" src={security_icon} alt="IBO"/>
-          <h2>IBO</h2>
+          <h2 class="com_name">IBO</h2>
           <p class="left">
             Welcome to IBO! <br/> Enter your account
           </p>
