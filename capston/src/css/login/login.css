@@ -1,0 +1,106 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+.LoginApp {
+	font-family: 'Noto Sans KR', sans-serif;
+	overflow: auto;
+	background-color: #EEF1F6;
+	display: flex;
+}
+
+.left_ibo {
+	margin: 160px 0px 0px 470px;
+	width: 500px;
+	height: 600px;
+	background-color: #515966;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.left {
+	color: #B2BFC5;
+	text-align: center;
+	font-size: 18px;
+}
+
+h2 {
+	text-align: center;
+	color: #B2BFC5;
+}
+
+.logo {
+	padding-top: 180px;
+	margin: auto;
+	display: block;
+	color: #B2BFC5;
+	height: 100px;
+	width: 100px;
+	margin: auto;
+}
+
+.userlogin {
+	margin-top: 205px;
+	background-color: white;
+	width: 420px;
+	height: 500px;
+	border-radius: 0px 5px 5px 0px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.findpw {
+	color: #848E91;
+}
+
+.input {
+	margin: 120px 60px 0px 60px;
+}
+
+.rememid {
+	color: #848E91;
+	font-size: 13px;
+}
+
+#userid {
+	text-indent: 20px;
+	color: #537AAA;
+	line-height: 40px;
+	height: 40px;
+	width: 280px;
+	border: 2px solid #537AAA;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px 5px 5px 5px;
+}
+
+#userpw {
+	text-indent: 20px;
+	color: #537AAA;
+	line-height: 40px;
+	height: 40px;
+	width: 280px;
+	border: 2px solid #537AAA;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+	margin-top: 20px;
+	margin-bottom: 10px;
+	border-radius: 5px 5px 5px 5px;
+}
+
+#loginbtn {
+	margin: auto; display : block;
+	border: none;
+	font-weight: 700;
+	font-size: 17px;
+	line-height: 23px;
+	color: white;
+	width: 120px;
+	height: 35px;
+	background: #537AAA;
+	border-color: #537AAA;
+	border-radius: 10px;
+	color: white;
+	line-height: 23px;
+	display: block;
+}
+
+.findbtn {
+	font-size: 13px;
+	text-align:center;
+}

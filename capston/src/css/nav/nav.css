@@ -1,0 +1,33 @@
+.navStyle {
+    display: flex;
+    flex-direction: column;
+
+    width: 190px;
+    height: 743px;
+    background: #515966;
+    border-radius: 5px 0px 0px 5px;
+    
+    margin-left: 40px;
+    margin-top: 110px;
+}
+
+.navStyle a:nth-child(1) {
+    margin-top: 59px;
+}
+
+.navStyle a {
+    height: 58px;
+    line-height: 58px;
+    text-decoration: none;
+}
+
+.navStyle span{
+    margin-left: 47px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+
+    color: #848E91;
+}
