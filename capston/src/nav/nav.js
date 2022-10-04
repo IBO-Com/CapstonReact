@@ -4,11 +4,11 @@ import "../css/nav/nav.css";
 function App() {
   return (
     <div className='navStyle'>
-        <Link to="/empinfo">
+        <Link to="/1">
             <span>기본정보</span>
         </Link>
 
-        <Link to="/2">
+        <Link to="/empinfo">
             <span>인사/조직관리</span>
         </Link>
 
