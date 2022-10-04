@@ -13,8 +13,8 @@ const App = () => {
 			</div>
 
 		<div className='nameAnddept'>
-			<p>김명지</p>
-			<p>경영관리본부</p>
+			<p className='name'>김  명  지</p>
+			<p className='dept'>경영관리본부</p>
 		</div>
 
 			<table class="firstTable">
@@ -23,7 +23,7 @@ const App = () => {
 					<td>ㆍ사번</td><td>ㆍ재직상태</td><td>ㆍ부서명</td><td>ㆍ직책</td><td>ㆍ사원구분</td>
 					</tr>
 					<tr>
-					<td>20227710nn</td><td>재직</td><td>경영지원부</td><td>사원</td><td>임원</td>
+					<td>nnnnnn</td><td>재직</td><td>경영지원부</td><td>사원</td><td>임원</td>
 					</tr>
 					<br></br>
 					<tr>
@@ -34,6 +34,14 @@ const App = () => {
 					</tr>
 				</tbody>
 			</table>
+
+			<hr class="empFirstLine" align="left"></hr>
+
+			<div class="empBasic">인사기본</div>
+			<div class="appoint">발령</div>
+			<div class="account">계좌</div>
+
+			<hr class="empFirstLine" align="left"></hr>
 		</div>
 	);
 };
