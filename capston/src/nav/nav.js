@@ -4,7 +4,7 @@ import "../css/nav/nav.css";
 function App() {
   return (
     <div className='navStyle'>
-        <Link to="/">
+        <Link to="/empinfo">
             <span>기본정보</span>
         </Link>
 

@@ -5,8 +5,8 @@ import Empinfo from "./empinfo"
 
 const App = () => {
 	return (
-		//<Login/>
-		<Empinfo />
+		<Login/>
+		//<Empinfo />
 	);
 };
 

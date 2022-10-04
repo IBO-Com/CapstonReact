@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Routes, Route, Router, BrowserRouter } from 'react-router-dom';
-import Test from './Test';
+
+//각 탭 임포트
+import Empinfo from "./empinfo";
+
 import NotFound from './NotFound';
 import Nav from './nav/nav';
 import "./css/main.css";
@@ -15,7 +18,8 @@ const App = () => {
 
 			<div className='mainContetnsBox'>
 				<Routes>
-					<Route path="/" element={<Test />}></Route>
+					<Route path="/" element={<Empinfo />}></Route>
+					<Route path="/empinfo" element={<Empinfo />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Routes>
 			</div>
