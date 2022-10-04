@@ -1,0 +1,45 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap')
+	;
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+.wrapimg {
+	width: 140px;
+	height:140px;
+	border-radius:50%;
+	overflow:hidden;
+	float:left;
+}
+
+
+.emp_img {
+	width:100%;
+	height:100%;
+	object-fit:cover;
+}
+
+.nameAnddept {
+	width: 100px;
+	height: 50px;
+	text-align: center;
+	float: left;
+	margin: 20px 10px 0px 10px;
+}
+
+.firstTable {
+	width: 50%;
+	text-align: left;
+	margin-top: 5px;
+}
+
+.infoList {
+	height: 60px;
+	padding: 20px;
+	margin-top: 20px;
+}
+
