@@ -1,4 +1,5 @@
 .mainApp {
+    background-color: #BEC6D3;
     display: flex;
     flex-direction: row;
 }
@@ -10,4 +11,7 @@
 .mainContetnsBox {
     width: 100%;
     height: 100vh;
+}
+
+body {
 }
