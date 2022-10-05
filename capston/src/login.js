@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import security_icon from "./img/security.png";
 import "./css/login/login.css";
-import Main from "./main";
+import MainNav from "./mainNav";
 
 
 const App = () => {
@@ -49,7 +49,7 @@ const App = () => {
         </div>
 		  </div>
     ) : ( //로그인이 되었다면
-      <Main/>
+      <MainNav/>
     )
 		
 	);

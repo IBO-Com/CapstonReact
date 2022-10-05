@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 import "../css/nav/nav.css";
 
+import Basic from "../img/basic.png";
+import Person from "../img/person.png";
+import Calendar from "../img/calendar.png";
+import Paid from "../img/paid.png";
+import Leave from "../img/leave.png";
+
 function App() {
   return (
     <div className='navStyle'>

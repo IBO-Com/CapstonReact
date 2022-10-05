@@ -1,15 +1,15 @@
 import React from 'react';
 
 import testimg from "./img/testimg.jpg";
-import "./empinfo.css";
+import "./css/empinfo/empinfo.css";
 
 const App = () => {
 	return (
 		<div className='empInfo'>
 			<div className='plzEmp'>
 				<div>
-					<div class="empWrapimg">
-						<img class="empimg" src={testimg} alt="이미지"/>
+					<div className="empWrapimg">
+						<img className="empimg" src={testimg} alt="이미지"/>
 					</div>
 				</div>
 
@@ -57,14 +57,14 @@ const App = () => {
 			</div>
 			
 			<div className='empLine'>
-				<hr class="empFirstLine" align="left"></hr>
+				<hr className="empFirstLine" align="left"></hr>
 				<div className='empTabFlex'>
 					<div class="empBasic">인사기본</div>
 					<div class="appoint">발령</div>
 					<div class="account">계좌</div>
 				</div>
 
-				<hr class="empFirstLine" align="left"></hr>
+				<hr className="empFirstLine" align="left"></hr>
 			</div>
 		</div>
 	);
