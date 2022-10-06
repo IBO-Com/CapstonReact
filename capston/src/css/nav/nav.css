@@ -33,14 +33,15 @@
 }
 
 .TapOne_Dropdown {
-    width: 100px;
-    margin-left: 60px;
+    width: 125px;
+    margin-left: 50px;
     display: none;
 }
 
 .TapOne:hover ~ .TapOne_Dropdown{
-    display: inline-block;
+    display: block;
     text-decoration: none;
     background-color: white;
-    color: black;
+    border-radius: 5px 5px 5px 5px;
+    transform: rotate(0deg);
 }
