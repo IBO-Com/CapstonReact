@@ -31,3 +31,16 @@
 
     color: #848E91;
 }
+
+.TapOne_Dropdown {
+    width: 100px;
+    margin-left: 60px;
+    display: none;
+}
+
+.TapOne:hover ~ .TapOne_Dropdown{
+    display: inline-block;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+}

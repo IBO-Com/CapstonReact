@@ -13,9 +13,18 @@ function App() {
         <Link to="/1">
             <span>기본정보</span>
         </Link>
-
+        
         <Link to="/empinfo">
-            <span>인사/조직관리</span>
+            <span className='TapOne'>인사/조직관리</span>
+                <div className='TapOne_Dropdown'>
+                    <a href="">인사정보</a><br></br>
+                    <a href="">인사정보등록</a><br></br>
+                    <a href="">인사/조직관리</a><br></br>
+                    <a href="">조직관리</a><br></br>
+                    <a href="">인사기록카드</a><br></br>
+                    <a href="">사원정보현황</a><br></br>
+                    <a href="">인사명령(발령)</a>
+                </div>
         </Link>
 
         <Link to="/3">
