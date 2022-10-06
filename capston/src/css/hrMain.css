@@ -10,28 +10,35 @@ body {
     flex-grow: 1;
     height: 100;
     width: 98%;
-    min-width: 1000px;
     background-color: white;
-}
-
- .hrMain .container {
-    margin-left: 50px;
-    padding-top: 55px;
-	width: 1260px;
 	display: flex;
 }
 
-.hrMain .user_container {
-    margin-right: 100px;
+ .hrMain_container {
+	padding-left: 50px;
+	padding-right: 50px;
+	width: 1000px;
+	margin: auto;
+    padding-top: 55px;
+	display: flex;
+	flex-direction: column;
+}
+.hrMain_Flex {
+
+	display: flex;
+	flex-direction: row;
+}
+
+.hrMain_user_container {
 	width: 500px;
 	height: 480px;
 }
 
-.hrMain .user_container h4 {
-	margin-left: 8px
+.hrMain_user_container h4 {
+	margin-left: 8px;
 }
 
-.hrMain .userInfo {
+.hrMain_userInfo {
 	width: 480px;
 	height: 380px;
 	text-align: center;
@@ -40,66 +47,76 @@ body {
 	text-align: center;
 }
 
-.hrMain .userImg {
+.hrMain_userImg {
 	margin: 30px 0px 10px 0px;
 }
 
-.hrMain .userImg img {
+.hrMain_userImg img {
 	width: 150px;
 	height: 150px;
 	object-fit: cover;
 	margin: 10px 0px;
 }
 
-.hrMain .userDetail {
+.hrMain_userDetail {
 	margin-bottom: 20px;
 	margin: auto;
 }
 
-.hrMain .userDetail li {
+.hrMain_userDetail li {
 	list-style: none;
 }
 
-.hrMain .userDetail li.userName {
+.hrMain_userDetail li.userName {
 	font-size: 20px;
 }
 
-.hrMain .work_container {
-	width: 500px;
+.hrMain_work_container {
+	padding-left: 70px;
+	width: 600px;
 	height: 480px;
 }
 
-.hrMain .workInfo {
+.hrMain_workInfo {
 	width: 480px;
 	height: 150px;
 	border: 1px solid #EBEFF2;
 	border-radius: 5px;
 }
-.hrMain .workInfo ul{
+.hrMain_workInfo ul{
 	list-style:none;
 }
-.hrMain .workInfo progress{
+.hrMain_workInfo progress{
 	margin-left:20px;
 }
-.hrMain .workInfo p{
+.hrMain_workInfo p{
 	text-align:center;	
 }
-.hrMain.history{
+.hrMain_history{
+	margin-top: 30px;
+	margin-bottom: 10px;
 	display:flex;
     flex-direction: row;
 }
 
-.hrMain .history_btn{
+.hrMain_history h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.hrMain_history_btn{
+	margin-left: 390px;
+	justify-content: center;
 	width:30px;
 	height:25px;
 	background:#FFC180;
 }
-.hrMain .button_img{
+.hrMain_button_img{
 	width:15px;
 	height:15px;
-	object-fit:cover
+	object-fit:cover;
 }
-.hrMain .historyList {
+.hrMain_historyList {
 	width: 480px;
 }
 
@@ -120,13 +137,12 @@ body {
 	color: #FFFFFF;
 }
 
-.hrMain .notice_container {
-    margin-left: 50px;
+.hrMain_notice_container {
 	width: 1050px;
 	height: 200px;
 }
 
-.hrMain .notice {
+.hrMain_notice {
 	width: 100%;
 	height: 150px;
 	border: 1px solid #EBEFF2;
