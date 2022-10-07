@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+.empLine {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.basicContents {
+  margin-left: 50px;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.basicLine {
+  width: 95%;
+  height: 2px;
+  background-color: #d3d3d3;
+  border: 0;
+}
+
+.empFirstTable {
+  width: 100%;
+  text-align: left;
+  margin-left: 30px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.empBodyTable {
+  margin-left: 10px;
+  width: 87%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.empinfoList {
+  height: 60px;
+  margin-top: 20px;
+}
+
+.empAddressTable {
+  margin-left: 10px;
+  width: 87%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+.tdPaddingLeft {
+  padding-left: 2vw;
+}
+
+.redStar {
+  color: red;
+}
