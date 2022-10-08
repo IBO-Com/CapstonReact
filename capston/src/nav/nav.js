@@ -36,6 +36,10 @@ function App() {
       <Link to="/empregister">
         <span>인사기본관리</span>
       </Link>
+      
+      <Link to="/empselect">
+        <span>인사현황관리</span>
+      </Link>
 
       <Link to="/3">
         <span>근태관리</span>

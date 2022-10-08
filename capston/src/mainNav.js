@@ -8,6 +8,7 @@ import HRMain from "./hrMain";
 import EmpRegister from "./emp/EmpRegister";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
+import EmpSelect from "./emp/EmpSelect";
 import "./css/mainNav.css";
 
 import UserHeader from "./userHeader";
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/1" element={<HRMain />}></Route>
             <Route path="/empinfo" element={<Empinfo />}></Route>
             <Route path="/empregister" element={<EmpRegister />}></Route>
+            <Route path="/empselect" element={<EmpSelect />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
