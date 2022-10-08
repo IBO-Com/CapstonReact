@@ -18,6 +18,7 @@ const App = () => {
 				{/* 비밀번호 찾기 */ }
 				<Route path="/findpw" element={<Findpw/>}/>
 
+				{/* 네비게이션으로 이동 */}
 				<Route path="/mainNav/*" element={<MainNav/>}/>
 				
 			</Routes>

@@ -24,6 +24,7 @@ const App = () => {
           <UserHeader />
 
           <Routes>
+            <Route path="/" element={<HRMain />}></Route>
             <Route path="/1" element={<HRMain />}></Route>
             <Route path="/empinfo" element={<Empinfo />}></Route>
             <Route path="/empregister" element={<EmpRegister />}></Route>
