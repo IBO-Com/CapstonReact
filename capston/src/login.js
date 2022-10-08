@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import security_icon from "./img/iboLogoImg.png";
 import "./css/login/login.css";
-import MainNav from "./mainNav";
 import { Link } from 'react-router-dom';
 
 
