@@ -19,6 +19,15 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 
+function getFormatDate(date) {
+  var year = date.getFullYear(); //yyyy
+  var month = 1 + date.getMonth(); //M
+  month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+  var day = date.getDate(); //d
+  day = day >= 10 ? day : "0" + day; //day 두자리로 저장
+  return year + "-" + month + "-" + day;
+}
+
 function EmpRegister() {
   const formRef = React.useRef();
   const name = useRef();
@@ -34,8 +43,14 @@ function EmpRegister() {
   const [team, setTeam] = React.useState("101");
   const [rank, setRank] = React.useState(1);
   const [dateComeIn, setDateComeIn] = React.useState(new Date());
-  const url = "http://43.200.115.198:8080/empregister.jsp";
 
+  const url = "http://43.200.115.198:8080/empregister.jsp";
+  //const url = "http://localhost:8080/empregister.jsp";
+
+  const handleDateChange = (date) => {
+    setDateComeIn(getFormatDate(date));
+    console.log(dateComeIn);
+  };
   const handleSelectGender = (event) => {
     setGender(event.target.value);
   };
@@ -324,7 +339,7 @@ function EmpRegister() {
                         showTodayButton
                         size="small"
                         todayLabel="오늘"
-                        onChange={setDateComeIn}
+                        onChange={handleDateChange}
                       />
                     </MuiPickersUtilsProvider>
                   </td>
