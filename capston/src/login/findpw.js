@@ -26,9 +26,7 @@ const App = () => {
                         </div>
 
                         <Link to="/findpw">
-                            <button className="findpwBtn" type="button">
-                                비밀번호 찾기
-                            </button>
+                            <button className="findpwBtn" type="button">비밀번호 찾기</button>
                         </Link>
                     </form>
                 </div>
