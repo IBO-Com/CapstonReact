@@ -1,6 +1,5 @@
 import React from 'react';
 import "../css/login/findpw.css"
-
 import { Link } from 'react-router-dom';
 
 const App = () => {
@@ -11,7 +10,6 @@ const App = () => {
                     <span className='findpwTitle'>비밀번호 찾기</span>
                     <span className='findpwContent'>비밀번호는 이름, 사번, 이메일을 통해 찾을 수 있습니다.</span>
                 </div>
-
 
                 <div className='userFindpw'>
                     <form className="findpwInput">
@@ -32,7 +30,6 @@ const App = () => {
                 </div>
             </div>
         </div>
-
 
         //<Empinfo />
     );

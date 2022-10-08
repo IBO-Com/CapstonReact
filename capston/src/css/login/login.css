@@ -92,7 +92,7 @@ body {
 }
 
 #loginbtn {
-	margin: auto; display : block;
+	margin: auto;
 	border: none;
 	font-weight: 700;
 	font-size: 17px;
@@ -104,8 +104,9 @@ body {
 	border-color: #537AAA;
 	border-radius: 10px;
 	color: white;
-	line-height: 23px;
-	display: block;
+	margin-left: 85px;
+	text-align: center;
+
 }
 
 .findbtn {
