@@ -12,6 +12,7 @@ import EmpSelect from "./emp/EmpSelect";
 import "./css/mainNav.css";
 
 import UserHeader from "./userHeader";
+import HRorganization from "./HRorganization/HRorganization";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/empinfo" element={<Empinfo />}></Route>
             <Route path="/empregister" element={<EmpRegister />}></Route>
             <Route path="/empselect" element={<EmpSelect />}></Route>
+            <Route path="/hrorganization" element={<HRorganization />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
