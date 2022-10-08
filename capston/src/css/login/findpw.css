@@ -1,0 +1,72 @@
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.findpwBox {
+	margin-top: 185px;
+    margin-left: 53vh;
+	background-color: white;
+	width: 940px;
+	height: 550px;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.findpwTitle {
+    color : #777D7E;
+    font-size: 40px;
+    text-align: center;
+    display: block;
+    padding-top: 40px;
+}
+
+.findpwContent {
+    color : #777D7E;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+}
+
+#findpwName, #findpwSabun, #findpwEmail {
+    text-indent: 20px;
+	color: #537AAA;
+	line-height: 40px;
+	height: 50px;
+	width: 450px;
+	border: 2px solid #537AAA;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px;
+    display: block;
+}
+
+#findpwName {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    margin-left: 240px;
+}
+
+#findpwSabun {
+    margin-bottom: 20px;
+    margin-left: 240px;
+}
+
+#findpwEmail {
+    margin-bottom: 20px;
+    margin-left: 240px;
+}
+
+.findpwBtn {
+    background-color: #537AAA;
+    color: white;
+    height: 50px;
+	width: 458px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    margin-left: 240px;
+    font-size: 18px;
+    font-weight: bold;
+}
