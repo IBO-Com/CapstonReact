@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import security_icon from "./img/iboLogoImg.png";
 import "./css/login/login.css";
 import MainNav from "./mainNav";
+import { Link } from 'react-router-dom';
 
 
 const App = () => {
@@ -39,17 +40,30 @@ const App = () => {
             </div>
             <br/>
             <div>
-              <input type="submit" id="loginbtn" name="loginbtn" value="LOGIN" />
+              <Link to="/MainNav">
+                <input id="loginbtn" name="loginbtn" value="LOGIN" />
+              </Link>
             </div>
             <br/>
             <div class="findbtn">
-              <a class="findpw" href="">비밀번호를 잊어버리셨나요?</a>
+              <Link to="/findpw">
+                <span className='/findpw'>비밀번호를 잊어버리셨나요?</span>
+              </Link>
+              
             </div>
           </form>
         </div>
 		  </div>
     ) : ( //로그인이 되었다면
-      <MainNav/>
+    
+      <div>
+        
+      {/*<MainNav/>
+        네비게이션 이동 수정.
+      */}  
+      
+
+      </div>
     )
 		
 	);

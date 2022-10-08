@@ -16,7 +16,6 @@ import UserHeader from "./userHeader";
 const App = () => {
   return (
     <div className="mainApp">
-      <BrowserRouter>
         <div className="mainNavBox">
           <Nav />
         </div>
@@ -25,7 +24,6 @@ const App = () => {
           <UserHeader />
 
           <Routes>
-            <Route path="/" element={<HRMain />}></Route>
             <Route path="/1" element={<HRMain />}></Route>
             <Route path="/empinfo" element={<Empinfo />}></Route>
             <Route path="/empregister" element={<EmpRegister />}></Route>
@@ -33,7 +31,6 @@ const App = () => {
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
-      </BrowserRouter>
     </div>
   );
 };

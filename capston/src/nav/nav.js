@@ -14,7 +14,7 @@ function App() {
         <span>기본정보</span>
       </Link>
 
-      <Link to="/empinfo">
+      <Link to="/mainNav/empinfo">
         <span className="TapOne">인사/조직관리</span>
         <div className="TapOne_Dropdown">
           <a href="">인사정보</a>
@@ -33,23 +33,23 @@ function App() {
         </div>
       </Link>
 
-      <Link to="/empregister">
+      <Link to="/mainNav/empregister">
         <span>인사기본관리</span>
       </Link>
       
-      <Link to="/empselect">
+      <Link to="/mainNav/empselect">
         <span>인사현황관리</span>
       </Link>
 
-      <Link to="/3">
+      <Link to="/mainNav/3">
         <span>근태관리</span>
       </Link>
 
-      <Link to="/4">
+      <Link to="/mainNav/4">
         <span>급여관리</span>
       </Link>
 
-      <Link to="/5">
+      <Link to="/mainNav/5">
         <span>퇴직관리</span>
       </Link>
     </div>
