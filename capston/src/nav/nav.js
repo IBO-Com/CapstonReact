@@ -10,7 +10,7 @@ import Leave from "../img/leave.png";
 function App() {
   return (
     <div className="navStyle">
-      <Link to="/1">
+      <Link to="/mainNav/1">
         <span>기본정보</span>
       </Link>
 
