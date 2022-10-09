@@ -19,9 +19,9 @@ const App = () => {
                             <div className="hrMain_userDetail">
                                 <li className="hrMain_userName">김명지</li>
                                 <li>2022771010</li>
-                                <li>경영관리본부</li>
-                                <li>경영기획부</li>
-                                <li>총무인사팀</li>
+                                <li className="hrMain_dept">경영관리본부</li>
+                                <li className="hrMain_subDept">경영기획부</li>
+                                <li className="hrMain_Team">총무인사팀</li>
                             </div>
                         </div>
                     </div>

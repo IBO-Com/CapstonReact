@@ -1,30 +1,28 @@
-@import
-	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap')
-	;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .hrMain {
-    flex-grow: 1;
-    height: 100;
-    width: 98%;
-    background-color: white;
+	flex-grow: 1;
+	height: 100;
+	width: 98%;
+	background-color: white;
 	display: flex;
 }
 
- .hrMain_container {
+.hrMain_container {
+	margin-left: 80px;
+	margin-top: 60px;
 	padding-left: 50px;
 	padding-right: 50px;
 	width: 1000px;
-	margin: auto;
-    padding-top: 55px;
 	display: flex;
 	flex-direction: column;
 }
-.hrMain_Flex {
 
+.hrMain_Flex {
 	display: flex;
 	flex-direction: row;
 }
@@ -48,7 +46,7 @@ body {
 }
 
 .hrMain_userImg {
-	margin: 30px 0px 10px 0px;
+	margin: 30px 0px 0px 0px;
 }
 
 .hrMain_userImg img {
@@ -67,8 +65,19 @@ body {
 	list-style: none;
 }
 
-.hrMain_userDetail li.userName {
-	font-size: 20px;
+.hrMain_userName {
+	font-size: 30px;
+	margin-bottom: 3px;
+}
+
+.hrMain_dept,
+.hrMain_subDept,
+.hrMain_Team {
+	font-size: 13px;
+}
+
+.hrMain_dept {
+	margin-top: 10px;
 }
 
 .hrMain_work_container {
@@ -83,20 +92,24 @@ body {
 	border: 1px solid #EBEFF2;
 	border-radius: 5px;
 }
-.hrMain_workInfo ul{
-	list-style:none;
+
+.hrMain_workInfo ul {
+	list-style: none;
 }
-.hrMain_workInfo progress{
-	margin-left:20px;
+
+.hrMain_workInfo progress {
+	margin-left: 20px;
 }
-.hrMain_workInfo p{
-	text-align:center;	
+
+.hrMain_workInfo p {
+	text-align: center;
 }
-.hrMain_history{
+
+.hrMain_history {
 	margin-top: 30px;
 	margin-bottom: 10px;
-	display:flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .hrMain_history h4 {
@@ -104,23 +117,28 @@ body {
 	margin-bottom: 0px;
 }
 
-.hrMain_history_btn{
+.hrMain_history_btn {
 	margin-left: 390px;
 	justify-content: center;
-	width:30px;
-	height:25px;
-	background:#FFC180;
+	width: 25px;
+	height: 25px;
+	background: #F09336;
+	border: none;
 }
-.hrMain_button_img{
-	width:15px;
-	height:15px;
-	object-fit:cover;
+
+.hrMain_button_img {
+	width: 15px;
+	height: 15px;
+	object-fit: cover;
 }
+
 .hrMain_historyList {
 	width: 480px;
 }
 
-.hrMain table, th, tr {
+.hrMain table,
+th,
+tr {
 	border: 1px solid #EBEFF2;
 	border-collapse: collapse;
 }
@@ -133,7 +151,7 @@ body {
 
 .hrMain th {
 	font-weight: normal;
-	background-color: #519BB6;
+	background-color: #537AAA;
 	color: #FFFFFF;
 }
 
@@ -144,7 +162,7 @@ body {
 
 .hrMain_notice {
 	width: 100%;
-	height: 150px;
+	height: 130px;
 	border: 1px solid #EBEFF2;
 	border-radius: 5px;
 }
