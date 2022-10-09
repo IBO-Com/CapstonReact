@@ -1,0 +1,51 @@
+.HrInfoTable {
+  margin: 20px 62px 48px 65px;
+}
+.HrInfoTable p {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  /* identical to box height */
+
+  letter-spacing: 0.1em;
+
+  color: #5a6163;
+}
+
+/* .HrInfoTable .info_table{
+    width: 1042px;
+    height: 694px;
+} */
+
+.HrInfoTable .info_Table table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #D9D9D9;
+}
+
+.HrInfoTable .info_Table table thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #EBEFF2;
+
+}
+
+.HrInfoTable .info_Table table thead th{
+    padding: 10px;
+}
+
+.HrInfoTable .info_Table table tbody td{
+    padding: 8px;
+    font-size: 12px;
+}
+
+.HrInfoTable .info_Table table th,
+.HrInfoTable .info_Table table td {
+  border: 1px solid#D9D9D9;
+  text-align: center;
+}

@@ -1,27 +1,67 @@
 .HRorganization_main{
     background: #FFFFFF;
-    height: 743px;
+    height: 806px;
     width: 98%;
+    
 }
 
 .HRorganization_dateBox span{
     color:#5A6163;
     width: 73px;
+    position: relative;
+    top: 3px;
 }
 
 .HRorganization_dateBox{
-   padding: 20px 40px;
+   padding: 15px 20px;
    display: flex;
+   border-bottom: 3px solid #D9D9D9;
+   margin: 0 20px;
+
 }
 
-.HRorganization_dateBox input{
-    border-radius: 5px !important;
-    padding:13px 10px;
+.HRorganization_dateBox .startDate{
     font-size: 16px;
     letter-spacing: 2px;
+    color:#515966;
+    margin-right: 15px;
     box-sizing: border-box;
-    width: 153px;
+    width: 163px;
     border-color: #D9D9D9;
-    height: 23px;
     outline: none;
 }
+
+
+
+
+
+
+
+.HRorganization_bar{
+    width: 20px;
+    height: 2px;
+   background-color: #D9D9D9;;
+   position: relative;
+   top: 15px;
+   margin-right: 10px;
+}
+
+
+
+.HRorganization_dateBox #outlined-basic{
+    width: 160px !important;
+    height: 20px;
+}
+
+
+.HRorganization_dateBox .HRorganization_btn{
+width: 97px;
+color:#FFFFFF;
+height: 36px;
+top: 123px;
+margin-left: 28px;
+border: none;
+background: #537AAA;
+border-radius: 2px;
+}
+
