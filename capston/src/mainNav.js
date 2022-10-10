@@ -15,6 +15,7 @@ import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
 import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
+import EmpBasicInfo from "./empBasicInfo";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/" element={<HRMain />}></Route>
           <Route path="/1" element={<HRMain />}></Route>
           <Route path="/empinfo" element={<Empinfo />}></Route>
+          <Route path="/empBasicInfo" element={<EmpBasicInfo />}></Route>
           <Route path="/appointmentcheck" element={<AppointmentCheck />}></Route>
           <Route path="/empregister" element={<EmpRegister />}></Route>
           <Route path="/accountregister" element={<AccountRegister />}></Route>
