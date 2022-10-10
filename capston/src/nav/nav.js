@@ -18,26 +18,20 @@ function App() {
     setSelected(i);
   };
 
-
   return (
     <div className="nav_wrapper">
       <div className="nav_accordion">
         {Object.keys(nav).map((item, i) => (
-          <div className={selected == i ? "nav_item_show" : "nav_item" }>
+          <div className={selected == i ? "nav_item_show" : "nav_item"}>
             <div className="nav_title" onClick={() => toggle(i)}>
               <h3>{item}</h3>
             </div>
             <div className={selected === i ? "nav_menu_show" : "nav_menu"}>
-                {
-                  nav[item].menu.map((item2, i2) => (
-                    <Link className="nav_link" to={nav[item].link[i2]}> 
-                      <div className="nav_text">
-                        {item2}
-                      </div>
-                    </Link>
-                  ))
-                }
-
+              {nav[item].menu.map((item2, i2) => (
+                <Link className="nav_link" to={nav[item].link[i2]}>
+                  <div className="nav_text">{item2}</div>
+                </Link>
+              ))}
             </div>
           </div>
         ))}
@@ -46,14 +40,10 @@ function App() {
   );
 }
 
-
 const nav = {
-  "기본정보" : {
+  기본정보: {
     menu: ["공통코드정보", "조직도"],
-    link: [
-      "/mainNav/a1",
-      "/mainNav/a2",
-    ],
+    link: ["/mainNav/a1", "/mainNav/a2"],
   },
   "인사/조직관리": {
     menu: [
@@ -73,7 +63,7 @@ const nav = {
       "/mainNav/b5",
       "/mainNav/hrorganization",
       "/mainNav/b7",
-    ]
+    ],
   },
   근태관리: {
     menu: [
@@ -89,34 +79,20 @@ const nav = {
       "/mainNav/c3",
       "/mainNav/c4",
       "/mainNav/c5",
-    ]
+    ],
   },
-  "급여관리": {
+  급여관리: {
     menu: ["급여기본관리", "개인급여관리", "월급여조회", "급여명세서조회"],
-    link: [
-      "/mainNav/d1",
-      "/mainNav/d2",
-      "/mainNav/d3",
-      "/mainNav/d4",
-    ]
+    link: ["/mainNav/d1", "/mainNav/d2", "/mainNav/d3", "/mainNav/d4"],
   },
-  "퇴직관리": {
+  퇴직관리: {
     menu: ["퇴직승인", "퇴직금산정", "퇴직소득영수증"],
-    link: [
-      "/mainNav/e1",
-      "/mainNav/e2",
-      "/mainNav/e3",
-    ]
+    link: ["/mainNav/e1", "/mainNav/e2", "/mainNav/e3"],
   },
-  "테스트": {
-    menu: ["page 1", "page 2", "page 3"],
-    link: [
-      "/mainNav/test1",
-      "/mainNav/test2",
-      "/mainNav/test3",
-      
-    ]
-  }
+  테스트: {
+    menu: ["발령조회", "page 2", "page 3"],
+    link: ["/mainNav/appointmentcheck", "/mainNav/test2", "/mainNav/test3"],
+  },
 };
 
 export default App;
