@@ -20,7 +20,7 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 const HRorganization = () => {
-  const [startDate, setStartDate] = useState(new Date('2000-01-01'));
+  const [startDate, setStartDate] = useState(new Date('2020-01-01'));
   const [endDate, setEndDate] = useState(new Date());
   
   const [selectDepart, setSelectDepart] = useState("*")
@@ -64,10 +64,10 @@ const HRorganization = () => {
     }
 
     if(eMonth < 10) {
-      eMonth = "0" + eMonth;
+      eMonth = " 0" + eMonth;
     }
-    if(sDay < 10) {
-      eDay = "0" + eDay;
+    if(eDay < 10) {
+      eDay = " 0" + eDay;
     }
 
     let sDate = sYear + sMonth + sDay;
@@ -94,6 +94,7 @@ const HRorganization = () => {
       query
     );  
     
+    console.log(query);
     
     axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res)=>{
           setPeopleData(res.data.ITEMS);            
