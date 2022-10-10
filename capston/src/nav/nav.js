@@ -33,6 +33,10 @@ function App() {
         </div>
       </Link>
 
+      <Link to="/mainNav/appointmentcheck">
+        <span>발령</span>
+      </Link>
+
       <Link to="/mainNav/empregister">
         <span>인사기본관리</span>
       </Link>
