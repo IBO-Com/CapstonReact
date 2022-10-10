@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-const HrInfoTable = ({startDate, endDate, selectDepart, textName}) => {
-    const [peopleData, setPeopleData] = useState();
-
- 
-
-    useEffect(()=> {
-        axios.post("http://43.200.115.198:8080/empselect.jsp").then((res)=>{
-            setPeopleData(res.data.ITEMS);            
-        }).catch((Error)=> {
-            console.log(Error);
-        })
-
-    }, [])
-
+const HrInfoTable = ({startDate, endDate, selectDepart, textName, peopleData}) => {
+    
     console.log(peopleData);
 
     return (

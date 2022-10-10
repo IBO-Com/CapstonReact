@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/HRorganization/HRorganization.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
@@ -11,6 +11,8 @@ import HrInfoTable from "./HrInfoTable";
 import "../css/HRorganization/HrInfoTable.css";
 import koLocale from "date-fns/locale/ko";
 import format from "date-fns/format";
+import axios from "axios";
+import qs from "qs";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -18,21 +20,87 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 const HRorganization = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date('2000-01-01'));
   const [endDate, setEndDate] = useState(new Date());
   
-  const [selectDepart, setSelectDepart] = useState()
-
+  const [selectDepart, setSelectDepart] = useState("*")
+  
   const [textName, setTextName]= useState();
+  const [peopleData, setPeopleData] = useState();
+
+  useEffect(()=> {
+    axios.post("http://43.200.115.198:8080/empselect.jsp").then((res)=>{
+        setPeopleData(res.data.ITEMS);            
+    }).catch((Error)=> {
+        console.log(Error);
+    })
+  }, [])
+
 
   const handleStartDateChange = (date) => {
-    setStartDate(getFormatDate(date));
+    setStartDate(date);
   };
 
   const handleEndDatetDateChange = (date) => {
-    setEndDate(getFormatDate(date));
+    setEndDate(date);
   };
 
+  const sendSubmit = () => {
+    /* 날짜 포멧 */
+    console.log("isEnter????");
+    let sYear = String(startDate.getFullYear());
+    let sMonth = startDate.getMonth() + 1;
+    let sDay = startDate.getDate();
+
+    let eYear = String(endDate.getFullYear());
+    let eMonth = endDate.getMonth() + 1;
+    let eDay = endDate.getDate();
+
+    if(sMonth < 10) {
+      sMonth = "0" + sMonth;
+    }
+    if(sDay < 10) {
+      sDay = "0" + sDay;
+    }
+
+    if(eMonth < 10) {
+      eMonth = "0" + eMonth;
+    }
+    if(sDay < 10) {
+      eDay = "0" + eDay;
+    }
+
+    let sDate = sYear + sMonth + sDay;
+    let eDate = eYear + eMonth + eDay;
+
+    /* 쿼리 문 작성 */
+    let postParam = {};
+    let query = {};
+    
+    query["startDate"] = sDate;
+    query["retireDate"] = eDate;
+    if(textName.trim() == '') {
+      delete query["sabunOrName"];
+    } else {
+      query["sabunOrName"] = textName
+    }
+    if(selectDepart == '*') {
+      delete query["dept"];
+    } else {
+      query["dept"] = selectDepart;
+    }
+
+    postParam = qs.stringify(
+      query
+    );  
+    
+    
+    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res)=>{
+          setPeopleData(res.data.ITEMS);            
+      }).catch((Error)=> {
+          console.log(Error);
+    })
+  }
 
   function getFormatDate(date) {
     var year = date.getFullYear(); //yyyy
@@ -51,11 +119,6 @@ const HRorganization = () => {
   const textNameHandle = (e) => {
     setTextName(e.target.value);
   }
-
-
-
-
-
 
 
   return (
@@ -109,8 +172,20 @@ const HRorganization = () => {
                 }}
                 onChange={handleSelectDepart}
               >
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"전체부서"}>
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
                   전체부서
+                </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
+                  경영지원부
+                </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
+                  경영관리
+                </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
+                  침해대응부
                 </MenuItem>
               </Select>
             </FormControl>
@@ -123,9 +198,9 @@ const HRorganization = () => {
                 onChange={textNameHandle}
               />
             </FormControl>
-            <button className="HRorganization_btn">검색</button>
+            <button className="HRorganization_btn" onClick={() => {sendSubmit()}}>검색</button>
         </div>
-        <HrInfoTable startDate={startDate} endDate = {endDate} selectDepart = {selectDepart} textName = {textName}/>
+        <HrInfoTable startDate={startDate} endDate = {endDate} selectDepart = {selectDepart} textName = {textName} peopleData={peopleData}/>
       </div>
     </>
   );
