@@ -1,0 +1,40 @@
+.appointmentCheck_contianer {
+  min-width: 1000px;
+  width: 98%;
+  height: 800px;
+  background-color: #ffffff;
+}
+.appointmentCheck_title {
+  margin: 10px 60px 10px 60px;
+  display: flex;
+  justify-content: space-between;
+}
+.appointmentCheck_title p {
+  font-size: 18px;
+  font-weight: bold;
+}
+.appointmentCheck_list {
+  margin-left: 60px;
+  margin-right: 60px;
+  text-align: center;
+}
+
+.appointmentCheck_list table,
+th,
+tr {
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+}
+
+.appointmentCheck_table {
+  width: 100%;
+}
+.appointmentCheck_table th {
+  padding: 5px;
+  background-color: #ebeff2;
+}
+.appointmentCheck_table td {
+  padding: 5px;
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+}
