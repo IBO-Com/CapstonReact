@@ -1,47 +1,73 @@
-.navStyle {
+
+.nav_wrapper {
     display: flex;
-    flex-direction: column;
-
     width: 190px;
-    height: 743px;
-    background: #515966;
-    border-radius: 5px 0px 0px 5px;
-    
-    margin-left: 40px;
     margin-top: 110px;
-}
-
-.navStyle a:nth-child(1) {
-    margin-top: 59px;
-}
-
-.navStyle a {
-    height: 58px;
-    line-height: 58px;
-    text-decoration: none;
-}
-
-.navStyle span{
-    margin-left: 47px;
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 26px;
-
+    margin-left: 38px;
+  }
+  .nav_accordion {
+    width: 190px;
+  }
+  .nav_item { /* 아이템이 닫혀있을 때 */
+    background: #515966;
+    padding: 5px 15px;
+    transition: 0.5s;
+  }
+  .nav_item_show { /* 아이템이 열려있을 때 */
+    text-align: left;
+    transition: 0.5s;
+    background: white;
     color: #848E91;
-}
+    padding: 10px 15px;
+    padding-left: 10px;
+    margin-left: -20px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .nav_title {
+    color: #848E91;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .nav_menu {
+    color: #848E91;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+  }
+  .nav_menu_show {
+    margin-left: 10px;
+    color: #848E91;
+    max-height: 0;
+    overflow: hidden;
+    height: auto;
+    max-height: 999px;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+  }
+  
+  .nav_menu_show div {
+    height: 40px;
+    line-height: 40px;
+  }
 
-.TapOne_Dropdown {
-    width: 125px;
-    margin-left: 50px;
-    display: none;
-}
-
-.TapOne:hover ~ .TapOne_Dropdown{
-    display: block;
+  .nav_link {
+    color: #848E91;
     text-decoration: none;
-    background-color: white;
-    border-radius: 5px 5px 5px 5px;
-    transform: rotate(0deg);
-}
+  }
+
+
+  .nav_text {
+    padding-left: 10px;
+  }
+
+  .nav_title {
+    padding-left: 10px;
+  }
+
+  .nav_link:hover .nav_text {
+    border-radius: 5px;
+    background-color: lightgray;
+  }
