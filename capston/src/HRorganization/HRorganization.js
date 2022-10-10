@@ -25,7 +25,7 @@ const HRorganization = () => {
   
   const [selectDepart, setSelectDepart] = useState("*")
   
-  const [textName, setTextName]= useState();
+  const [textName, setTextName]= useState('');
   const [peopleData, setPeopleData] = useState();
 
   useEffect(()=> {
