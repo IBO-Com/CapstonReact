@@ -6,6 +6,8 @@
     margin-left: 38px;
   }
   .nav_accordion {
+    z-index: 100;
+    margin-top: 30px;
     width: 190px;
   }
   .nav_item { /* 아이템이 닫혀있을 때 */
@@ -18,13 +20,17 @@
     transition: 0.5s;
     background: white;
     color: #848E91;
-    padding: 10px 15px;
+    padding: 5px 15px;
     padding-left: 10px;
     margin-left: -20px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
   
+  .nav_title h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   .nav_title {
     color: #848E91;
     display: flex;
@@ -38,6 +44,10 @@
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0, 1, 0, 1);
   }
+  .nav_link:nth-last-child(1) .nav_text {
+    margin-bottom: 5px;
+  }
+
   .nav_menu_show {
     margin-left: 10px;
     color: #848E91;
@@ -70,4 +80,15 @@
   .nav_link:hover .nav_text {
     border-radius: 5px;
     background-color: lightgray;
+  }
+
+  .nav_block {
+    z-index: 1;
+    position: absolute;
+    width: 190px;
+    height: 790px;
+    background-color:  #515966;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }

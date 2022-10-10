@@ -20,6 +20,7 @@ function App() {
 
   return (
     <div className="nav_wrapper">
+      <div className="nav_block"/>
       <div className="nav_accordion">
         {Object.keys(nav).map((item, i) => (
           <div className={selected == i ? "nav_item_show" : "nav_item"}>
