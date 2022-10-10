@@ -1,15 +1,59 @@
-@import
-	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap')
-	;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 	padding: 0px;
 }
 
-.empFirstLine {
-	width:100%;
-	height:2px;
+.empBasic_container {
+	background-color: #ffffff;
+	min-width: 1000px;
+	width: 98%;
+	height: 400px;
+}
+
+.empBasicInfoTop {
+	margin-bottom: 15px;
+}
+
+.empBasicBox {
+	padding-top: 40px;
+	padding-left: 40px;
+}
+
+.empBasicLine {
+	margin-left: 20px;
+	width: 85%;
+	height: 2px;
+	display: inline-block;
 	background-color: #D3D3D3;
-	border:0;
+	border: 0;
+}
+
+.empBasic_editBtn {
+	width: 50px;
+	height: 30px;
+	margin-right: 20px;
+	background-color: #e78854;
+	color: #ffffff;
+	border-radius: 5px;
+	border: 0;
+	outline: 0;
+	margin-left: 20px;
+}
+
+.empBasicTableBox {
+	width: 90%;
+	text-align: left;
+	padding-top: 10px;
+}
+
+.empBasicStatus {
+	width: 200px;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.empBasicBox_divSection {
+	margin-left: 20px;
 }

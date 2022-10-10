@@ -9,7 +9,7 @@ const App = () => {
 			<div className='plzEmp'>
 				<div>
 					<div className="empWrapimg">
-						<img className="empimg" src={testimg} alt="이미지"/>
+						<img className="empimg" src={testimg} alt="이미지" />
 					</div>
 				</div>
 
@@ -48,14 +48,15 @@ const App = () => {
 								<td>2022-09-01</td>
 								<td>n년 n개월</td>
 								<td>2022-10-01</td>
-								<td></td>
+								<td>
+								</td>
 							</tr>
 						</tbody>
 					</table>
-			</div>
+				</div>
 
 			</div>
-			
+
 			<div className='empLine'>
 				<hr className="empFirstLine" align="left"></hr>
 				<div className='empTabFlex'>
