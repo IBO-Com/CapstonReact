@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import testimg from "../img/testimg.jpg";
 import TextField from "@mui/material/TextField";
@@ -13,15 +13,30 @@ import DateFnsUtils from "@date-io/date-fns";
 import qs from "qs";
 import format from "date-fns/format";
 
+
 class koLocalizedUtils extends DateFnsUtils {
     getCalendarHeaderText(date) {
       return format(date, "yyyy년　　 MM월", { locale: this.locale });
     }
   }
-  
+
 const App = () => {
     const url = "http://43.200.115.198:8080/empselect.jsp";
     const [dateComeIn, setDateComeIn] = React.useState(new Date());
+
+    useEffect(() => {
+        //데이터가 없으면 비어둘것
+        let postParam = qs.stringify({
+            startDate: '20221117',
+            retireDate: '20221120',
+            sabunOrName: 'TEST유저',
+            dept: '02'
+          });
+
+          axios.post(url, postParam).then((response) => {
+            console.log(response);
+          });
+    }, []);
 
     function getFormatDate(date) {
         var year = date.getFullYear(); //yyyy
