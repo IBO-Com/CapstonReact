@@ -36,7 +36,11 @@ function App() {
       <Link to="/mainNav/empregister">
         <span>인사기본관리</span>
       </Link>
-      
+
+      <Link to="/mainNav/accountregister">
+        <span>계좌등록</span>
+      </Link>
+
       <Link to="/mainNav/hrorganization/">
         <span>인사현황관리</span>
       </Link>

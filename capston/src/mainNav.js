@@ -13,27 +13,29 @@ import "./css/mainNav.css";
 
 import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
+import AccountRegister from "./emp/AccountRegister";
 
 const App = () => {
   return (
     <div className="mainApp">
-        <div className="mainNavBox">
-          <Nav />
-        </div>
+      <div className="mainNavBox">
+        <Nav />
+      </div>
 
-        <div className="mainContetnsBox">
-          <UserHeader />
+      <div className="mainContetnsBox">
+        <UserHeader />
 
-          <Routes>
-            <Route path="/" element={<HRMain />}></Route>
-            <Route path="/1" element={<HRMain />}></Route>
-            <Route path="/empinfo" element={<Empinfo />}></Route>
-            <Route path="/empregister" element={<EmpRegister />}></Route>
-            <Route path="/empselect" element={<EmpSelect />}></Route>
-            <Route path="/hrorganization" element={<HRorganization />}></Route>
-            <Route path="*" element={<NotFound />}></Route>
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<HRMain />}></Route>
+          <Route path="/1" element={<HRMain />}></Route>
+          <Route path="/empinfo" element={<Empinfo />}></Route>
+          <Route path="/empregister" element={<EmpRegister />}></Route>
+          <Route path="/accountregister" element={<AccountRegister />}></Route>
+          <Route path="/empselect" element={<EmpSelect />}></Route>
+          <Route path="/hrorganization" element={<HRorganization />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </div>
     </div>
   );
 };
