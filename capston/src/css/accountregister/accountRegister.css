@@ -66,8 +66,11 @@
 }
 .accountRegister_list table,
 th,
-tr,
-td {
+tr {
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+}
+.accountRegister_accountTable td {
   border: 1px solid #d9d9d9;
   border-collapse: collapse;
 }

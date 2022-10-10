@@ -19,7 +19,7 @@ const App = () => {
           </div>
         </div>
         <div className="accountRegister_list">
-          <table>
+          <table className="accountRegister_accountTable">
             <th>번호</th>
             <th>삭제</th>
             <th>은행코드</th>

@@ -1,168 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
 body {
-	font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .hrMain {
-	flex-grow: 1;
-	height: 100;
-	width: 98%;
-	background-color: white;
-	display: flex;
+  flex-grow: 1;
+  height: 100;
+  width: 98%;
+  background-color: white;
+  display: flex;
 }
 
 .hrMain_container {
-	margin-left: 80px;
-	margin-top: 60px;
-	padding-left: 50px;
-	padding-right: 50px;
-	width: 1000px;
-	display: flex;
-	flex-direction: column;
+  margin-left: 80px;
+  margin-top: 60px;
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
 }
 
 .hrMain_Flex {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .hrMain_user_container {
-	width: 500px;
-	height: 480px;
+  width: 500px;
+  height: 480px;
 }
 
 .hrMain_user_container h4 {
-	margin-left: 8px;
+  margin-left: 8px;
 }
 
 .hrMain_userInfo {
-	width: 480px;
-	height: 380px;
-	text-align: center;
-	border: 1px solid #EBEFF2;
-	border-radius: 5px;
-	text-align: center;
+  width: 480px;
+  height: 380px;
+  text-align: center;
+  border: 1px solid #ebeff2;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .hrMain_userImg {
-	margin: 30px 0px 0px 0px;
+  margin: 30px 0px 0px 0px;
 }
 
 .hrMain_userImg img {
-	width: 150px;
-	height: 150px;
-	object-fit: cover;
-	margin: 10px 0px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 10px 0px;
 }
 
 .hrMain_userDetail {
-	margin-bottom: 20px;
-	margin: auto;
+  margin-bottom: 20px;
+  margin: auto;
 }
 
 .hrMain_userDetail li {
-	list-style: none;
+  list-style: none;
 }
 
 .hrMain_userName {
-	font-size: 30px;
-	margin-bottom: 3px;
+  font-size: 30px;
+  margin-bottom: 3px;
 }
 
 .hrMain_dept,
 .hrMain_subDept,
 .hrMain_Team {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .hrMain_dept {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .hrMain_work_container {
-	padding-left: 70px;
-	width: 600px;
-	height: 480px;
+  padding-left: 70px;
+  width: 600px;
+  height: 480px;
 }
 
 .hrMain_workInfo {
-	width: 480px;
-	height: 150px;
-	border: 1px solid #EBEFF2;
-	border-radius: 5px;
+  width: 480px;
+  height: 150px;
+  border: 1px solid #ebeff2;
+  border-radius: 5px;
 }
 
 .hrMain_workInfo ul {
-	list-style: none;
+  list-style: none;
 }
 
 .hrMain_workInfo progress {
-	margin-left: 20px;
+  margin-left: 20px;
 }
 
 .hrMain_workInfo p {
-	text-align: center;
+  text-align: center;
 }
 
 .hrMain_history {
-	margin-top: 30px;
-	margin-bottom: 10px;
-	display: flex;
-	flex-direction: row;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .hrMain_history h4 {
-	margin-top: 0px;
-	margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .hrMain_history_btn {
-	margin-left: 390px;
-	justify-content: center;
-	width: 25px;
-	height: 25px;
-	background: #F09336;
-	border: none;
+  margin-left: 390px;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  background: #f09336;
+  border: none;
 }
 
 .hrMain_button_img {
-	width: 15px;
-	height: 15px;
-	object-fit: cover;
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
 }
 
 .hrMain_historyList {
-	width: 480px;
+  width: 480px;
 }
 
 .hrMain table,
 th,
 tr {
-	border: 1px solid #EBEFF2;
-	border-collapse: collapse;
+  border: 1px solid #ebeff2;
+  border-collapse: collapse;
+}
+.hrMain_historyTable td {
+  border: 1px solid #ebeff2;
+  border-collapse: collapse;
 }
 
 .hrMain table {
-	text-align: center;
-	margin: auto;
-	width: 100%;
+  text-align: center;
+  margin: auto;
+  width: 100%;
 }
 
 .hrMain th {
-	font-weight: normal;
-	background-color: #537AAA;
-	color: #FFFFFF;
+  font-weight: normal;
+  background-color: #537aaa;
+  color: #ffffff;
 }
 
 .hrMain_notice_container {
-	width: 1050px;
-	height: 200px;
+  width: 1050px;
+  height: 200px;
 }
 
 .hrMain_notice {
-	width: 100%;
-	height: 130px;
-	border: 1px solid #EBEFF2;
-	border-radius: 5px;
+  width: 100%;
+  height: 130px;
+  border: 1px solid #ebeff2;
+  border-radius: 5px;
 }
