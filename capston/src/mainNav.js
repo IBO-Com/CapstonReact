@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route, Router, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Router, BrowserRouter, Link } from "react-router-dom";
 
 //각 탭 임포트
 import Empinfo from "./empinfo";
@@ -17,9 +17,16 @@ import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import EmpBasicInfo from "./empBasicInfo";
 
+import Inbo from "./img/Group 23.png";
+
 const App = () => {
   return (
     <div className="mainApp">
+      <Link to={"/mainNav"}>
+        <div className="mainNav_icon">
+            <img src={Inbo}></img>
+        </div>
+      </Link>
       <div className="mainNavBox">
         <Nav />
       </div>

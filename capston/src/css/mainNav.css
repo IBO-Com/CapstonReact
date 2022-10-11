@@ -15,5 +15,10 @@
     height: 100vh;
 }
 
-body {
+.mainNav_icon {
+    width: 150px;
+    position: absolute;
+    left: 40px;
+    top: 51px;
 }
+
