@@ -46,7 +46,7 @@
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0, 1, 0, 1);
   }
-  .nav_link:nth-last-child(1) .nav_text {
+  .nav_link:nth-last-child(1) div {
     margin-bottom: 5px;
   }
 
@@ -80,6 +80,12 @@
   }
 
   .nav_link:hover .nav_text {
+    border-radius: 5px;
+    background-color: rgb(236, 233, 233);
+  }
+
+  .nav_clicked { /* 네비게이션이 클릭되었을 때 */
+    padding-left: 10px;
     border-radius: 5px;
     background-color: lightgray;
   }

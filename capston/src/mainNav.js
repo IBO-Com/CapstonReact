@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Routes, Route, Router, BrowserRouter, Link } from "react-router-dom";
 
 //각 탭 임포트
@@ -20,23 +20,28 @@ import EmpBasicInfo from "./empBasicInfo";
 import Inbo from "./img/Group 23.png";
 
 const App = () => {
+  
+  //현재 탭에서 무엇을 클릭했는지 확인
+  const [currentClick, setCurrentClick] = useState('');
+
   return (
     <div className="mainApp">
-      <Link to={"/mainNav"}>
+      <Link to={"/mainNav"} onClick={() => {setCurrentClick("로고")}}>
         <div className="mainNav_icon">
             <img src={Inbo}></img>
         </div>
       </Link>
       <div className="mainNavBox">
-        <Nav />
+        <Nav currentClick={currentClick} setCurrentClick={setCurrentClick}/>
       </div>
 
       <div className="mainContetnsBox">
         <UserHeader />
 
         <Routes>
+        
+          {/* 기본 페이지 */}
           <Route path="/" element={<HRMain />}></Route>
-          <Route path="/1" element={<HRMain />}></Route>
           <Route path="/empinfo" element={<Empinfo />}></Route>
           <Route path="/empBasicInfo" element={<EmpBasicInfo />}></Route>
           <Route

@@ -100,7 +100,6 @@ function EmpRegister() {
           dateComeIn: dateComeIn,
         });
 
-        console.log("query : ", postParam);
         axios.post(url, postParam).then((response) => {
           console.log(response);
         });

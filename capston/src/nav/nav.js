@@ -8,7 +8,7 @@ import Paid from "../img/paid.png";
 import Leave from "../img/leave.png";
 import { useState } from "react";
 
-function App() {
+function App({currentClick, setCurrentClick}) {
   const [selected, setSelected] = useState(null);
   const toggle = (i) => {
     if (selected === i) {
@@ -17,6 +17,10 @@ function App() {
 
     setSelected(i);
   };
+
+  const LinkOnClick = (item) => {
+    setCurrentClick(item);
+  }
 
   return (
     <div className="nav_wrapper">
@@ -29,8 +33,8 @@ function App() {
             </div>
             <div className={selected === i ? "nav_menu_show" : "nav_menu"}>
               {nav[item].menu.map((item2, i2) => (
-                <Link className="nav_link" to={nav[item].link[i2]}>
-                  <div className="nav_text">{item2}</div>
+                <Link className="nav_link" to={nav[item].link[i2]} onClick={() => {LinkOnClick(item2)}}>
+                  <div  className={currentClick == item2 ?"nav_clicked":"nav_text"}>{item2}</div>
                 </Link>
               ))}
             </div>
