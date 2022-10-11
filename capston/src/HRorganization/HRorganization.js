@@ -188,6 +188,18 @@ const HRorganization = () => {
                 <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
                   침해대응부
                 </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
+                  관제센터
+                </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
+                  보안연구부
+                </MenuItem>
+
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
+                  보안취약점연구부
+                </MenuItem>
               </Select>
             </FormControl>
             <FormControl>
