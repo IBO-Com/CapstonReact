@@ -43,10 +43,16 @@ const App = () => {
             path="/appointmentcheck"
             element={<AppointmentCheck />}
           ></Route>
+
+          {/* 인사 등록 페이지 */}
           <Route path="/empregister" element={<EmpRegister />}></Route>
           <Route path="/accountregister" element={<AccountRegister />}></Route>
           <Route path="/empselect" element={<EmpSelect />}></Route>
+
+          {/* 인사 현황 페이지 */}
           <Route path="/hrorganization" element={<HRorganization />}></Route>
+          
+          {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

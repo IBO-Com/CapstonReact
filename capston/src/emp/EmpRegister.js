@@ -42,7 +42,7 @@ function EmpRegister() {
   const [dept, setDept] = React.useState("01");
   const [team, setTeam] = React.useState("101");
   const [rank, setRank] = React.useState(1);
-  const [dateComeIn, setDateComeIn] = React.useState(new Date());
+  const [dateComeIn, setDateComeIn] = React.useState(getFormatDate(new Date()));
 
   const url = "http://43.200.115.198:8080/empregister.jsp";
   //const url = "http://localhost:8080/empregister.jsp";
@@ -98,7 +98,20 @@ function EmpRegister() {
   };
 
   //일단 하드코딩, 추후 서버에서 가져올것임.
-  const center_list = ["경영관리본부", "사이버보안본부", "보안연구본부"];
+  //- 하드코딩이 나을 것 같아요!
+  const center_list = {
+    "경영관리본부": {
+      "경영지원부": ["인사관리팀", "마케팅팀"],
+      "경영관리부": ["총무회계팀", "경리팀"]
+    },
+    "사이버보안본부":{
+      "침해대응부": ["침해대응팀", "위협분석팀"],
+      "과제센터": ["보안관제팀", "정보보호팀"]
+    },
+    "보안연구본부": {
+      "보안연구부": ["연구팀", "연구기획팀"],
+      "보안취약점분석부":["종합분석팀", "취약점분석팀"]
+    }};
 
   return (
     <div className="empInfo">
@@ -260,7 +273,7 @@ function EmpRegister() {
                         onChange={handleSelectDept}
                       >
                         <MenuItem value={"01"}>경영지원부</MenuItem>
-                        <MenuItem value={"02"}>경영관리</MenuItem>
+                        <MenuItem value={"02"}>경영관리부</MenuItem>
                         <MenuItem value={"03"}>침해대응부</MenuItem>
                         <MenuItem value={"04"}>관제센터</MenuItem>
                         <MenuItem value={"05"}>보안연구부</MenuItem>
