@@ -182,7 +182,7 @@ const HRorganization = () => {
                 </MenuItem>
 
                 <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                  경영관리
+                  경영관리부
                 </MenuItem>
 
                 <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
