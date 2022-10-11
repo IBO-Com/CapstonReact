@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import testimg from "../img/testimg.jpg";
 import TextField from "@mui/material/TextField";
@@ -38,11 +38,12 @@ function EmpRegister() {
   const address = useRef();
   const [gender, setGender] = React.useState(0);
   const [married, setMarried] = React.useState(0);
-  const [center, setCenter] = React.useState("H");
-  const [dept, setDept] = React.useState("01");
-  const [team, setTeam] = React.useState("101");
+  const [center, setCenter] = React.useState("H-경영관리본부");
+  const [dept, setDept] = React.useState("01-경영지원부");
+  const [team, setTeam] = React.useState("101-인사관리팀");
   const [rank, setRank] = React.useState(1);
   const [dateComeIn, setDateComeIn] = React.useState(getFormatDate(new Date()));
+
 
   const url = "http://43.200.115.198:8080/empregister.jsp";
   //const url = "http://localhost:8080/empregister.jsp";
@@ -70,6 +71,16 @@ function EmpRegister() {
     setRank(event.target.value);
   };
 
+  useEffect(() => {
+    let findDept = Object.keys(center_list[center])[0];
+    setDept(findDept);
+  }, [center])
+
+  useEffect(() => {
+    let findTeam = center_list[center][dept][0];
+    setTeam(findTeam);
+  }, [dept])
+
   const clickSaveButton = () => {
     if (formRef.current.reportValidity()) {
       if (window.confirm("저장하시겠습니까?")) {
@@ -82,12 +93,14 @@ function EmpRegister() {
           address: address.current.value,
           gender: gender,
           married: married,
-          center: center,
-          dept: dept,
-          team: team,
+          center: center.split('-')[0],
+          dept: dept.split('-')[0],
+          team: team.split('-')[0],
           rank: rank,
           dateComeIn: dateComeIn,
         });
+
+        console.log("query : ", postParam);
         axios.post(url, postParam).then((response) => {
           console.log(response);
         });
@@ -99,18 +112,19 @@ function EmpRegister() {
 
   //일단 하드코딩, 추후 서버에서 가져올것임.
   //- 하드코딩이 나을 것 같아요!
+
   const center_list = {
-    "경영관리본부": {
-      "경영지원부": ["인사관리팀", "마케팅팀"],
-      "경영관리부": ["총무회계팀", "경리팀"]
+    "H-경영관리본부": {
+      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
+      "02-경영관리부": ["201-총무회계팀", "202-경리팀"]
     },
-    "사이버보안본부":{
-      "침해대응부": ["침해대응팀", "위협분석팀"],
-      "과제센터": ["보안관제팀", "정보보호팀"]
+    "C-사이버보안본부":{
+      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
+      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"]
     },
-    "보안연구본부": {
-      "보안연구부": ["연구팀", "연구기획팀"],
-      "보안취약점분석부":["종합분석팀", "취약점분석팀"]
+    "S-보안연구본부": {
+      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
+      "06-보안취약점분석부":["601-종합분석팀", "602-취약점분석팀"]
     }};
 
   return (
@@ -256,9 +270,11 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectCenter}
                       >
-                        <MenuItem value={"H"}>경영관리본부</MenuItem>
-                        <MenuItem value={"C"}>사이버보안본부</MenuItem>
-                        <MenuItem value={"S"}>보안연구본부</MenuItem>
+                        {
+                          Object.keys(center_list).map((e, i) => (
+                              <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
+                          ))
+                        }
                       </Select>
                     </FormControl>
                   </td>
@@ -272,12 +288,11 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectDept}
                       >
-                        <MenuItem value={"01"}>경영지원부</MenuItem>
-                        <MenuItem value={"02"}>경영관리부</MenuItem>
-                        <MenuItem value={"03"}>침해대응부</MenuItem>
-                        <MenuItem value={"04"}>관제센터</MenuItem>
-                        <MenuItem value={"05"}>보안연구부</MenuItem>
-                        <MenuItem value={"06"}>보안취약점연구부</MenuItem>
+                        {
+                          Object.keys(center_list[center]).map((e, i) => (
+                            <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
+                          ))
+                        }
                       </Select>
                     </FormControl>
                   </td>
@@ -290,18 +305,15 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectTeam}
                       >
-                        <MenuItem value={"101"}>인사관리팀</MenuItem>
-                        <MenuItem value={"102"}>마케팅팀</MenuItem>
-                        <MenuItem value={"201"}>총무회계팀</MenuItem>
-                        <MenuItem value={"202"}>경리팀</MenuItem>
-                        <MenuItem value={"301"}>침해대응팀</MenuItem>
-                        <MenuItem value={"302"}>위협분석팀</MenuItem>
-                        <MenuItem value={"401"}>보안관제팀</MenuItem>
-                        <MenuItem value={"402"}>정보보호팀</MenuItem>
-                        <MenuItem value={"501"}>연구팀</MenuItem>
-                        <MenuItem value={"502"}>연구기획팀</MenuItem>
-                        <MenuItem value={"601"}>종합분석팀</MenuItem>
-                        <MenuItem value={"602"}>취약점분석팀</MenuItem>
+                        {
+                          center_list[center][dept] ? (
+                            center_list[center][dept].map((e, i) => (
+                              <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
+                            ))
+                          ) : (
+                           <div></div>
+                          )
+                        }
                       </Select>
                     </FormControl>
                   </td>
