@@ -65,7 +65,7 @@ const nav = {
       "/mainNav/empregister",
       "/mainNav/b3",
       "/mainNav/b4",
-      "/mainNav/b5",
+      "/mainNav/personnelcard",
       "/mainNav/hrorganization",
       "/mainNav/b7",
     ],

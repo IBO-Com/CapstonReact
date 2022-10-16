@@ -15,6 +15,7 @@ import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
 import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
+import PersonnelCard from "./personnelCard"; //인사기록카드
 import EmpBasicInfo from "./empBasicInfo";
 
 import Inbo from "./img/Group 23.png";
@@ -56,6 +57,9 @@ const App = () => {
 
           {/* 인사 현황 페이지 */}
           <Route path="/hrorganization" element={<HRorganization />}></Route>
+
+          {/* 인사기록카드 페이지 */}
+          <Route path="/personnelCard" element={<PersonnelCard />}></Route>
           
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
