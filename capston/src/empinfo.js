@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import testimg from "./img/testimg.jpg";
 import "./css/empinfo/empinfo.css";
+import Empbase from "./empInfo_detail/Empbase";
+import Appointment from './empInfo_detail/Appointment';
+import Account from './empInfo_detail/Account';
 
 const App = () => {
+
+	const [toogleState, setToggleState] = useState(1);
+
+	const toggleTab = (index) => {
+		setToggleState(index);
+	}
+
 	return (
 		<div className='empInfo'>
 			<div className='plzEmp'>
@@ -60,12 +70,17 @@ const App = () => {
 			<div className='empLine'>
 				<hr className="empFirstLine" align="left"></hr>
 				<div className='empTabFlex'>
-					<div class="empBasic">인사기본</div>
-					<div class="appoint">발령</div>
-					<div class="account">계좌</div>
+					<div class="empBasic btn" onClick={()=>{toggleTab(1)}}>인사기본</div>
+					<div class="appoint btn" onClick={()=>{toggleTab(2)}}>발령</div>
+					<div class="account btn" onClick={()=>{toggleTab(3)}}>계좌</div>
 				</div>
 
 				<hr className="empFirstLine" align="left"></hr>
+				<div>
+					{toogleState === 1 ? <Empbase /> : ""}
+					{toogleState === 2 ? <Appointment /> : ""}
+					{toogleState === 3 ? <Account /> : ""}
+				</div>
 			</div>
 		</div>
 	);

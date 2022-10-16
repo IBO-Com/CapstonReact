@@ -97,3 +97,7 @@ body {
 .empTabFlex div {
 	margin-right: 80px;
 }
+
+.empTabFlex .btn{
+	cursor: pointer;
+}

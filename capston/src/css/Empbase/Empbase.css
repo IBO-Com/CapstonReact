@@ -1,0 +1,51 @@
+.baseInfo{
+    margin: 0 98px 0 98px;
+    margin-top: 32px;
+}
+
+.baseInfo > span{
+    letter-spacing: 2px;
+    font-weight: 400;
+    display: block;
+    position: relative;
+}
+
+.baseInfo >span::after{
+    position:absolute;
+    width: 1100px;
+    height: 1px;
+    border-bottom: 4px dotted #D9D9D9;
+    top: 10px;
+    left: 100px;
+    content: "";
+}
+
+.baseInfo .info_base_div{
+    display: flex;
+}
+
+.baseInfo .info_box{
+    width: 400px;
+}
+
+
+.baseInfo .address_box{
+    width: 800px !important;
+}
+.baseInfo .address_box2{
+    width: 400px !important;
+}
+.baseInfo .info_box:first-child{
+    margin-left: 20px;
+}
+
+.baseInfo .info_margin:last-child{
+    margin-bottom: 30px;
+}
+.baseInfo .info_base_div .info_box .info_margin {
+    margin-top: 19px;
+    padding-left: 10px;
+}
+.baseInfo .info_base_div .info_box .info_margin > span{
+    margin-left: 30px;
+}
