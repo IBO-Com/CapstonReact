@@ -1,0 +1,74 @@
+.PersonnelAppointment_container {
+  background-color: #ffffff;
+  min-width: 1000px;
+  width: 98%;
+  height: 800px;
+}
+.PersonnelAppointment_search {
+  border-bottom: 2px solid #d9d9d9;
+  margin: 20px 20px 20px 20px;
+  display: flex;
+}
+.PersonnelAppointment_search span {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 16px;
+}
+.PersonnelAppointment_bar {
+  background-color: #d9d9d9;
+  width: 20px;
+  height: 2px;
+  margin: 15px 5px 0px 5px;
+}
+.PersonnelAppointment_searchBtn {
+  width: 97px;
+  height: 36px;
+  margin-left: 50px;
+  background-color: #537aaa;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 0;
+  outline: 0;
+}
+.PersonnelAppointment_content {
+  margin: 10px 50px 10px 50px;
+}
+.PersonnelAppointment_title {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.PersonnelAppointment_title span {
+  font-size: 18px;
+}
+.PersonnelAppointment_registerBtn {
+  width: 97px;
+  height: 36px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 0;
+  outline: 0;
+}
+
+.PersonnelAppointmet_table table,
+th,
+tr {
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+}
+.PersonnelAppointmet_table table {
+  text-align: center;
+  width: 100%;
+  margin: auto;
+}
+.PersonnelAppointmet_table thead {
+  background-color: #ebeff2;
+}
+
+.PersonnelAppointmet_table tr,
+.PersonnelAppointmet_table td {
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+  padding: 5px;
+}

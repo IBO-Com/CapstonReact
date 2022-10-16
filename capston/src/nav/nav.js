@@ -8,7 +8,7 @@ import Paid from "../img/paid.png";
 import Leave from "../img/leave.png";
 import { useState } from "react";
 
-function App({currentClick, setCurrentClick}) {
+function App({ currentClick, setCurrentClick }) {
   const [selected, setSelected] = useState(null);
   const toggle = (i) => {
     if (selected === i) {
@@ -20,11 +20,11 @@ function App({currentClick, setCurrentClick}) {
 
   const LinkOnClick = (item) => {
     setCurrentClick(item);
-  }
+  };
 
   return (
     <div className="nav_wrapper">
-      <div className="nav_block"/>
+      <div className="nav_block" />
       <div className="nav_accordion">
         {Object.keys(nav).map((item, i) => (
           <div className={selected == i ? "nav_item_show" : "nav_item"}>
@@ -33,8 +33,20 @@ function App({currentClick, setCurrentClick}) {
             </div>
             <div className={selected === i ? "nav_menu_show" : "nav_menu"}>
               {nav[item].menu.map((item2, i2) => (
-                <Link className="nav_link" to={nav[item].link[i2]} onClick={() => {LinkOnClick(item2)}}>
-                  <div  className={currentClick == item2 ?"nav_clicked":"nav_text"}>{item2}</div>
+                <Link
+                  className="nav_link"
+                  to={nav[item].link[i2]}
+                  onClick={() => {
+                    LinkOnClick(item2);
+                  }}
+                >
+                  <div
+                    className={
+                      currentClick == item2 ? "nav_clicked" : "nav_text"
+                    }
+                  >
+                    {item2}
+                  </div>
                 </Link>
               ))}
             </div>
@@ -67,7 +79,7 @@ const nav = {
       "/mainNav/b4",
       "/mainNav/personnelcard",
       "/mainNav/hrorganization",
-      "/mainNav/b7",
+      "/mainNav/personnelappointment",
     ],
   },
   근태관리: {

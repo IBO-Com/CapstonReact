@@ -17,34 +17,38 @@ import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import PersonnelCard from "./personnelCard"; //인사기록카드
 import EmpBasicInfo from "./empBasicInfo";
+import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 
 import Inbo from "./img/Group 23.png";
 
 const App = () => {
-  
   //현재 탭에서 무엇을 클릭했는지 확인
 
   // 페이지 등록 순서
   // 1. 하단에 Route에 추가하고자 하는 경로 및 컴포넌트 입력
   // 2. nav/nav.js 에서 JSON에 알맞게 추가
-  const [currentClick, setCurrentClick] = useState('');
+  const [currentClick, setCurrentClick] = useState("");
 
   return (
     <div className="mainApp">
-      <Link to={"/mainNav"} onClick={() => {setCurrentClick("로고")}}>
+      <Link
+        to={"/mainNav"}
+        onClick={() => {
+          setCurrentClick("로고");
+        }}
+      >
         <div className="mainNav_icon">
-            <img src={Inbo}></img>
+          <img src={Inbo}></img>
         </div>
       </Link>
       <div className="mainNavBox">
-        <Nav currentClick={currentClick} setCurrentClick={setCurrentClick}/>
+        <Nav currentClick={currentClick} setCurrentClick={setCurrentClick} />
       </div>
 
       <div className="mainContetnsBox">
         <UserHeader />
 
         <Routes>
-        
           {/* 기본 페이지 */}
           <Route path="/" element={<HRMain />}></Route>
           <Route path="/empinfo" element={<Empinfo />}></Route>
@@ -64,7 +68,13 @@ const App = () => {
 
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
-          
+
+          {/* 인사명령(발령) 페이지 */}
+          <Route
+            path="/personnelappointment"
+            element={<PersonnelAppointment />}
+          ></Route>
+
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
