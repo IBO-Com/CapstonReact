@@ -23,6 +23,10 @@ import Inbo from "./img/Group 23.png";
 const App = () => {
   
   //현재 탭에서 무엇을 클릭했는지 확인
+
+  // 페이지 등록 순서
+  // 1. 하단에 Route에 추가하고자 하는 경로 및 컴포넌트 입력
+  // 2. nav/nav.js 에서 JSON에 알맞게 추가
   const [currentClick, setCurrentClick] = useState('');
 
   return (
