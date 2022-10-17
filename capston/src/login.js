@@ -7,10 +7,16 @@ import { Link } from 'react-router-dom';
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
 
+  useEffect(() => {
+    
+  }, [])
+
   const Submit = (e) => {
     e.preventDefault();
     //로그인이 되었다면 true 
-    setIsLogin(true);
+
+
+    window.location.href = "/mainNav";
   }
 
 	return (
@@ -25,7 +31,7 @@ const App = () => {
         </div>
 
         <div class="userlogin">
-          <form class="input" onSubmit={Submit}>
+          <form class="input" >
             <div class="inputid">
               <input type="text" name="userid" id="userid" autocomplete="off"
                 placeholder="아이디를 입력해주세요."/>
@@ -39,9 +45,7 @@ const App = () => {
             </div>
             <br/>
             <div>
-              <Link to="/MainNav">
-                <input id="loginbtn" name="loginbtn" value="LOGIN" />
-              </Link>
+                <input id="loginbtn" name="loginbtn" value="LOGIN" onClick={Submit}/>
             </div>
             <br/>
             <div class="findbtn">

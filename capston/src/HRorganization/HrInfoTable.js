@@ -31,17 +31,17 @@ const HrInfoTable = ({startDate, endDate, selectDepart, textName, peopleData}) =
                                 return(
                                     <>
                                         <tr>
-                                            <td>{index + 1}</td>
-                                            <td>사진</td>
-                                            <td>{name.sabun}</td>
-                                            <td>{name.name}</td>
-                                            <td>{name.eng_name}</td>
-                                            <td>{name.identity}</td>
-                                            <td>{name.gender === "0" ? "남자" : "여자"}</td>
-                                            <td>{name.dept === "01" ? "경영지원부" : "" || name.dept === "02" ? "경영관리" : "" || name.dept === "03" ? "침해대응부" : "" || name.dept === "04" ? "관제센터" : "" || name.dept === "05" ? "보안연구부" : "" || name.dept === "06" ? "보안취약점연구부" : ""}</td>
-                                            <td>{name.rank === "1" ? "사원" : "" || name.rank === "2" ? "대리" : "" || name.rank === "3" ? "과장" : "" || name.rank === "4" ? "차장" : "" || name.rank === "5" ? "부장" : "" || name.rank === "6" ? "이사" : "" || name.rank === "7" ? "상무" : ""  }</td>
-                                            <td>{name.start_date}</td>
-                                            <td>{name.retire_date === null ? "-":""}</td>
+                                            <td style={{minWidth:"20px"}}>{index + 1}</td>
+                                            <td style={{minWidth:"30px"}}>사진</td>
+                                            <td style={{minWidth:"60px"}}>{name.sabun}</td>
+                                            <td style={{minWidth:"50px"}}>{name.name}</td>
+                                            <td style={{minWidth:"80px"}}>{name.eng_name}</td>
+                                            <td style={{minWidth:"100px"}}>{name.identity.slice(0, 6)}-{name.identity.slice(6, 13)}</td>
+                                            <td style={{minWidth:"25px"}}>{name.gender === "0" ? "남자" : "여자"}</td>
+                                            <td style={{minWidth:"100px"}}>{name.dept === "01" ? "경영지원부" : "" || name.dept === "02" ? "경영관리" : "" || name.dept === "03" ? "침해대응부" : "" || name.dept === "04" ? "관제센터" : "" || name.dept === "05" ? "보안연구부" : "" || name.dept === "06" ? "보안취약점연구부" : ""}</td>
+                                            <td style={{minWidth:"30px"}}>{name.rank === "1" ? "사원" : "" || name.rank === "2" ? "대리" : "" || name.rank === "3" ? "과장" : "" || name.rank === "4" ? "차장" : "" || name.rank === "5" ? "부장" : "" || name.rank === "6" ? "이사" : "" || name.rank === "7" ? "상무" : ""  }</td>
+                                            <td style={{minWidth:"70px"}}>{name.start_date}</td>
+                                            <td style={{minWidth:"30px"}}>{name.retire_date === null ? "-":""}</td>
 
                                       
                                         </tr>
