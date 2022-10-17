@@ -1,5 +1,5 @@
 .CardInfoTable {
-    margin: 20px 970px 48px 65px;
+    margin: 20px 0px 48px 65px;
 }
 
 .CardInfoTable span {
@@ -81,10 +81,9 @@
     background-color: white;
     height: 100%;
     width: 98%;
+    display: flex;
 }
 
 .card_empCard span {
     background-color: red;
-    margin-left: 750px;
-    display: flex;
 }
