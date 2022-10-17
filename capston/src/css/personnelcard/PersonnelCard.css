@@ -1,5 +1,5 @@
 .CardInfoTable {
-    margin: 20px 62px 48px 65px;
+    margin: 20px 970px 48px 65px;
 }
 
 .CardInfoTable span {
@@ -24,11 +24,6 @@
     background: #F09336;
     border-radius: 2px;
 }
-
-/* .HrInfoTable .info_table{
-      width: 1042px;
-      height: 694px;
-  } */
 
 .CardInfoTable .hrCardInfo table {
     border-collapse: collapse;
@@ -90,5 +85,6 @@
 
 .card_empCard span {
     background-color: red;
-    margin-left: 700px;
+    margin-left: 750px;
+    display: flex;
 }
