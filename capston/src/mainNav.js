@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Routes, Route, Router, BrowserRouter, Link } from "react-router-dom";
 
 //각 탭 임포트
@@ -28,7 +28,9 @@ const App = () => {
   // 1. 하단에 Route에 추가하고자 하는 경로 및 컴포넌트 입력
   // 2. nav/nav.js 에서 JSON에 알맞게 추가
   const [currentClick, setCurrentClick] = useState("");
-
+  
+  useEffect(() => {
+  }, []);
   return (
     <div className="mainApp">
       <Link
