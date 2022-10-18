@@ -1,55 +1,104 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  padding: 0px;
+}
+
+.plzEmp {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
 .empLine {
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.basicContents {
+.empTabFlex {
   margin-left: 50px;
-  margin-top: 30px;
-  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.empTabFlex div {
+  margin-right: 80px;
+}
+
+.empBasic {
+  font-size: 17px;
+}
+
+.account {
+  font-size: 17px;
+}
+
+.buttonStyle {
+  width: 3.5vw;
+  height: 3.5vh;
+  background-color: #e5a360;
+  color: #ffffff;
+}
+
+.empWrapimg {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.empimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inputStyle {
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  padding-top: 45px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.empinfoName {
+  font-size: 23px;
+}
+
+.empinfoDept {
   font-size: 15px;
 }
 
-.basicLine {
-  width: 95%;
-  height: 2px;
-  background-color: #d3d3d3;
-  border: 0;
+.inputFileButton {
+  padding: 6px 25px;
+  background-color: #eceff2;
+  border: 1px solid black;
+  border-radius: 4px;
+  color: #000000;
+  cursor: pointer;
 }
 
-.empFirstTable {
+.empTable {
   width: 100%;
+  margin-top: 15px;
   text-align: left;
-  margin-left: 30px;
   border-collapse: separate;
   border-spacing: 0 10px;
-}
-
-.empBodyTable {
-  margin-left: 10px;
-  width: 87%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-.empinfoList {
-  height: 60px;
-  margin-top: 20px;
-}
-
-.empAddressTable {
-  margin-left: 10px;
-  width: 87%;
-  border-collapse: separate;
-  border-spacing: 0 5px;
 }
 
 .tdPaddingLeft {
   padding-left: 2vw;
 }
 
+td {
+  padding-right: 1vw;
+}
+
 .redStar {
   color: red;
+  padding-right: "3px";
 }

@@ -23,34 +23,36 @@ function getFormatDate(date) {
   var year = date.getFullYear(); //yyyy
   var month = 1 + date.getMonth(); //M
   month = month >= 10 ? month : "0" + month; //month 두자리로 저장
-  var day = date.getDate(); //d
+  var day = date.getDate();
   day = day >= 10 ? day : "0" + day; //day 두자리로 저장
   return year + "-" + month + "-" + day;
 }
 
 function EmpRegister() {
-  const formRef = React.useRef();
+  const formRef = useRef();
   const name = useRef();
   const englishName = useRef();
-  const identityNumber = useRef();
+  const identityNumberF = useRef();
+  const identityNumberB = useRef();
   const email = useRef();
   const tel = useRef();
   const address = useRef();
-  const [gender, setGender] = React.useState(0);
-  const [married, setMarried] = React.useState(0);
-  const [center, setCenter] = React.useState("H-경영관리본부");
-  const [dept, setDept] = React.useState("01-경영지원부");
-  const [team, setTeam] = React.useState("101-인사관리팀");
-  const [rank, setRank] = React.useState(1);
-  const [dateComeIn, setDateComeIn] = React.useState(getFormatDate(new Date()));
+  const [gender, setGender] = useState(0);
+  const [married, setMarried] = useState(0);
+  const [center, setCenter] = useState("H-경영관리본부");
+  const [dept, setDept] = useState("01-경영지원부");
+  const [team, setTeam] = useState("101-인사관리팀");
+  const [rank, setRank] = useState(1);
+  const [rankTest, setRankTest] = useState("");
+  const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
 
-
-  const url = "http://43.200.115.198:8080/empregister.jsp";
-  //const url = "http://localhost:8080/empregister.jsp";
+  const urlSave = "http://43.200.115.198:8080/empregister.jsp";
+  const urlGetCls = "http://43.200.115.198:8080/empGetCode.jsp";
+  //const urlSave = "http://localhost:8080/empregister.jsp";
+  //const urlGetCls = "http://localhost:8080/empGetRank.jsp";
 
   const handleDateChange = (date) => {
     setDateComeIn(getFormatDate(date));
-    console.log(dateComeIn);
   };
   const handleSelectGender = (event) => {
     setGender(event.target.value);
@@ -72,14 +74,20 @@ function EmpRegister() {
   };
 
   useEffect(() => {
+    axios.get(urlGetCls).then((response) => {
+      setRankTest(response.data.ITEMS);
+    });
+  }, []);
+
+  useEffect(() => {
     let findDept = Object.keys(center_list[center])[0];
     setDept(findDept);
-  }, [center])
+  }, [center]);
 
   useEffect(() => {
     let findTeam = center_list[center][dept][0];
     setTeam(findTeam);
-  }, [dept])
+  }, [dept]);
 
   const clickSaveButton = () => {
     if (formRef.current.reportValidity()) {
@@ -87,178 +95,185 @@ function EmpRegister() {
         let postParam = qs.stringify({
           name: name.current.value,
           englishName: englishName.current.value,
-          identityNumber: identityNumber.current.value,
+          identityNumberFront: identityNumberF.current.value,
+          identityNumberBack: identityNumberB.current.value,
           email: email.current.value,
           tel: tel.current.value,
           address: address.current.value,
           gender: gender,
           married: married,
-          center: center.split('-')[0],
-          dept: dept.split('-')[0],
-          team: team.split('-')[0],
+          center: center.split("-")[0],
+          dept: dept.split("-")[0],
+          team: team.split("-")[0],
           rank: rank,
           dateComeIn: dateComeIn,
         });
 
-        axios.post(url, postParam).then((response) => {
+        axios.post(urlSave, postParam).then((response) => {
           console.log(response);
+          if (response.data.result === "success") {
+            alert("저장되었습니다.");
+          } else {
+            alert("error");
+          }
         });
-      } else {
-        
       }
     }
   };
 
-  //일단 하드코딩, 추후 서버에서 가져올것임.
-  //- 하드코딩이 나을 것 같아요!
-
   const center_list = {
     "H-경영관리본부": {
       "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
-      "02-경영관리부": ["201-총무회계팀", "202-경리팀"]
+      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
     },
-    "C-사이버보안본부":{
+    "C-사이버보안본부": {
       "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
-      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"]
+      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
     },
     "S-보안연구본부": {
       "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
-      "06-보안취약점분석부":["601-종합분석팀", "602-취약점분석팀"]
-    }};
+      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
+    },
+  };
 
   return (
-    <div className="empInfo">
+    <div
+      style={{
+        backgroundColor: "white",
+        width: "98%",
+        minHeight: "790px",
+        maxHeight: "790px",
+      }}
+    >
       <div className={styles.empLine}>
-        <hr className="empFirstLine" align="left"></hr>
-        <div className="empTabFlex">
-          <div class="empBasic">인사기본</div>
-          <div class="account">계좌</div>
-        </div>
-        <hr className="empFirstLine" align="left"></hr>
-        <p className={styles.basicContents}>
-          기본사항
+        <hr className={styles.empFirstLine} align="left" />
+        <div className={styles.empTabFlex}>
+          <div class={styles.empBasic}>인사기본</div>
+          <div class={styles.account}>계좌</div>
           <Button
+            className={styles.buttonStyle}
             style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              float: "right",
-              marginRight: "2vw",
-              backgroundColor: "#3875DE",
-              color: "#FFFFFF",
+              marginLeft: "auto",
+              marginRight: "2.5vw",
+              marginTop: "-3px",
             }}
             onClick={() => clickSaveButton()}
             variant="contained"
           >
             저장
           </Button>
-        </p>
-
-        <hr className={styles.basicLine}></hr>
-        <form ref={formRef}>
-          <div className="plzEmp">
-            <div>
-              <div className="empWrapimg">
-                <img className="empimg" src={testimg} alt="이미지" />
-              </div>
-            </div>
-            <div className="nameAnddept">
-              <p className="empinfoName">김 명 지</p>
-              <p className="empinfoDept">일단냅둠</p>
-            </div>
-
-            <div className="empBox">
-              <table className={styles.empFirstTable}>
-                <colgroup>
-                  <col width="20%" />
-                  <col width="30%" />
-                  <col width="20%" />
-                  <col width="30%" />
-                </colgroup>
-                <tbody className={styles.empinfoList}>
-                  <tr>
-                    <td>
-                      <strong className={styles.redStar}>*</strong>성명
-                    </td>
-                    <td>
-                      <TextField
-                        InputProps={{ sx: { height: 40 } }}
-                        required
-                        inputRef={name}
-                      />
-                    </td>
-                    <td className={styles.tdPaddingLeft}>영문 성명</td>
-                    <td>
-                      <TextField
-                        inputRef={englishName}
-                        InputProps={{ sx: { height: 40 } }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong className={styles.redStar}>*</strong>주민등록번호
-                    </td>
-                    <td>
-                      <TextField
-                        required
-                        InputProps={{ sx: { height: 40 } }}
-                        inputRef={identityNumber}
-                      />
-                    </td>
-                    <td className={styles.tdPaddingLeft}>성별</td>
-                    <td>
-                      <FormControl>
-                        <Select
-                          value={gender}
-                          sx={{ minWidth: "200px", height: 40 }}
-                          onChange={handleSelectGender}
+        </div>
+        <hr className={styles.empFirstLine} align="left" />
+      </div>
+      <form ref={formRef}>
+        <div className={styles.plzEmp}>
+          <div style={{ margin: "auto" }}>
+            <table className={styles.empTable}>
+              <tbody>
+                <tr>
+                  <td rowSpan={3} colSpan={2}>
+                    <div style={{ display: "flex" }}>
+                      <div className={styles.empWrapimg}>
+                        <img
+                          className={styles.empimg}
+                          src={testimg}
+                          alt="이미지"
+                        />
+                      </div>
+                      <div className={styles.inputStyle}>
+                        <input
+                          type="file"
+                          style={{
+                            display: "none",
+                          }}
+                          name="profile_img"
+                          id="profile_img"
+                          accept="image/*"
+                          //onChange={(event) => handleFileOnChange(event, "img_1")}
+                        />
+                        <label
+                          className={styles.inputFileButton}
+                          for="profile_img"
                         >
-                          <MenuItem value={0}>남성</MenuItem>
-                          <MenuItem value={1}>여성</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong className={styles.redStar}>*</strong>이메일
-                    </td>
-                    <td>
-                      <TextField
-                        required
-                        InputProps={{ sx: { height: 40 } }}
-                        inputRef={email}
-                      />
-                    </td>
-                    <td className={styles.tdPaddingLeft}>결혼여부</td>
-                    <td>
-                      <FormControl>
-                        <Select
-                          value={married}
-                          sx={{ minWidth: "200px", height: 40 }}
-                          onChange={handleSelectMarried}
-                        >
-                          <MenuItem value={0}>미혼</MenuItem>
-                          <MenuItem value={1}>기혼</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="plzEmp">
-            <table className={styles.empBodyTable}>
-              <colgroup>
-                <col width="10%" />
-                <col width="20%" />
-                <col width="10%" />
-                <col width="20%" />
-                <col width="10%" />
-                <col width="20%" />
-              </colgroup>
-              <tbody className={styles.empinfoList}>
+                          파일찾기
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <strong className={styles.redStar}>*</strong>성명
+                  </td>
+                  <td>
+                    <TextField
+                      InputProps={{ sx: { height: 40 } }}
+                      required
+                      inputRef={name}
+                    />
+                  </td>
+                  <td className={styles.tdPaddingLeft}>영문 성명</td>
+                  <td>
+                    <TextField
+                      inputRef={englishName}
+                      InputProps={{ sx: { height: 40 } }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong className={styles.redStar}>*</strong>주민등록번호
+                  </td>
+                  <td>
+                    <TextField
+                      required
+                      InputProps={{ sx: { width: 108, height: 40 } }}
+                      inputRef={identityNumberF}
+                    />
+                    <span>-</span>
+                    <TextField
+                      required
+                      InputProps={{ sx: { width: 108, height: 40 } }}
+                      inputRef={identityNumberB}
+                    />
+                  </td>
+                  <td className={styles.tdPaddingLeft}>성별</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={gender}
+                        sx={{ minWidth: "222px", height: 40 }}
+                        onChange={handleSelectGender}
+                      >
+                        <MenuItem value={0}>남성</MenuItem>
+                        <MenuItem value={1}>여성</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong className={styles.redStar}>*</strong>이메일
+                  </td>
+                  <td>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      inputRef={email}
+                    />
+                  </td>
+                  <td className={styles.tdPaddingLeft}>결혼여부</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={married}
+                        sx={{ minWidth: "222px", height: 40 }}
+                        onChange={handleSelectMarried}
+                      >
+                        <MenuItem value={0}>미혼</MenuItem>
+                        <MenuItem value={1}>기혼</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
                 <tr>
                   <td className={styles.tdPaddingLeft}>본부</td>
                   <td>
@@ -269,15 +284,13 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectCenter}
                       >
-                        {
-                          Object.keys(center_list).map((e, i) => (
-                              <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
-                          ))
-                        }
+                        {Object.keys(center_list).map((e, i) => (
+                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </td>
-                  <td className={styles.tdPaddingLeft}>부서</td>
+                  <td>부서</td>
                   <td>
                     <FormControl>
                       <Select
@@ -287,11 +300,9 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectDept}
                       >
-                        {
-                          Object.keys(center_list[center]).map((e, i) => (
-                            <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
-                          ))
-                        }
+                        {Object.keys(center_list[center]).map((e, i) => (
+                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </td>
@@ -304,15 +315,13 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectTeam}
                       >
-                        {
-                          center_list[center][dept] ? (
-                            center_list[center][dept].map((e, i) => (
-                              <MenuItem value={e}>{e.split('-')[1]}</MenuItem>
-                            ))
-                          ) : (
-                           <div></div>
-                          )
-                        }
+                        {center_list[center][dept] ? (
+                          center_list[center][dept].map((e, i) => (
+                            <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                          ))
+                        ) : (
+                          <div></div>
+                        )}
                       </Select>
                     </FormControl>
                   </td>
@@ -326,17 +335,19 @@ function EmpRegister() {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectRank}
                       >
-                        <MenuItem value={1}>사원</MenuItem>
-                        <MenuItem value={2}>대리</MenuItem>
-                        <MenuItem value={3}>과장</MenuItem>
-                        <MenuItem value={4}>차장</MenuItem>
-                        <MenuItem value={5}>부장</MenuItem>
-                        <MenuItem value={6}>이사</MenuItem>
-                        <MenuItem value={7}>상무</MenuItem>
+                        {rankTest.length > 0 ? (
+                          rankTest.map((item) => (
+                            <MenuItem value={item.code_cd}>
+                              {item.code_nm}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value={1} />
+                        )}
                       </Select>
                     </FormControl>
                   </td>
-                  <td className={styles.tdPaddingLeft}>
+                  <td>
                     <strong className={styles.redStar}>*</strong>연락처
                   </td>
                   <td>
@@ -369,21 +380,11 @@ function EmpRegister() {
                     </MuiPickersUtilsProvider>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="plzEmp">
-            <table className={styles.empAddressTable}>
-              <colgroup>
-                <col width="10%" />
-                <col />
-              </colgroup>
-              <tbody>
                 <tr>
                   <td className={styles.tdPaddingLeft}>
                     <strong className={styles.redStar}>*</strong>주소
                   </td>
-                  <td>
+                  <td colSpan={5}>
                     <TextField
                       required
                       InputProps={{ sx: { height: 40 } }}
@@ -395,8 +396,8 @@ function EmpRegister() {
               </tbody>
             </table>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }
