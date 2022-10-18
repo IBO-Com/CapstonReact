@@ -18,7 +18,7 @@ const App = () => {
   const [peopleData, setPeopleData] = useState();
   const [openModal, setOpenModal] = useState(false);
 
-  console.log(openModal)
+  console.log(openModal);
 
   useEffect(() => {
     axios
@@ -47,7 +47,6 @@ const App = () => {
 
   return (
     <div className="PersonnelAppointment_container">
-
       <div className="PersonnelAppointment_search">
         <span>발령일자</span>
 
@@ -90,10 +89,21 @@ const App = () => {
       <div className="PersonnelAppointment_content">
         <div className="PersonnelAppointment_title">
           <span>인사명령조회</span>
-          <button className="PersonnelAppointment_registerBtn" onClick={()=>{setOpenModal(true)}}>발령등록</button>
+          <button
+            className="PersonnelAppointment_registerBtn"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            발령등록
+          </button>
         </div>
 
-        {openModal === true ? <AppointmentModal openModal={openModal} setOpenModal = {setOpenModal} /> : ""}
+        {openModal === true ? (
+          <AppointmentModal openModal={openModal} setOpenModal={setOpenModal} />
+        ) : (
+          ""
+        )}
 
         <div className="PersonnelAppointmet_table">
           <table>
