@@ -10,10 +10,6 @@ import axios from "axios";
 import qs from "qs";
 import * as Cookie from "./cookies/cookies";
 
-import axios from "axios";
-import qs from "qs";
-import * as Cookie from "./cookies/cookies";
-
 const App = () => {
   const [today, setToday] = useState(new Date());
   const [defaultYear, setDefaultYear] = useState("19");

@@ -47,7 +47,7 @@ function EmpRegister() {
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
 
   const urlSave = "http://43.200.115.198:8080/empregister.jsp";
-  const urlGetCls = "http://43.200.115.198:8080/empGetCode.jsp";
+  const urlGetCls = "http://43.200.115.198:8080/empGetRank.jsp";
   //const urlSave = "http://localhost:8080/empregister.jsp";
   //const urlGetCls = "http://localhost:8080/empGetRank.jsp";
 
