@@ -15,6 +15,7 @@ const App = () => {
 	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
+		if(Cookie.getCookie("loginInfo") == undefined) return;
 		if(Object.keys(Cookie.getCookie("loginInfo")).length > 0) { //쿠키 정보가 있다면
 			setIsLogin(true);
 		}
