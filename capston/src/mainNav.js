@@ -16,7 +16,7 @@ import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
 import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
-import PersonnelCard from "./personnelCard"; //인사기록카드
+import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 

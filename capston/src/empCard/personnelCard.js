@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import "./css/personnelcard/PersonnelCard.css";
+import "../css/personnelcard/PersonnelCard.css";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
 import qs from "qs";
-import ReactToPrint from 'react-to-print/lib';
+
+import FormCareercert from "./formCareercert";
+import FormPersonnelCard from './formPersonnelCard';
+import FormProofofemp from './formProofofemp';
 
 
 const App = () => {
     const [selectDepart, setSelectDepart] = useState("*")
     const [textName, setTextName] = useState('');
     const [peopleData, setPeopleData] = useState();
+
+    const [toogleState, setToggleState] = useState(1);
+
+	const toggleTab = (index) => {
+		setToggleState(index);
+	}
 
     useEffect(() => {
         axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
@@ -158,12 +167,14 @@ const App = () => {
 
                     <div className='card_empCard'>
                         <div className='card_Btnbox'>
-                            <button className="empSelect_Btn">인사기록카드</button>
-                            <button className="proof_of_emp_btn">재직증명서</button>
-                            <button className="work_emp_btn">경력증명서</button>
+                            <button className="empSelect_Btn" onClick={()=>{toggleTab(1)}}>인사기록카드</button>
+                            <button className="proof_of_emp_btn" onClick={()=>{toggleTab(2)}}>재직증명서</button>
+                            <button className="work_emp_btn" onClick={()=>{toggleTab(3)}}>경력증명서</button>
                         </div>
                         <div className='Card_viewer'>
-                            <p> </p>
+                            {toogleState === 1 ? <FormPersonnelCard /> : ""}
+                            {toogleState === 2 ? <FormProofofemp /> : ""}
+                            {toogleState === 3 ? <FormCareercert /> : ""}
                         </div>
                     </div>
 
