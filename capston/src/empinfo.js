@@ -11,11 +11,16 @@ import qs from "qs";
 import * as Cookie from "./cookies/cookies";
 
 const App = () => {
-	const url = "http://43.200.115.198:8080/empselect.jsp";
 	const [today, setToday] = useState(new Date());
 	const [defaultYear, setDefaultYear] = useState("19");
 	const [workMonth, setWorkMonth] = useState("0");
 	const [workYear, setWorkYear] = useState("0");
+	
+	const [dept, setDept] = useState("");
+	const [team, setTeam] = useState("");
+	const [rank, setRank] = useState("");
+	const [center, setCenter] = useState("");
+	
 
 	const [toogleState, setToggleState] = useState(1);
 	const [userData, setUserData] = useState({});
@@ -28,7 +33,7 @@ const App = () => {
             sabunOrName: data["id"]
           });
 
-          axios.post(url, postParam).then((response) => {
+          axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((response) => {
 			userInfo = response.data.ITEMS[0];
 			let startDate = new Date(userInfo["start_date"].slice(0, 4), userInfo["start_date"].slice(4, 6), userInfo["start_date"].slice(6, 8));
 			let subDate = today - startDate;
@@ -43,6 +48,44 @@ const App = () => {
 				setDefaultYear("20");
 			}
 			setUserData(response.data.ITEMS[0]);
+
+
+			/////
+			let postParam2 = qs.stringify({
+				code: userInfo["center"]
+			  });
+			  console.log("param : ", postParam2);
+
+			axios.post("http://43.200.115.198:8080/empGetCode.jsp", postParam2).then((response2) => {
+			  setCenter(response2.data.ITEMS[0]["code_nm"])
+          	});
+
+			/////
+			postParam2 = qs.stringify({
+				code: userInfo["dept"]
+			  });
+
+			axios.post("http://43.200.115.198:8080/empGetCode.jsp", postParam2).then((response2) => {
+			  setDept(response2.data.ITEMS[0]["code_nm"])
+          	});
+
+			/////
+			postParam2 = qs.stringify({
+				code: userInfo["team"]
+			});
+
+			axios.post("http://43.200.115.198:8080/empGetCode.jsp", postParam2).then((response2) => {
+			  setTeam(response2.data.ITEMS[0]["code_nm"])
+          	});
+
+			//////
+			postParam2 = qs.stringify({
+				code: userInfo["rank"]
+			});
+
+			axios.post("http://43.200.115.198:8080/empGetCode.jsp", postParam2).then((response2) => {
+			  setRank(response2.data.ITEMS[0]["code_nm"])
+          	});
           });
 	}, []);
 
@@ -62,7 +105,7 @@ const App = () => {
 
 				<div className='nameAnddept'>
 					<p className='empinfoName'>{userData["name"] ? userData["name"] : "로딩중"}</p>
-					<p className='empinfoDept'>[경영관리본부]</p>
+					<p className='empinfoDept'>{center}</p>
 				</div>
 
 				<div class="empBox">
@@ -73,14 +116,12 @@ const App = () => {
 								<td>ㆍ재직상태</td>
 								<td>ㆍ부서명</td>
 								<td>ㆍ직책</td>
-								<td>ㆍ사원구분</td>
 							</tr>
 							<tr>
 								<td>{userData["sabun"] ? userData["sabun"] : "로딩중"}</td>
-								<td>[재직]</td>
-								<td>[경영지원부]</td>
-								<td>[사원]</td>
-								<td>[임원]</td>
+								<td>{userData["retire_cls"] == 0 ? "재직" : "퇴직"}</td>
+								<td>{dept ? dept : ""}</td>
+								<td>{rank ? rank : ""}</td>
 							</tr>
 							<br></br>
 							<tr>
@@ -94,7 +135,7 @@ const App = () => {
 								<td>{userData["identity"] ? defaultYear +  userData["identity"].slice(0,2) + "-" + userData["identity"].slice(2, 4) + "-" + userData["identity"].slice(4, 6): "로딩중"}</td>
 								<td>{userData["start_date"] ? userData["start_date"].slice(0,4) + "-" + userData["start_date"].slice(4, 6) + "-" + userData["start_date"].slice(6, 8): "로딩중"}</td>
 								<td>{workYear}년 {workMonth}개월</td>
-								<td>[2022-10-01]</td>
+								<td>{userData["start_date"] ? userData["start_date"].slice(0,4) + "-" + userData["start_date"].slice(4, 6) + "-" + userData["start_date"].slice(6, 8): "로딩중"}</td>
 								<td>
 								</td>
 							</tr>

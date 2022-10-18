@@ -45,7 +45,7 @@ const Empbase = ({userData, defaultYear}) => {
 
           <div className="info_margin">
             결혼여부
-            <Checkbox />
+            <Checkbox/>
           </div>
         </div>
 
