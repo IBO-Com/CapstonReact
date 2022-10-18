@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
 import qs from "qs";
+import ReactToPrint from 'react-to-print/lib';
 
 
 const App = () => {
@@ -115,7 +116,7 @@ const App = () => {
                     </FormControl>
                     <button className="card_search_btn" onClick={() => { sendSubmit() }}>검색</button>
                 </div>
-                
+
                 <hr className='card_lineBar'></hr>
 
                 <div className='personnelCard_box'>
@@ -155,16 +156,17 @@ const App = () => {
                         </div>
                     </div>
 
-                        <div className='card_empCard'>
-                            <div className='card_Btnbox'>
-                                <button className="empSelect_Btn">인사기록카드</button>
-                                <button className="proof_of_emp_btn">재직증명서</button>
-                                <button className="work_emp_btn">경력증명서</button>
-                            </div>
-                            <div className='Card_viewer'>
-                                <p> </p>
-                            </div>
+                    <div className='card_empCard'>
+                        <div className='card_Btnbox'>
+                            <button className="empSelect_Btn">인사기록카드</button>
+                            <button className="proof_of_emp_btn">재직증명서</button>
+                            <button className="work_emp_btn">경력증명서</button>
                         </div>
+                        <div className='Card_viewer'>
+                            <p> </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,124 @@
+.AppointmentModal_container {
+  position: absolute;
+  width: 650px;
+  height: 500px;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 1px 1px 8px rgb(169, 169, 169);
+}
+
+.AppointmentModal_title {
+  height: 55px;
+  display: flex;
+  background-color: #bec6d3;
+}
+.AppointmentModal_title span {
+  margin-top: 14px;
+  margin-left: 50px;
+  margin-right: 27%;
+}
+
+.AppointmentModal_searchBtn {
+  width: 97px;
+  height: 36px;
+  margin-top: 9px;
+  margin-left: 20px;
+  background-color: #537aaa;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 0;
+  outline: 0;
+}
+
+.AppointmentModal_userInfo {
+  display: flex;
+  justify-content: space-evenly;
+}
+.AppointmentModal_userImg {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 30px;
+}
+.AppointmentModal_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.AppointmentModal_infoTable {
+  width: 200px;
+  margin-top: 20px;
+}
+.AppointmentModal_infoTable table {
+  width: 100%;
+}
+.AppointmentModal_infoTable tr,
+.AppointmentModal_infoTable td {
+  padding: 8px;
+}
+.AppointmentModal_appointment {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+.AppointmentModal_appointment span {
+  margin-right: 20px;
+}
+.AppointmentModal_state {
+  margin-left: 20px;
+}
+.AppointmentModal_table {
+  margin-top: 20px;
+}
+.AppointmentModal_table table {
+  border-collapse: collapse;
+  width: 93%;
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}
+.AppointmentModal_table thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+}
+.AppointmentModal_table thead td {
+  padding: 10px;
+}
+.AppointmentModal_table tbody td {
+  padding: 8px;
+  font-size: 12px;
+}
+.AppointmentModal_table tr,
+.AppointmentModal_table td {
+  border: 1px solid#D9D9D9;
+  text-align: center;
+}
+.AppointmentModal_btns {
+  margin-top: 20px;
+  margin-left: 74%;
+}
+.AppointmentModal_cancelBtn {
+  margin-right: 10px;
+  width: 60px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.AppointmentModal_registerBtn {
+  width: 60px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
