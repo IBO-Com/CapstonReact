@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import "../css/PersonnelAppointment/PersonnelAppointment.css";
+import AppointmentModal from "./AppointmentModal";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -15,6 +16,9 @@ const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-01-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [peopleData, setPeopleData] = useState();
+  const [openModal, setOpenModal] = useState(false);
+
+  console.log(openModal);
 
   useEffect(() => {
     axios
@@ -85,8 +89,22 @@ const App = () => {
       <div className="PersonnelAppointment_content">
         <div className="PersonnelAppointment_title">
           <span>인사명령조회</span>
-          <button className="PersonnelAppointment_registerBtn">발령등록</button>
+          <button
+            className="PersonnelAppointment_registerBtn"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            발령등록
+          </button>
         </div>
+
+        {openModal === true ? (
+          <AppointmentModal openModal={openModal} setOpenModal={setOpenModal} />
+        ) : (
+          ""
+        )}
+
         <div className="PersonnelAppointmet_table">
           <table>
             <thead>
