@@ -6,6 +6,7 @@ import Empinfo from "./empinfo";
 import Test from "./Test";
 import HRMain from "./hrMain";
 import EmpRegister from "./emp/EmpRegister";
+import OrganizeSetting from "./emp/OrganizeSetting";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
 import EmpSelect from "./emp/EmpSelect";
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/empregister" element={<EmpRegister />}></Route>
           <Route path="/accountregister" element={<AccountRegister />}></Route>
           <Route path="/empselect" element={<EmpSelect />}></Route>
+          <Route path="/setorganize" element={<OrganizeSetting />}></Route>
 
           {/* 인사 현황 페이지 */}
           <Route path="/hrorganization" element={<HRorganization />}></Route>

@@ -19,6 +19,12 @@ const AppointmentModal = ({ openModal, setOpenModal }) => {
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
+
+  const [selectDepart, setSelectDepart] = useState("*")
+  const handleSelectDepart = (event) => {
+    setSelectDepart(event.target.value);
+  };
+
   return (
     <div className="AppointmentModal_container">
       <div className="AppointmentModal_title">
@@ -29,6 +35,7 @@ const AppointmentModal = ({ openModal, setOpenModal }) => {
             label="사번/성명"
             variant="outlined"
             size="small"
+            margin="dense"
             // onChange={textNameHandle}
           />
         </FormControl>
@@ -76,6 +83,8 @@ const AppointmentModal = ({ openModal, setOpenModal }) => {
         <span className="AppointmentModal_state">발령</span>
         <FormControl>
           <Select
+          value = {selectDepart || ""}
+            onChange={handleSelectDepart}
             sx={{
               minWidth: "153px",
               height: 39,

@@ -1,20 +1,21 @@
 import React from "react";
 import "../css/Empbase/Empbase.css";
 import { Checkbox } from '@mui/material';
-const Empbase = () => {
+const Empbase = ({userData, defaultYear}) => {
   return (
-    <div className="baseInfo">
+    Object.keys(userData).length > 0 ? (
+      <div className="baseInfo">
       <span className="baseRead">기본사항</span>
       <div className="info_base_div">
         <div className="info_base_first info_box">
           <div className="info_margin">
             성명
-            <span>김명지</span>
+            <span>{userData["name"]}</span>
           </div>
 
           <div className="info_margin">
             성별
-            <span>여</span>
+            <span>{userData["gender"] == "0" ? "남자" : "여자"}</span>
           </div>
           <div className="info_margin">
             그룹입사일
@@ -30,12 +31,12 @@ const Empbase = () => {
         <div className="info_base_second info_box">
         <div className="info_margin">
             영문성명
-            <span>KIM MYOUNG JI</span>
+            <span>{userData["eng_name"]}</span>
           </div>
 
           <div className="info_margin">
             주민등록번호
-            <span>000222-4111111</span>
+            <span>{userData["identity"].slice(0, 6) + "-" + userData["identity"].slice(6, 13)}</span>
           </div>
           <div className="info_margin">
             입사일
@@ -51,21 +52,21 @@ const Empbase = () => {
         <div className="info_base_third info_box">
         <div className="info_margin">
             고용구분
-            <span>공개채용 | 기타</span>
+            <span>[공개채용 | 기타]</span>
           </div>
 
           <div className="info_margin">
             생년월일
-            <span>2000-02-22 | 양</span>
+            <span>{(defaultYear + userData["identity"].slice(0, 2)) + "-" + userData["identity"].slice(2, 4) + "-" + userData["identity"].slice(4, 6)} | 양</span>
           </div>
           <div className="info_margin">
             인성직급/년차
-            <span>상무보/2년차</span>
+            <span>[상무보/2년차]</span>
           </div>
 
           <div className="info_margin">
             재직상태
-            <span>재직</span>
+            <span>{userData["retire_cls"] == 0 ? "재직" : "퇴직"}</span>
           </div>
         </div>
 
@@ -76,26 +77,16 @@ const Empbase = () => {
         <div className="info_base_first info_box">
           <div className="info_margin">
             사무실전화
-            <span>02-564-7894</span>
+            <span>[02-564-7894]</span>
           </div>
 
-          <div className="info_margin">
-            사내이메일
-            <span>mm123@ibo.co.kr</span>
-          </div>
         </div>
 
         <div className="info_base_second info_box">
         <div className="info_margin">
-            자택전화
-            <span>02-342-1283</span>
+            사내이메일
+            <span>{userData["email"]}</span>
           </div>
-
-          <div className="info_margin">
-            사외이메일
-            <span>mm123@gmail.com</span>
-          </div>
-  
     
 
         </div>
@@ -103,13 +94,9 @@ const Empbase = () => {
         <div className="info_base_third info_box">
         <div className="info_margin">
             휴대전화
-            <span>01036626022</span>
+            <span>{userData["tel_no"].slice(0, 3) + "-" + userData["tel_no"].slice(3, 7) + "-" + userData["tel_no"].slice(7, 11)}</span>
           </div>
 
-          <div className="info_margin">
-            비상연락망
-            <span>01036626022</span>
-          </div>
 
         </div>
 
@@ -121,12 +108,12 @@ const Empbase = () => {
         <div className="info_base_first info_box address_box">
           <div className="info_margin">
             현주소지
-            <span>서울특별시 서대문구 가좌로 134</span>
+            <span>{userData["address"]}</span>
           </div>
 
           <div className="info_margin">
             주민등록지
-            <span>서울특별시 서대문구 가좌로 134</span>
+            <span>{userData["address"]}</span>
           </div>
           
         </div>
@@ -134,12 +121,12 @@ const Empbase = () => {
         <div className="info_base_second info_box address_box2">
         <div className="info_margin">
             우편번호
-            <span>111-2222</span>
+            <span>[111-2222]</span>
           </div>
 
           <div className="info_margin">
             우편번호
-            <span>111-2222</span>
+            <span>[111-2222]</span>
           </div>
        
         </div>
@@ -149,6 +136,11 @@ const Empbase = () => {
       </div>
 
     </div>
+    ) : (
+      <>
+      </>
+    )
+   
   );
 };
 
