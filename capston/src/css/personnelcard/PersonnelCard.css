@@ -23,11 +23,24 @@
     width: 130px;
     color: #FFFFFF;
     height: 28px;
-    margin-left: 370px;
+    margin-left: 220px;
     margin-top: 20px;
     margin-bottom: 10px;
     border: none;
     background: #F09336;
+    border-radius: 2px;
+}
+
+.print_Btn {
+    width: 60px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-left: 80px;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background: gray;
     border-radius: 2px;
 }
 

@@ -19,9 +19,9 @@ const App = () => {
 
     const [toogleState, setToggleState] = useState(1);
 
-	const toggleTab = (index) => {
-		setToggleState(index);
-	}
+    const toggleTab = (index) => {
+        setToggleState(index);
+    }
 
     useEffect(() => {
         axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
@@ -167,9 +167,10 @@ const App = () => {
 
                     <div className='card_empCard'>
                         <div className='card_Btnbox'>
-                            <button className="empSelect_Btn" onClick={()=>{toggleTab(1)}}>인사기록카드</button>
-                            <button className="proof_of_emp_btn" onClick={()=>{toggleTab(2)}}>재직증명서</button>
-                            <button className="work_emp_btn" onClick={()=>{toggleTab(3)}}>경력증명서</button>
+                            <button className="print_Btn">인쇄</button>
+                            <button className="empSelect_Btn" onClick={() => { toggleTab(1) }}>인사기록카드</button>
+                            <button className="proof_of_emp_btn" onClick={() => { toggleTab(2) }}>재직증명서</button>
+                            <button className="work_emp_btn" onClick={() => { toggleTab(3) }}>경력증명서</button>
                         </div>
                         <div className='Card_viewer'>
                             {toogleState === 1 ? <FormPersonnelCard /> : ""}
