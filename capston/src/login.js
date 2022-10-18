@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import security_icon from "./img/iboLogoImg.png";
 import "./css/login/login.css";
 import { Link, useNavigate  } from 'react-router-dom';
+import * as Cookie from "./cookies/cookies";
 
 
 const App = ({isLogin, setIsLogin}) => {
@@ -12,6 +13,7 @@ const App = ({isLogin, setIsLogin}) => {
   const [inputId, setInputId] = useState("1012210000");
   const [inputPw, setInputPw] = useState("1234");
 
+  
   useEffect(() => {
     if(!loginInfo) {  //처음 로딩할때
       return;
@@ -21,12 +23,11 @@ const App = ({isLogin, setIsLogin}) => {
       alert("아이디 또는 비밀번호를 다시 확인해주세요.");
       return; //초기값 설정 시, 로그인 안됐을 때
     }
-    
-    console.log(loginInfo);
+
+    Cookie.setCookie("loginInfo", JSON.stringify(loginInfo[0]));
     setIsLogin(true);
     //로그인 성공시 
-    //window.location.href = "/mainNav";
-    console.log(loginInfo);
+    console.log("Login Success : ", Cookie.getCookie("loginInfo"));
     navigate('/MainNav');
   }, [loginInfo])
 
