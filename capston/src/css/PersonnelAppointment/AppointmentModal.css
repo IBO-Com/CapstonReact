@@ -4,9 +4,10 @@
   height: 500px;
   background-color: #ffffff;
   border: 1px solid #d9d9d9;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 1px 1px 8px rgb(169, 169, 169);
 }
 
 .AppointmentModal_title {
