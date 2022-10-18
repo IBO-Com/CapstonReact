@@ -1,0 +1,15 @@
+.perCardtitle p {
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-left: 280px;
+    margin-top: 45px;
+}
+
+.perCardtitle {
+    display: flex;
+    text-align: center;
+    width: 595px;
+    height: 129px;
+}
