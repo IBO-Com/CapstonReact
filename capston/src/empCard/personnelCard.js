@@ -170,7 +170,7 @@ const App = () => {
                         <div className='card_Btnbox'>
                             
                             <ReactToPrint
-                                trigger={() => <button>인쇄</button>}
+                                trigger={() => <button className='print_Btn'>인쇄</button>}
                                 content={() => componentRef.current}
                             />
                             <button className="empSelect_Btn" onClick={() => { toggleTab(1) }}>인사기록카드</button>
