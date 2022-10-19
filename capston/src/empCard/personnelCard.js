@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "../css/personnelcard/PersonnelCard.css";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,12 +10,13 @@ import qs from "qs";
 import FormCareercert from "./formCareercert";
 import FormPersonnelCard from './formPersonnelCard';
 import FormProofofemp from './formProofofemp';
-
+import ReactToPrint from 'react-to-print';
 
 const App = () => {
     const [selectDepart, setSelectDepart] = useState("*")
     const [textName, setTextName] = useState('');
     const [peopleData, setPeopleData] = useState();
+    const componentRef = useRef(null);
 
     const [toogleState, setToggleState] = useState(1);
 
@@ -167,13 +168,17 @@ const App = () => {
 
                     <div className='card_empCard'>
                         <div className='card_Btnbox'>
-                            <button className="print_Btn">인쇄</button>
+                            
+                            <ReactToPrint
+                                trigger={() => <button>인쇄</button>}
+                                content={() => componentRef.current}
+                            />
                             <button className="empSelect_Btn" onClick={() => { toggleTab(1) }}>인사기록카드</button>
                             <button className="proof_of_emp_btn" onClick={() => { toggleTab(2) }}>재직증명서</button>
                             <button className="work_emp_btn" onClick={() => { toggleTab(3) }}>경력증명서</button>
                         </div>
                         <div className='Card_viewer'>
-                            {toogleState === 1 ? <FormPersonnelCard /> : ""}
+                            {toogleState === 1 ? <FormPersonnelCard componentRef={componentRef}/> : ""}
                             {toogleState === 2 ? <FormProofofemp /> : ""}
                             {toogleState === 3 ? <FormCareercert /> : ""}
                         </div>
