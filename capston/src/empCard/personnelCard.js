@@ -179,8 +179,8 @@ const App = () => {
                         </div>
                         <div className='Card_viewer'>
                             {toogleState === 1 ? <FormPersonnelCard componentRef={componentRef}/> : ""}
-                            {toogleState === 2 ? <FormProofofemp /> : ""}
-                            {toogleState === 3 ? <FormCareercert /> : ""}
+                            {toogleState === 2 ? <FormProofofemp componentRef={componentRef}/> : ""}
+                            {toogleState === 3 ? <FormCareercert componentRef={componentRef}/> : ""}
                         </div>
                     </div>
 

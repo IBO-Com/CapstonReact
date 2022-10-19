@@ -1,9 +1,9 @@
 import React from 'react';
 import "../css/personnelcard/formCareeCert.css";
 
-const App = () => {
+const App = ({componentRef}) => {
    return (
-      <div>
+      <div ref={componentRef}>
          <p>경력증명서 페이지입니다</p>
       </div>
    );
