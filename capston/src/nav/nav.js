@@ -107,8 +107,8 @@ const nav = {
     link: ["/mainNav/e1", "/mainNav/e2", "/mainNav/e3"],
   },
   테스트: {
-    menu: ["발령조회", "page 2", "page 3"],
-    link: ["/mainNav/appointmentcheck", "/mainNav/test2", "/mainNav/test3"],
+    menu: ["발령조회", "테스트", "page 3"],
+    link: ["/mainNav/appointmentcheck", "/mainNav/Test", "/mainNav/test3"],
   },
 };
 

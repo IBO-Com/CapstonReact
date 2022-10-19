@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../css/personnelcard/formPerCard.css";
 import axios from "axios";
 
-const App = () => {
+const App = ({componentRef}) => {
     const [peopleData, setPeopleData] = useState();
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const App = () => {
     }, [])
 
     return (
-        <div className='perCard_box'>
+        <div className='perCard_box' ref={componentRef}>
             <div className='perCardtitle'>
                 <p>인사기록카드</p>
             </div>

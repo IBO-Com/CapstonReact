@@ -73,11 +73,15 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
 
+
           {/* 인사명령(발령) 페이지 */}
           <Route
             path="/personnelappointment"
             element={<PersonnelAppointment />}
           ></Route>
+
+          {/* 인사기록카드 페이지 */}
+          <Route path="/Test" element={<Test />}></Route>
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
