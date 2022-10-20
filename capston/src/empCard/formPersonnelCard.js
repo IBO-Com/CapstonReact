@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "../css/personnelcard/formPerCard.css";
 import axios from "axios";
 
-const App = ({componentRef}) => {
-    const [peopleData, setPeopleData] = useState();
+const App = ({ componentRef }) => {
+  const [peopleData, setPeopleData] = useState();
 
-    useEffect(() => {
-        axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
-            setPeopleData(res.data.ITEMS);
-        }).catch((Error) => {
-            console.log(Error);
-        })
-    }, [])
+  useEffect(() => {
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp")
+      .then((res) => {
+        setPeopleData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }, []);
 
-    return (
-        <div className='perCard_box' ref={componentRef}>
-            <div className='perCardtitle'>
-                <p>인사기록카드</p>
-            </div>
+  return (
+    <div className="perCard_box" ref={componentRef}>
+      <div className="perCardtitle">
+        <p>인사기록카드</p>
+      </div>
 
-            <div className='perCard_data'>
-                {!peopleData ? ("No data found") : (
+      <div className="perCard_data">
+        {/* {!peopleData ? ("No data found") : (
                     <table>
                         <thead>
                             <tr>
@@ -62,10 +65,127 @@ const App = ({componentRef}) => {
                         </tbody>
                     </table>
                 )
-                }
-            </div>
-        </div>
-    );
+                } */}
+
+        <table>
+          <thead>
+            <tr>
+              <td colSpan={5}>사원정보</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="firsttable">
+              <td rowSpan={4}>사진</td>
+              <td>부서명</td>
+              <td></td>
+              <td>입사년월일</td>
+              <td></td>
+            </tr>
+            <tr className="table_bg">
+              <td>성명</td>
+              <td></td>
+              <td>현직책발령일</td>
+              <td></td>
+            </tr>
+            <tr className="table_bg">
+              <td>직책</td>
+              <td></td>
+              <td>주소</td>
+              <td></td>
+            </tr>
+            <tr className="table_bg">
+              <td>주민등록번호</td>
+              <td></td>
+              <td>생년월일</td>
+              <td></td>
+            </tr>
+            
+            <tr className="firsttable family_td">
+                <td rowSpan={3}>가족사항</td>
+                <td>관계</td>
+                <td>성명</td>
+                <td>생년월일</td>
+                <td>동기여부</td>
+            </tr>
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr className="firsttable family_td">
+                <td rowSpan={4}>경력사항</td>
+                <td>기간</td>
+                <td>학교명</td>
+                <td>전공</td>
+                <td>학위</td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+
+            <tr className="firsttable family_td">
+                <td rowSpan={4}>자격사항</td>
+                <td>취득일자</td>
+                <td>자격면허명</td>
+                <td>직책</td>
+                <td>담당업무</td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>빈칸</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default App;

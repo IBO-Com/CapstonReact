@@ -12,7 +12,7 @@
 
 .baseInfo >span::after{
     position:absolute;
-    width: 1100px;
+    width: 1320px;
     height: 1px;
     border-bottom: 4px dotted #D9D9D9;
     top: 10px;
@@ -25,12 +25,12 @@
 }
 
 .baseInfo .info_box{
-    width: 400px;
+    width: 475px;
 }
 
 
 .baseInfo .address_box{
-    width: 800px !important;
+    width: 940px !important;
 }
 .baseInfo .address_box2{
     width: 400px !important;
