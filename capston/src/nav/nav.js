@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import "../css/nav/nav.css";
-
 import Basic from "../img/basic.png";
 import Person from "../img/person.png";
 import Calendar from "../img/calendar.png";
@@ -83,19 +82,12 @@ const nav = {
     ],
   },
   근태관리: {
-    menu: [
-      "근무관리",
-      "휴가관리",
-      "근태/근무신청",
-      "근태/근무현황",
-      "근태마감",
-    ],
+    menu: ["근태등록", "근무관리", "휴가관리", "근태/근무현황"],
     link: [
-      "/mainNav/c1",
+      "/mainNav/attendanceregister",
       "/mainNav/c2",
       "/mainNav/c3",
       "/mainNav/c4",
-      "/mainNav/c5",
     ],
   },
   급여관리: {
