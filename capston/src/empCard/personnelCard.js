@@ -24,6 +24,7 @@ const App = () => {
         setToggleState(index);
     }
 
+    
     useEffect(() => {
         axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
             setPeopleData(res.data.ITEMS);
@@ -31,7 +32,11 @@ const App = () => {
             console.log(Error);
         })
     }, [])
-
+    
+    const radioBoxChange = (sabun) => {
+        
+    } 
+    
     const sendSubmit = () => {
         /* 쿼리 문 작성 */
         let postParam = {};
@@ -151,7 +156,7 @@ const App = () => {
                                                 <>
                                                     <tr>
                                                         <td>{index + 1}</td>
-                                                        <td><input type="radio" className='Card_radio' /></td>
+                                                        <td><input type="radio" className='Card_radio' onChange={() => {radioBoxChange(name.sabun)}} /></td>
                                                         <td>{name.sabun}</td>
                                                         <td>{name.name}</td>
                                                         <td>{name.retire_cls === "0" ? "재직" : "퇴직"}</td>
