@@ -20,6 +20,7 @@ import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import MonthlySalaryCheck from "./monthlySalaryCheck"; //월급여조회
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
+import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
 
 import Inbo from "./img/Group 23.png";
 
@@ -30,9 +31,8 @@ const App = () => {
   // 1. 하단에 Route에 추가하고자 하는 경로 및 컴포넌트 입력
   // 2. nav/nav.js 에서 JSON에 알맞게 추가
   const [currentClick, setCurrentClick] = useState("");
-  
-  useEffect(() => {
-  }, []);
+
+  useEffect(() => {}, []);
   return (
     <div className="mainApp">
       <Link
@@ -74,7 +74,6 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
 
-
           {/* 인사명령(발령) 페이지 */}
           <Route
             path="/personnelappointment"
@@ -84,13 +83,13 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/Test" element={<Test />}></Route>
 
-
-
+          {/* 근태/급여 현황 */}
+          <Route path="attendancestatus" element={<AttendanceStatus />}></Route>
 
           {/* 월급여조회 페이지 */}
-          <Route path="monthlySalaryCheck" element={<MonthlySalaryCheck/>}> </Route>
-
-
+          <Route path="monthlySalaryCheck" element={<MonthlySalaryCheck />}>
+            {" "}
+          </Route>
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
