@@ -1,0 +1,13 @@
+ .enterForm{
+    background-color: #fff !important;
+}
+
+.enterForm .date_form{
+    display: flex;
+    justify-content: center;
+}
+
+.enterForm .date_form .date2{
+    margin-left: 50px;
+    margin-top: 12px;
+}
