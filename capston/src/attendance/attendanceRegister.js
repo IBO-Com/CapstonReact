@@ -25,12 +25,12 @@ function AttendanceRegister() {
   const [itemList, setItemList] = useState([]);
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
-  const urlRetrieve = "http://localhost:8080/attretrieve.jsp";
-  const urlSave = "http://localhost:8080/attsave.jsp";
-  const urlClosing = "http://localhost:8080/attclosing.jsp";
-  // const urlRetrieve = "http://43.200.115.198:8080/attretrieve.jsp";
-  // const urlSave = "http://43.200.115.198:8080/attsave.jsp"
-  // const urlClosing = "http://43.200.115.198:8080/attclosing.jsp";
+  //const urlRetrieve = "http://localhost:8080/attretrieve.jsp";
+  //const urlSave = "http://localhost:8080/attsave.jsp";
+  //const urlClosing = "http://localhost:8080/attclosing.jsp";
+  const urlRetrieve = "http://43.200.115.198:8080/attretrieve.jsp";
+  const urlSave = "http://43.200.115.198:8080/attsave.jsp";
+  const urlClosing = "http://43.200.115.198:8080/attclosing.jsp";
 
   const handleDateChange = (date) => {
     setRetrieveDate(getFormatDate(date));
@@ -40,6 +40,7 @@ function AttendanceRegister() {
     datafields: [
       { name: "in_date", type: "string" },
       { name: "sabun", type: "string" },
+      { name: "name", type: "string" },
       { name: "start_datetime", type: "string" },
       { name: "end_datetime", type: "string" },
       { name: "over_datetime", type: "string" },
@@ -74,14 +75,22 @@ function AttendanceRegister() {
       align: "center",
       cellsalign: "center",
       datafield: "in_date",
-      width: 200,
+      width: 150,
     },
     {
       text: "사번",
       align: "center",
       cellsalign: "center",
       datafield: "sabun",
-      width: 200,
+      width: 150,
+    },
+    {
+      text: "이름",
+      align: "center",
+      cellsalign: "center",
+      editable: false,
+      datafield: "name",
+      width: 150,
     },
     {
       text: "출근시간",
