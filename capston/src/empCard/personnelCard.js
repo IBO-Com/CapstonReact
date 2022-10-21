@@ -16,6 +16,7 @@ const App = () => {
     const [selectDepart, setSelectDepart] = useState("*")
     const [textName, setTextName] = useState('');
     const [peopleData, setPeopleData] = useState();
+    const [sabun, setSabun] = useState();
     const componentRef = useRef(null);
 
     const [toogleState, setToggleState] = useState(1);
@@ -34,7 +35,7 @@ const App = () => {
     }, [])
     
     const radioBoxChange = (sabun) => {
-        
+        setSabun(sabun);
     } 
     
     const sendSubmit = () => {
@@ -156,7 +157,7 @@ const App = () => {
                                                 <>
                                                     <tr>
                                                         <td>{index + 1}</td>
-                                                        <td><input type="radio" className='Card_radio' onChange={() => {radioBoxChange(name.sabun)}} /></td>
+                                                        <td><input type="radio" name="userSelect" className='Card_radio' onChange={() => {radioBoxChange(name.sabun)}} /></td>
                                                         <td>{name.sabun}</td>
                                                         <td>{name.name}</td>
                                                         <td>{name.retire_cls === "0" ? "재직" : "퇴직"}</td>
@@ -183,9 +184,9 @@ const App = () => {
                             <button className="work_emp_btn" onClick={() => { toggleTab(3) }}>경력증명서</button>
                         </div>
                         <div className='Card_viewer'>
-                            {toogleState === 1 ? <FormPersonnelCard componentRef={componentRef}/> : ""}
-                            {toogleState === 2 ? <FormProofofemp componentRef={componentRef}/> : ""}
-                            {toogleState === 3 ? <FormCareercert componentRef={componentRef}/> : ""}
+                            {toogleState === 1 ? <FormPersonnelCard componentRef={componentRef} sabun={sabun}/> : ""}
+                            {toogleState === 2 ? <FormProofofemp componentRef={componentRef} sabun={sabun}/> : ""}
+                            {toogleState === 3 ? <FormCareercert componentRef={componentRef} sabun={sabun}/> : ""}
                         </div>
                     </div>
                 </div>
