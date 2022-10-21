@@ -56,28 +56,6 @@ const App = () => {
       query["dept"] = selectDepart;
     }
 
-<<<<<<< HEAD
-    
-    useEffect(() => {
-        axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
-            setPeopleData(res.data.ITEMS);
-        }).catch((Error) => {
-            console.log(Error);
-        })
-    }, [])
-    
-    const radioBoxChange = (sabun) => {
-
-    } 
-    
-    const sendSubmit = () => {
-        /* 쿼리 문 작성 */
-        let postParam = {};
-        let query = {};
-=======
-    postParam = qs.stringify(query);
->>>>>>> 7a5967f6a6f8fbf1bf7762a60d880f4199eaf8f6
-
     console.log(query);
 
     axios
