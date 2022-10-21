@@ -14,6 +14,7 @@ const App = ({ componentRef, sabun }) => {
    const [center, setCenter] = useState("");
 
    useEffect(() => {
+      if(!sabun) return;
       let postParam = qs.stringify({
          sabunOrName: sabun
        });

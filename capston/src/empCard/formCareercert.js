@@ -20,6 +20,7 @@ const App = ({componentRef, sabun}) => {
    
 
    useEffect(() => {
+      if(!sabun) return;
       let postParam = qs.stringify({
          sabunOrName: sabun
        });
