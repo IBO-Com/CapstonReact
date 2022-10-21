@@ -16,6 +16,7 @@ const App = () => {
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
   const [peopleData, setPeopleData] = useState();
+    const [sabun, setSabun] = useState();
   const componentRef = useRef(null);
 
   const [toogleState, setToggleState] = useState(1);
@@ -35,7 +36,9 @@ const App = () => {
       });
   }, []);
 
-  const radioBoxChange = (sabun) => {};
+  const radioBoxChange = (sabun) => {
+    setSabun(sabun);
+  };
 
   const sendSubmit = () => {
     /* 쿼리 문 작성 */
@@ -187,7 +190,7 @@ const App = () => {
                             <td>
                               <input
                                 type="radio"
-                                className="Card_radio"
+                                name="userSelect" className="Card_radio"
                                 onChange={() => {
                                   radioBoxChange(name.sabun);
                                 }}
@@ -239,17 +242,17 @@ const App = () => {
             </div>
             <div className="Card_viewer">
               {toogleState === 1 ? (
-                <FormPersonnelCard componentRef={componentRef} />
+                <FormPersonnelCard componentRef={componentRef}  sabun={sabun}/>
               ) : (
                 ""
               )}
               {toogleState === 2 ? (
-                <FormProofofemp componentRef={componentRef} />
+                <FormProofofemp componentRef={componentRef}  sabun={sabun}/>
               ) : (
                 ""
               )}
               {toogleState === 3 ? (
-                <FormCareercert componentRef={componentRef} />
+                <FormCareercert componentRef={componentRef}  sabun={sabun}/>
               ) : (
                 ""
               )}

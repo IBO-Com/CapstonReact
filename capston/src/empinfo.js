@@ -9,12 +9,15 @@ import Account from "./empInfo_detail/Account";
 import axios from "axios";
 import qs from "qs";
 import * as Cookie from "./cookies/cookies";
+import * as GetYearOfWork from "./modules/getYearOfWork";
+import * as GetCDTR from "./modules/getCDTR";
 
 const App = () => {
   const [today, setToday] = useState(new Date());
   const [defaultYear, setDefaultYear] = useState("19");
   const [workMonth, setWorkMonth] = useState("0");
   const [workYear, setWorkYear] = useState("0");
+  const [workDay, setWorkDay] = useState("0");
 
   const [dept, setDept] = useState("");
   const [team, setTeam] = useState("");
@@ -36,16 +39,13 @@ const App = () => {
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
+        
         let startDate = new Date(
           userInfo["start_date"].slice(0, 4),
-          userInfo["start_date"].slice(4, 6),
+          parseInt(userInfo["start_date"].slice(4, 6)) -1, //Date 연산으로 인한 -1을 해주어야 함
           userInfo["start_date"].slice(6, 8)
         );
-        let subDate = today - startDate;
-
-        let tempMonth = subDate / 1000 / 60 / 60 / 24 / 30;
-        setWorkMonth(parseInt(tempMonth % 12));
-        setWorkYear(parseInt(tempMonth / 12));
+        GetYearOfWork.getYearOfWork(startDate, today, setWorkYear, setWorkMonth, setWorkDay);
 
         if (
           today.getFullYear() - 2000 <
@@ -57,50 +57,8 @@ const App = () => {
         }
         setUserData(response.data.ITEMS[0]);
 
-        /////
-        let postParam2 = qs.stringify({
-          code: userInfo["center"],
-        });
-        console.log("param : ", postParam2);
-
-        axios
-          .post("http://43.200.115.198:8080/empGetCode.jsp", postParam2)
-          .then((response2) => {
-            setCenter(response2.data.ITEMS[0]["code_nm"]);
-          });
-
-        /////
-        postParam2 = qs.stringify({
-          code: userInfo["dept"],
-        });
-
-        axios
-          .post("http://43.200.115.198:8080/empGetCode.jsp", postParam2)
-          .then((response2) => {
-            setDept(response2.data.ITEMS[0]["code_nm"]);
-          });
-
-        /////
-        postParam2 = qs.stringify({
-          code: userInfo["team"],
-        });
-
-        axios
-          .post("http://43.200.115.198:8080/empGetCode.jsp", postParam2)
-          .then((response2) => {
-            setTeam(response2.data.ITEMS[0]["code_nm"]);
-          });
-
-        //////
-        postParam2 = qs.stringify({
-          code: userInfo["rank"],
-        });
-
-        axios
-          .post("http://43.200.115.198:8080/empGetCode.jsp", postParam2)
-          .then((response2) => {
-            setRank(response2.data.ITEMS[0]["code_nm"]);
-          });
+        GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
+        setCenter, setDept, setTeam, setRank);
       });
   }, []);
 
