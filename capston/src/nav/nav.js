@@ -87,12 +87,17 @@ const nav = {
       "/mainNav/attendanceregister",
       "/mainNav/c2",
       "/mainNav/c3",
-      "/mainNav/c4",
+      "/mainNav/attendancestatus",
     ],
   },
   급여관리: {
     menu: ["급여기본관리", "개인급여관리", "월급여조회", "급여명세서조회"],
-    link: ["/mainNav/d1", "/mainNav/d2", "/mainNav/d3", "/mainNav/d4"],
+    link: [
+      "/mainNav/d1",
+      "/mainNav/d2",
+      "/mainNav/monthlySalaryCheck",
+      "/mainNav/d4",
+    ],
   },
   퇴직관리: {
     menu: ["퇴직승인", "퇴직금산정", "퇴직소득영수증"],

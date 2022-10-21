@@ -156,3 +156,47 @@
     height: 819px;
     background-color: white;
 }
+
+.perCard_data table{
+    width: 100%;
+    border: 1px solid #D9D9D9;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+
+.perCard_data table thead tr td{
+    padding: 15px 10px;   
+    font-size: 12px;
+    background: #EBEFF2;
+}
+
+
+.perCard_data table tbody td{
+    border: 1px solid #D9D9D9;
+    padding-right: 0;
+    width: 100px;
+    font-size: 12px;
+    height: 5px;
+    padding: 10px 5px !important;
+    box-sizing: border-box;
+}
+
+.perCard_data table tbody .firsttable td:nth-child(2n){
+    background: #EBEFF2;
+
+}
+
+.perCard_data table tbody .firsttable td:first-child{
+    width: 80px !important;
+}
+
+.perCard_data table tbody .table_bg td:nth-child(1),
+.perCard_data table tbody .table_bg td:nth-child(3)  {
+    background: #EBEFF2;
+}
+
+.perCard_data table tbody .family_td td{
+    background: #EBEFF2 !important;
+
+}
