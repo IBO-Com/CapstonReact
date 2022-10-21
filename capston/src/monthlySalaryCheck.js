@@ -164,10 +164,10 @@ const App = () => {
                <td></td>
             </tr>
             <tr className="monthlyFive">
-               <td className="totalPay">총 지급액</td>
-               <td className="totalPay"></td>
-               <td className="totalDeduct">총 공제액</td>
-               <td className="totalDeduct"></td>
+               <td className="TabletotalPay">총 지급액</td>
+               <td className="TabletotalPay"></td>
+               <td className="TabletotalDeduct">총 공제액</td>
+               <td className="TabletotalDeduct"></td>
             </tr>
          </table>
       </div>
