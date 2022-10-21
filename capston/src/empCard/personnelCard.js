@@ -34,7 +34,7 @@ const App = () => {
     }, [])
     
     const radioBoxChange = (sabun) => {
-        
+
     } 
     
     const sendSubmit = () => {

@@ -1,0 +1,203 @@
+.monthlyPay_searchBox .monthlyPay_search_btn {
+    width: 97px;
+    color: #FFFFFF;
+    height: 36px;
+    margin-left: 28px;
+    border: none;
+    background: #537AAA;
+    border-radius: 2px;
+}
+
+.monthlyPay_searchBox {
+    margin-top: 5px;
+    padding: 20px 20px;
+    margin-left: 83px;
+}
+
+.monthlyPay_search_btn {
+    margin-top: 3px;
+}
+
+.monthlyPay_background {
+    background-color: white;
+    height: 790px;
+    width: 98%;
+}
+
+.monthlyPay_lineBar {
+    border: 1px solid #D9D9D9;
+    margin-left: 70px;
+    width: 90%;
+    margin: auto;
+}
+
+.monthlyPay_title span {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
+    text-align: center;
+}
+
+.monthlyPay_title {
+    margin-left: 120px;
+    margin-top: 15px;
+}
+
+.monthlyPay_viewer {
+    width: 1240px;
+    height: 100px;
+    background: #FDFDFD;
+    border: 2px solid #D9D9D9;
+    border-radius: 5px;
+    margin-left: 120px;
+    margin-top: 10px;
+    display: flex;
+}
+
+.monthlyPay_ment {
+    margin-top: 20px;
+    margin-left: 70px;
+    width: 250px;
+    text-align: center;
+    color: #5A6163;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+}
+
+.monthlyPay_Btn {
+    width: 190px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 10px;
+    border: none;
+    background: #F09336;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+}
+
+.monthlyPay_total, .monthlyPay_deduct, .monthlyPay_amount {
+    margin-left: 100px;
+    margin-top: 5px;
+    width: 180px;
+    text-align: center;
+    color: #5A6163;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+}
+
+.totalPay,
+.deductPay,
+.amountPay {
+    font-weight: bold;
+}
+
+.monthlyWork_title {
+    margin-left: 120px;
+    display: flex;
+    margin-top: 5px;
+}
+
+.monthlyWork_title p {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
+    text-align: center;
+}
+
+.monthlyWork_viewer {
+    width: 1240px;
+    height: 100px;
+    background: #FDFDFD;
+    border: 2px solid #D9D9D9;
+    border-radius: 5px;
+    margin-left: 120px;
+    display: flex;
+}
+
+.monthlyNormalWork_ment,
+.monthlyOvertimeWork_ment,
+.monthlyNightWork_ment,
+.monthlyHolidayWork_ment {
+    color: #5A6163;
+    font-family: 'Noto Sans KR';
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    margin-left: 60px;
+    padding-top: 20px;
+}
+
+.monthlytotalWork_ment, .monthlyWorkTime_ment {
+    color: #5A6163;
+    font-family: 'Noto Sans KR';
+    font-weight: bold;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    margin-left: 75px;
+    padding-top: 60px;
+}
+
+.monthlyPayCheck_title {
+    margin-left: 120px;
+    margin-top: 5px;
+    display: flex;
+}
+
+.monthlyPayCheck_title p {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
+    text-align: center;
+}
+
+
+.monthlyTable {
+    width: 75%;
+    border: 1px solid #D9D9D9;
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: 120px;
+}
+
+.monthlyTable tr td{
+    padding: 15px 10px;   
+    font-size: 12px;
+    border: 1px solid #D9D9D9;
+    width: 100px;
+}
+
+.monthlyFirst {
+    background: #EBEFF2;
+    font-weight: bold;
+}
+
+.monthlyOne td:nth-child(odd),
+.monthlyTwo td:nth-child(odd),
+.monthlyThree td:nth-child(odd),
+.monthlyFour td:nth-child(odd),
+.monthlyFive td:nth-child(odd) {
+    background: #EBEFF2;
+    font-weight: bold;
+}
+
+.totalPay {
+    color: blue;
+}
+
+.totalDeduct {
+    color: red;
+}
