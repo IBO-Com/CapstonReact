@@ -2,10 +2,11 @@
   background-color: #ffffff;
   min-width: 1000px;
   width: 98%;
-  height: 800px;
+  height: 790px;
   position: relative;
 }
 .PersonnelAppointment_search {
+  height: 60px;
   border-bottom: 2px solid #d9d9d9;
   margin: 20px 20px 20px 20px;
   display: flex;
@@ -13,7 +14,9 @@
 .PersonnelAppointment_search span {
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 7px;
   font-size: 16px;
+  color: #5a6163;
 }
 .PersonnelAppointment_bar {
   background-color: #d9d9d9;
@@ -24,7 +27,8 @@
 .PersonnelAppointment_searchBtn {
   width: 97px;
   height: 36px;
-  margin-left: 50px;
+  margin-left: 30px;
+  margin-top: 2px;
   background-color: #537aaa;
   color: #ffffff;
   border-radius: 2px;
@@ -40,7 +44,13 @@
   justify-content: space-between;
 }
 .PersonnelAppointment_title span {
-  font-size: 18px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
 }
 .PersonnelAppointment_registerBtn {
   width: 97px;
