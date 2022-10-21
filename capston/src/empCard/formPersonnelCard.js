@@ -179,8 +179,6 @@ const App = ({ componentRef }) => {
                 <td></td>
             </tr>
 
-
-
           </tbody>
         </table>
       </div>

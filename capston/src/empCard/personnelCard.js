@@ -151,7 +151,7 @@ const App = () => {
                                                 <>
                                                     <tr>
                                                         <td>{index + 1}</td>
-                                                        <td><input type="checkbox" className='Card_check' /></td>
+                                                        <td><input type="radio" className='Card_radio' /></td>
                                                         <td>{name.sabun}</td>
                                                         <td>{name.name}</td>
                                                         <td>{name.retire_cls === "0" ? "재직" : "퇴직"}</td>
@@ -183,7 +183,6 @@ const App = () => {
                             {toogleState === 3 ? <FormCareercert componentRef={componentRef}/> : ""}
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
