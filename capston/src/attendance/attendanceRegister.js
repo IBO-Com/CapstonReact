@@ -37,6 +37,7 @@ function AttendanceRegister() {
   };
 
   const work_form_list = [
+    { value: "NM", label: "일반" },
     { value: "OW", label: "외근" },
     { value: "BT", label: "출장" },
     { value: "HW", label: "재택" },
