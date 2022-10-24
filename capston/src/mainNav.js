@@ -24,6 +24,9 @@ import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
 import AttendanceRegister from "./attendance/attendanceRegister";
 
+//근태관리 탭
+import VactionManage from "./vacationManage/vactionManage";
+
 import Inbo from "./img/Group 23.png";
 
 const App = () => {
@@ -99,6 +102,9 @@ const App = () => {
 
           {/* 급여명세서조회 페이지 */}
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
+
+          {/* 휴가 관리 */}
+          <Route path="vactionManage" element={<VactionManage/>}></Route>
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>

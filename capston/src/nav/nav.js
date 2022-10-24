@@ -86,7 +86,7 @@ const nav = {
     link: [
       "/mainNav/attendanceregister",
       "/mainNav/c2",
-      "/mainNav/c3",
+      "/mainNav/vactionManage",
       "/mainNav/attendancestatus",
     ],
   },
