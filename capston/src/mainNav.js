@@ -26,7 +26,7 @@ import AttendanceRegister from "./attendance/attendanceRegister";
 import RetirementApproval from "./Retirement/RetirementApproval";
 
 //근태관리 탭
-import VactionManage from "./vacationManage/vactionManage";
+import VacationManage from "./vacationManage/vacationManage";
 
 import Inbo from "./img/Group 23.png";
 
@@ -105,7 +105,7 @@ const App = () => {
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
 
           {/* 휴가 관리 */}
-          <Route path="vactionManage" element={<VactionManage />}></Route>
+          <Route path="vacationManage" element={<VacationManage />}></Route>
 
           {/* 퇴직승인 */}
           <Route
