@@ -1,0 +1,62 @@
+.Appointment_main{
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.Appointment_main .Appointment_header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 60px 0 0 ;
+    align-items: center;
+}
+
+.Appointment_main .Appointment_header span{
+font-family: Noto Sans KR;
+font-size: 17px;
+font-weight: 400;
+line-height: 25px;
+letter-spacing: 0.1em;
+text-align: center;
+
+
+}
+
+
+.Appointment_main .Appointment_Table{
+    width: 1492px;
+    height: 470px;
+    margin-top: 20px;
+    overflow-y: scroll;
+    overflow-y: auto;
+
+}
+
+.Appointment_main .Appointment_Table table{
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #D9D9D9;
+    text-align: center;
+}
+
+.Appointment_main .Appointment_Table table thead{
+    background: #EBEFF2;
+    font-size: 14px;
+}
+
+.Appointment_main .Appointment_Table table td{
+    padding:10px;
+  border: 1px solid#D9D9D9;
+
+}
+
+
+.Appointment_main .Appointment_Table table tbody{
+    font-family: Noto Sans KR;
+font-size: 12px;
+font-weight: 400;
+line-height: 17px;
+letter-spacing: 0.1em;
+text-align: center;
+
+}
