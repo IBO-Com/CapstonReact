@@ -8,6 +8,7 @@ import axios from "axios";
 import qs from "qs";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
+import "../css/Retirement/RetirementApproval.css";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -20,7 +21,7 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
-  const [peopleData, setPeopleData] = useState();
+  const [peopleData, setPeopleData] = useState([]);
 
   useEffect(() => {
     axios
@@ -152,63 +153,78 @@ const App = () => {
             onChange={handleEndDatetDateChange}
           />
         </MuiPickersUtilsProvider>
-        <FormControl>
-          <Select
-            value={selectDepart || ""}
-            sx={{
-              minWidth: "153px",
-              height: 39,
-              marginLeft: "15px",
-              marginRight: "26px",
-            }}
-            onChange={handleSelectDepart}
-          >
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-              전체부서
-            </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-              경영지원부
-            </MenuItem>
+        <div className="RetirementApproval_dept">
+          <FormControl>
+            <Select
+              value={selectDepart || ""}
+              sx={{
+                minWidth: "153px",
+                height: 39,
+                marginLeft: "15px",
+                marginRight: "26px",
+              }}
+              onChange={handleSelectDepart}
+            >
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                전체부서
+              </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-              경영관리부
-            </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
+                경영지원부
+              </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-              침해대응부
-            </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
+                경영관리부
+              </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-              관제센터
-            </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
+                침해대응부
+              </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-              보안연구부
-            </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
+                관제센터
+              </MenuItem>
 
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-              보안취약점연구부
-            </MenuItem>
-          </Select>
-        </FormControl>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
+                보안연구부
+              </MenuItem>
+
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
+                보안취약점연구부
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
         <FormControl>
           <TextField
             id="outlined-basic"
             label="사번/성명"
             variant="outlined"
             size="small"
+            margin="small"
             onChange={textNameHandle}
           />
         </FormControl>
-        <button className="RetirementApproval_searchtBtn">검색</button>
+        <button
+          className="RetirementApproval_searchtBtn"
+          onClick={() => {
+            sendSubmit();
+          }}
+        >
+          검색
+        </button>
       </div>
-      <div className="RetirementApproval_conent">
-        <span>퇴직승인</span>
-        <div className="RetirementApproval_btns">
-          <button className="RetirementApproval_batchBtn">일괄승인</button>
-          <button className="RetirementApproval_savetBtn">저장</button>
+      <div className="RetirementApproval_content">
+        <div className="RetirementApproval_title">
+          <span>퇴직승인</span>
+          <div className="RetirementApproval_btns">
+            <button className="RetirementApproval_batchBtn">일괄승인</button>
+            <button className="RetirementApproval_savetBtn">저장</button>
+          </div>
         </div>
+
         <div className="RetirementApproval_table">
           <table>
             <thead>

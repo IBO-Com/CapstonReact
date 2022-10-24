@@ -112,7 +112,6 @@ const App = () => {
             path="retirementapproval"
             element={<RetirementApproval />}
           ></Route>
-
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
