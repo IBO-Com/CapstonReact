@@ -17,7 +17,7 @@ import HRorganization from "./HRorganization/HRorganization";
 import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
-import MonthlySalaryCheck from "./monthlySalaryCheck"; //월급여조회
+import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";

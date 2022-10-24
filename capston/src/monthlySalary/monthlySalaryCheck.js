@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import "./css/monthlySalary/monthlySalaryCheck.css";
+import "../css/monthlySalary/monthlySalaryCheck.css";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
 import axios from "axios";
