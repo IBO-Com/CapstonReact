@@ -22,7 +22,9 @@ body {
     border-bottom: 3px solid lightgray;
 }
 
+
 .vactionManage_card {
+    margin-bottom: 30px;
     width: 510px;
     max-width: 510px;
     height: 140px;

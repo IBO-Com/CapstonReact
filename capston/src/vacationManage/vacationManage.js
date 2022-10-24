@@ -19,13 +19,13 @@ const App = () => {
 
     return (
         <div className="vactionManage_App">         
-            <FormControl sx={{ m: 1, minWidth: 150, display: 'flex', flexDirection:'row'}}>
+            <FormControl sx={{ m: 1, marginTop:'15px', marginBottom:'15px', minWidth: 150, display: 'flex', flexDirection:'row'}}>
                 <Select
                 value={selectDep}
                 onChange={handleChange}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
-                sx={{height:'40px', marginRight: '30px'}}
+                sx={{ marginLeft:'60px', height:'40px', marginRight: '30px', width: '210px', textAlign: 'center'}}
                 >
 
                 <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
@@ -82,7 +82,9 @@ const App = () => {
                 <div className="vacationManage_contents_right">
                     <p>완료된 요청 ( 2 )</p>
                     
-                    <VacationManageCard/>    
+                    <VacationManageCard/>
+                    <VacationManageCard/>
+                    
                 </div>
             
             </div>
