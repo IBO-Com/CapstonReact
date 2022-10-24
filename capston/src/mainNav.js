@@ -21,6 +21,7 @@ import MonthlySalaryCheck from "./monthlySalaryCheck"; //월급여조회
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
+import AttendanceRegister from "./attendance/attendanceRegister";
 
 import Inbo from "./img/Group 23.png";
 
@@ -74,6 +75,10 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
 
+          <Route
+            path="/attendanceRegister"
+            element={<AttendanceRegister />}
+          ></Route>
           {/* 인사명령(발령) 페이지 */}
           <Route
             path="/personnelappointment"

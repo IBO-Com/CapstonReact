@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import JqxGrid, { jqx } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxgrid";
 
@@ -11,6 +8,10 @@ function OrganizeSetting() {
   const detailGrid = useRef();
   const [itemListMaster, setItemListMaster] = useState([]);
   const [itemListDetail, setItemListDetail] = useState([]);
+
+  useEffect(() => {
+    onClickRetrieveButton();
+  }, []);
 
   //const urlRetrieve = "http://localhost:8080/setorganize.jsp";
   //const urlSave = "http://localhost:8080/saveorganize.jsp";
