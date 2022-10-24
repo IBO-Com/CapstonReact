@@ -12,6 +12,9 @@ import koLocale from "date-fns/locale/ko";
 import DateFnsUtils from "@date-io/date-fns";
 import qs from "qs";
 import format from "date-fns/format";
+import AccountRegister from "./AccountRegister";
+import FamilyRegister from "./FamilyRegister";
+import LicenseRegister from "./LicenseRegister";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -46,6 +49,8 @@ function EmpRegister() {
   const [rankTest, setRankTest] = useState("");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
 
+  const [toogleState, setToggleState] = useState(1);
+
   const urlSave = "http://43.200.115.198:8080/empregister.jsp";
   const urlGetCls = "http://43.200.115.198:8080/empGetRank.jsp";
   //const urlSave = "http://localhost:8080/empregister.jsp";
@@ -71,6 +76,10 @@ function EmpRegister() {
   };
   const handleSelectRank = (event) => {
     setRank(event.target.value);
+  };
+
+  const toggleTab = (index) => {
+    setToggleState(index);
   };
 
   useEffect(() => {
@@ -148,8 +157,38 @@ function EmpRegister() {
       <div className={styles.empLine}>
         <hr className={styles.empFirstLine} align="left" />
         <div className={styles.empTabFlex}>
-          <div class={styles.empBasic}>인사기본</div>
-          <div class={styles.account}>계좌</div>
+          <div
+            class={styles.empBasic}
+            onClick={() => {
+              toggleTab(1);
+            }}
+          >
+            인사기본
+          </div>
+          <div
+            class={styles.account}
+            onClick={() => {
+              toggleTab(2);
+            }}
+          >
+            계좌
+          </div>
+          <div
+            class={styles.family}
+            onClick={() => {
+              toggleTab(3);
+            }}
+          >
+            가족
+          </div>
+          <div
+            class={styles.license}
+            onClick={() => {
+              toggleTab(4);
+            }}
+          >
+            자격
+          </div>
           <Button
             className={styles.buttonStyle}
             style={{
@@ -164,6 +203,11 @@ function EmpRegister() {
           </Button>
         </div>
         <hr className={styles.empFirstLine} align="left" />
+        <div>
+          {toogleState === 2 ? <AccountRegister /> : ""}
+          {toogleState === 3 ? <FamilyRegister /> : ""}
+          {toogleState === 4 ? <LicenseRegister /> : ""}
+        </div>
       </div>
       <form ref={formRef}>
         <div className={styles.plzEmp}>
