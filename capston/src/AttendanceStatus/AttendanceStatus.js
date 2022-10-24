@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import koLocale from "date-fns/locale/ko";
 import { Select, MenuItem } from "@material-ui/core";
@@ -8,6 +8,8 @@ import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import "../css/AttendanceStatus/AttendanceStatus.css";
 import { differenceInSeconds } from "date-fns";
+import * as GetAttendance from "../modules/GetAttendance"
+
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -19,6 +21,12 @@ const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-10-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
+
+  const [AttendData, setAttendData] = useState([]);
+
+  useEffect(() => {
+    GetAttendance.getInfo(setAttendData);
+  }, [])
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -119,7 +127,7 @@ const App = () => {
             variant="outlined"
             size="small"
             margin="small"
-            // onChange={textNameHandle}
+          // onChange={textNameHandle}
           />
         </FormControl>
         <button className="AttendanceStatus_searchBtn">검색</button>
@@ -168,11 +176,9 @@ const App = () => {
                 <td>부서</td>
                 <td>직책</td>
                 <td>근태항목</td>
-                <td>신청구분</td>
                 <td>시작시각</td>
                 <td>종료시각</td>
                 <td>소요시각</td>
-                <td>상태</td>
               </tr>
             </thead>
             <tbody>
@@ -183,11 +189,9 @@ const App = () => {
                 <td>경영지원부</td>
                 <td>사원</td>
                 <td>연장근무</td>
-                <td>연장근무</td>
                 <td>18:00</td>
                 <td>20:00</td>
                 <td>2:00</td>
-                <td>정상처리</td>
               </tr>
             </tbody>
           </table>

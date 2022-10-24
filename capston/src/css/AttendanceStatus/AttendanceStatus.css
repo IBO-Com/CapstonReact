@@ -3,12 +3,14 @@
   height: 790px;
   width: 98%;
 }
+
 .AttendacneStatus_search {
   height: 60px;
   border-bottom: 2px solid #d9d9d9;
   margin: 20px 20px 20px 20px;
   display: flex;
 }
+
 .AttendacneStatus_search span {
   margin-left: 20px;
   margin-right: 20px;
@@ -20,16 +22,19 @@
   width: 150px !important;
   height: 23px;
 }
+
 .AttendanceStatus_depart {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .AttendanceStatus_bar {
   background-color: #d9d9d9;
   width: 20px;
   height: 2px;
   margin: 19px 5px 0px 5px;
 }
+
 .AttendanceStatus_searchBtn {
   width: 97px;
   height: 36px;
@@ -41,9 +46,11 @@
   border: 0;
   outline: 0;
 }
+
 .AttendanceStatus_content {
   margin: 10px 50px 10px 50px;
 }
+
 .AttendanceStatus_content > span {
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -53,27 +60,43 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
+
 .AttendanceStatus_type {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.AttendanceStatus_type02,
+.AttendanceStatus_type03,
+.AttendanceStatus_type04,
+.AttendanceStatus_type05,
+.AttendanceStatus_type06 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .AttendanceStatus_type > div {
   border: 1px solid #d9d9d9;
   width: 130px;
   height: 50px;
   text-align: center;
 }
+
 .AttendanceStatus_type01 {
   background-color: #537aaa;
   color: #ffffff;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
+
 .AttendanceStatus_table table {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #d9d9d9;
-  margin-top: 15px;
+  margin-top: 20px;
 }
+
 .AttendanceStatus_table tr,
 .AttendanceStatus_table td {
   border: 1px solid#D9D9D9;
@@ -88,9 +111,11 @@
   font-weight: 700;
   background-color: #ebeff2;
 }
+
 .AttendanceStatus_table thead td {
   padding: 10px;
 }
+
 .AttendanceStatus_table tbody td {
   padding: 8px;
   font-size: 12px;

@@ -30,12 +30,6 @@
     outline: none;
 }
 
-
-
-
-
-
-
 .HRorganization_bar{
     width: 20px;
     height: 2px;
@@ -45,13 +39,10 @@
    margin-right: 10px;
 }
 
-
-
 .HRorganization_dateBox #outlined-basic{
     width: 160px !important;
     height: 20px !important;
 }
-
 
 .HRorganization_dateBox .HRorganization_btn{
 width: 97px;
@@ -64,3 +55,7 @@ background: #537AAA;
 border-radius: 2px;
 }
 
+.HRorganization_input {
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+}
