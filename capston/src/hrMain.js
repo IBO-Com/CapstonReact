@@ -4,6 +4,8 @@ import "./css/hrMain.css";
 
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
+import User from "../src/img/user.png";
+import ApexCharts from 'apexcharts';
 
 const App = () => {
   return (
@@ -14,7 +16,7 @@ const App = () => {
             <h4>사용자 정보</h4>
             <div className="hrMain_userInfo">
               <div className="hrMain_userImg">
-                <img src={Profile} alt="userImg" />
+                <img src={User} alt="userImg" />
               </div>
               <div className="hrMain_userDetail">
                 <li className="hrMain_userName">김명지</li>
