@@ -76,10 +76,11 @@ const App = () => {
         </div>
 
         <div className="nameAnddept">
-          <p className="empinfoName">
+        <p className="empinfoName" style={{fontSize:"20px"}}>
             {userData["name"] ? userData["name"] : "로딩중"}
           </p>
-          <p className="empinfoDept">{center}</p>
+
+          <p className="empinfoDept" style={{fontSize:"13px"}}>{center}</p>
         </div>
 
         <div class="empBox">
