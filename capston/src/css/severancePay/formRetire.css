@@ -1,0 +1,52 @@
+.formRetire_Info td:nth-child(odd){
+    background: #EBEFF2;
+    height: 25px;
+    width: 80px;
+}
+
+.formRetire_title {
+    background: #EBEFF2;
+}
+
+.formRetire_Maintitle span {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
+}
+
+.formRetire_footer{
+    margin-top: 130px;
+    text-align: center;
+    color:#515966;
+    margin-bottom: 100px;
+}
+
+.formRetire_Info td:nth-child(even){
+    width: 100px;
+    padding-left: 15px;
+}
+
+.formRetireTable{
+    width: 100%;
+    border: 1px solid #D9D9D9;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.formRetireTable tr td{
+    padding: 15px 10px;   
+    font-size: 12px;
+    border: 1px solid #D9D9D9;
+    width: 100px;
+}
+
+.formRetire_boldcolor {
+    background: #EBEFF2;
+    height: 60px;
+    font-weight: bold;
+}

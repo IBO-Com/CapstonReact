@@ -5,11 +5,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 const App = () => {
   return (
     <div className="accountRegister_container">
-      <div className="accountRegister_Tab">
-        <div className="accountRegister_empInfo">인사기본</div>
-        <div className="accountRegister_account">계좌</div>
-        <button className="accountRegister_registerBtn">등록</button>
-      </div>
       <div className="accountRegister_content">
         <div className="accountRegister_title">
           <span>김명지의 계좌</span>
