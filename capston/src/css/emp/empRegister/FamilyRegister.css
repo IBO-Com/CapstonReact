@@ -1,11 +1,13 @@
-.accountRegister_title {
+.FamilyReigster_container {
   margin-left: 60px;
   margin-right: 60px;
-  margin-bottom: 10px;
+}
+.FamilyRegister_title {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
-.accountRegister_title span {
+.FamilyRegister_title span {
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
@@ -14,8 +16,7 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
-
-.accountRegister_addBtn {
+.FamilyRegister_addBtn {
   width: 50px;
   height: 30px;
   margin-right: 20px;
@@ -25,7 +26,7 @@
   border: 0;
   outline: 0;
 }
-.accountRegister_saveBtn {
+.FamilyRegister_saveBtn {
   width: 50px;
   height: 30px;
   background-color: #e78854;
@@ -34,22 +35,18 @@
   border: 0;
   outline: 0;
 }
-.accountRegister_list {
-  margin-left: 60px;
-  margin-right: 60px;
-}
-.accountRegister_list table {
+.FamilyRegister_table table {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #d9d9d9;
   margin-top: 15px;
 }
-.accountRegister_list tr,
-.accountRegister_list td {
+.FamilyRegister_table tr,
+.FamilyRegister_table td {
   border: 1px solid#D9D9D9;
   text-align: center;
 }
-.accountRegister_list thead tr {
+.FamilyRegister_table thead tr {
   font-size: 12px;
   color: #515966;
   font-family: "Noto Sans KR";
@@ -57,10 +54,10 @@
   font-weight: 700;
   background-color: #ebeff2;
 }
-.accountRegister_list thead td {
+.FamilyRegister_table thead td {
   padding: 10px;
 }
-.accountRegister_list tbody td {
+.FamilyRegister_table tbody td {
   padding: 8px;
   font-size: 12px;
 }
