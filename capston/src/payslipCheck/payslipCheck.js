@@ -11,7 +11,6 @@ import qs from "qs";
 import ReactToPrint from "react-to-print";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 import FormPayslip from "./formPayslip";
 
