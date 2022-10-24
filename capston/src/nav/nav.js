@@ -85,7 +85,7 @@ const nav = {
     menu: ["근태등록", "근무관리", "휴가관리", "근태/근무현황"],
     link: [
       "/mainNav/attendanceregister",
-      "/mainNav/c2",
+      "/mainNav/workManage",
       "/mainNav/vacationManage",
       "/mainNav/attendancestatus",
     ],
@@ -100,8 +100,8 @@ const nav = {
     ],
   },
   퇴직관리: {
-    menu: ["퇴직승인", "퇴직금산정", "퇴직소득영수증"],
-    link: ["/mainNav/retirementapproval", "/mainNav/e2", "/mainNav/e3"],
+    menu: ["퇴직승인", "퇴직금산정", "퇴직금명세서"],
+    link: ["/mainNav/retirementapproval", "/mainNav/e2", "/mainNav/severancepay"],
   },
   테스트: {
     menu: ["발령조회", "테스트", "page 3"],

@@ -18,6 +18,7 @@ import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import PayslipCheck from "./payslipCheck/payslipCheck"; //급여명세서
+import SeverancePay from "./severancePay/severancepay"; //퇴직금명세서
 import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
@@ -26,7 +27,8 @@ import AttendanceRegister from "./attendance/attendanceRegister";
 import RetirementApproval from "./Retirement/RetirementApproval";
 
 //근태관리 탭
-import VacationManage from "./vacationManage/vacationManage";
+import VacationManage from "./vacationManage/vacationManage"; //휴가관리
+import WorkManage from "./workManage/workManage"; //근무관리
 
 import Inbo from "./img/Group 23.png";
 
@@ -107,11 +109,15 @@ const App = () => {
           {/* 휴가 관리 */}
           <Route path="vacationManage" element={<VacationManage />}></Route>
 
+          {/* 근무 관리 */}
+          <Route path="workManage" element={<WorkManage />}></Route>
+
           {/* 퇴직승인 */}
-          <Route
-            path="retirementapproval"
-            element={<RetirementApproval />}
-          ></Route>
+          <Route path="retirementapproval" element={<RetirementApproval />}></Route>
+          {/* 퇴직금명세서 */}
+          <Route path="severancepay" element={<SeverancePay />}></Route>
+
+
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

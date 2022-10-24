@@ -53,11 +53,12 @@ const HRorganization = () => {
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
+    console.log(e.target.value);
   };
 
   const sendSubmit = () => {
+    console.log("send submit")
     /* 날짜 포멧 */
-    console.log("isEnter????");
     let sYear = String(startDate.getFullYear());
     let sMonth = startDate.getMonth() + 1;
     let sDay = startDate.getDate();
@@ -102,10 +103,10 @@ const HRorganization = () => {
 
     postParam = qs.stringify(query);
 
-    console.log(query);
+    //console.log(query);
 
     axios
-      .post("http://43.200.115.198:8080/empselect.jsp")
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {
         setPeopleData(res.data.ITEMS);
       })
@@ -201,21 +202,26 @@ const HRorganization = () => {
                 보안취약점연구부
               </MenuItem>
             </Select>
-          </FormControl>
-          <FormControl>
-            <TextField
-              id="outlined-basic"
+          </FormControl> 
+            <input
+              style={{
+                lineHeight: "33px",
+                width: "170px",
+                height: "33px"
+              }}
+              placeholder="사번 / 성명"
+              type="text"
+              className="HRorganization_input"
               label="사번/성명"
               variant="outlined"
               size="small"
               onChange={textNameHandle}
             />
-          </FormControl>
           <button
             className="HRorganization_btn"
             onClick={() => {
               sendSubmit();
-            }}
+            }} 
           >
             검색
           </button>
