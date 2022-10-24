@@ -85,7 +85,7 @@ const nav = {
     menu: ["근태등록", "근무관리", "휴가관리", "근태/근무현황"],
     link: [
       "/mainNav/attendanceregister",
-      "/mainNav/c2",
+      "/mainNav/workManage",
       "/mainNav/vacationManage",
       "/mainNav/attendancestatus",
     ],
