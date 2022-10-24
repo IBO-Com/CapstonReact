@@ -3,7 +3,7 @@ import "../css/HRorganization/HRorganization.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import Select from "@mui/material/Select";
-import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
@@ -20,22 +20,24 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 const HRorganization = () => {
-  const [startDate, setStartDate] = useState(new Date('2020-01-01'));
+  const [startDate, setStartDate] = useState(new Date("2020-01-01"));
   const [endDate, setEndDate] = useState(new Date());
-  
-  const [selectDepart, setSelectDepart] = useState("*")
-  
-  const [textName, setTextName]= useState('');
+
+  const [selectDepart, setSelectDepart] = useState("*");
+
+  const [textName, setTextName] = useState("");
   const [peopleData, setPeopleData] = useState();
 
-  useEffect(()=> {
-    axios.post("http://43.200.115.198:8080/empselect.jsp").then((res)=>{
-        setPeopleData(res.data.ITEMS);            
-    }).catch((Error)=> {
+  useEffect(() => {
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp")
+      .then((res) => {
+        setPeopleData(res.data.ITEMS);
+      })
+      .catch((Error) => {
         console.log(Error);
-    })
-  }, [])
-
+      });
+  }, []);
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -43,6 +45,14 @@ const HRorganization = () => {
 
   const handleEndDatetDateChange = (date) => {
     setEndDate(date);
+  };
+
+  const handleSelectDepart = (event) => {
+    setSelectDepart(event.target.value);
+  };
+
+  const textNameHandle = (e) => {
+    setTextName(e.target.value);
   };
 
   const sendSubmit = () => {
@@ -56,17 +66,17 @@ const HRorganization = () => {
     let eMonth = endDate.getMonth() + 1;
     let eDay = endDate.getDate();
 
-    if(sMonth < 10) {
+    if (sMonth < 10) {
       sMonth = "0" + sMonth;
     }
-    if(sDay < 10) {
+    if (sDay < 10) {
       sDay = "0" + sDay;
     }
 
-    if(eMonth < 10) {
+    if (eMonth < 10) {
       eMonth = " 0" + eMonth;
     }
-    if(eDay < 10) {
+    if (eDay < 10) {
       eDay = " 0" + eDay;
     }
 
@@ -76,32 +86,33 @@ const HRorganization = () => {
     /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
-    
+
     query["startDate"] = sDate;
     query["retireDate"] = eDate;
-    if(textName.trim() == '') {
+    if (textName.trim() == "") {
       delete query["sabunOrName"];
     } else {
-      query["sabunOrName"] = textName
+      query["sabunOrName"] = textName;
     }
-    if(selectDepart == '*') {
+    if (selectDepart == "*") {
       delete query["dept"];
     } else {
       query["dept"] = selectDepart;
     }
 
-    postParam = qs.stringify(
-      query
-    );  
-    
+    postParam = qs.stringify(query);
+
     console.log(query);
-    
-    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res)=>{
-          setPeopleData(res.data.ITEMS);            
-      }).catch((Error)=> {
-          console.log(Error);
-    })
-  }
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp")
+      .then((res) => {
+        setPeopleData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
 
   function getFormatDate(date) {
     var year = date.getFullYear(); //yyyy
@@ -111,16 +122,6 @@ const HRorganization = () => {
     day = day >= 10 ? day : "0" + day; //day 두자리로 저장
     return year + "-" + month + "-" + day;
   }
-
-  const handleSelectDepart = (event) => {
-    setSelectDepart(event.target.value);
-  };
-
-
-  const textNameHandle = (e) => {
-    setTextName(e.target.value);
-  }
-
 
   return (
     <>
@@ -145,9 +146,8 @@ const HRorganization = () => {
           </MuiPickersUtilsProvider>
           <div className="HRorganization_bar"></div>
 
-          
           <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
-          <DatePicker
+            <DatePicker
               autoOk
               variant="inline"
               views={["year", "month", "date"]}
@@ -160,60 +160,73 @@ const HRorganization = () => {
               todayLabel="오늘"
               onChange={handleEndDatetDateChange}
             />
-            </MuiPickersUtilsProvider>
-       
-            <FormControl>
-              <Select
-                value = {selectDepart || ""}
-                sx={{
-                  minWidth: "153px",
-                  height: 39,
-                  marginLeft: "15px",
-                  marginRight: "26px",
-                }}
-                onChange={handleSelectDepart}
-              >
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                  전체부서
-                </MenuItem>
+          </MuiPickersUtilsProvider>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-                  경영지원부
-                </MenuItem>
+          <FormControl>
+            <Select
+              value={selectDepart || ""}
+              sx={{
+                minWidth: "153px",
+                height: 39,
+                marginLeft: "15px",
+                marginRight: "26px",
+              }}
+              onChange={handleSelectDepart}
+            >
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                전체부서
+              </MenuItem>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                  경영관리부
-                </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
+                경영지원부
+              </MenuItem>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-                  침해대응부
-                </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
+                경영관리부
+              </MenuItem>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-                  관제센터
-                </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
+                침해대응부
+              </MenuItem>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-                  보안연구부
-                </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
+                관제센터
+              </MenuItem>
 
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-                  보안취약점연구부
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <TextField
-                id="outlined-basic"
-                label="사번/성명"
-                variant="outlined"
-                size="small"
-                onChange={textNameHandle}
-              />
-            </FormControl>
-            <button className="HRorganization_btn" onClick={() => {sendSubmit()}}>검색</button>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
+                보안연구부
+              </MenuItem>
+
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
+                보안취약점연구부
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <TextField
+              id="outlined-basic"
+              label="사번/성명"
+              variant="outlined"
+              size="small"
+              onChange={textNameHandle}
+            />
+          </FormControl>
+          <button
+            className="HRorganization_btn"
+            onClick={() => {
+              sendSubmit();
+            }}
+          >
+            검색
+          </button>
         </div>
-        <HrInfoTable startDate={startDate} endDate = {endDate} selectDepart = {selectDepart} textName = {textName} peopleData={peopleData}/>
+        <HrInfoTable
+          startDate={startDate}
+          endDate={endDate}
+          selectDepart={selectDepart}
+          textName={textName}
+          peopleData={peopleData}
+        />
       </div>
     </>
   );

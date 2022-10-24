@@ -101,7 +101,7 @@ const nav = {
   },
   퇴직관리: {
     menu: ["퇴직승인", "퇴직금산정", "퇴직소득영수증"],
-    link: ["/mainNav/e1", "/mainNav/e2", "/mainNav/e3"],
+    link: ["/mainNav/retirementapproval", "/mainNav/e2", "/mainNav/e3"],
   },
   테스트: {
     menu: ["발령조회", "테스트", "page 3"],

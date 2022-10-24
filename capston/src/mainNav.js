@@ -23,6 +23,7 @@ import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
 import AttendanceRegister from "./attendance/attendanceRegister";
+import RetirementApproval from "./Retirement/RetirementApproval";
 
 //근태관리 탭
 import VactionManage from "./vacationManage/vactionManage";
@@ -104,7 +105,13 @@ const App = () => {
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
 
           {/* 휴가 관리 */}
-          <Route path="vactionManage" element={<VactionManage/>}></Route>
+          <Route path="vactionManage" element={<VactionManage />}></Route>
+
+          {/* 퇴직승인 */}
+          <Route
+            path="retirementapproval"
+            element={<RetirementApproval />}
+          ></Route>
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
