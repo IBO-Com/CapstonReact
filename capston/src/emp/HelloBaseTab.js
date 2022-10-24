@@ -1,31 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import DateFnsUtils from "@date-io/date-fns";
 import qs from "qs";
 import styles from "../css/emp/empRegister/empRegister.module.css";
 import format from "date-fns/format";
-import axios from 'axios';
-import { Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import axios from "axios";
+import {
+  Button,
+  FormControl,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/testimg.jpg";
 import koLocale from "date-fns/locale/ko";
 
 class koLocalizedUtils extends DateFnsUtils {
-    getCalendarHeaderText(date) {
-      return format(date, "yyyy년　　 MM월", { locale: this.locale });
-    }
+  getCalendarHeaderText(date) {
+    return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
-  
-  function getFormatDate(date) {
-    var year = date.getFullYear(); //yyyy
-    var month = 1 + date.getMonth(); //M
-    month = month >= 10 ? month : "0" + month; //month 두자리로 저장
-    var day = date.getDate();
-    day = day >= 10 ? day : "0" + day; //day 두자리로 저장
-    return year + "-" + month + "-" + day;
-  }
-  
+}
+
+function getFormatDate(date) {
+  var year = date.getFullYear(); //yyyy
+  var month = 1 + date.getMonth(); //M
+  month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+  var day = date.getDate();
+  day = day >= 10 ? day : "0" + day; //day 두자리로 저장
+  return year + "-" + month + "-" + day;
+}
+
 const HelloBaseTab = () => {
-    const formRef = useRef();
+  const formRef = useRef();
   const name = useRef();
   const englishName = useRef();
   const identityNumberF = useRef();
@@ -41,7 +47,6 @@ const HelloBaseTab = () => {
   const [rank, setRank] = useState(1);
   const [rankTest, setRankTest] = useState("");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
-
 
   const urlSave = "http://43.200.115.198:8080/empregister.jsp";
   const urlGetCls = "http://43.200.115.198:8080/empGetRank.jsp";
@@ -69,7 +74,6 @@ const HelloBaseTab = () => {
   const handleSelectRank = (event) => {
     setRank(event.target.value);
   };
-
 
   useEffect(() => {
     axios.get(urlGetCls).then((response) => {
@@ -133,23 +137,22 @@ const HelloBaseTab = () => {
       "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
     },
   };
-    return (
-        <div>
-                  <Button
-            className={styles.buttonStyle}
-            style={{
-              marginLeft: "auto",
-              marginRight: "2.5vw",
-              marginTop: "-3px",
-            }}
-            onClick={() => clickSaveButton()}
-            variant="contained"
-          >
-            저장
-          </Button>
+  return (
+    <div>
+      <Button
+        className={styles.buttonStyle}
+        style={{
+          marginLeft: "92%",
+          marginRight: "2.5vw",
+          marginTop: "-90px",
+        }}
+        onClick={() => clickSaveButton()}
+        variant="contained"
+      >
+        저장
+      </Button>
 
-
-          <form ref={formRef}>
+      <form ref={formRef}>
         <div className={styles.plzEmp}>
           <div style={{ margin: "auto" }}>
             <table className={styles.empTable}>
@@ -382,8 +385,8 @@ const HelloBaseTab = () => {
           </div>
         </div>
       </form>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default HelloBaseTab;
