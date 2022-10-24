@@ -96,7 +96,7 @@ const nav = {
       "/mainNav/d1",
       "/mainNav/d2",
       "/mainNav/monthlySalaryCheck",
-      "/mainNav/d4",
+      "/mainNav/payslipCheck",
     ],
   },
   퇴직관리: {

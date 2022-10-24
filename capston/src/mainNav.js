@@ -17,6 +17,7 @@ import HRorganization from "./HRorganization/HRorganization";
 import AccountRegister from "./emp/AccountRegister";
 import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
+import PayslipCheck from "./payslipCheck/payslipCheck"; //급여명세서
 import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
@@ -95,6 +96,9 @@ const App = () => {
           <Route path="monthlySalaryCheck" element={<MonthlySalaryCheck />}>
             {" "}
           </Route>
+
+          {/* 급여명세서조회 페이지 */}
+          <Route path="payslipCheck" element={<PayslipCheck />}></Route>
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>
