@@ -36,11 +36,34 @@ function AttendanceRegister() {
     setRetrieveDate(getFormatDate(date));
   };
 
+  const work_form_list = [
+    { value: "OW", label: "외근" },
+    { value: "BT", label: "출장" },
+    { value: "HW", label: "재택" },
+    { value: "EW", label: "연장" },
+    { value: "RW", label: "휴일" },
+  ];
+
+  const workFormSource = {
+    datatype: "array",
+    datafields: [
+      { name: "label", type: "string" },
+      { name: "value", type: "string" },
+    ],
+    localdata: work_form_list,
+  };
+
+  let workFormAdapter = new jqx.dataAdapter(workFormSource, {
+    autoBind: true,
+  });
+
   const sources = {
     datafields: [
       { name: "in_date", type: "string" },
       { name: "sabun", type: "string" },
       { name: "name", type: "string" },
+      { name: "work_form_cd", type: "string" },
+      { name: "work_form_nm", type: "string" },
       { name: "start_datetime", type: "string" },
       { name: "end_datetime", type: "string" },
       { name: "over_datetime", type: "string" },
@@ -93,14 +116,30 @@ function AttendanceRegister() {
       width: 150,
     },
     {
-      text: "출근시간",
+      text: "근무형태",
+      align: "center",
+      cellsalign: "center",
+      columntype: "dropdownlist",
+      datafield: "work_form_cd",
+      displayfield: "work_form_nm",
+      createeditor: function (row, value, editor) {
+        editor.jqxDropDownList({
+          source: workFormAdapter,
+          displayMember: "label",
+          valueMember: "value",
+        });
+      },
+      width: 150,
+    },
+    {
+      text: "출근(시작)시간",
       align: "center",
       datafield: "start_datetime",
       cellsalign: "center",
       width: 160,
     },
     {
-      text: "퇴근시간",
+      text: "퇴근(종료)시간",
       align: "center",
       cellsalign: "center",
       datafield: "end_datetime",
