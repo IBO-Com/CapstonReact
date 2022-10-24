@@ -1,0 +1,71 @@
+.payslip_money td:nth-child(odd){
+    background: #EBEFF2;
+    height: 40px;
+    width: 100px;
+}
+
+.payslip_money td:nth-child(even){
+    width: 100px;
+    padding-left: 15px;
+}
+
+.payslip_TotalPayTitle, .payslip_tableTitle {
+    background: #EBEFF2;
+}
+
+.payslip_box .payslip_form_footer{
+    margin-top: 50px;
+    text-align: center;
+    color:#515966;
+    margin-bottom: 100px;
+}
+
+.formPayslipTable{
+    width: 100%;
+    border: 1px solid #D9D9D9;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.payslip_title{
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 60px;
+    margin-top: 70px;
+}
+
+.formPayslip_empInfo {
+    color:#515966;
+    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.payslip_head1, .payslip_head2, .payslip_TotalPayTitle {
+    height: 50px;
+}
+
+.payslip_head1 {
+    border-right: 1px solid #D9D9D9;
+}
+
+.payslip_TotalPay{
+    height: 50px;
+}
+
+.payslip_pay {
+    color: blue;
+    font-weight: bold;
+}
+
+.payslip_deduct {
+    color: red;
+    font-weight: bold;
+}
+
+.payslip_TotalPayTitle, .payslip_TotalPay{
+    font-weight: bold;
+}
