@@ -8,7 +8,6 @@
  */
 export const getYearOfWork = (startDate, endDate, setWorkYear, setWorkMonth, setWorkDay) => {
     let subDate = Math.abs(endDate.getTime() - startDate.getTime());
-    
 
     let tempDay = subDate / 1000 / 60 / 60 / 24;
     setWorkDay(parseInt(tempDay % 30))

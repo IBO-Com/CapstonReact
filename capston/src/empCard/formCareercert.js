@@ -7,6 +7,7 @@ import qs from "qs";
 
 const App = ({componentRef, sabun}) => {
    const [today, setToday] = useState(new Date());
+   const [endDate, setEndDate] = useState(new Date());
    const [defaultYear, setDefaultYear] = useState("19");
    const [userData, setUserData] = useState();
    const [dept, setDept] = useState("");
@@ -44,15 +45,12 @@ const App = ({componentRef, sabun}) => {
             userInfo["start_date"].slice(6, 8)
          );
 
-         let endDate = new Date();
          if(userInfo["retire_cls"] == 1) { //퇴직일경우 EndDate를 퇴직일자로 변경
-            endDate = new Date(
+            setEndDate(new Date(
                userInfo["retire_date"].slice(0, 4),
                parseInt(userInfo["retire_date"].slice(4, 6)) -1, //Date 연산으로 인한 -1을 해주어야 함
                userInfo["retire_date"].slice(6, 8)
-            )
-         } else {
-            console.log(startDate.getTime() + "," + endDate.getTime())
+            ));
          }
 
          GetYearOfWork.getYearOfWork(startDate, endDate, setWorkYear, setWorkMonth, setWorkDay);
@@ -98,11 +96,19 @@ const App = ({componentRef, sabun}) => {
                <td colSpan={3} className="enterForm">
                   <div className='date_form'>
                      <div className='date'>
-                        <p>{workYear}년 1월 1일부터</p>
-                        <p>2020년 12월 31일까지</p>
+                        <p>{userData ? userData["start_date"].slice(0, 4) + "년 " + userData["start_date"].slice(4, 6) + "월 " + userData["start_date"].slice(6, 8) + "일 부터" : ""}</p>
+                        <p>
+                           {
+                              userData ? (
+                                 <p>{endDate.getFullYear() + "년 " + (endDate.getMonth() + 1) + "월 " + endDate.getDate() + "일 까지"}</p>
+                              ) : (
+                                 <></>
+                              )
+                           }
+                        </p>
                      </div>
                      <div className='date2'>
-                        <p>(1년 0개월 0일)</p>
+                        <p>({workYear}년 {workMonth}개월 {workDay}일)</p>
                      </div>
                   </div>
 
