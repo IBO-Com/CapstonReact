@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 const HrInfoTable = ({startDate, endDate, selectDepart, textName, peopleData}) => {
     
-    console.log(peopleData);
+    //console.log(peopleData);
 
     return (
         <div className='HrInfoTable'>
