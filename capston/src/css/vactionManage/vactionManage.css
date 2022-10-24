@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.vactionManage_App {
+    width: 98%;
+    min-width: 1000px;
+    height: 100vh;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.vactionManage_line {
+    margin-left: auto;
+    margin-right: auto;
+    width: 96%;
+    min-width: 980px;
+    border-bottom: 3px solid lightgray;
+}
+
+.vactionManage_card {
+    width: 510px;
+    max-width: 510px;
+    height: 140px;
+    max-height: 140px;
+    border: 2px solid #D9D9D9;
+    border-radius: 5px;
+}
+
+.vactionManage_card_state {
+    letter-spacing: 10%;
+    font-family: 'Noto Sans KR';
+    font-size: 15px;
+    text-align: center;
+    line-height: 33px;
+    width: 128px;
+    height: 33px;
+    background-color: #F09336;
+    color: white;
+    
+}
+
+.vactionManage_card_flex {
+    margin-left: 15px;
+    margin-top: 9px;
+    display: flex;
+    flex-direction: row;
+}
+
+.vactionManage_card_text {
+    margin-left: 15px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.vactionManage_card_text2 {
+    color: #5A6163;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    height: 33px;
+    line-height: 33px;
+}
+
+.vactionManage_card_title {
+    margin-bottom: 5px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.vacationManage_contents {
+    display: flex;
+    flex-direction: row;
+}
+
+.vacationManage_contents_left {
+    margin-left: 66px;
+    margin-top: 20px;
+}
+
+.vacationManage_contents_right {
+    margin-left: 50px;
+    margin-top: 20px;
+}
