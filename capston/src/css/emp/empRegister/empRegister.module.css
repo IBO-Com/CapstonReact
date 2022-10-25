@@ -31,6 +31,7 @@ body {
 
 .empTabFlex div {
   margin-right: 80px;
+  cursor: pointer;
 }
 
 .empBasic {
