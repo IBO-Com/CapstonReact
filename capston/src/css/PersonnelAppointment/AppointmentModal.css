@@ -122,3 +122,8 @@
   border: 0;
   outline: 0;
 }
+.AppointmentModal_input {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-top: 1px;
+}

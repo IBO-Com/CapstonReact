@@ -128,3 +128,9 @@
 .AttendanceStatus_table table thead tr {
   height: 40px;
 }
+
+.AttendanceStatus_input {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-top: 1px;
+}

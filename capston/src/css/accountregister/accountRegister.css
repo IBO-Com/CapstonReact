@@ -14,7 +14,16 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
-
+.accountRegister_removeBtn {
+  width: 50px;
+  height: 30px;
+  margin-right: 20px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
 .accountRegister_addBtn {
   width: 50px;
   height: 30px;
