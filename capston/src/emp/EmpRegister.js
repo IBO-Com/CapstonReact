@@ -35,7 +35,7 @@ function EmpRegister() {
         <hr className={styles.empFirstLine} align="left" />
         <div className={styles.empTabFlex}>
           <div
-            class={styles.empBasic}
+            className={styles.empBasic}
             onClick={() => {
               toggleTab(1);
             }}
@@ -43,7 +43,7 @@ function EmpRegister() {
             인사기본
           </div>
           <div
-            class={styles.account}
+            className={styles.account}
             onClick={() => {
               toggleTab(2);
             }}
@@ -51,7 +51,7 @@ function EmpRegister() {
             계좌
           </div>
           <div
-            class={styles.family}
+            className={styles.family}
             onClick={() => {
               toggleTab(3);
             }}
@@ -59,7 +59,7 @@ function EmpRegister() {
             가족
           </div>
           <div
-            class={styles.license}
+            className={styles.license}
             onClick={() => {
               toggleTab(4);
             }}

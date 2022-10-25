@@ -101,9 +101,9 @@ const App = () => {
           </p>
         </div>
 
-        <div class="empBox">
-          <table class="empFirstTable">
-            <tbody class="empinfoList">
+        <div className="empBox">
+          <table className="empFirstTable">
+            <tbody className="empinfoList">
               <tr>
                 <td>ㆍ사번</td>
                 <td>ㆍ재직상태</td>
@@ -167,7 +167,7 @@ const App = () => {
         <hr className="empFirstLine" align="left"></hr>
         <div className="empTabFlex">
           <div
-            class="empBasic btn"
+            className="empBasic btn"
             onClick={() => {
               toggleTab(1);
             }}
@@ -175,7 +175,7 @@ const App = () => {
             인사기본
           </div>
           <div
-            class="appoint btn"
+            className="appoint btn"
             onClick={() => {
               toggleTab(2);
             }}
@@ -183,7 +183,7 @@ const App = () => {
             발령
           </div>
           <div
-            class="account btn"
+            className="account btn"
             onClick={() => {
               toggleTab(3);
             }}
@@ -191,7 +191,7 @@ const App = () => {
             계좌
           </div>
           <div
-            class="family btn"
+            className="family btn"
             onClick={() => {
               toggleTab(4);
             }}
@@ -199,7 +199,7 @@ const App = () => {
             가족
           </div>
           <div
-            class="license btn"
+            className="license btn"
             onClick={() => {
               toggleTab(5);
             }}

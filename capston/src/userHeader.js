@@ -20,12 +20,12 @@ const App = () => {
 
     return (
         <div>
-            <div class="userHeader_wrap">
-                <div class="userHeader_sub_wrap">
-                    <p class="userHeader_sub_tile">이정재님 환영합니다!</p>
-                    <div class="userHeader_sub_menu">
-                        <button class="userHeader_notice"><AiOutlineSetting size={"30px"} color={"gray"} /></button>
-                        <button class="userHeader_profile"><AiOutlineBell size={"30px"} color={"gray"} /></button>
+            <div className="userHeader_wrap">
+                <div className="userHeader_sub_wrap">
+                    <p className="userHeader_sub_tile">이정재님 환영합니다!</p>
+                    <div className="userHeader_sub_menu">
+                        <button className="userHeader_notice"><AiOutlineSetting size={"30px"} color={"gray"} /></button>
+                        <button className="userHeader_profile"><AiOutlineBell size={"30px"} color={"gray"} /></button>
                     </div>
                 </div>
             </div>

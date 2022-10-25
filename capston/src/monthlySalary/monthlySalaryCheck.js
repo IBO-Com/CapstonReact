@@ -5,7 +5,7 @@ import { Button, MenuItem, TextField } from "@mui/material";
 import Modal from 'react-modal';
 import axios from "axios";
 import qs from "qs";
-import ModalMonthlySalary from "./ModalMonthlySalary";
+import ModalMonthlySalary from "./modalMonthlySalary";
 
 
 const App = () => {
