@@ -117,8 +117,8 @@ const App = () => {
     const textNameHandle = (e) => {
         setTextName(e.target.value);
         console.log(e.target.value);
-      };
-    
+    };
+
 
 
     return (
@@ -262,6 +262,7 @@ const App = () => {
                                 trigger={() => <button className="print_Btn">인쇄</button>}
                                 content={() => componentRef.current}
                             />
+                            <button className="payslip_DebuctBtn">급여 공제액 도움말</button>
                             <button className="payslip_Btn">다운로드</button>
                         </div>
                         <div className="payslip_viewer">

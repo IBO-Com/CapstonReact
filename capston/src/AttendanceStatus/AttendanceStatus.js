@@ -9,17 +9,15 @@ import DateFnsUtils from "@date-io/date-fns";
 import "../css/AttendanceStatus/AttendanceStatus.css";
 import { differenceInSeconds } from "date-fns";
 import axios from "axios";
-import * as GetAttendance from "../modules/GetAttendance"
+import * as GetAttendance from "../modules/GetAttendance";
 import * as GetCDTR from "../modules/getCDTR";
 import qs from "qs";
-
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
 }
-
 
 const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-10-01"));
@@ -120,8 +118,8 @@ const App = () => {
   const changeTap = (idx, tab) => {
     setNowTab(tab)
     let element = document.querySelectorAll(".AttendanceStatus_type > div");
-    for(let i = 0; i < element.length; i ++)  {
-      if(i == idx) {
+    for (let i = 0; i < element.length; i++) {
+      if (i == idx) {
         element[i].className = "AttendanceStatus_type01";
       } else {
         element[i].className = "AttendanceStatus_type02";
@@ -164,25 +162,25 @@ const App = () => {
       .post("http://43.200.115.198:8080/getAttendance_workCount.jsp")
       .then((response) => {
         let data = response.data.ITEMS;
-        if(data["OW"]) {
+        if (data["OW"]) {
           setOW(parseInt(data["OW"]));
-        } 
-        if(data["BT"]) {
+        }
+        if (data["BT"]) {
           setBT(parseInt(data["BT"]));
-        } 
-        if(data["HW"]) {
+        }
+        if (data["HW"]) {
           setHW(parseInt(data["HW"]));
-        } 
-        if(data["NM"]) {
+        }
+        if (data["NM"]) {
           setNM(parseInt(data["NM"]));
-        } 
-        if(data["EW"]) {
+        }
+        if (data["EW"]) {
           setEW(parseInt(data["EW"]));
         }
-        if(data["RW"]) {
+        if (data["RW"]) {
           setRW(parseInt(data["RW"]));
         }
-      }) 
+      })
       .catch((Error) => {
         console.log(Error);
       });
@@ -196,10 +194,7 @@ const App = () => {
       .catch((Error) => {
         console.log(Error);
       });
-
   }, []);
-
-
 
   return (
     <div className="AttendanceStatus_container">
@@ -282,12 +277,18 @@ const App = () => {
         </div>
 
         <FormControl>
-          <TextField
-            id="outlined-card"
+          <input
+            style={{
+              lineHeight: "33px",
+              width: "170px",
+              height: "33px",
+            }}
+            placeholder="사번 / 성명"
+            type="text"
+            className="AttendanceStatus_input"
             label="사번/성명"
             variant="outlined"
             size="small"
-            margin="small"
             onChange={textNameHandle}
           />
         </FormControl>
@@ -296,32 +297,62 @@ const App = () => {
       <div className="AttendanceStatus_content">
         <span>근태/근무현황</span>
         <div className="AttendanceStatus_type">
-          <div className="AttendanceStatus_type01" onClick={(e) => {changeTap(0, "A")}}>
+          <div
+            className="AttendanceStatus_type01"
+            onClick={(e) => {
+              changeTap(0, "A");
+            }}
+          >
             <span>전체</span>
             <br></br>
             <span>{oW + bT + hW + nM + eW + rW}건</span>
           </div>
-          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(1, "OW")}}>
+          <div
+            className="AttendanceStatus_type02"
+            onClick={(e) => {
+              changeTap(1, "OW");
+            }}
+          >
             <span>외근</span>
             <br></br>
             <span>{oW}건</span>
           </div>
-          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(2, "BT")}}>
+          <div
+            className="AttendanceStatus_type02"
+            onClick={(e) => {
+              changeTap(2, "BT");
+            }}
+          >
             <span>출장</span>
             <br></br>
             <span>{bT}건</span>
           </div>
-          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(3, "HW")}}>
+          <div
+            className="AttendanceStatus_type02"
+            onClick={(e) => {
+              changeTap(3, "HW");
+            }}
+          >
             <span>재택</span>
             <br></br>
             <span>{hW}건</span>
           </div>
-          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(4, "EW")}}>
+          <div
+            className="AttendanceStatus_type02"
+            onClick={(e) => {
+              changeTap(4, "EW");
+            }}
+          >
             <span>연장근무</span>
             <br></br>
             <span>{eW}건</span>
           </div>
-          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(5, "RW")}}>
+          <div
+            className="AttendanceStatus_type02"
+            onClick={(e) => {
+              changeTap(5, "RW");
+            }}
+          >
             <span>휴일대체</span>
             <br></br>
             <span>{rW}건</span>
@@ -350,13 +381,23 @@ const App = () => {
                   return (
                     <>
                       <tr>
-                        <td>{attend.in_date.slice(0,4)}년 {attend.in_date.slice(4,6)}월 {attend.in_date.slice(6,8)}일</td>
+                        <td>
+                          {attend.in_date.slice(0, 4)}년{" "}
+                          {attend.in_date.slice(4, 6)}월{" "}
+                          {attend.in_date.slice(6, 8)}일
+                        </td>
                         <td>{attend.name}</td>
                         <td>{codeData[attend.dept]}</td>
                         <td>{codeData[attend.rank]}</td>
                         <td>{codeData[attend.work_form]}</td>
-                        <td>{attend.start_datetime.slice(0,2)}시 {attend.start_datetime.slice(2,4)}분</td>
-                        <td>{attend.end_datetime.slice(0,2)}시 {attend.end_datetime.slice(2,4)}분</td>
+                        <td>
+                          {attend.start_datetime.slice(0, 2)}시{" "}
+                          {attend.start_datetime.slice(2, 4)}분
+                        </td>
+                        <td>
+                          {attend.end_datetime.slice(0, 2)}시{" "}
+                          {attend.end_datetime.slice(2, 4)}분
+                        </td>
                         <td>{attend.over_datetime}</td>
                         <td>{attend.night_datetime}</td>
                       </tr>

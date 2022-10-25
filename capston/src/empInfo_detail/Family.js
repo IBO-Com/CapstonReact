@@ -7,6 +7,7 @@ const App = () => {
       <div className="Family_header">
         <span>가족</span>
         <div className="Family_btns">
+          <button className="Family_removeBtn">삭제</button>
           <button className="Family_addBtn">추가</button>
           <button className="Family_saveBtn">저장</button>
         </div>

@@ -37,6 +37,7 @@ const App = () => {
         <div className="LicenseRegister_title">
           <span>이정재의 자격</span>
           <div className="LicenseRegister_btns">
+            <button className="LicenseRegister_removeBtn">삭제</button>
             <button className="LicenseRegister_addBtn">추가</button>
             <button className="LicenseRegister_saveBtn">저장</button>
           </div>
