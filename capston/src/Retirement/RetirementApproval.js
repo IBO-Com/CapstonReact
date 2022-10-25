@@ -202,11 +202,11 @@ const App = () => {
             style={{
               lineHeight: "33px",
               width: "170px",
-              height: "33px"
+              height: "33px",
             }}
             placeholder="사번 / 성명"
             type="text"
-            className="HRorganization_input"
+            className="RetirementApproval_input"
             label="사번/성명"
             variant="outlined"
             size="small"
@@ -255,9 +255,6 @@ const App = () => {
                           type="radio"
                           name="userSelect"
                           className="retirement_radio"
-                        //   onChange={() => {
-                        //     radioBoxChange(name.sabun);
-                        //   }}
                         />
                       </td>
                       <td> </td>
@@ -268,16 +265,16 @@ const App = () => {
                         {name.dept === "01"
                           ? "경영지원부"
                           : "" || name.dept === "02"
-                            ? "경영관리"
-                            : "" || name.dept === "03"
-                              ? "침해대응부"
-                              : "" || name.dept === "04"
-                                ? "관제센터"
-                                : "" || name.dept === "05"
-                                  ? "보안연구부"
-                                  : "" || name.dept === "06"
-                                    ? "보안취약점연구부"
-                                    : ""}
+                          ? "경영관리"
+                          : "" || name.dept === "03"
+                          ? "침해대응부"
+                          : "" || name.dept === "04"
+                          ? "관제센터"
+                          : "" || name.dept === "05"
+                          ? "보안연구부"
+                          : "" || name.dept === "06"
+                          ? "보안취약점연구부"
+                          : ""}
                       </td>
                     </tr>
                   </>

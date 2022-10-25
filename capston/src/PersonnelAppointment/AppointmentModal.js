@@ -8,7 +8,7 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import koLocale from "date-fns/locale/ko";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
-//유겸이 바보 맞음 ㄱ- 
+//유겸이 바보 맞음 ㄱ-
 //유겸이 바보
 //서온이 바보
 //시연이 바보
@@ -61,11 +61,11 @@ const AppointmentModal = ({ openModal, setOpenModal }) => {
           <table>
             <tr>
               <td>사번</td>
-              <td>2022771010</td>
+              <td>1012210000</td>
             </tr>
             <tr>
               <td>성명</td>
-              <td>김명지</td>
+              <td>이정재</td>
             </tr>
             <tr>
               <td>소속</td>
