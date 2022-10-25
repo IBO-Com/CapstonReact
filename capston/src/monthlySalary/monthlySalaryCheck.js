@@ -5,6 +5,8 @@ import { Button, MenuItem, TextField } from "@mui/material";
 import Modal from 'react-modal';
 import axios from "axios";
 import qs from "qs";
+import ModalMonthlySalary from "./ModalMonthlySalary";
+
 
 const App = () => {
    const todayTime = () => {
@@ -144,8 +146,8 @@ const App = () => {
             </button>
             {/*<button className="monthlyPay_DebuctBtn">급여 공제액 도움말</button>*/}
          </div>
-         {monthlyPayDebuct === true ? (
-            <modalMonthlySalary monthlyPayDebuct={monthlyPayDebuct} setMonthlyPayDebuct={setMonthlyPayDebuct} />
+         {monthlyPayDebuct == true ? (
+            <ModalMonthlySalary setMonthlyPayDebuct = {setMonthlyPayDebuct}/>
          ) : (
             ""
          )}

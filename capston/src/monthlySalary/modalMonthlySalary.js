@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const App = ({monthlyPayDebuct, setMonthlyPayDebuct}) => {
+const App = ({setMonthlyPayDebuct}) => {
     return (
         <div className="modalMonthlySalary_wrap">
             <p>공제액 도움말</p>
