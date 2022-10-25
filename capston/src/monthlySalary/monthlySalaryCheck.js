@@ -22,7 +22,7 @@ const App = () => {
    const [peopleData, setPeopleData] = useState();
    const [textName, setTextName] = useState('');
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
-   console.log(monthlyPayDebuct);
+   //console.log(monthlyPayDebuct);
 
    const toggleTab = (index) => {
       setToggleState(index);
@@ -47,6 +47,8 @@ const App = () => {
 
       if (textName.trim() == '') {
          delete query["sabunOrName"];
+         alert("사번/성명을 입력해주세요.");
+         return;
       } else {
          query["sabunOrName"] = textName
       }
@@ -55,10 +57,32 @@ const App = () => {
          query
       );
 
-      console.log(query);
-
       axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => {
+         let data = res.data.ITEMS;
          setPeopleData(res.data.ITEMS);
+         
+         let postParam2 = {
+            rank : data[0].rank
+         }
+         postParam2 = qs.stringify(postParam2)
+         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
+            console.log(res2.data.ITEMS);
+         }).catch((Error) => {
+            console.log(Error);
+         })
+         /* ------ */
+
+         postParam2 = {
+            rank : data[0].rank
+         }
+         postParam2 = qs.stringify(postParam2)
+         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
+            console.log(res2.data.ITEMS);
+         }).catch((Error) => {
+            console.log(Error);
+         })
+
+
       }).catch((Error) => {
          console.log(Error);
       })
