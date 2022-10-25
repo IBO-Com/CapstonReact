@@ -21,7 +21,7 @@ const App = () => {
       </Button>
 
       <div className="accountRegister_title">
-        <span>김명지의 계좌</span>
+        <span>이정재의 계좌</span>
         <div className="accountRegister_Btn">
           <button className="accountRegister_addBtn">추가</button>
           <button className="accountRegister_saveBtn">저장</button>
@@ -54,7 +54,7 @@ const App = () => {
               </td>
               <td>신한은행</td>
               <td>1020301203102</td>
-              <td>김명지</td>
+              <td>이정재</td>
               <td> </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@ const App = () => {
               </td>
               <td>농협은행</td>
               <td>1022601234105</td>
-              <td>김명지</td>
+              <td>이정재</td>
               <td> </td>
             </tr>
           </tbody>
