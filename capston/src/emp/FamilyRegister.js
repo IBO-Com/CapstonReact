@@ -50,6 +50,7 @@ const App = () => {
         <div className="FamilyRegister_title">
           <span>이정재의 가족</span>
           <div className="FamilyRegister_btns">
+            <button className="FamilyRegister_removeBtn">삭제</button>
             <button className="FamilyRegister_addBtn">추가</button>
             <button className="FamilyRegister_saveBtn">저장</button>
           </div>
@@ -82,7 +83,6 @@ const App = () => {
                       value={relationList || ""}
                       sx={{
                         minWidth: "130px",
-                        
                       }}
                       onChange={handleRelationList}
                     >
@@ -119,7 +119,7 @@ const App = () => {
                     <Select
                       value={cohabitationList || ""}
                       sx={{
-                        minWidth: "130px"
+                        minWidth: "130px",
                       }}
                       onChange={handleCohabitationList}
                     >

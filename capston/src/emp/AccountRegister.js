@@ -23,6 +23,7 @@ const App = () => {
       <div className="accountRegister_title">
         <span>이정재의 계좌</span>
         <div className="accountRegister_Btn">
+          <button className="accountRegister_removeBtn">삭제</button>
           <button className="accountRegister_addBtn">추가</button>
           <button className="accountRegister_saveBtn">저장</button>
         </div>

@@ -7,6 +7,7 @@ const Account = () => {
       <div className="Account_header">
         <span>계좌</span>
         <div className="Account_btns">
+          <button className="Account_removeBtn">삭제</button>
           <button className="Account_addBtn">추가</button>
           <button className="Account_saveBtn">저장</button>
         </div>
