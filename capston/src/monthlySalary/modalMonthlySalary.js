@@ -19,7 +19,7 @@ const App = ({ setMonthlyPayDebuct }) => {
                     <p className="modalMonthly_national">과세 금액의 4.5%를 공제합니다.</p>
                     <br></br>
                     <p className="modalMonthly_health1">건강보험</p>
-                    <p className="modalMonthly_health">과세 금액의 3.4%를 공제합니다.</p>
+                    <p className="modalMonthly_health">과세 금액의 3.495%를 공제합니다.</p>
                     <br></br>
                     <p className="modalMonthly_conval1">장기요양</p>
                     <p className="modalMonthly_conval">건강보험 금액의 12.27%를 공제합니다.</p>
