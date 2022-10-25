@@ -116,7 +116,9 @@ const App = () => {
 
     const textNameHandle = (e) => {
         setTextName(e.target.value);
-    };
+        console.log(e.target.value);
+      };
+    
 
 
     return (
@@ -180,8 +182,15 @@ const App = () => {
                         </Select>
                     </FormControl>
                     <FormControl>
-                        <TextField
-                            id="outlined-card"
+                        <input
+                            style={{
+                                lineHeight: "33px",
+                                width: "170px",
+                                height: "33px"
+                            }}
+                            placeholder="사번 / 성명"
+                            type="text"
+                            className="HRorganization_input"
                             label="사번/성명"
                             variant="outlined"
                             size="small"
