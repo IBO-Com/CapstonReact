@@ -1,13 +1,96 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./css/hrMain.css";
 
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
 import User from "../src/img/user.png";
-import ApexCharts from 'apexcharts';
+import ApexCharts from 'react-apexcharts';
 
 const App = () => {
+  const [data, setData] = useState({
+    series: [12],
+    options: {
+      chart: {
+        height: 0,
+        type: 'radialBar',
+        toolbar: {
+          show: true
+        }
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: 0,
+          endAngle: 360,
+           hollow: {
+            margin: 0,
+            size: '70%',
+            background: '#fff',
+            image: undefined,
+            imageOffsetX: 0,
+            imageOffsetY: 0,
+            position: 'front',
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 4,
+              opacity: 0.24
+            }
+          },
+          track: {
+            background: '#fff',
+            strokeWidth: '67%',
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: -3,
+              left: 0,
+              blur: 4,
+              opacity: 0.35
+            }
+          },
+      
+          dataLabels: {
+            show: true,
+            name: {
+              offsetY: -10,
+              show: true,
+              color: '#888',
+              fontSize: '17px'
+            },
+            value: {
+              formatter: function(val) {
+                return parseInt(val);
+              },
+              color: '#111',
+              fontSize: '36px',
+              show: true,
+            }
+          }
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#ABE5A1'],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        lineCap: 'round'
+      },
+      labels: ['Percent'],
+    },
+}
+  );
+
   return (
     <div className="hrMain">
       <div className="hrMain_container">
@@ -34,7 +117,9 @@ const App = () => {
                 <li className="hrMain_today">2022.09.29 목</li>
                 <li>출근 2022-07-29 08:49</li>
                 <li>
-                  연차 <progress value="20" max="100"></progress>
+                <ApexCharts options={data.options} series={data.series} type="radialBar" height={350} />
+
+    
                 </li>
                 <p>
                   {" "}

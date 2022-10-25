@@ -10,6 +10,7 @@ import "../css/AttendanceStatus/AttendanceStatus.css";
 import { differenceInSeconds } from "date-fns";
 import axios from "axios";
 import * as GetAttendance from "../modules/GetAttendance"
+import * as GetCDTR from "../modules/getCDTR";
 
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -25,10 +26,7 @@ const App = () => {
   const [selectDepart, setSelectDepart] = useState("*");
   const [AttendData, setAttendData] = useState([]);
   const [userAttendData, setUserAttendData] = useState();
-
-  useEffect(() => {
-    GetAttendance.getInfo(setAttendData);
-  }, [])
+  const [codeData, setCodeData] = useState({});
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -53,7 +51,15 @@ const App = () => {
       .post("http://43.200.115.198:8080/getAttendance.jsp")
       .then((response) => {
         setAttendData(response.data.ITEMS);
-        console.log(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+
+      axios
+      .post("http://43.200.115.198:8080/getAllCodeNm.jsp")
+      .then((response) => {
+        setCodeData(response.data.ITEMS);
       })
       .catch((Error) => {
         console.log(Error);
@@ -212,10 +218,10 @@ const App = () => {
                     <>
                       <tr>
                         <td>{attend.in_date.slice(0,4)}년 {attend.in_date.slice(4,6)}월 {attend.in_date.slice(6,8)}일</td>
-                        <td>성명</td>
-                        <td>부서</td>
-                        <td>직책</td>
-                        <td>{attend.work_form === "NM" ? "일반근무" : "" || attend.work_form === "OW" ? "외근근무" : "" || attend.work_form === "BT" ? "출장근무" : "" || attend.work_form === "HW" ? "재택근무" : "" || attend.work_form === "EW" ? "연장근무" : "" || attend.work_form === "RW" ? "휴일근무" : ""}</td>
+                        <td>{attend.name}</td>
+                        <td>{codeData[attend.dept]}</td>
+                        <td>{codeData[attend.rank]}</td>
+                        <td>{codeData[attend.work_form]}</td>
                         <td>{attend.start_datetime.slice(0,2)}시 {attend.start_datetime.slice(2,4)}분</td>
                         <td>{attend.end_datetime.slice(0,2)}시 {attend.end_datetime.slice(2,4)}분</td>
                         <td>{attend.over_datetime}</td>

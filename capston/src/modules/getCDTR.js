@@ -2,21 +2,19 @@ import axios from "axios";
 import qs from "qs";
 
 /**
- * Center, Dept, Team, Rank 중 하나의 값을 통해 코드값을 찾아내는 함수
+ * 코드값을 한글로 바꿔주는 함수
  * @param {*} code code 부분
  * @param {*} setCode useState의 setCode 부분
  */
 export const getCode = (code, setCode) => {
-    let postParam = qs.stringify({
-        code: code,
-      });
-
-      axios
-        .post("http://43.200.115.198:8080/empGetCode.jsp", postParam)
-        .then((response) => {
-          setCode(response.data.ITEMS[0]["code_nm"]);
-      });
+  axios
+    .post("http://43.200.115.198:8080/getAllCodeNm.jsp")
+    .then((response) => {
+      let data = response.data.ITEMS;
+      setCode(data[code]);
+  });
 }
+
 
 /**
  * Center, Dept, Team, Rank 전체를 입력 후 데이터를 받아내는 함수
@@ -30,46 +28,14 @@ export const getCode = (code, setCode) => {
  * @param {*} setRank useState의 setRank 부분
  */
 export const getCDTR = (center, dept, team, rank, setCenter, setDept, setTeam, setRank) => {
-    let postParam = qs.stringify({
-        code: center,
-      });
-
-      axios
-        .post("http://43.200.115.198:8080/empGetCode.jsp", postParam)
-        .then((response) => {
-          setCenter(response.data.ITEMS[0]["code_nm"]);
-      });
-
-    //
-    postParam = qs.stringify({
-        code: dept,
-      });
-
-      axios
-        .post("http://43.200.115.198:8080/empGetCode.jsp", postParam)
-        .then((response) => {
-          setDept(response.data.ITEMS[0]["code_nm"]);
-      });
-
-    //
-    postParam = qs.stringify({
-        code: team,
-      });
-
-      axios
-        .post("http://43.200.115.198:8080/empGetCode.jsp", postParam)
-        .then((response) => {
-          setTeam(response.data.ITEMS[0]["code_nm"]);
-      });
-
-    postParam = qs.stringify({
-        code: rank,
-    });
-
     axios
-    .post("http://43.200.115.198:8080/empGetCode.jsp", postParam)
+    .post("http://43.200.115.198:8080/getAllCodeNm.jsp")
     .then((response) => {
-        setRank(response.data.ITEMS[0]["code_nm"]);
-    });
-
+      let data = response.data.ITEMS;
+      setCenter(data[center]);
+      setDept(data[dept]);
+      setTeam(data[team]);
+      setRank(data[rank]);
+      
+  });
 }
