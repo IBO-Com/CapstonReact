@@ -319,6 +319,19 @@ function AttendanceRegister() {
           </div>
           <Button
             style={{
+              width: "8vw",
+              height: "3.5vh",
+              marginRight: "2vw",
+              backgroundColor: "orange",
+              color: "#FFFFFF",
+            }}
+            onClick={() => onClickAddButton()}
+            variant="contained"
+          >
+            엑셀업로드
+          </Button>
+          <Button
+            style={{
               width: "3.5vw",
               height: "3.5vh",
               marginRight: "2vw",
