@@ -1,4 +1,4 @@
-.modalMonthlySalary_Box {
+.modalPayslip_Box {
     position: absolute;
     width: 300px;
     height: 510px;
@@ -6,12 +6,13 @@
     border: 1px solid #d9d9d9;
     top: 40%;
     left: 50%;
-    transform: translate(-120%, -0%); 
+    transform: translate(20%, -22%); 
     box-shadow: 0px 0px 10px rgb(169, 169, 169);
     padding-left: 20px;
+    z-index: 1;
 }
 
-.modalMonthlySalary_ok {
+.modalPayslip_ok {
     width: 60px;
     height: 30px;
     background-color: #e78854;
@@ -23,23 +24,23 @@
     margin-top: 30px;
 }
 
-.modalMonthlyTitle {
+.modalPayslipTitle {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 30px;
     margin-top: 30px;
 }
 
-.modalMonthly p {
+.modalPayslip p {
     margin: 0;
     padding: 0;
 }
 
-.modalMonthly_national1, .modalMonthly_health1,
-.modalMonthly_conval1, .modalMonthly_emp1, .modalMonthly_totalDe1 {
+.modalPayslip_national1, .modalPayslip_health1,
+.modalPayslip_conval1, .modalPayslip_emp1, .modalPayslip_totalDe1 {
     font-weight: bold;
 }
 
-.modalMonthly_btnBox {
-    margin-left: 210px;
+.modalPayslip_btnBox {
+    margin-left: 220px;
 }

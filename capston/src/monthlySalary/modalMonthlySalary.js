@@ -6,7 +6,7 @@ import "../css/monthlySalary/modalMonthlysalary.css";
  * 건강보험 3.495% 공제 ex) 87,370원
  * 장기요양보험료 12.27% ex) 87,370원에서 12.27% 10,720원
  * 고용보험 0.9% 공제
- * 근로소득세는? 잠시만
+ * 근로소득세 https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6583&cntntsId=7862 참고
  */
 
 const App = ({ setMonthlyPayDebuct }) => {
@@ -32,11 +32,10 @@ const App = ({ setMonthlyPayDebuct }) => {
                 </div>
                 <div className="modalMonthly_btnBox">
                     <button
-                        className="modalMonthlySalary_cancel"
+                        className="modalMonthlySalary_ok"
                         onClick={() => setMonthlyPayDebuct(false)}>
-                        취소
+                        확인
                     </button>
-                    <button className="modalMonthlySalary_ok">등록</button>
                 </div>
             </div>
         </div>

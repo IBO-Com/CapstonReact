@@ -12,6 +12,7 @@ import ReactToPrint from "react-to-print";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import FormPayslip from "./formPayslip";
+import ModalPayslip from "./modalPayslip";
 
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -29,6 +30,9 @@ const App = () => {
     const [peopleData, setPeopleData] = useState();
     const [sabun, setSabun] = useState();
     const componentRef = useRef(null);
+
+    const [payslip, setPayslip] = useState(false);
+    console.log(payslip);
 
     const [toogleState, setToggleState] = useState(1);
 
@@ -262,8 +266,18 @@ const App = () => {
                                 trigger={() => <button className="print_Btn">인쇄</button>}
                                 content={() => componentRef.current}
                             />
-                            <button className="payslip_DebuctBtn">급여 공제액 도움말</button>
-                            <button className="payslip_Btn">다운로드</button>
+                            <button
+                                className="payslip"
+                                onClick={() => {
+                                    setPayslip(true);
+                                }}>
+                                공제액 도움말
+                            </button>
+                            {payslip == true ? (
+                                <ModalPayslip setPayslip={setPayslip} />
+                            ) : (
+                                ""
+                            )}
                         </div>
                         <div className="payslip_viewer">
                             {toogleState === 1 ? (

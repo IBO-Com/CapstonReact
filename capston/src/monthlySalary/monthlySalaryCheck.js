@@ -144,7 +144,6 @@ const App = () => {
                }}>
                   공제액 도움말
             </button>
-            {/*<button className="monthlyPay_DebuctBtn">급여 공제액 도움말</button>*/}
          </div>
          {monthlyPayDebuct == true ? (
             <ModalMonthlySalary setMonthlyPayDebuct = {setMonthlyPayDebuct}/>
