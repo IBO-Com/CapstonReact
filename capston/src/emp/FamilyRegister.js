@@ -81,9 +81,8 @@ const App = () => {
                     <Select
                       value={relationList || ""}
                       sx={{
-                        minWidth: "153px",
-                        marginLeft: "15px",
-                        marginRight: "26px",
+                        minWidth: "130px",
+                        
                       }}
                       onChange={handleRelationList}
                     >
@@ -120,9 +119,7 @@ const App = () => {
                     <Select
                       value={cohabitationList || ""}
                       sx={{
-                        minWidth: "153px",
-                        marginLeft: "15px",
-                        marginRight: "26px",
+                        minWidth: "130px"
                       }}
                       onChange={handleCohabitationList}
                     >
