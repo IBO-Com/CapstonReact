@@ -11,6 +11,7 @@ import { differenceInSeconds } from "date-fns";
 import axios from "axios";
 import * as GetAttendance from "../modules/GetAttendance"
 import * as GetCDTR from "../modules/getCDTR";
+import qs from "qs";
 
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -19,14 +20,22 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 
+
 const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-10-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
   const [AttendData, setAttendData] = useState([]);
-  const [userAttendData, setUserAttendData] = useState();
+
   const [codeData, setCodeData] = useState({});
+
+  const [oW, setOW] = useState(0); //외근
+  const [bT, setBT] = useState(0); //출장
+  const [hW, setHW] = useState(0); //재택
+  const [nM, setNM] = useState(0); //일반
+  const [eW, setEW] = useState(0); //연장
+  const [rW, setRW] = useState(0); //휴일
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -45,8 +54,46 @@ const App = () => {
   };
 
 
+  const changeTap = (idx, tab) => {
+    let element = document.querySelectorAll(".AttendanceStatus_type > div");
+    for(let i = 0; i < element.length; i ++)  {
+      if(i == idx) {
+        element[i].className = "AttendanceStatus_type01";
+      } else {
+        element[i].className = "AttendanceStatus_type02";
+      }
+    }
+
+    if(tab == 'A') { //전체검색
+      axios
+      .post("http://43.200.115.198:8080/getAttendance.jsp")
+      .then((response) => {
+        setAttendData(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+    } else {
+
+      let param = qs.stringify({
+        work_form: tab
+      });
+
+      axios
+      .post("http://43.200.115.198:8080/getAttendance.jsp", param)
+      .then((response) => {
+        setAttendData(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+    }
+    
+  }
+  
 
   useEffect(() => {
+    //각종 정보
     axios
       .post("http://43.200.115.198:8080/getAttendance.jsp")
       .then((response) => {
@@ -56,7 +103,36 @@ const App = () => {
         console.log(Error);
       });
 
-      axios
+    //외근, 휴일 등등 개수
+    axios
+      .post("http://43.200.115.198:8080/getAttendance_workCount.jsp")
+      .then((response) => {
+        let data = response.data.ITEMS;
+        if(data["OW"]) {
+          setOW(parseInt(data["OW"]));
+        } 
+        if(data["BT"]) {
+          setBT(parseInt(data["BT"]));
+        } 
+        if(data["HW"]) {
+          setHW(parseInt(data["HW"]));
+        } 
+        if(data["NM"]) {
+          setNM(parseInt(data["NM"]));
+        } 
+        if(data["EW"]) {
+          setEW(parseInt(data["EW"]));
+        }
+        if(data["RW"]) {
+          setRW(parseInt(data["RW"]));
+        }
+      }) 
+      .catch((Error) => {
+        console.log(Error);
+      });
+
+    //코드 정보
+    axios
       .post("http://43.200.115.198:8080/getAllCodeNm.jsp")
       .then((response) => {
         setCodeData(response.data.ITEMS);
@@ -64,6 +140,7 @@ const App = () => {
       .catch((Error) => {
         console.log(Error);
       });
+
   }, []);
 
 
@@ -163,35 +240,35 @@ const App = () => {
       <div className="AttendanceStatus_content">
         <span>근태/근무현황</span>
         <div className="AttendanceStatus_type">
-          <div className="AttendanceStatus_type01">
+          <div className="AttendanceStatus_type01" onClick={(e) => {changeTap(0, "A")}}>
             <span>전체</span>
             <br></br>
-            <span>{userAttendData ? userAttendData[""] : ""}</span>
+            <span>{oW + bT + hW + nM + eW + rW}건</span>
           </div>
-          <div className="AttendanceStatus_type02">
+          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(1, "OW")}}>
             <span>외근</span>
             <br></br>
-            <span>1건</span>
+            <span>{oW}건</span>
           </div>
-          <div className="AttendanceStatus_type03">
+          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(2, "BT")}}>
             <span>출장</span>
             <br></br>
-            <span>1건</span>
+            <span>{bT}건</span>
           </div>
-          <div className="AttendanceStatus_type04">
+          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(3, "HW")}}>
             <span>재택</span>
             <br></br>
-            <span>1건</span>
+            <span>{hW}건</span>
           </div>
-          <div className="AttendanceStatus_type05">
+          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(4, "EW")}}>
             <span>연장근무</span>
             <br></br>
-            <span>1건</span>
+            <span>{eW}건</span>
           </div>
-          <div className="AttendanceStatus_type06">
+          <div className="AttendanceStatus_type02" onClick={(e) => {changeTap(5, "RW")}}>
             <span>휴일대체</span>
             <br></br>
-            <span>1건</span>
+            <span>{rW}건</span>
           </div>
         </div>
         <div className="AttendanceStatus_table">
