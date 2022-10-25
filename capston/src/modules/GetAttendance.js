@@ -14,13 +14,8 @@ export const getInfo = (setAttendData) => {
         end_date: "20221025"
     });
 */      
-    let param = qs.stringify ({
-        work_form : "EW"
-    });
-    
-    
     axios
-        .post("http://43.200.115.198:8080/getAttendance.jsp", param)
+        .post("http://43.200.115.198:8080/getAttendance.jsp")
         .then((response) => { 
             setAttendData(response.data.ITEMS);
             console.log(response.data.ITEMS);

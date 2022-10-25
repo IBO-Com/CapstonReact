@@ -120,3 +120,11 @@
   padding: 8px;
   font-size: 12px;
 }
+
+.attendTable_head {
+  height: 20px;
+}
+
+.AttendanceStatus_table table thead tr {
+  height: 40px;
+}

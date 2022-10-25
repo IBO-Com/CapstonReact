@@ -8,6 +8,7 @@ import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import "../css/AttendanceStatus/AttendanceStatus.css";
 import { differenceInSeconds } from "date-fns";
+import axios from "axios";
 import * as GetAttendance from "../modules/GetAttendance"
 
 
@@ -20,9 +21,10 @@ class koLocalizedUtils extends DateFnsUtils {
 const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-10-01"));
   const [endDate, setEndDate] = useState(new Date());
+  const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
-
   const [AttendData, setAttendData] = useState([]);
+  const [userAttendData, setUserAttendData] = useState();
 
   useEffect(() => {
     GetAttendance.getInfo(setAttendData);
@@ -39,6 +41,26 @@ const App = () => {
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
   };
+
+  const textNameHandle = (e) => {
+    setTextName(e.target.value);
+  };
+
+
+
+  useEffect(() => {
+    axios
+      .post("http://43.200.115.198:8080/getAttendance.jsp")
+      .then((response) => {
+        setAttendData(response.data.ITEMS);
+        console.log(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }, []);
+
+
 
   return (
     <div className="AttendanceStatus_container">
@@ -127,7 +149,7 @@ const App = () => {
             variant="outlined"
             size="small"
             margin="small"
-          // onChange={textNameHandle}
+            onChange={textNameHandle}
           />
         </FormControl>
         <button className="AttendanceStatus_searchBtn">검색</button>
@@ -138,7 +160,7 @@ const App = () => {
           <div className="AttendanceStatus_type01">
             <span>전체</span>
             <br></br>
-            <span>5건</span>
+            <span>{userAttendData ? userAttendData[""] : ""}</span>
           </div>
           <div className="AttendanceStatus_type02">
             <span>외근</span>
@@ -167,34 +189,44 @@ const App = () => {
           </div>
         </div>
         <div className="AttendanceStatus_table">
-          <table>
-            <thead>
-              <tr>
-                <td>일자</td>
-                <td>요일</td>
-                <td>성명</td>
-                <td>부서</td>
-                <td>직책</td>
-                <td>근태항목</td>
-                <td>시작시각</td>
-                <td>종료시각</td>
-                <td>소요시각</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2022-10-01</td>
-                <td>토요일</td>
-                <td>김명지</td>
-                <td>경영지원부</td>
-                <td>사원</td>
-                <td>연장근무</td>
-                <td>18:00</td>
-                <td>20:00</td>
-                <td>2:00</td>
-              </tr>
-            </tbody>
-          </table>
+          {!AttendData ? (
+            "No data found"
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>일자</th>
+                  <th>성명</th>
+                  <th>부서</th>
+                  <th>직책</th>
+                  <th>근태항목</th>
+                  <th>시작시간</th>
+                  <th>종료시간</th>
+                  <th>연장시간(분)</th>
+                  <th>야근시간(분)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {AttendData.map(function (attend, index) {
+                  return (
+                    <>
+                      <tr>
+                        <td>{attend.in_date.slice(0,4)}년 {attend.in_date.slice(4,6)}월 {attend.in_date.slice(6,8)}일</td>
+                        <td>성명</td>
+                        <td>부서</td>
+                        <td>직책</td>
+                        <td>{attend.work_form === "NM" ? "일반근무" : "" || attend.work_form === "OW" ? "외근근무" : "" || attend.work_form === "BT" ? "출장근무" : "" || attend.work_form === "HW" ? "재택근무" : "" || attend.work_form === "EW" ? "연장근무" : "" || attend.work_form === "RW" ? "휴일근무" : ""}</td>
+                        <td>{attend.start_datetime.slice(0,2)}시 {attend.start_datetime.slice(2,4)}분</td>
+                        <td>{attend.end_datetime.slice(0,2)}시 {attend.end_datetime.slice(2,4)}분</td>
+                        <td>{attend.over_datetime}</td>
+                        <td>{attend.night_datetime}</td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>
