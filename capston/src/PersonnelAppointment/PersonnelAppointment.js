@@ -100,7 +100,7 @@ const App = () => {
         </div>
 
         {openModal === true ? (
-          <AppointmentModal openModal={openModal} setOpenModal={setOpenModal} />
+          <AppointmentModal peopleData={peopleData} openModal={openModal} setOpenModal={setOpenModal} />
         ) : (
           ""
         )}

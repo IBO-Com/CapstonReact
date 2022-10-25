@@ -18,7 +18,7 @@ class koLocalizedUtils extends DateFnsUtils {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
 }
-const AppointmentModal = ({ openModal, setOpenModal }) => {
+const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
   const [startDate, setStartDate] = useState(new Date("2022-10-01"));
   const handleStartDateChange = (date) => {
     setStartDate(date);
