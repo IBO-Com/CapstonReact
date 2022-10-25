@@ -1,30 +1,36 @@
-import React from 'react';
-
-//이미지
-import notice from "./img/notice.png";
-import profile from "./img/profile.png";
-
-//css
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { AiOutlineSetting, AiOutlineBell } from "react-icons/ai";
 import "./css/userHeader.css";
 
 const App = () => {
-	return (
+
+    useEffect(() => {
+        axios
+            .post("http://43.200.115.198:8080/empselect.jsp")
+            .then((res) => {
+                setPeopleData(res.data.ITEMS);
+            })
+            .catch((Error) => {
+                console.log(Error);
+            });
+    }, []);
+
+    const [peopleData, setPeopleData] = useState();
+
+    return (
         <div>
-            <div class="userHeader_wrap">
-                <div class="userHeader_sub_wrap">
-                    <p class="userHeader_sub_tile">김명지님 환영합니다!</p>
-                    <div class="userHeader_sub_menu">
-                    <ul>
-                        <li class="userHeader_notice"><img src={notice} alt="알림"/>
-                        </li>
-                        <li class="userHeader_profile"><img src={profile} alt="회원정보수정"/>
-                        </li>
-                    </ul>
+            <div className="userHeader_wrap">
+                <div className="userHeader_sub_wrap">
+                    <p className="userHeader_sub_tile">이정재님 환영합니다!</p>
+                    <div className="userHeader_sub_menu">
+                        <button className="userHeader_notice"><AiOutlineSetting size={"30px"} color={"gray"} /></button>
+                        <button className="userHeader_profile"><AiOutlineBell size={"30px"} color={"gray"} /></button>
                     </div>
                 </div>
             </div>
         </div>
-	);
+    );
 };
 
 export default App;

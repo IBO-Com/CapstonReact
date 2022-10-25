@@ -198,12 +198,18 @@ const App = () => {
         </div>
 
         <FormControl>
-          <TextField
-            id="outlined-basic"
+          <input
+            style={{
+              lineHeight: "33px",
+              width: "170px",
+              height: "33px",
+            }}
+            placeholder="사번 / 성명"
+            type="text"
+            className="RetirementApproval_input"
             label="사번/성명"
             variant="outlined"
             size="small"
-            margin="small"
             onChange={textNameHandle}
           />
         </FormControl>
@@ -249,9 +255,6 @@ const App = () => {
                           type="radio"
                           name="userSelect"
                           className="retirement_radio"
-                          //   onChange={() => {
-                          //     radioBoxChange(name.sabun);
-                          //   }}
                         />
                       </td>
                       <td> </td>

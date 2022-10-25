@@ -80,7 +80,9 @@
     letter-spacing: 0.1em;
 }
 
-.monthlyPay_total, .monthlyPay_deduct, .monthlyPay_amount {
+.monthlyPay_total,
+.monthlyPay_deduct,
+.monthlyPay_amount {
     margin-left: 100px;
     margin-top: 5px;
     width: 180px;
@@ -136,7 +138,8 @@
     padding-top: 20px;
 }
 
-.monthlytotalWork_ment, .monthlyWorkTime_ment {
+.monthlytotalWork_ment,
+.monthlyWorkTime_ment {
     color: #5A6163;
     font-family: 'Noto Sans KR';
     font-weight: bold;
@@ -173,8 +176,8 @@
     margin-left: 120px;
 }
 
-.monthlyTable tr td{
-    padding: 15px 10px;   
+.monthlyTable tr td {
+    padding: 15px 10px;
     font-size: 12px;
     border: 1px solid #D9D9D9;
     width: 100px;
@@ -200,4 +203,16 @@
 
 .TabletotalDeduct {
     color: red;
+}
+
+.monthlyPayDebuct {
+    width: 120px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 10px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
 }

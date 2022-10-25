@@ -30,6 +30,11 @@
   margin-left: 20px;
   margin-right: 20px;
 }
+.RetirementApproval_input {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-top: 1px;
+}
 .RetirementApproval_searchtBtn {
   width: 97px;
   height: 36px;

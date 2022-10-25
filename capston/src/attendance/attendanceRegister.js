@@ -112,7 +112,6 @@ function AttendanceRegister() {
       text: "이름",
       align: "center",
       cellsalign: "center",
-      editable: false,
       datafield: "name",
       width: 150,
     },

@@ -5,6 +5,10 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
+.empimg {
+	border-radius: 15px 15px 15px 15px;
+}
+
 .userHeader_wrap {
 	position: relative;
 	display: flex;
@@ -43,4 +47,13 @@
 
 .userHeader_sub_menu ul>li.notice {
 	margin-right: 15px;
+}
+
+.userHeader_notice {
+	margin-right: 10px;
+}
+
+.userHeader_notice, .userHeader_profile {
+	border: 0;
+	margin-top: 5px;
 }

@@ -2,8 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import "../css/monthlySalary/monthlySalaryCheck.css";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
+import Modal from 'react-modal';
 import axios from "axios";
 import qs from "qs";
+import ModalMonthlySalary from "./modalMonthlySalary";
+
 
 const App = () => {
    const todayTime = () => {
@@ -18,6 +21,8 @@ const App = () => {
    const [toogleState, setToggleState] = useState(1);
    const [peopleData, setPeopleData] = useState();
    const [textName, setTextName] = useState('');
+   const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
+   console.log(monthlyPayDebuct);
 
    const toggleTab = (index) => {
       setToggleState(index);
@@ -83,7 +88,7 @@ const App = () => {
          <div className="monthlyPay_viewer">
             <div className="monthlyPay_ment">
                <span>급여지급일 {todayTime()}</span>
-               <button className="monthlyPay_Btn">급여명세서 조회</button>
+               <button className="monthlyPay_Btn">(주) IBO</button>
             </div>
             <div className="monthlyPay_total">
                <p>총 급여</p>
@@ -130,10 +135,22 @@ const App = () => {
             </div>
          </div>
 
-
          <div className="monthlyPayCheck_title">
             <p>급여현황</p>
+            <button
+               className="monthlyPayDebuct"
+               onClick={() => {
+                  setMonthlyPayDebuct(true);
+               }}>
+                  공제액 도움말
+            </button>
          </div>
+         {monthlyPayDebuct == true ? (
+            <ModalMonthlySalary setMonthlyPayDebuct = {setMonthlyPayDebuct}/>
+         ) : (
+            ""
+         )}
+
          <table className="monthlyTable">
             <tr className="monthlyFirst">
                <td colSpan={2}>지급액</td>

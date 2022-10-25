@@ -5,6 +5,8 @@ import "./css/empinfo/empinfo.css";
 import Empbase from "./empInfo_detail/Empbase";
 import Appointment from "./empInfo_detail/Appointment";
 import Account from "./empInfo_detail/Account";
+import Family from "./empInfo_detail/Family";
+import License from "./empInfo_detail/License";
 
 import axios from "axios";
 import qs from "qs";
@@ -39,13 +41,19 @@ const App = () => {
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
-        
+
         let startDate = new Date(
           userInfo["start_date"].slice(0, 4),
-          parseInt(userInfo["start_date"].slice(4, 6)) -1, //Date 연산으로 인한 -1을 해주어야 함
+          parseInt(userInfo["start_date"].slice(4, 6)) - 1, //Date 연산으로 인한 -1을 해주어야 함
           userInfo["start_date"].slice(6, 8)
         );
-        GetYearOfWork.getYearOfWork(startDate, today, setWorkYear, setWorkMonth, setWorkDay);
+        GetYearOfWork.getYearOfWork(
+          startDate,
+          today,
+          setWorkYear,
+          setWorkMonth,
+          setWorkDay
+        );
 
         if (
           today.getFullYear() - 2000 <
@@ -57,8 +65,16 @@ const App = () => {
         }
         setUserData(response.data.ITEMS[0]);
 
-        GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
-        setCenter, setDept, setTeam, setRank);
+        GetCDTR.getCDTR(
+          userInfo["center"],
+          userInfo["dept"],
+          userInfo["team"],
+          userInfo["rank"],
+          setCenter,
+          setDept,
+          setTeam,
+          setRank
+        );
       });
   }, []);
 
@@ -76,16 +92,18 @@ const App = () => {
         </div>
 
         <div className="nameAnddept">
-        <p className="empinfoName" style={{fontSize:"20px"}}>
+          <p className="empinfoName" style={{ fontSize: "20px" }}>
             {userData["name"] ? userData["name"] : "로딩중"}
           </p>
 
-          <p className="empinfoDept" style={{fontSize:"13px"}}>{center}</p>
+          <p className="empinfoDept" style={{ fontSize: "13px" }}>
+            {center}
+          </p>
         </div>
 
-        <div class="empBox">
-          <table class="empFirstTable">
-            <tbody class="empinfoList">
+        <div className="empBox">
+          <table className="empFirstTable">
+            <tbody className="empinfoList">
               <tr>
                 <td>ㆍ사번</td>
                 <td>ㆍ재직상태</td>
@@ -149,7 +167,7 @@ const App = () => {
         <hr className="empFirstLine" align="left"></hr>
         <div className="empTabFlex">
           <div
-            class="empBasic btn"
+            className="empBasic btn"
             onClick={() => {
               toggleTab(1);
             }}
@@ -157,7 +175,7 @@ const App = () => {
             인사기본
           </div>
           <div
-            class="appoint btn"
+            className="appoint btn"
             onClick={() => {
               toggleTab(2);
             }}
@@ -165,12 +183,28 @@ const App = () => {
             발령
           </div>
           <div
-            class="account btn"
+            className="account btn"
             onClick={() => {
               toggleTab(3);
             }}
           >
             계좌
+          </div>
+          <div
+            className="family btn"
+            onClick={() => {
+              toggleTab(4);
+            }}
+          >
+            가족
+          </div>
+          <div
+            className="license btn"
+            onClick={() => {
+              toggleTab(5);
+            }}
+          >
+            자격
           </div>
         </div>
 
@@ -183,6 +217,8 @@ const App = () => {
           )}
           {toogleState === 2 ? <Appointment /> : ""}
           {toogleState === 3 ? <Account /> : ""}
+          {toogleState === 4 ? <Family /> : ""}
+          {toogleState === 5 ? <License /> : ""}
         </div>
       </div>
     </div>

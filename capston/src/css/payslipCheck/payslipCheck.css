@@ -1,5 +1,5 @@
 .payslipCheck_box {
-    background-color:white;
+    background-color: white;
     width: 98%;
     display: flex;
 }
@@ -12,6 +12,10 @@
 .payslip_dateBox {
     padding: 20px 20px;
     margin-left: 83px;
+}
+
+.payslip_dateBox span {
+    margin-right: 10px;
 }
 
 .payslip_dateBox .payslip_search_btn {
@@ -31,7 +35,7 @@
 }
 
 .payslipCheck_box {
-    background-color:white;
+    background-color: white;
     width: 98%;
     display: flex;
 }
@@ -91,7 +95,7 @@
     width: 130px;
     color: #FFFFFF;
     height: 28px;
-    margin-left: 500px;
+    margin-left: 340px;
     margin-top: 20px;
     margin-bottom: 10px;
     border: none;
@@ -108,4 +112,28 @@
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
     border-radius: 3px;
+}
+
+.payslip_DebuctBtn {
+    width: 150px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 10px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+}
+
+.payslip {
+    width: 120px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 10px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
 }

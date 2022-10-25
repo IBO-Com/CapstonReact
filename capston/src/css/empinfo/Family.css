@@ -1,0 +1,70 @@
+.Family_container {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 20px;
+}
+.Family_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.Family_header span {
+  font-family: Noto Sans KR;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.Family_removeBtn {
+  width: 50px;
+  height: 30px;
+  margin-right: 20px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.Family_addBtn {
+  width: 50px;
+  height: 30px;
+  margin-right: 20px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.Family_saveBtn {
+  width: 50px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.Family_table table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}
+.Family_table table thead {
+  background: #ebeff2;
+  font-size: 14px;
+}
+.Family_table table td {
+  padding: 10px;
+  border: 1px solid#D9D9D9;
+}
+.Family_table table tbody td {
+  font-family: Noto Sans KR;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0.1em;
+  text-align: center;
+}

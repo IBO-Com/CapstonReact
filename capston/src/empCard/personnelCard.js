@@ -41,6 +41,8 @@ const App = () => {
   };
 
   const sendSubmit = () => {
+    console.log("send submit")
+
     /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
@@ -56,7 +58,9 @@ const App = () => {
       query["dept"] = selectDepart;
     }
 
-    console.log(query);
+    postParam = qs.stringify(query);
+
+    //console.log(query);
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)

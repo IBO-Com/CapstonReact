@@ -51,33 +51,33 @@ const App = ({isLogin, setIsLogin}) => {
 
 	return (
       <div className='LoginApp'>
-        <div class="left_ibo">
-          <img class="logo" src={security_icon} alt="IBO"/>
-          <h2 class="com_name">IBO</h2>
-          <p class="left">
+        <div className="left_ibo">
+          <img className="logo" src={security_icon} alt="IBO"/>
+          <h2 className="com_name">IBO</h2>
+          <p className="left">
             Welcome to IBO! <br/> Enter your account
           </p>
         </div>
 
-        <div class="userlogin">
-          <form class="input" >
-            <div class="inputid">
+        <div className="userlogin">
+          <form className="input" >
+            <div className="inputid">
               <input type="text" name="userid" id="userid" autocomplete="off" Value={inputId} onChange={(e) => {setInputId(e.target.value)}}
                 placeholder="아이디를 입력해주세요."/>
             </div>
-            <div class="inputpw">
+            <div className="inputpw">
               <input type="password" name="userpw" id="userpw" autocomplete="off"  Value={inputPw} onChange={(e) => {setInputPw(e.target.value)}}
                 placeholder="비밀번호를 입력해주세요."/>
             </div>
             <div>
-              <span class="rememid"><input type="checkbox"/> 아이디 저장</span>
+              <span className="rememid"><input type="checkbox"/> 아이디 저장</span>
             </div>
             <br/>
             <div>
                 <input id="loginbtn" name="loginbtn" value="LOGIN" onClick={Submit}/>
             </div>
             <br/>
-            <div class="findbtn">
+            <div className="findbtn">
               <Link to="/findpw">
                 <span className='/findpw'>비밀번호를 잊어버리셨나요?</span>
               </Link>

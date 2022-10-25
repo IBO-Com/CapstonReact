@@ -12,9 +12,9 @@ const App = () => {
 					<button className="empBasic_editBtn">수정</button>
 				</div>
 
-				<div class="empBasicBox_divSection">
-					<table class="empBasicTableBox">
-						<tbody class="empBasicInfoList">
+				<div className="empBasicBox_divSection">
+					<table className="empBasicTableBox">
+						<tbody className="empBasicInfoList">
 							<tr className="empBasic1">
 								<td>성명</td>
 								<td>김명지</td>

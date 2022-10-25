@@ -1,54 +1,82 @@
 import React from "react";
 import "../css/accountregister/accountRegister.css";
 import Checkbox from "@material-ui/core/Checkbox";
+import { Button } from "@mui/material";
+import styles from "../css/emp/empRegister/empRegister.module.css";
 
 const App = () => {
   return (
     <div className="accountRegister_container">
-      <div className="accountRegister_content">
-        <div className="accountRegister_title">
-          <span>김명지의 계좌</span>
-          <div className="accountRegister_Btn">
-            <button className="accountRegister_addBtn">추가</button>
-            <button className="accountRegister_saveBtn">저장</button>
-          </div>
+      <Button
+        className={styles.buttonStyle}
+        style={{
+          marginLeft: "92%",
+          marginRight: "2.5vw",
+          marginTop: "-90px",
+        }}
+        // onClick={() => clickSaveButton()}
+        variant="contained"
+      >
+        저장
+      </Button>
+
+      <div className="accountRegister_title">
+        <span>이정재의 계좌</span>
+        <div className="accountRegister_Btn">
+          <button className="accountRegister_removeBtn">삭제</button>
+          <button className="accountRegister_addBtn">추가</button>
+          <button className="accountRegister_saveBtn">저장</button>
         </div>
-        <div className="accountRegister_list">
-          <table className="accountRegister_accountTable">
-            <th>번호</th>
-            <th>삭제</th>
-            <th>은행코드</th>
-            <th>계좌번호</th>
-            <th>예금주</th>
-            <th>비고</th>
+      </div>
+      <div className="accountRegister_list">
+        <table>
+          <thead>
+            <tr>
+              <td>번호</td>
+              <td>삭제</td>
+              <td>은행코드</td>
+              <td>계좌번호</td>
+              <td>예금주</td>
+              <td>비고</td>
+            </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>1</td>
-              <td className="accountRegister_checkbox">
-                <Checkbox
-                  color="primary"
-                  inputProps={{ "aria-label": "secondary checkbox" }}
+              <td>
+                <input
+                  type="radio"
+                  name="userSelect"
+                  className="account_radio"
+                  //   onChange={() => {
+                  //     radioBoxChange(name.sabun);
+                  //   }}
                 />
               </td>
               <td>신한은행</td>
               <td>1020301203102</td>
-              <td>김명지</td>
+              <td>이정재</td>
               <td> </td>
             </tr>
             <tr>
               <td>2</td>
-              <td className="accountRegister_checkbox">
-                <Checkbox
-                  color="primary"
-                  inputProps={{ "aria-label": "secondary checkbox" }}
+              <td>
+                <input
+                  type="radio"
+                  name="userSelect"
+                  className="account_radio"
+                  //   onChange={() => {
+                  //     radioBoxChange(name.sabun);
+                  //   }}
                 />
               </td>
               <td>농협은행</td>
               <td>1022601234105</td>
-              <td>김명지</td>
+              <td>이정재</td>
               <td> </td>
             </tr>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
   );
