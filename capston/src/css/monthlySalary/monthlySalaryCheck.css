@@ -201,3 +201,15 @@
 .TabletotalDeduct {
     color: red;
 }
+
+.monthlyPay_DebuctBtn {
+    width: 150px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 10px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+}

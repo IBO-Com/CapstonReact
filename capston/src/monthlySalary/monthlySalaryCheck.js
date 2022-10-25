@@ -133,6 +133,7 @@ const App = () => {
 
          <div className="monthlyPayCheck_title">
             <p>급여현황</p>
+            <button className="monthlyPay_DebuctBtn">급여 공제액 도움말</button>
          </div>
          <table className="monthlyTable">
             <tr className="monthlyFirst">
