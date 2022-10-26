@@ -8,8 +8,11 @@ import User from "../src/img/user.png";
 import ApexCharts from 'react-apexcharts';
 
 const App = () => {
+  let maxAnnual = 15;
+  const [annual, setAnnual] = useState(12.5); //연차 개수 
+
   const [data, setData] = useState({
-    series: [12],
+    series: [100 / maxAnnual * annual], //100 -> 12
     options: {
       chart: {
         height: 0,
@@ -24,7 +27,7 @@ const App = () => {
           endAngle: 360,
            hollow: {
             margin: 0,
-            size: '70%',
+            size: '85%',
             background: '#fff',
             image: undefined,
             imageOffsetX: 0,
@@ -40,7 +43,7 @@ const App = () => {
           },
           track: {
             background: '#fff',
-            strokeWidth: '67%',
+            strokeWidth: '50%',
             margin: 0, // margin is in pixels
             dropShadow: {
               enabled: true,
@@ -61,10 +64,11 @@ const App = () => {
             },
             value: {
               formatter: function(val) {
-                return parseInt(val);
+
+                return annual + "개"
               },
               color: '#111',
-              fontSize: '36px',
+              fontSize: '20px',
               show: true,
             }
           }
@@ -86,7 +90,7 @@ const App = () => {
       stroke: {
         lineCap: 'round'
       },
-      labels: ['Percent'],
+      labels: ['잔여연차'],
     },
 }
   );
@@ -111,66 +115,55 @@ const App = () => {
             </div>
           </div>
           <div className="hrMain_work_container">
-            <h4>근무 정보</h4>
-            <div className="hrMain_workInfo">
-              <ul>
-                <li className="hrMain_today">2022.09.29 목</li>
-                <li>출근 2022-07-29 08:49</li>
-                <li>
-                <ApexCharts options={data.options} series={data.series} type="radialBar" height={350} />
+            <div>
+              <h4>근무 정보</h4>
+              <div className="hrMain_workInfo">
+                <div style={{padding: "15px", fontSize: "20px", fontWeight: "bold"}}>2022.10.27 (목)</div>
+                <div className="hrMain_workInfo_work">
+                  <div className="hrMain_workState"> 출근 </div>
+                  <div className="hrMain_workDate"> 2022-07-29 </div>
+                  <div className="hrMain_workTime"> 08:49</div>
+                </div>
 
-    
-                </li>
-                <p>
-                  {" "}
-                  잔여 연차 12개 / 총 연차 5개 <br /> 2022년 17개 갱신{" "}
-                </p>
-              </ul>
+                <ApexCharts options={data.options} series={data.series} type="radialBar" height={200}/>
+                <div className="hrMain_workBottomText">2022년 17개 갱신</div>
+              </div>
             </div>
-            <div className="hrMain_history">
-              <h4>신청내역</h4>
-              <button className="hrMain_history_btn">
-                <img className="hrMain_button_img" src={Basic} alt="detail" />
-              </button>
+
+          </div>
+
+          <div className="hrMain_work_container">
+            <div>
+              <h4>신청 내역</h4>
+              <div className="hrMain_workTable">
+                <table className="hrMain_table">
+                  <thead>
+                    <tr>
+                      <td>신청종류</td>
+                      <td>신청일자</td>
+                      <td>처리</td>
+                      <td>접수일자</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>연차휴가</td>
+                      <td>2022.07.28</td>
+                      <td>완료</td>
+                      <td>2022.07.28</td>
+                    </tr>
+
+                    <tr>
+                      <td>출장</td>
+                      <td>2022.03.15</td>
+                      <td>완료</td>
+                      <td>2022.03.15</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div className="hrMain_historyList">
-              <table className="hrMain_historyTable">
-                <th>신청종류</th>
-                <th>신청일자</th>
-                <th>처리</th>
-                <th>접수일자</th>
-                <tr>
-                  <td>연차휴가</td>
-                  <td>2022.07.28</td>
-                  <td>완료</td>
-                  <td>2022.07.28</td>
-                </tr>
-                <tr>
-                  <td>연차휴가</td>
-                  <td>2022.07.15</td>
-                  <td>완료</td>
-                  <td>2022.07.15</td>
-                </tr>
-                <tr>
-                  <td>연차휴가</td>
-                  <td>2022.05.15</td>
-                  <td>완료</td>
-                  <td>2022.05.15</td>
-                </tr>
-                <tr>
-                  <td>출장</td>
-                  <td>2022.03.15</td>
-                  <td>완료</td>
-                  <td>2022.03.15</td>
-                </tr>
-                <tr>
-                  <td>연차휴가</td>
-                  <td>2022.02.15</td>
-                  <td>완료</td>
-                  <td>2022.02.15</td>
-                </tr>
-              </table>
-            </div>
+
           </div>
         </div>
 

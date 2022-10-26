@@ -19,6 +19,9 @@ const App = () => {
    }
    const [salaryData, setSalaryData] = useState({});
    const [salary, setSalary] = useState(0);
+   const [payOver, setPayOver] = useState(1);
+   const [payNight, setPayNight] = useState(1);
+   
 
    const [toogleState, setToggleState] = useState(1);
    const [peopleData, setPeopleData] = useState();
@@ -70,6 +73,10 @@ const App = () => {
          axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
             console.log(res2.data.ITEMS);
             setSalaryData(res2.data.ITEMS[0]);
+            setSalary(parseInt(res2.data.ITEMS[0].salary));
+            setPayOver(parseFloat(res2.data.ITEMS[0].pay_over));
+            setPayNight(parseFloat(res2.data.ITEMS[0].pay_night));
+            
          }).catch((Error) => {
             console.log(Error);
          })
@@ -185,7 +192,7 @@ const App = () => {
             </tr>
             <tr className="monthlyOne">
                <td>기본급</td>
-               <td></td>
+               <td>{parseInt(salary / 12).toLocaleString()}원</td>
                <td>국민연금</td>
                <td></td>
             </tr>
