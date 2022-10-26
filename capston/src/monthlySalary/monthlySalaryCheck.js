@@ -17,6 +17,8 @@ const App = () => {
 
       return todayYear + "-" + todayMonth + "-" + toDayDate;
    }
+   const [salaryData, setSalaryData] = useState({});
+   const [salary, setSalary] = useState(0);
 
    const [toogleState, setToggleState] = useState(1);
    const [peopleData, setPeopleData] = useState();
@@ -67,6 +69,7 @@ const App = () => {
          postParam2 = qs.stringify(postParam2)
          axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
             console.log(res2.data.ITEMS);
+            setSalaryData(res2.data.ITEMS[0]);
          }).catch((Error) => {
             console.log(Error);
          })
