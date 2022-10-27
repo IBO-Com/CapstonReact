@@ -1,0 +1,51 @@
+.formRetire_noBack {
+    background-color: white;
+}
+
+.formSeverPay_footer {
+    margin-top: 80px;
+    text-align: center;
+    color: #515966;
+    margin-bottom: 60px;
+}
+
+.formRetire_money,
+.formRetire_RetireMoney,
+.formRetire_bankInfo {
+    background: #EBEFF2;
+}
+
+.formSeverance_Info td:nth-child(odd) {
+    background: #EBEFF2;
+    width: 80px;
+    height: 15px;
+    padding: 8px 0px 8px 0px;
+}
+
+.formSeverance_Info td:nth-child(even) {
+    padding: 8px 0px 8px 0px;
+}
+
+.formRetire_bankInfo td:nth-child(odd) {
+    padding: 8px 0px 8px 0px;
+}
+
+.formRetire_bankInfo td:nth-child(even) {
+    padding: 8px 0px 8px 0px;
+}
+
+.formRetire_money td:nth-child(odd) {
+    padding: 10px 0px 10px 0px;
+}
+
+.formRetire_money td:nth-child(even) {
+    padding: 10px 0px 10px 0px;
+}
+
+.formRetire_RetireMoney td:nth-child(odd) {
+    padding: 10px 0px 10px 0px;
+}
+
+.formRetire_RetireMoney td:nth-child(even) {
+    padding: 10px 0px 10px 0px;
+}
