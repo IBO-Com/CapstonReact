@@ -81,7 +81,7 @@ const App = ({ componentRef, sabun }) => {
                         <tr className="payslip_money">
                             <td>연장근무</td>
                             <td>원</td>
-                            <td>건강보험</td>
+                            <td>건강보험외</td>
                             <td>원</td>
                         </tr>
 
@@ -95,7 +95,7 @@ const App = ({ componentRef, sabun }) => {
                         <tr className="payslip_money">
                             <td>휴일근무</td>
                             <td>원</td>
-                            <td>근로소득세</td>
+                            <td>근로소득세외</td>
                             <td>원</td>
                         </tr>
 

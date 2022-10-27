@@ -21,7 +21,6 @@ const Account = () => {
               <td>은행코드</td>
               <td>계좌번호</td>
               <td>예금주</td>
-              <td>비고</td>
             </tr>
           </thead>
           <tbody>
@@ -32,15 +31,11 @@ const Account = () => {
                   type="radio"
                   name="userSelect"
                   className="account_radio"
-                  //   onChange={() => {
-                  //     radioBoxChange(name.sabun);
-                  //   }}
                 />
               </td>
               <td>신한은행</td>
               <td>1020301203102</td>
               <td>이정재</td>
-              <td> </td>
             </tr>
             <tr>
               <td>2</td>
@@ -49,15 +44,11 @@ const Account = () => {
                   type="radio"
                   name="userSelect"
                   className="account_radio"
-                  //   onChange={() => {
-                  //     radioBoxChange(name.sabun);
-                  //   }}
                 />
               </td>
               <td>농협은행</td>
               <td>1022601234105</td>
               <td>이정재</td>
-              <td> </td>
             </tr>
           </tbody>
         </table>

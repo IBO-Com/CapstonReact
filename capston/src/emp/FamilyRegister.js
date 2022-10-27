@@ -16,8 +16,8 @@ class koLocalizedUtils extends DateFnsUtils {
 }
 
 const App = () => {
-  const [relationList, setRelationList] = useState("*");
-  const [cohabitationList, setCohabitaionList] = useState("*");
+  const [relationList, setRelationList] = useState("0");
+  const [cohabitationList, setCohabitaionList] = useState("0");
   const [birthDate, setBirthtDate] = useState(new Date("2020-01-01"));
 
   const handleRelationList = (event) => {
@@ -86,14 +86,14 @@ const App = () => {
                       }}
                       onChange={handleRelationList}
                     >
-                      <MenuItem value={"*"}>배우자</MenuItem>
-                      <MenuItem value={"01"}>자녀</MenuItem>
-                      <MenuItem value={"02"}>부</MenuItem>
-                      <MenuItem value={"03"}>모</MenuItem>
+                      <MenuItem value={"0"}>부</MenuItem>
+                      <MenuItem value={"1"}>모</MenuItem>
+                      <MenuItem value={"2"}>배우자</MenuItem>
+                      <MenuItem value={"3"}>자녀</MenuItem>
                     </Select>
                   </FormControl>
                 </td>
-                <td>김우굥</td>
+                <td>김무공</td>
                 <td>
                   <MuiPickersUtilsProvider
                     utils={koLocalizedUtils}
@@ -123,8 +123,8 @@ const App = () => {
                       }}
                       onChange={handleCohabitationList}
                     >
-                      <MenuItem value={"*"}>동거</MenuItem>
-                      <MenuItem value={"01"}>별거</MenuItem>
+                      <MenuItem value={"0"}>동거</MenuItem>
+                      <MenuItem value={"1"}>별거</MenuItem>
                     </Select>
                   </FormControl>
                 </td>

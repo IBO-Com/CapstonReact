@@ -6,6 +6,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import "../css/PersonnelAppointment/PersonnelAppointment.css";
 import AppointmentModal from "./AppointmentModal";
+import * as GetCDTR from "../modules/getCDTR";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -100,7 +101,12 @@ const App = () => {
         </div>
 
         {openModal === true ? (
-          <AppointmentModal peopleData={peopleData} openModal={openModal} setOpenModal={setOpenModal} />
+          <AppointmentModal
+            peopleData={peopleData}
+            setPeopleData={setPeopleData}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
         ) : (
           ""
         )}
@@ -110,14 +116,14 @@ const App = () => {
             <thead>
               <tr>
                 <td>번호</td>
-                <td>발령구분</td>
                 <td>발령일</td>
+                <td>발령구분</td>
+                <td>직책</td>
                 <td>사번</td>
                 <td>성명</td>
-                <td>발령내용</td>
-                <td>비고</td>
               </tr>
             </thead>
+
             {peopleData ? (
               <tbody>
                 {peopleData.map((item, index) => (
@@ -125,10 +131,9 @@ const App = () => {
                     <td>{index + 1}</td>
                     <td> </td>
                     <td> </td>
+                    <td> </td>
                     <td>{item.sabun}</td>
                     <td>{item.name}</td>
-                    <td> </td>
-                    <td> </td>
                   </tr>
                 ))}
               </tbody>
