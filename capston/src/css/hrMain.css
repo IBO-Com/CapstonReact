@@ -5,6 +5,7 @@ body {
 }
 
 .hrMain {
+  overflow-x: scroll;
   flex-grow: 1;
   height: 100;
   width: 98%;
@@ -28,7 +29,7 @@ body {
 }
 
 .hrMain_user_container {
-  width: 500px;
+  width: 330px;
   height: 480px;
 }
 
@@ -37,10 +38,10 @@ body {
 }
 
 .hrMain_userInfo {
-  width: 480px;
+  width: 330px;
   height: 380px;
   text-align: center;
-  border: 1px solid #ebeff2;
+  border: 1px solid lightgray;
   border-radius: 5px;
   text-align: center;
 }
@@ -81,16 +82,25 @@ body {
 }
 
 .hrMain_work_container {
-  padding-left: 70px;
+  margin-left: 50px;
   width: 600px;
   height: 480px;
 }
 
 .hrMain_workInfo {
-  width: 480px;
-  height: 150px;
-  border: 1px solid #ebeff2;
+  width: 400px;
+  height: 380px;
+  border: 1px solid lightgray;
   border-radius: 5px;
+}
+
+.hrMain_workTable {
+  overflow: hidden;
+  width: 500px;
+  height: 380px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+
 }
 
 .hrMain_workInfo ul {
@@ -102,7 +112,95 @@ body {
 }
 
 .hrMain_workInfo p {
+}
+
+.hrMain_workDate {
+  margin-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.hrMain_workTime {
+  margin-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+
+.hrMain_workState {
+  margin-left: 15px;
+  border: 1px solid lightgray;
+  background-color: #21BF54;
+  color: white;
+  border-radius: 5px;
   text-align: center;
+  line-height: 28px;
+  height: 30px;
+  width: 50px;
+
+}
+.hrMain_table {
+
+  width: 100%;
+
+}
+
+.hrMain_table {
+  border-spacing: 0;
+}
+
+.hrMain_table thead {
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #537AAA;
+  color: white;
+  text-align: center;
+}
+
+.hrMain_table thead td{
+  border-left: 1px solid lightgray;
+  padding: 0px;
+}
+
+.hrMain_table thead td:nth-child(1){
+  padding: 0px;
+}
+
+.hrMain_table tbody {
+  font-size: 14px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: black;
+  background-color: lightblue;
+}
+
+.hrMain_table tbody tr:nth-child(2n) {
+  background-color: whitesmoke;
+}
+.hrMain_table tbody tr:nth-child(2n - 1) {
+  background-color: white;
+}
+
+.hrMain_table tbody tr:nth-last-child(1) {
+  border-bottom: 1px solid lightgray;
+}
+
+
+.hrMain_table tbody td {
+  border-left: 1px solid lightgray;
+  padding: 0px;
+}
+
+
+.hrMain_workInfo_work {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
 }
 
 .hrMain_history {
@@ -117,15 +215,6 @@ body {
   margin-bottom: 0px;
 }
 
-.hrMain_history_btn {
-  margin-left: 390px;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  background: #f09336;
-  border: none;
-}
-
 .hrMain_button_img {
   width: 15px;
   height: 15px;
@@ -136,37 +225,20 @@ body {
   width: 480px;
 }
 
-.hrMain table,
-th,
-tr {
-  border: 1px solid #ebeff2;
-  border-collapse: collapse;
-}
-.hrMain_historyTable td {
-  border: 1px solid #ebeff2;
-  border-collapse: collapse;
-}
-
-.hrMain table {
+.hrMain_workBottomText {
+  margin-top: 15px;
   text-align: center;
-  margin: auto;
-  width: 100%;
 }
 
-.hrMain th {
-  font-weight: normal;
-  background-color: #537aaa;
-  color: #ffffff;
-}
 
 .hrMain_notice_container {
-  width: 1050px;
+  width: 1332px;
   height: 200px;
 }
 
 .hrMain_notice {
   width: 100%;
   height: 130px;
-  border: 1px solid #ebeff2;
+  border: 1px solid lightgray;
   border-radius: 5px;
 }

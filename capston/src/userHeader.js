@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { AiOutlineSetting, AiOutlineBell } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 import "./css/userHeader.css";
+import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const App = () => {
 
@@ -24,8 +26,13 @@ const App = () => {
                 <div className="userHeader_sub_wrap">
                     <p className="userHeader_sub_tile">이정재님 환영합니다!</p>
                     <div className="userHeader_sub_menu">
-                        <button className="userHeader_notice"><AiOutlineSetting size={"30px"} color={"gray"} /></button>
-                        <button className="userHeader_profile"><AiOutlineBell size={"30px"} color={"gray"} /></button>
+                        <button className="userHeader_logout"><BiLogOut size={"30px"} color={"gray"} /></button>
+                        <div class="userHeader_dropdown">
+                            <ul>
+                                <li><Link to="/" className="userHeader_logout">로그아웃</Link></li>
+                                <li><Link to="../login/changepw" className="userHeader_changepw">비밀번호 변경</Link></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

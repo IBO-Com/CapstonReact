@@ -15,14 +15,16 @@ const App = ({ componentRef, sabun }) => {
   const [center, setCenter] = useState("");
 
   useEffect(() => {
-    if(sabun == null) return;
+    if (sabun == null) return;
     console.log(sabun);
-    
+
     let postParam = qs.stringify({
-      sabunOrName: sabun
+      sabunOrName: sabun,
     });
 
-    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((response) => {
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((response) => {
         setUserData(response.data.ITEMS[0]);
         let userInfo = response.data.ITEMS[0];
 
@@ -35,10 +37,17 @@ const App = ({ componentRef, sabun }) => {
           setDefaultYear("20");
         }
 
-        GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
-        setCenter, setDept, setTeam, setRank);
-    });
-    
+        GetCDTR.getCDTR(
+          userInfo["center"],
+          userInfo["dept"],
+          userInfo["team"],
+          userInfo["rank"],
+          setCenter,
+          setDept,
+          setTeam,
+          setRank
+        );
+      });
   }, [sabun]);
 
   return (
@@ -104,13 +113,29 @@ const App = ({ componentRef, sabun }) => {
               <td>부서명</td>
               <td>{dept}</td>
               <td>입사년월일</td>
-              <td>{userData ? userData["start_date"].slice(0, 4) + "-" + userData["start_date"].slice(4, 6) + "-" + userData["start_date"].slice(6, 8) : ""}</td>
+              <td>
+                {userData
+                  ? userData["start_date"].slice(0, 4) +
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
+                  : ""}
+              </td>
             </tr>
             <tr className="table_bg">
               <td>성명</td>
               <td>{userData ? userData["name"] : ""}</td>
               <td>현직책발령일</td>
-              <td>{userData ? userData["start_date"].slice(0, 4) + "-" + userData["start_date"].slice(4, 6) + "-" + userData["start_date"].slice(6, 8) : ""}</td>
+              <td>
+                {userData
+                  ? userData["start_date"].slice(0, 4) +
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
+                  : ""}
+              </td>
             </tr>
             <tr className="table_bg">
               <td>직책</td>
@@ -120,90 +145,103 @@ const App = ({ componentRef, sabun }) => {
             </tr>
             <tr className="table_bg">
               <td>주민등록번호</td>
-              <td>{userData ? userData["identity"].slice(0,6) + "-" + userData["identity"].slice(6, 13) : ""}</td>
+              <td>
+                {userData
+                  ? userData["identity"].slice(0, 6) +
+                    "-" +
+                    userData["identity"].slice(6, 13)
+                  : ""}
+              </td>
               <td>생년월일</td>
-              <td>{userData ? defaultYear + userData["identity"].slice(0,2) + "-" + userData["identity"].slice(2,4) + "-" + userData["identity"].slice(4, 6) : ""}</td>
-            </tr>
-            
-            <tr className="firsttable family_td">
-                <td rowSpan={3}>가족사항</td>
-                <td>관계</td>
-                <td>성명</td>
-                <td>생년월일</td>
-                <td>동기여부</td>
-            </tr>
-            <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>
+                {userData
+                  ? defaultYear +
+                    userData["identity"].slice(0, 2) +
+                    "-" +
+                    userData["identity"].slice(2, 4) +
+                    "-" +
+                    userData["identity"].slice(4, 6)
+                  : ""}
+              </td>
             </tr>
 
             <tr className="firsttable family_td">
-                <td rowSpan={4}>경력사항</td>
-                <td>기간</td>
-                <td>학교명</td>
-                <td>전공</td>
-                <td>학위</td>
+              <td rowSpan={3}>가족사항</td>
+              <td>관계</td>
+              <td>성명</td>
+              <td>생년월일</td>
+              <td>동기여부</td>
             </tr>
-
             <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
-
             <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
-
-            <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
 
             <tr className="firsttable family_td">
-                <td rowSpan={4}>자격사항</td>
-                <td>취득일자</td>
-                <td>자격면허명</td>
-                <td>직책</td>
-                <td>담당업무</td>
+              <td rowSpan={4}>경력사항</td>
+              <td>기간</td>
+              <td>학교명</td>
+              <td>전공</td>
+              <td>학위</td>
             </tr>
 
             <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
 
             <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
 
             <tr>
-                <td>빈칸</td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
 
+            <tr className="firsttable family_td">
+              <td rowSpan={4}>자격사항</td>
+              <td>취득일자</td>
+              <td>자격면허명</td>
+              <td>직책</td>
+              <td>담당업무</td>
+            </tr>
+
+            <tr>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>빈칸</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </div>

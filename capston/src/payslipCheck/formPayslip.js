@@ -60,7 +60,7 @@ const App = ({ componentRef, sabun }) => {
                     <p>성명 : {userData ? userData["name"] : ""}</p>
                     <p>부서명 : {dept}</p>
                     <p>직책 : {rank}</p>
-                    <p>지급일 : {todayTime()}</p>
+                    <p>지급일 : {todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
                 </div>
 
                 <table className="formPayslipTable">
@@ -81,7 +81,7 @@ const App = ({ componentRef, sabun }) => {
                         <tr className="payslip_money">
                             <td>연장근무</td>
                             <td>원</td>
-                            <td>건강보험</td>
+                            <td>건강보험외</td>
                             <td>원</td>
                         </tr>
 
@@ -95,7 +95,7 @@ const App = ({ componentRef, sabun }) => {
                         <tr className="payslip_money">
                             <td>휴일근무</td>
                             <td>원</td>
-                            <td>근로소득세</td>
+                            <td>근로소득세외</td>
                             <td>원</td>
                         </tr>
 
@@ -119,7 +119,7 @@ const App = ({ componentRef, sabun }) => {
 
                 <div className="payslip_form_footer">
                     <p>귀하의 노고에 감사드립니다.</p>
-                    <p>{todayTime()}</p>
+                    <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
                     <p className="mbt">IBO</p>
                     <p>대표이사 담 당 자 (인)</p>
                 </div>
