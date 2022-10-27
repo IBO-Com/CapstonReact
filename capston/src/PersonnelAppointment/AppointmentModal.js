@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import React, { useState } from "react";
 import "../css/PersonnelAppointment/AppointmentModal.css";
 import testimg from "../img/testimg.jpg";
@@ -8,25 +7,107 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import koLocale from "date-fns/locale/ko";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
-//유겸이 바보 맞음 ㄱ-
-//유겸이 바보
-//서온이 바보
-//시연이 바보
+import axios from "axios";
+import qs from "qs";
+import * as GetCDTR from "../modules/getCDTR";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
 }
-const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
+const AppointmentModal = ({
+  peopleData,
+  setPeopleData,
+  openModal,
+  setOpenModal,
+}) => {
+  // 사번 성명 인풋
+  const [textName, setTextName] = useState("");
+  const textNameHandle = (e) => {
+    setTextName(e.target.value);
+
+    console.log(e.target.value);
+  };
+
+  // 발령일자
   const [startDate, setStartDate] = useState(new Date("2022-10-01"));
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
+  // 발령구분
+  const [selectType, setSelectType] = useState("*");
+  const handleSelectType = (event) => {
+    setSelectDepart(event.target.value);
+  };
 
+  // 부서선택
   const [selectDepart, setSelectDepart] = useState("*");
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
+  };
+
+  //직책선택
+  const [selectRank, setSeletRank] = useState("*");
+
+  const [empData, setEmpData] = useState();
+  const [dept, setDept] = useState("");
+  const [team, setTeam] = useState("");
+  const [rank, setRank] = useState("");
+  const [center, setCenter] = useState("");
+
+  // 검색
+  const sendSubmit = () => {
+    console.log("send submit");
+    /* 날짜 포멧 */
+    let sYear = String(startDate.getFullYear());
+    let sMonth = startDate.getMonth() + 1;
+    let sDay = startDate.getDate();
+
+    if (sMonth < 10) {
+      sMonth = "0" + sMonth;
+    }
+    if (sDay < 10) {
+      sDay = "0" + sDay;
+    }
+
+    let sDate = sYear + sMonth + sDay;
+
+    /* 쿼리 문 작성 */
+    let postParam = {};
+    let query = {};
+
+    query["startDate"] = sDate;
+
+    if (textName.trim() == "") {
+      delete query["sabunOrName"];
+    } else {
+      query["sabunOrName"] = textName;
+    }
+
+    postParam = qs.stringify(query);
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((res) => {
+        // setPeopleData(res.data.ITEMS);
+        setEmpData(res.data.ITEMS[0]);
+        let empInfo = res.data.ITEMS[0];
+
+        GetCDTR.getCDTR(
+          empInfo["center"],
+          empInfo["dept"],
+          empInfo["team"],
+          empInfo["rank"],
+          setCenter,
+          setDept,
+          setTeam,
+          setRank
+        );
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
   };
 
   return (
@@ -47,10 +128,17 @@ const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
             label="사번/성명"
             variant="outlined"
             size="small"
-            // onChange={textNameHandle}
+            onChange={textNameHandle}
           />
         </FormControl>
-        <button className="AppointmentModal_searchBtn">검색</button>
+        <button
+          className="AppointmentModal_searchBtn"
+          onClick={() => {
+            sendSubmit();
+          }}
+        >
+          검색
+        </button>
       </div>
 
       <div className="AppointmentModal_userInfo">
@@ -61,15 +149,13 @@ const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
           <table>
             <tr>
               <td>사번</td>
-              <td>1012210000</td>
-            </tr>
-            <tr>
               <td>성명</td>
-              <td>이정재</td>
+              <td>직책</td>
             </tr>
             <tr>
-              <td>소속</td>
-              <td>경영관리부</td>
+              <td>{empData ? empData["sabun"] : ""}</td>
+              <td>{empData ? empData["name"] : ""}</td>
+              <td>{dept}</td>
             </tr>
           </table>
         </div>
@@ -91,11 +177,11 @@ const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
             onChange={handleStartDateChange}
           />
         </MuiPickersUtilsProvider>
-        <span className="AppointmentModal_state">발령</span>
+        <span className="AppointmentModal_state">발령구분</span>
         <FormControl>
           <Select
-            value={selectDepart || ""}
-            onChange={handleSelectDepart}
+            value={selectType || ""}
+            onChange={handleSelectType}
             sx={{
               minWidth: "153px",
               height: 39,
@@ -123,16 +209,12 @@ const AppointmentModal = ({peopleData, openModal, setOpenModal }) => {
             <tbody>
               <tr>
                 <td>부서</td>
-                <td></td>
+                <td>{dept}</td>
                 <td></td>
               </tr>
               <tr>
                 <td>직책</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>비고</td>
+                <td>{rank}</td>
                 <td></td>
               </tr>
             </tbody>

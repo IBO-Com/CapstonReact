@@ -16,7 +16,7 @@ const App = () => {
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
   const [peopleData, setPeopleData] = useState();
-    const [sabun, setSabun] = useState();
+  const [sabun, setSabun] = useState();
   const componentRef = useRef(null);
 
   const [toogleState, setToggleState] = useState(1);
@@ -41,7 +41,7 @@ const App = () => {
   };
 
   const sendSubmit = () => {
-    console.log("send submit")
+    console.log("send submit");
 
     /* 쿼리 문 작성 */
     let postParam = {};
@@ -172,7 +172,8 @@ const App = () => {
                             <td>
                               <input
                                 type="radio"
-                                name="userSelect" className="Card_radio"
+                                name="userSelect"
+                                className="Card_radio"
                                 onChange={() => {
                                   radioBoxChange(name.sabun);
                                 }}
@@ -224,17 +225,17 @@ const App = () => {
             </div>
             <div className="Card_viewer">
               {toogleState === 1 ? (
-                <FormPersonnelCard componentRef={componentRef}  sabun={sabun}/>
+                <FormPersonnelCard componentRef={componentRef} sabun={sabun} />
               ) : (
                 ""
               )}
               {toogleState === 2 ? (
-                <FormProofofemp componentRef={componentRef}  sabun={sabun}/>
+                <FormProofofemp componentRef={componentRef} sabun={sabun} />
               ) : (
                 ""
               )}
               {toogleState === 3 ? (
-                <FormCareercert componentRef={componentRef}  sabun={sabun}/>
+                <FormCareercert componentRef={componentRef} sabun={sabun} />
               ) : (
                 ""
               )}

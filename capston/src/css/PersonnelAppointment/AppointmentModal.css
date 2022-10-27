@@ -55,9 +55,15 @@
 }
 .AppointmentModal_infoTable table {
   width: 100%;
+  margin-top: 10px;
 }
-.AppointmentModal_infoTable tr,
+.AppointmentModal_infoTable tr {
+  display: block;
+  border: none;
+  float: left;
+}
 .AppointmentModal_infoTable td {
+  display: block;
   padding: 8px;
 }
 .AppointmentModal_appointment {
