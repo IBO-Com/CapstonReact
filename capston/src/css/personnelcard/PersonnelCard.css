@@ -115,7 +115,7 @@
     position: absolute;
     width: 700px;
     height: 600px;
-    overflow: scroll;
+    overflow-y: scroll;
     margin-left: 80px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
