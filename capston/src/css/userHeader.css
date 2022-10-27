@@ -1,5 +1,4 @@
-@import
-	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 #header {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -30,30 +29,45 @@
 	border-radius: 5px 5px 0 0;
 }
 
-.userHeader_sub_tile{
-	font-size:18px;
-}
-.userHeader_sub_menu ul {
-	list-style: none;
-	display: flex;
-	flex-direction: row;
-}
-.userHeader_sub_menu ul>li img {
-	margin-left: 20px;
-	width: 30px;
-	height: 30px;
-	object-fit: cover;
+.userHeader_sub_tile {
+	font-size: 18px;
 }
 
-.userHeader_sub_menu ul>li.notice {
-	margin-right: 15px;
-}
-
-.userHeader_notice {
+.userHeader_logout {
 	margin-right: 10px;
-}
-
-.userHeader_notice, .userHeader_profile {
 	border: 0;
 	margin-top: 5px;
+}
+
+.userHeader_dropdown {
+	display: none;
+	position: fixed;
+	background-color: #EBEFF2;
+	width: 160px;
+	height: 105px;
+    transform: translate(-45%, -0%); 
+	z-index: 1;
+	text-align: center;
+	padding: 0;
+}
+
+.userHeader_dropdown ul li {
+	color: black;
+	padding: 10px 0px 10px 0px;
+	margin: 0;
+	display: block;
+	text-align: center;
+}
+
+.userHeader_dropdown ul {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.userHeader_dropdown ul li:hover {
+	background-color: #D4DEDF;
+}
+
+.userHeader_sub_menu:hover .userHeader_dropdown {
+	display: block;
 }
