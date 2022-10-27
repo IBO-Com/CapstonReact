@@ -14,10 +14,9 @@ import FamilyRegister from "./FamilyRegister";
 import LicenseRegister from "./LicenseRegister";
 import HelloBaseTab from "./HelloBaseTab";
 
-
 function EmpRegister() {
   const [toogleState, setToggleState] = useState(1);
-  
+
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -66,7 +65,6 @@ function EmpRegister() {
           >
             자격
           </div>
-    
         </div>
         <hr className={styles.empFirstLine} align="left" />
         <div>
@@ -76,7 +74,6 @@ function EmpRegister() {
           {toogleState === 4 ? <LicenseRegister /> : ""}
         </div>
       </div>
-     
     </div>
   );
 }
