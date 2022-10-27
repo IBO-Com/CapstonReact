@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BiLogOut } from "react-icons/bi";
 import "./css/userHeader.css";
+import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const App = () => {
 
@@ -27,8 +29,8 @@ const App = () => {
                         <button className="userHeader_logout"><BiLogOut size={"30px"} color={"gray"} /></button>
                         <div class="userHeader_dropdown">
                             <ul>
-                                <li>로그아웃</li>
-                                <li>비밀번호 변경</li>
+                                <li><Link to="/" className="userHeader_logout">로그아웃</Link></li>
+                                <li><Link to="../login/changepw" className="userHeader_changepw">비밀번호 변경</Link></li>
                             </ul>
                         </div>
                     </div>

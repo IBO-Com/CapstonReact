@@ -71,3 +71,7 @@
 .userHeader_sub_menu:hover .userHeader_dropdown {
 	display: block;
 }
+
+.userHeader_logout, .userHeader_changepw {
+	text-decoration: none;
+}
