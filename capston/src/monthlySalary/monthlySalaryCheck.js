@@ -121,7 +121,7 @@ const App = () => {
 
          <div className="monthlyPay_viewer">
             <div className="monthlyPay_ment">
-               <span>급여지급일 {todayTime()}</span>
+               <span>급여지급일 {todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</span>
                <button className="monthlyPay_Btn">(주) IBO</button>
             </div>
             <div className="monthlyPay_total">
