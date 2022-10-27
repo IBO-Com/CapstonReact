@@ -6,7 +6,24 @@ import Modal from 'react-modal';
 import axios from "axios";
 import qs from "qs";
 import ModalMonthlySalary from "./modalMonthlySalary";
+import format from "date-fns/format";
+import DateFnsUtils from "@date-io/date-fns";
+import koLocale from "date-fns/locale/ko";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
+class koLocalizedUtils extends DateFnsUtils {
+   getCalendarHeaderText(date) {
+     return format(date, "yyyy년　　 MM월", { locale: this.locale });
+   }
+ }
+
+ function getFormatDate(date) {
+   var year = date.getFullYear(); //yyyy
+   var month = 1 + date.getMonth(); //M
+   month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+   return year + "-" + month;
+ }
+ 
 
 const App = () => {
    const todayTime = () => {
@@ -22,16 +39,25 @@ const App = () => {
    const [payOver, setPayOver] = useState(1);
    const [payNight, setPayNight] = useState(1);
    
+   const [normalWorkTime, setNormalWorkTime] = useState(0);
+   const [restWorkTime, setRestWorkTime] = useState(0);
+   
 
    const [toogleState, setToggleState] = useState(1);
    const [peopleData, setPeopleData] = useState();
    const [textName, setTextName] = useState('');
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
+   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+
    //console.log(monthlyPayDebuct);
 
    const toggleTab = (index) => {
       setToggleState(index);
    }
+
+   const handleDateChange = (date) => {
+      setRetrieveDate(getFormatDate(date));
+    };
 
    useEffect(() => {
       axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
@@ -83,14 +109,20 @@ const App = () => {
          /* ------ */
 
          postParam2 = {
-            rank : data[0].rank
+            start_date:"",
+            etire_date:""
          }
+         /*
          postParam2 = qs.stringify(postParam2)
-         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
-            console.log(res2.data.ITEMS);
+         axios.post("http://43.200.115.198:8080/getAttendanceTime.jsp", postParam2).then((res2) => {
+            let data2 = res2.data.ITEMS;
+            setNormalWorkTime(parseInt(data2.s_normal_work_time)); //일반 근무시간
+            setRestWorkTime(parseInt(data2.s_rest_work_time)); //휴일 근무시간
+            
          }).catch((Error) => {
             console.log(Error);
          })
+         */
 
 
       }).catch((Error) => {
@@ -102,8 +134,23 @@ const App = () => {
    return (
       <div className="monthlyPay_background">
          <div className="monthlyPay_searchBox">
+            <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
+               <DatePicker
+                  autoOk
+                  variant="inline"
+                  views={["year", "month"]}
+                  format="yyyy-MM"
+                  value={retrieveDate}
+                  inputVariant="outlined"
+                  size="small"
+                  onChange={handleDateChange}
+               />
+            </MuiPickersUtilsProvider>
+
+
             <FormControl>
                <TextField
+                  
                   id="outlined-card"
                   label="사번/성명"
                   variant="outlined"
