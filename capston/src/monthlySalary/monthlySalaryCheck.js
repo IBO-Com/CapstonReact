@@ -68,7 +68,7 @@ const App = () => {
    const [employmentInsurance, setEmploymentInsurance] = useState(0); //고용보험
    const [incomeTax, setIncomTax] = useState(0); //근로소득세
    const [residentTax, setResidentTax] = useState(0); //주민세
-   const [deductible, setDeductible] = useState(0); //총 공제액 
+   const [totalDeductible, setTotalDeductible] = useState(0); //총 공제액 
 
    
    const [toogleState, setToggleState] = useState(1);
@@ -78,27 +78,6 @@ const App = () => {
    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
    //console.log(monthlyPayDebuct);
-
-   const comareTax = (compareValue) => { //근로소득세 비교
-      let taxValue = [12000000, 46000000, 88000000, 150000000, 300000000, 500000000, 1000000000];
-      let tariff = [0.06, 0.15, 0.24, 0.35, 0.38, 0.40, 0.42, 0.45];
-      
-      if(compareValue <= taxValue[0]) {
-         return tariff[0];
-      }
-
-      for(let i = 0; i < taxValue.length - 1; i ++) {
-         if(compareValue > taxValue[i] && compareValue <= taxValue[i + 1]) {
-            return tariff[i + 1];
-         }
-      }
-
-      return tariff[tariff.length-1];
-   }
-
-   const toggleTab = (index) => {
-      setToggleState(index);
-   }
 
    const handleDateChange = (date) => {
       setRetrieveDate(getFormatDate(date));
@@ -135,23 +114,37 @@ const App = () => {
 
       axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => {
          let data = res.data.ITEMS;
-         setPeopleData(res.data.ITEMS);
-         
+         if(data.length == 0) {
+            alert("사원이 존재하지 않습니다.");
+            setTotalDeductible(0);
+            setTotalMoney(0);
+            setSalary(0);
+            setNormalWorkTime(0);
+            setOverMoney(0); setOverWorkTime(0);
+            setNightMoney(0); setNightWorkTime(0);
+            setRestMoney(0); setRestWorkTime(0);
+            setDay(0);
+            setNationalPension(0);
+            setHealthInsurance(0); setLongCare(0);
+            setEmploymentInsurance(0);
+            setIncomTax(0); setResidentTax(0);
+            return;
+         }
          /* 기본연금 측정 */
          let postParam2 = {
             rank : data[0].rank
          }
+
          postParam2 = qs.stringify(postParam2)
          axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
             let data2 = res2.data.ITEMS;
             console.log("Salary Response Data : ", data2);
             setSalaryData(data2[0]);
             setSalary(parseInt(data2[0].salary));
-            setPayOver(parseFloat(data2[0].pay_over));
-            setPayNight(parseFloat(data2[0].pay_night));
 
-            let moneyData = String(Math.floor((Math.floor(data2[0].salary) / 12)));
-            moneyData = parseInt(moneyData.slice(0, -3) + "000");
+            let moneyData = Math.floor(data2[0].salary / 12);
+            moneyData = parseInt(moneyData / 1000) * 1000;
+           
 
             setNationalPension(parseInt(moneyData * defaultValue.np));
             setHealthInsurance(parseInt(moneyData * defaultValue.health));
@@ -196,19 +189,37 @@ const App = () => {
    }
 
    useEffect(() => { //연장 근무
-      if(overWorkTime != 0) 
-         setOverMoney(Math.floor(((salary / 12 / 209) * defaultValue.payOver * parseFloat(overWorkTime / 60).toFixed(1))));
+      setOverMoney(Math.floor(((salary / 12 / 209) * defaultValue.payOver * parseFloat(overWorkTime / 60).toFixed(1))));
    }, [overWorkTime]);
 
    useEffect(() => { //야근 근무 
-      if(nightWorkTime != 0)
-         setNightMoney(Math.floor(((salary / 12 / 209) * defaultValue.payNight * parseFloat(nightWorkTime / 60).toFixed(1))));
+      setNightMoney(Math.floor(((salary / 12 / 209) * defaultValue.payNight * parseFloat(nightWorkTime / 60).toFixed(1))));
    }, [nightWorkTime]);
 
-   useEffect(() => { //휴일 근무 
-      if(restWorkTime != 0)
-         setRestMoney(Math.floor(((salary / 12 / 209) * defaultValue.payRest * parseFloat(restWorkTime / 60).toFixed(1))));
+   useEffect(() => { //휴일 근무
+      setRestMoney(Math.floor(((salary / 12 / 209) * defaultValue.payRest * parseFloat(restWorkTime / 60).toFixed(1))));
    }, [restWorkTime])
+
+   useEffect(() => { //근로소득세, 주민세 계산
+      if(salary != 0) {
+         let moneyData = Math.floor(salary / 12);
+         let postParam = {
+            monthPay: parseInt(moneyData)
+         }
+         postParam = qs.stringify(postParam);
+         axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => {
+            let data = res.data.ITEMS;
+            setIncomTax(parseInt(data.incomeTax));
+            setResidentTax(parseInt(parseInt(data.incomeTax) / 10));
+         }).catch((Error) => {
+            console.log(Error);
+         })
+      }
+   }, [salary])
+
+   useEffect(() => { //총 공제액
+      setTotalDeductible(nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax);
+   }, [nationalPension, healthInsurance, longCare, employmentInsurance, incomeTax, residentTax])
 
    useEffect(() => { //총 지급액
       setTotalMoney(overMoney + nightMoney + restMoney + parseInt(salary / 12));
@@ -266,15 +277,15 @@ const App = () => {
             </div>
             <div className="monthlyPay_total">
                <p>총 급여</p>
-               <span className="totalPay">0,000,000원</span>
+               <span className="totalPay">{totalMoney.toLocaleString()}원</span>
             </div>
             <div className="monthlyPay_deduct">
                <p>공제액</p>
-               <span className="deductPay">0,000,000원</span>
+               <span className="deductPay">{totalDeductible.toLocaleString()}원</span>
             </div>
             <div className="monthlyPay_amount">
                <p>실수령액</p>
-               <span className="amountPay">0,000,000원</span>
+               <span className="amountPay">{(totalMoney - totalDeductible).toLocaleString()}원</span>
             </div>
          </div>
 
@@ -352,13 +363,13 @@ const App = () => {
                <td>휴일근무</td>
                <td>{restMoney.toLocaleString()}원</td>
                <td>근로소득세외</td>
-               <td>원</td>
+               <td>{(incomeTax + residentTax).toLocaleString()}원</td>
             </tr>
             <tr className="monthlyFive">
                <td className="TabletotalPay">총 지급액</td>
                <td className="TabletotalPay">{totalMoney.toLocaleString()}원</td>
                <td className="TabletotalDeduct">총 공제액</td>
-               <td className="TabletotalDeduct">원</td>
+               <td className="TabletotalDeduct">{totalDeductible.toLocaleString()}원</td>
             </tr>
          </table>
       </div>
