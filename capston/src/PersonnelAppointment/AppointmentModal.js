@@ -47,8 +47,13 @@ const AppointmentModal = ({
     setSelectDepart(event.target.value);
   };
 
-  //직책선택
+  // 직책선택
   const [selectRank, setSeletRank] = useState("*");
+  const handleSelectRank = (event) => {
+    setSeletRank(event.target.value);
+  };
+
+  // 등록
 
   const [empData, setEmpData] = useState();
   const [dept, setDept] = useState("");
@@ -193,6 +198,9 @@ const AppointmentModal = ({
               전체
             </MenuItem>
             <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
+              부서이동
+            </MenuItem>
+            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
               승진
             </MenuItem>
           </Select>
@@ -210,12 +218,142 @@ const AppointmentModal = ({
               <tr>
                 <td>부서</td>
                 <td>{dept}</td>
-                <td></td>
+                <td>
+                  <FormControl>
+                    <Select
+                      value={selectDepart || ""}
+                      sx={{
+                        minWidth: "153px",
+                        height: 39,
+                        marginLeft: "15px",
+                        marginRight: "26px",
+                      }}
+                      onChange={handleSelectDepart}
+                    >
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"*"}
+                      >
+                        전체부서
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"01"}
+                      >
+                        경영지원부
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"02"}
+                      >
+                        경영관리부
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"03"}
+                      >
+                        침해대응부
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"04"}
+                      >
+                        관제센터
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"05"}
+                      >
+                        보안연구부
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"06"}
+                      >
+                        보안취약점연구부
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </td>
               </tr>
               <tr>
                 <td>직책</td>
                 <td>{rank}</td>
-                <td></td>
+                <td>
+                  <FormControl>
+                    <Select
+                      value={selectRank || ""}
+                      sx={{
+                        minWidth: "153px",
+                        height: 39,
+                        marginLeft: "15px",
+                        marginRight: "26px",
+                      }}
+                      onChange={handleSelectRank}
+                    >
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"*"}
+                      >
+                        사원
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"01"}
+                      >
+                        대리
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"02"}
+                      >
+                        과장
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"03"}
+                      >
+                        차장
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"04"}
+                      >
+                        부장
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"05"}
+                      >
+                        이사
+                      </MenuItem>
+
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"06"}
+                      >
+                        사장
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ minWidth: "153px", height: 30 }}
+                        value={"07"}
+                      >
+                        대표이사
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </td>
               </tr>
             </tbody>
           </table>

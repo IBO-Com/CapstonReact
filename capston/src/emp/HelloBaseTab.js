@@ -14,6 +14,7 @@ import {
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/testimg.jpg";
 import koLocale from "date-fns/locale/ko";
+import * as Cookie from "../cookies/cookies";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -48,9 +49,9 @@ const HelloBaseTab = () => {
   const [rankTest, setRankTest] = useState("");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
 
-  const urlSave = "http://43.200.115.198:8080/empregister.jsp";
+  //const urlSave = "http://43.200.115.198:8080/empregister.jsp";
   const urlGetCls = "http://43.200.115.198:8080/empGetRank.jsp";
-  //const urlSave = "http://localhost:8080/empregister.jsp";
+  const urlSave = "http://localhost:8080/empregister.jsp";
   //const urlGetCls = "http://localhost:8080/empGetRank.jsp";
 
   const handleDateChange = (date) => {
@@ -109,6 +110,7 @@ const HelloBaseTab = () => {
           team: team.split("-")[0],
           rank: rank,
           dateComeIn: dateComeIn,
+          loginId: Cookie.getCookie("loginInfo").id,
         });
 
         axios.post(urlSave, postParam).then((response) => {
