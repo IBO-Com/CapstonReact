@@ -50,8 +50,8 @@ const App = () => {
                 <td>삭제</td>
                 <td>취득일자</td>
                 <td>자격면허명</td>
-                <td>직책</td>
-                <td>담당업무</td>
+                <td>자격번호</td>
+                <td>부여기관</td>
               </tr>
             </thead>
             <tbody>

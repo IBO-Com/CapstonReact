@@ -116,70 +116,58 @@ const App = ({ componentRef, sabun }) => {
               <td>
                 {userData
                   ? userData["start_date"].slice(0, 4) +
-                    "-" +
-                    userData["start_date"].slice(4, 6) +
-                    "-" +
-                    userData["start_date"].slice(6, 8)
+                  "-" +
+                  userData["start_date"].slice(4, 6) +
+                  "-" +
+                  userData["start_date"].slice(6, 8)
                   : ""}
               </td>
             </tr>
             <tr className="table_bg">
               <td>성명</td>
               <td>{userData ? userData["name"] : ""}</td>
-              <td>현직책발령일</td>
-              <td>
-                {userData
-                  ? userData["start_date"].slice(0, 4) +
-                    "-" +
-                    userData["start_date"].slice(4, 6) +
-                    "-" +
-                    userData["start_date"].slice(6, 8)
-                  : ""}
-              </td>
+              <td>영문 성명</td>
+              <td>{userData ? userData["eng_name"] : ""}</td>
             </tr>
             <tr className="table_bg">
               <td>직책</td>
               <td>{rank}</td>
-              <td>주소</td>
-              <td>{userData ? userData["address"] : ""}</td>
-            </tr>
-            <tr className="table_bg">
               <td>주민등록번호</td>
               <td>
                 {userData
                   ? userData["identity"].slice(0, 6) +
-                    "-" +
-                    userData["identity"].slice(6, 13)
-                  : ""}
-              </td>
-              <td>생년월일</td>
-              <td>
-                {userData
-                  ? defaultYear +
-                    userData["identity"].slice(0, 2) +
-                    "-" +
-                    userData["identity"].slice(2, 4) +
-                    "-" +
-                    userData["identity"].slice(4, 6)
+                  "-" +
+                  userData["identity"].slice(6, 13)
                   : ""}
               </td>
             </tr>
+            <tr className="table_bg">
+
+              <td>주소</td>
+              <td colSpan={3}>{userData ? userData["address"] : ""}</td>
+            </tr>
 
             <tr className="firsttable family_td">
-              <td rowSpan={3}>가족사항</td>
+              <td rowSpan={4}>가족사항</td>
               <td>관계</td>
               <td>성명</td>
               <td>생년월일</td>
               <td>동기여부</td>
             </tr>
             <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
             <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
@@ -187,28 +175,28 @@ const App = ({ componentRef, sabun }) => {
 
             <tr className="firsttable family_td">
               <td rowSpan={4}>경력사항</td>
-              <td>기간</td>
-              <td>학교명</td>
-              <td>전공</td>
-              <td>학위</td>
+              <td>발령일</td>
+              <td>발령구분</td>
+              <td>부서</td>
+              <td>직책</td>
             </tr>
 
             <tr>
-              <td>빈칸</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
@@ -218,26 +206,26 @@ const App = ({ componentRef, sabun }) => {
               <td rowSpan={4}>자격사항</td>
               <td>취득일자</td>
               <td>자격면허명</td>
-              <td>직책</td>
-              <td>담당업무</td>
+              <td>자격번호</td>
+              <td>부여기관</td>
             </tr>
 
             <tr>
-              <td>빈칸</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>빈칸</td>
+              <td>&nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>&nbsp;</td>
               <td></td>
               <td></td>
               <td></td>
