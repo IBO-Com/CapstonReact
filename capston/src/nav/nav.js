@@ -104,8 +104,8 @@ const nav = {
     link: ["/mainNav/retirementapproval", "/mainNav/e2", "/mainNav/severancepay"],
   },
   테스트: {
-    menu: ["발령조회", "테스트", "page 3"],
-    link: ["/mainNav/appointmentcheck", "/mainNav/Test", "/mainNav/test3"],
+    menu: ["주소 API 테스트"],
+    link: ["/mainNav/Test"],
   },
 };
 
