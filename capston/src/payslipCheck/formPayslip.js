@@ -101,9 +101,9 @@ const App = ({ componentRef, sabun }) => {
 
                         <tr className="payslip_money">
                             <td className="payslip_pay">총 지급액</td>
-                            <td>원</td>
+                            <td className="payslip_pay_sub">원</td>
                             <td className="payslip_deduct">총 공제액</td>
-                            <td>원</td>
+                            <td className="payslip_deduct_sub">원</td>
                         </tr>
 
                         <tr className="payslip_TotalPayTitle">

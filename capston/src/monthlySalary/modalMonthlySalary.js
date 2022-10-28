@@ -52,6 +52,16 @@ const App = ({ setMonthlyPayDebuct }) => {
                                 <td className="modalPayslip_per">24%</td>
                                 <td className="modalPayslip_tablededu">522만원</td>
                             </tr>
+                            <tr>
+                                <td className="modalPayslip_pay">8,800만원 ~ 1억 5천만원</td>
+                                <td className="modalPayslip_per">35%</td>
+                                <td className="modalPayslip_tablededu">1,490만원</td>
+                            </tr>
+                            <tr>
+                                <td className="modalPayslip_pay">1억 5천만원 ~ 3억원</td>
+                                <td className="modalPayslip_per">38%</td>
+                                <td className="modalPayslip_tablededu">1,940만원</td>
+                            </tr>
                         </tbody>
                     </table>
                     <br></br>

@@ -56,12 +56,12 @@
     height: 50px;
 }
 
-.payslip_pay {
+.payslip_pay, .payslip_pay_sub {
     color: blue;
     font-weight: bold;
 }
 
-.payslip_deduct {
+.payslip_deduct, .payslip_deduct_sub {
     color: red;
     font-weight: bold;
 }

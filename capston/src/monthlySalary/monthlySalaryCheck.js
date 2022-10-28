@@ -284,28 +284,28 @@ const App = () => {
          </div>
          <div className="monthlyWork_viewer">
             <div className="monthlyNormalWork_ment">
-               <span>일반근무 </span>
-               <span> {(normalWorkTime / 60).toFixed(1)}시간</span>
+               <span>일반근무&nbsp;</span>
+               <span>{(normalWorkTime / 60).toFixed(1)}시간</span>
             </div>
             <div className="monthlyOvertimeWork_ment">
-               <span>연장근무 </span>
-               <span> {(overWorkTime / 60).toFixed(1)}시간</span>
+               <span>연장근무&nbsp;</span>
+               <span>{(overWorkTime / 60).toFixed(1)}시간</span>
             </div>
             <div className="monthlyNightWork_ment">
-               <span>야간근무 </span>
-               <span> {(nightWorkTime / 60).toFixed(1)}시간</span>
+               <span>야간근무&nbsp;</span>
+               <span>{(nightWorkTime / 60).toFixed(1)}시간</span>
             </div>
             <div className="monthlyHolidayWork_ment">
-               <span>휴일근무 </span>
-               <span> {(restWorkTime / 60).toFixed(1)}시간</span>
+               <span>휴일근무&nbsp;</span>
+               <span>{(restWorkTime / 60).toFixed(1)}시간</span>
             </div>
             <div className="monthlytotalWork_ment">
-               <span>총 근무일수 </span>
-               <span> {day}일</span>
+               <span>총 근무일수&nbsp;</span>
+               <span>{day}일</span>
             </div>
             <div className="monthlyWorkTime_ment">
-               <span>총 근로시간 </span>
-               <span> {parseFloat((normalWorkTime / 60).toFixed(1)) + parseFloat((overWorkTime / 60).toFixed(1)) + parseFloat((nightWorkTime / 60).toFixed(1)) + parseFloat((restWorkTime / 60).toFixed(1))}시간</span>
+               <span>총 근로시간&nbsp;</span>
+               <span>{parseFloat((normalWorkTime / 60).toFixed(1)) + parseFloat((overWorkTime / 60).toFixed(1)) + parseFloat((nightWorkTime / 60).toFixed(1)) + parseFloat((restWorkTime / 60).toFixed(1))}시간</span>
             </div>
          </div>
 
@@ -352,13 +352,13 @@ const App = () => {
                <td>휴일근무</td>
                <td>{restMoney.toLocaleString()}원</td>
                <td>근로소득세외</td>
-               <td></td>
+               <td>원</td>
             </tr>
             <tr className="monthlyFive">
                <td className="TabletotalPay">총 지급액</td>
                <td className="TabletotalPay">{totalMoney.toLocaleString()}원</td>
                <td className="TabletotalDeduct">총 공제액</td>
-               <td className="TabletotalDeduct"></td>
+               <td className="TabletotalDeduct">원</td>
             </tr>
          </table>
       </div>
