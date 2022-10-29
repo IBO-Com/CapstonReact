@@ -23,6 +23,9 @@ class koLocalizedUtils extends DateFnsUtils {
 
 
 const App = () => {
+    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
+    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+
     const [startDate, setStartDate] = useState(new Date("2020-10-01"));
     const [endDate, setEndDate] = useState(new Date());
     const [selectDepart, setSelectDepart] = useState("*");
@@ -47,6 +50,13 @@ const App = () => {
     const handleEndDatetDateChange = (date) => {
         setEndDate(date);
     };
+
+    function getFormatDate(date) {
+        var year = date.getFullYear(); //yyyy
+        var month = 1 + date.getMonth(); //M
+        month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+        return year + "-" + month;
+    }
 
     useEffect(() => {
         axios

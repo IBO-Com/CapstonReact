@@ -3,16 +3,69 @@ import "../css/payslipCheck/formPayslip.css";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
+import IBOstamp from "../img/stamp.png";
+import * as GetFinalTax from "../modules/getFinalTax";
 
 const App = ({ componentRef, sabun }) => {
+    const [normalWorkTime, setNormalWorkTime] = useState(0); //기본 시간
+    const [restWorkTime, setRestWorkTime] = useState(0); //휴일 시간
+    const [overWorkTime, setOverWorkTime] = useState(0); //연장시간
+    const [nightWorkTime, setNightWorkTime] = useState(0); //야근시간
+    const [day, setDay] = useState(0); //일한시간
+
+    const [overMoney, setOverMoney] = useState(0); //연장 돈
+    const [nightMoney, setNightMoney] = useState(0); //야근 돈 
+    const [restMoney, setRestMoney] = useState(0); //휴일 돈
+    const [totalMoney, setTotalMoney] = useState(0); //총 금액
+
+    const [nationalPension, setNationalPension] = useState(0); //국민연금
+    const [healthInsurance, setHealthInsurance] = useState(0); //건강 보험
+    const [longCare, setLongCare] = useState(0); //장기요양
+    const [employmentInsurance, setEmploymentInsurance] = useState(0); //고용보험
+    const [incomeTax, setIncomTax] = useState(0); //근로소득세
+    const [residentTax, setResidentTax] = useState(0); //주민세
+    const [totalDeductible, setTotalDeductible] = useState(0); //총 공제액 
+
+
+    const [textName, setTextName] = useState('');
+    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
+    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+
     const [today, setToday] = useState(new Date());
     const [defaultYear, setDefaultYear] = useState("19");
+
+    const [salaryData, setSalaryData] = useState({});
+    const [salary, setSalary] = useState(0);
 
     const [userData, setUserData] = useState();
     const [dept, setDept] = useState("");
     const [team, setTeam] = useState("");
     const [rank, setRank] = useState("");
     const [center, setCenter] = useState("");
+
+    const sendSubmit = () => {
+        GetFinalTax.getAllTax(textName, retrieveDate, setSalary, setDay, setNormalWorkTime, setOverMoney, setOverWorkTime, setNightMoney, setNightWorkTime,
+            setRestMoney, setRestWorkTime, setNationalPension, setHealthInsurance, setLongCare, setEmploymentInsurance, setIncomTax, setResidentTax, setTotalMoney, setTotalDeductible);
+    }
+
+    useEffect(() => { //총 공제액
+        setTotalDeductible(nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax);
+    }, [nationalPension, healthInsurance, longCare, employmentInsurance, incomeTax, residentTax])
+
+    useEffect(() => { //총 지급액
+        setTotalMoney(overMoney + nightMoney + restMoney + parseInt(salary / 12));
+    }, [overMoney, nightMoney, restMoney, salary])
+
+    function getFormatDate(date) {
+        var year = date.getFullYear(); //yyyy
+        var month = 1 + date.getMonth(); //M
+        month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+        return year + "-" + month;
+    }
+
+    const textNameHandle = (e) => {
+        setTextName(e.target.value);
+    }
 
     const todayTime = () => {
         let now = new Date();
@@ -73,37 +126,37 @@ const App = ({ componentRef, sabun }) => {
                     <tbody>
                         <tr className="payslip_money">
                             <td>기본급</td>
-                            <td>원</td>
+                            <td>{parseInt(salary / 12).toLocaleString()}원</td>
                             <td>국민연금</td>
-                            <td>원</td>
+                            <td>{nationalPension.toLocaleString()}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>연장근무</td>
-                            <td>원</td>
+                            <td>{overMoney.toLocaleString()}원</td>
                             <td>건강보험외</td>
-                            <td>원</td>
+                            <td>{employmentInsurance.toLocaleString()}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>야간근무</td>
-                            <td>원</td>
+                            <td>{nightMoney.toLocaleString()}원</td>
                             <td>고용보험</td>
-                            <td>원</td>
+                            <td>{employmentInsurance.toLocaleString()}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>휴일근무</td>
-                            <td>원</td>
+                            <td>{restMoney.toLocaleString()}원</td>
                             <td>근로소득세외</td>
-                            <td>원</td>
+                            <td>{(incomeTax + residentTax).toLocaleString()}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td className="payslip_pay">총 지급액</td>
-                            <td className="payslip_pay_sub">원</td>
+                            <td className="payslip_pay_sub">{totalMoney.toLocaleString()}원</td>
                             <td className="payslip_deduct">총 공제액</td>
-                            <td className="payslip_deduct_sub">원</td>
+                            <td className="payslip_deduct_sub">{totalDeductible.toLocaleString()}원</td>
                         </tr>
 
                         <tr className="payslip_TotalPayTitle">
@@ -111,7 +164,7 @@ const App = ({ componentRef, sabun }) => {
                         </tr>
 
                         <tr className="payslip_TotalPay">
-                            <td colSpan={4}>원</td>
+                            <td colSpan={4}>{(totalMoney - totalDeductible).toLocaleString()}원</td>
                         </tr>
 
                     </tbody>
@@ -121,7 +174,7 @@ const App = ({ componentRef, sabun }) => {
                     <p>귀하의 노고에 감사드립니다.</p>
                     <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
                     <p className="mbt">IBO</p>
-                    <p>대표이사 담 당 자 (인)</p>
+                    <p className="payslip_zzang">대표이사 담 당 자 (인)</p>
                 </div>
             </div>
         </div>
