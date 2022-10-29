@@ -112,13 +112,15 @@ export const getAllTax = (sabunOrName, retrieveDate, setSalary, setDay, setNorma
             retire_date:(retrieveDate + "32").replace("-", ""),
             sabunOrName:sabunOrName
         }
-
+        console.log("OverWOrk Param : ", postParam2);
         postParam2 = qs.stringify(postParam2)
         axios.post("http://43.200.115.198:8080/getAttendanceTime.jsp", postParam2).then((res2) => { 
             let data2 = res2.data.ITEMS;
-            setNormalWorkTime(parseInt(data2.s_normal_work_time)); //일반 근무시간
-            setRestWorkTime(parseInt(data2.s_rest_work_time)); //휴일 근무시간
-            setRestMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payRest * parseFloat(parseInt(data2.s_rest_work_time) / 60).toFixed(1))));
+            let normalTime = parseInt(data2.s_normal_work_time == undefined ? 0 : data2.s_normal_work_time);
+            let restTime = parseInt(data2.s_rest_work_time == undefined ? 0 : data2.s_rest_work_time);
+            setNormalWorkTime(normalTime); //일반 근무시간
+            setRestWorkTime(restTime); //휴일 근무시간
+            setRestMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payRest * parseFloat(restTime / 60).toFixed(1))));
             console.log("Response Data : ", data2);
         }).catch((Error) => {
             alert("Error Code : 101");
@@ -127,12 +129,15 @@ export const getAllTax = (sabunOrName, retrieveDate, setSalary, setDay, setNorma
         /* 근무 외 시간 측정 */
         axios.post("http://43.200.115.198:8080/getAttendanceOverTime.jsp", postParam2).then((res2) => {
             let data2 = res2.data.ITEMS;
-            setOverWorkTime(parseInt(data2.s_over_datetime)); //연장시간
-            setOverMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payOver * parseFloat(parseInt(data2.s_over_datetime) / 60).toFixed(1))));
+            console.log("OverWork Data : ", data2);
+            let overTime = parseInt(data2.s_over_datetime == undefined ? 0 : data2.s_over_datetime);
+            setOverWorkTime(overTime); //연장시간
+            setOverMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payOver * parseFloat(overTime / 60).toFixed(1))));
             
-            setNightWorkTime(parseInt(data2.s_night_datetime)); //야근시간
-            setNightMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payNight * parseFloat(parseInt(data2.s_night_datetime) / 60).toFixed(1))));
-            setDay(parseInt(data2.day)); //일한일수
+            let nightTime = parseInt(data2.s_night_datetime == undefined ? 0 : data2.s_night_datetime);
+            setNightWorkTime(nightTime); //야근시간
+            setNightMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payNight * parseFloat(nightTime / 60).toFixed(1))));
+            setDay(parseInt(data2.day == undefined ? 0 : data2.day)); //일한일수
         }).catch((Error) => {
             alert("Error Code : 102");
         })
