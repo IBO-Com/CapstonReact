@@ -29,7 +29,7 @@ const App = () => {
 
    let defaultValue = {
       payOver: 1.5, //연장
-      payNight: 1.5, //야근 
+      payNight: 0.5, //야근 
       payRest: 1.5, //휴일
       np: 0.045, //국민연금
       health:0.03495, //건강보험
@@ -104,7 +104,8 @@ const App = () => {
          query
       );
 
-      axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => {
+      axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => { //값 가져오고 없으면 초기화
+         let yearMoney = 0;
          let data = res.data.ITEMS;
          if(data.length == 0) {
             alert("사원이 존재하지 않습니다.");
@@ -128,84 +129,73 @@ const App = () => {
          }
 
          postParam2 = qs.stringify(postParam2)
-         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => {
+         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then((res2) => { // 연봉 데이터
             let data2 = res2.data.ITEMS;
             console.log("Salary Response Data : ", data2);
+            yearMoney = (parseInt(data2[0].salary));
             setSalaryData(data2[0]);
             setSalary(parseInt(data2[0].salary));
 
             let moneyData = Math.floor(data2[0].salary / 12);
-            moneyData = parseInt(moneyData / 1000) * 1000;
            
+           
+            let postParam = {
+               monthPay: parseInt(moneyData)
+            }
+            postParam = qs.stringify(postParam);
+            axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
+               let data = res.data.ITEMS;
+               setIncomTax(parseInt(data.incomeTax));
+               setResidentTax(parseInt(parseInt(data.incomeTax) / 10));
+            }).catch((Error) => {
+               alert("Error Code : 103");
+            })
+            moneyData = parseInt(moneyData / 1000) * 1000;
 
+            //연금 계산
             setNationalPension(parseInt(moneyData * defaultValue.np));
             setHealthInsurance(parseInt(moneyData * defaultValue.health));
             setLongCare(parseInt((moneyData * defaultValue.health) * defaultValue.longCare));
             setEmploymentInsurance(parseInt(moneyData * defaultValue.emp));
+
+            /* 근무시간 측정 */
+            postParam2 = {
+               start_date:(retrieveDate + "01").replace("-", ""),
+               retire_date:(retrieveDate + "32").replace("-", ""),
+               sabunOrName:textName
+            }
+
+            postParam2 = qs.stringify(postParam2)
+            axios.post("http://43.200.115.198:8080/getAttendanceTime.jsp", postParam2).then((res2) => { 
+               let data2 = res2.data.ITEMS;
+               setNormalWorkTime(parseInt(data2.s_normal_work_time)); //일반 근무시간
+               setRestWorkTime(parseInt(data2.s_rest_work_time)); //휴일 근무시간
+               setRestMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payRest * parseFloat(parseInt(data2.s_rest_work_time) / 60).toFixed(1))));
+               console.log("Response Data : ", data2);
+            }).catch((Error) => {
+               alert("Error Code : 101");
+            })
+
+            /* 근무 외 시간 측정 */
+            axios.post("http://43.200.115.198:8080/getAttendanceOverTime.jsp", postParam2).then((res2) => {
+               let data2 = res2.data.ITEMS;
+               setOverWorkTime(parseInt(data2.s_over_datetime)); //연장시간
+               setOverMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payOver * parseFloat(parseInt(data2.s_over_datetime) / 60).toFixed(1))));
+               
+               setNightWorkTime(parseInt(data2.s_night_datetime)); //야근시간
+               setNightMoney(Math.floor(((yearMoney / 12 / 209) * defaultValue.payNight * parseFloat(parseInt(data2.s_night_datetime) / 60).toFixed(1))));
+               setDay(parseInt(data2.day)); //일한일수
+            }).catch((Error) => {
+               alert("Error Code : 102");
+            })
+            //getAttendanceOverTime.jsp
          }).catch((Error) => {
             alert("Error Code : 100");
          })
-
-
-         /* 근무시간 측정 */
-         postParam2 = {
-            start_date:(retrieveDate + "01").replace("-", ""),
-            retire_date:(retrieveDate + "32").replace("-", ""),
-            sabunOrName:textName
-         }
-
-         postParam2 = qs.stringify(postParam2)
-         axios.post("http://43.200.115.198:8080/getAttendanceTime.jsp", postParam2).then((res2) => {
-            let data2 = res2.data.ITEMS;
-            setNormalWorkTime(parseInt(data2.s_normal_work_time)); //일반 근무시간
-            setRestWorkTime(parseInt(data2.s_rest_work_time)); //휴일 근무시간
-            console.log("Response Data : ", data2);
-         }).catch((Error) => {
-            alert("Error Code : 101");
-         })
-
-         /* 근무 외 시간 측정 */
-         axios.post("http://43.200.115.198:8080/getAttendanceOverTime.jsp", postParam2).then((res2) => {
-            let data2 = res2.data.ITEMS;
-            setOverWorkTime(parseInt(data2.s_over_datetime)); //연장시간
-            setNightWorkTime(parseInt(data2.s_night_datetime)); //야근시간
-            setDay(parseInt(data2.day)); //일한일수
-         }).catch((Error) => {
-            alert("Error Code : 102");
-         })
-         //getAttendanceOverTime.jsp
-
       }).catch((Error) => {
          console.log(Error);
       })
    }
-
-   useEffect(() => { //연장 근무
-      setOverMoney(Math.floor(((salary / 12 / 209) * defaultValue.payOver * parseFloat(overWorkTime / 60).toFixed(1))));
-   }, [overWorkTime]);
-
-   useEffect(() => { //야근 근무 
-      setNightMoney(Math.floor(((salary / 12 / 209) * defaultValue.payNight * parseFloat(nightWorkTime / 60).toFixed(1))));
-   }, [nightWorkTime]);
-
-   useEffect(() => { //휴일 근무
-      setRestMoney(Math.floor(((salary / 12 / 209) * defaultValue.payRest * parseFloat(restWorkTime / 60).toFixed(1))));
-   }, [restWorkTime])
-
-   useEffect(() => { //근로소득세, 주민세 계산
-      let moneyData = Math.floor(salary / 12);
-      let postParam = {
-         monthPay: parseInt(moneyData)
-      }
-      postParam = qs.stringify(postParam);
-      axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => {
-         let data = res.data.ITEMS;
-         setIncomTax(parseInt(data.incomeTax));
-         setResidentTax(parseInt(parseInt(data.incomeTax) / 10));
-      }).catch((Error) => {
-         alert("Error Code : 103");
-      })
-   }, [salary])
 
    useEffect(() => { //총 공제액
       setTotalDeductible(nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax);
