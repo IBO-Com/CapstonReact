@@ -1,0 +1,125 @@
+.PersonalSalary_conatainer {
+  background-color: #ffffff;
+  width: 98%;
+  height: 790px;
+}
+.PersonalSalary_search {
+  display: flex;
+  height: 60px;
+  border-bottom: 2px solid #d9d9d9;
+  margin: 20px 20px 20px 20px;
+}
+.PersonalSalary_searchBtn {
+  width: 97px;
+  height: 36px;
+  margin-left: 30px;
+  margin-top: 2px;
+  background-color: #537aaa;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 0;
+  outline: 0;
+}
+.PersonalSalary_input {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-left: 20px;
+}
+.PersonalSalary_basicInfo {
+  margin: 10px 50px 10px 50px;
+  display: flex;
+}
+.personalSalary_userInfo span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.personalSalary_userInfo table {
+  margin-top: 10px;
+  border-collapse: collapse;
+  border: 1px solid #d9d9d9;
+}
+.personalSalary_userInfo th {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+  padding: 10px;
+}
+.personalSalary_userInfo td {
+  padding: 8px;
+  font-size: 12px;
+  text-align: center;
+  width: 200px;
+}
+
+.PersonalSalary_payrollContainer {
+  margin: 20px 50px 10px 50px;
+}
+.PersonalSalary_payrollTitle {
+  display: flex;
+  justify-content: space-between;
+}
+.PersonalSalary_payrollTitle span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.PersonalSalary_copyBtn {
+  width: 100px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.PersonalSalary_payrollTable table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  border: 1px solid #d9d9d9;
+}
+.PersonalSalary_payrollTable thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+}
+.PersonalSalary_payrollTable thead td {
+  padding: 10px;
+  border-collapse: collapse;
+  border: 1px solid #d9d9d9;
+}
+.PersonalSalary_payrollTable tbody th {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+  padding: 10px;
+}
+.PersonalSalary_payrollTable tbody td {
+  padding: 8px;
+  font-size: 12px;
+  border-collapse: collapse;
+  border: 1px solid #d9d9d9;
+}
+.PersonalSalary_payrollTable tr,
+.PersonalSalary_payrollTablet td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}

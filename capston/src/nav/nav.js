@@ -94,14 +94,18 @@ const nav = {
     menu: ["급여기본관리", "개인급여관리", "월급여조회", "급여명세서조회"],
     link: [
       "/mainNav/d1",
-      "/mainNav/d2",
+      "/mainNav/personalsalary",
       "/mainNav/monthlySalaryCheck",
       "/mainNav/payslipCheck",
     ],
   },
   퇴직관리: {
     menu: ["퇴직승인", "퇴직금산정", "퇴직금명세서"],
-    link: ["/mainNav/retirementapproval", "/mainNav/e2", "/mainNav/severancepay"],
+    link: [
+      "/mainNav/retirementapproval",
+      "/mainNav/e2",
+      "/mainNav/severancepay",
+    ],
   },
   테스트: {
     menu: ["주소 API 테스트"],
