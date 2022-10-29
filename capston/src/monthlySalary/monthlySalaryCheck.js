@@ -83,14 +83,6 @@ const App = () => {
       setRetrieveDate(getFormatDate(date));
     };
 
-   useEffect(() => {
-      axios.post("http://43.200.115.198:8080/empselect.jsp").then((res) => {
-         setPeopleData(res.data.ITEMS);
-      }).catch((Error) => {
-         console.log(Error);
-      })
-   }, [])
-
    const textNameHandle = (e) => {
       setTextName(e.target.value);
    }
@@ -151,7 +143,7 @@ const App = () => {
             setLongCare(parseInt((moneyData * defaultValue.health) * defaultValue.longCare));
             setEmploymentInsurance(parseInt(moneyData * defaultValue.emp));
          }).catch((Error) => {
-            console.log(Error);
+            alert("Error Code : 100");
          })
 
 
@@ -169,7 +161,7 @@ const App = () => {
             setRestWorkTime(parseInt(data2.s_rest_work_time)); //휴일 근무시간
             console.log("Response Data : ", data2);
          }).catch((Error) => {
-            console.log(Error);
+            alert("Error Code : 101");
          })
 
          /* 근무 외 시간 측정 */
@@ -179,7 +171,7 @@ const App = () => {
             setNightWorkTime(parseInt(data2.s_night_datetime)); //야근시간
             setDay(parseInt(data2.day)); //일한일수
          }).catch((Error) => {
-            console.log(Error);
+            alert("Error Code : 102");
          })
          //getAttendanceOverTime.jsp
 
@@ -201,20 +193,18 @@ const App = () => {
    }, [restWorkTime])
 
    useEffect(() => { //근로소득세, 주민세 계산
-      if(salary != 0) {
-         let moneyData = Math.floor(salary / 12);
-         let postParam = {
-            monthPay: parseInt(moneyData)
-         }
-         postParam = qs.stringify(postParam);
-         axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => {
-            let data = res.data.ITEMS;
-            setIncomTax(parseInt(data.incomeTax));
-            setResidentTax(parseInt(parseInt(data.incomeTax) / 10));
-         }).catch((Error) => {
-            console.log(Error);
-         })
+      let moneyData = Math.floor(salary / 12);
+      let postParam = {
+         monthPay: parseInt(moneyData)
       }
+      postParam = qs.stringify(postParam);
+      axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => {
+         let data = res.data.ITEMS;
+         setIncomTax(parseInt(data.incomeTax));
+         setResidentTax(parseInt(parseInt(data.incomeTax) / 10));
+      }).catch((Error) => {
+         alert("Error Code : 103");
+      })
    }, [salary])
 
    useEffect(() => { //총 공제액
