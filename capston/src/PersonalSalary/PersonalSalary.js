@@ -5,6 +5,7 @@ import * as GetFinalTax from "../modules/getFinalTax";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
+import ReactApexChart from "react-apexcharts";
 import "../css/PersonalSalary/PersonalSalary.css";
 
 const App = () => {
@@ -141,6 +142,102 @@ const App = () => {
     setTotalMoney(overMoney + nightMoney + restMoney + parseInt(salary / 12));
   }, [overMoney, nightMoney, restMoney, salary]);
 
+  const [monthlyBar, setMonthlyBar] = useState({
+    series: [
+      {
+        name: "Inflation",
+        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: "top", // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#304758"],
+        },
+      },
+
+      xaxis: {
+        categories: [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ],
+        position: "top",
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
+      title: {
+        text: "Monthly Inflation in Argentina, 2002",
+        floating: true,
+        offsetY: 330,
+        align: "center",
+        style: {
+          color: "#444",
+        },
+      },
+    },
+  });
+
   return (
     <div className="PersonalSalary_conatainer">
       <div className="PersonalSalary_search">
@@ -238,7 +335,15 @@ const App = () => {
             </tr>
           </table>
         </div>
-        <div className="PersonalSalary_monthlyGraph">월간 급여 그래프</div>
+        <div className="PersonalSalary_monthlyGraph">
+          <ReactApexChart
+            options={monthlyBar.options}
+            series={monthlyBar.series}
+            type="bar"
+            height={240}
+            width={900}
+          />
+        </div>
       </div>
       <div className="PersonalSalary_payrollContainer">
         <div className="PersonalSalary_payrollTitle">

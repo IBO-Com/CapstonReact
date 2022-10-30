@@ -26,7 +26,7 @@
   margin-left: 20px;
 }
 .PersonalSalary_basicInfo {
-  margin: 10px 50px 10px 50px;
+  margin: 10px 50px 0px 50px;
   display: flex;
 }
 .personalSalary_userInfo span {
@@ -42,6 +42,7 @@
   margin-top: 10px;
   border-collapse: collapse;
   border: 1px solid #d9d9d9;
+  margin-right: 50px;
 }
 .personalSalary_userInfo th {
   font-size: 12px;
@@ -60,7 +61,7 @@
 }
 
 .PersonalSalary_payrollContainer {
-  margin: 20px 50px 10px 50px;
+  margin: 0px 50px 10px 50px;
 }
 .PersonalSalary_payrollTitle {
   display: flex;
