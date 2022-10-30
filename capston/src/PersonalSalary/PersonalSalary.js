@@ -146,7 +146,7 @@ const App = () => {
     series: [
       {
         name: "실수령액",
-        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+        data: [300, 218, 431, 550, 540, 338, 468, 388, 551, 368, 279, 261],
       },
     ],
     options: {
@@ -156,21 +156,21 @@ const App = () => {
       },
       plotOptions: {
         bar: {
-          borderRadius: 10,
+          borderRadius: 5, //표 테두리 둥글게
           dataLabels: {
-            position: "top", // top, center, bottom
+            position: "top", // 데이터 값 표시 위치 top, center, bottom
           },
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: true, //값 보여줄거야 말거야
         formatter: function (val) {
-          return val + "%";
+          return val;
         },
         offsetY: -20,
         style: {
           fontSize: "12px",
-          colors: ["#304758"], //퍼센트 색
+          colors: ["#304758"], //표 바로 위에 글자색
         },
       },
 
@@ -220,19 +220,19 @@ const App = () => {
           show: false,
         },
         labels: {
-          show: true, //옆에 최대 최소값 표시하냐 마냐
+          show: true, //옆에 최대 최소값 표시하냐
           formatter: function (val) {
-            return val + "%";
+            return val + "만원";
           },
         },
       },
       title: {
-        text: "Monthly Inflation in Argentina, 2002",
+        text: "", //표 타이틀 필요없어서 텍스트 지움
         floating: true,
-        offsetY: 330,
+        offsetY: 0,
         align: "center",
         style: {
-          color: "#444",
+          color: "#000000",
         },
       },
     },
