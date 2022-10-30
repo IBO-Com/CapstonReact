@@ -26,8 +26,6 @@ const App = () => {
     const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
     const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
-    const [startDate, setStartDate] = useState(new Date("2020-10-01"));
-    const [endDate, setEndDate] = useState(new Date());
     const [selectDepart, setSelectDepart] = useState("*");
     const [textName, setTextName] = useState("");
     const [peopleData, setPeopleData] = useState();
@@ -44,11 +42,7 @@ const App = () => {
     };
 
     const handleStartDateChange = (date) => {
-        setStartDate(date);
-    };
-
-    const handleEndDatetDateChange = (date) => {
-        setEndDate(date);
+        setRetrieveDate(getFormatDate(date));
     };
 
     function getFormatDate(date) {
@@ -74,31 +68,10 @@ const App = () => {
     };
 
     const sendSubmit = () => {
-        /* 날짜 포멧 */
-        console.log("isEnter????");
-        let sYear = String(startDate.getFullYear());
-        let sMonth = startDate.getMonth() + 1;
-
-        let eYear = String(endDate.getFullYear());
-        let eMonth = endDate.getMonth() + 1;
-
-        if (sMonth < 10) {
-            sMonth = "0" + sMonth;
-        }
-
-        if (eMonth < 10) {
-            eMonth = " 0" + eMonth;
-        }
-
-        let sDate = sYear + sMonth;
-        let eDate = eYear + eMonth;
-
         /* 쿼리 문 작성 */
         let postParam = {};
         let query = {};
 
-        query["startDate"] = sDate;
-        query["retireDate"] = eDate;
         if (textName.trim() == '') {
             delete query["sabunOrName"];
         } else {
@@ -113,9 +86,6 @@ const App = () => {
         postParam = qs.stringify(
             query
         );
-
-        console.log(query);
-
         axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => {
             setPeopleData(res.data.ITEMS);
         }).catch((Error) => {
@@ -146,7 +116,7 @@ const App = () => {
                             variant="inline"
                             views={["year", "month"]}
                             format="yyyy-MM"
-                            value={startDate}
+                            value={retrieveDate}
                             inputVariant="outlined"
                             showTodayButton
                             className="startDate"
@@ -291,7 +261,7 @@ const App = () => {
                         </div>
                         <div className="payslip_viewer">
                             {toogleState === 1 ? (
-                                <FormPayslip componentRef={componentRef} sabun={sabun} />
+                                <FormPayslip componentRef={componentRef} sabun={sabun} retrieveDate={retrieveDate}/>
                             ) : (
                                 ""
                             )}

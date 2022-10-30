@@ -39,27 +39,31 @@ const App = () => {
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
-   const [taxPack, setTaxPack] = useState({
+   const [taxPack, setTaxPack] = useState({ //기본 데이터 꼭 필요함
       sabunOrName: 0,
       retrieveDate: 0,
       day: 0,
       연봉: 0,
       월급: 0,
+
       일반근무시간: 0,
       연장근무금액: 0,
       연장근무시간: 0,
       야간근무금액: 0,
       야간근무시간: 0,
+      
       휴일근무금액: 0,
       휴일근무시간: 0,
       국민연금: 0,
       건강보험: 0,
       장기요양: 0,
+      
       고용보험: 0,
       근로소득세: 0,
       주민세: 0,
       총지급액: 0,
       총공제액: 0,
+      
       실수령액: 0
   });
 

@@ -257,27 +257,32 @@ export const getAllTaxToJson = async(sabunOrName, retrieveDate, saveData) => {
             let totalMoney = overMoney + nightMoney + restMoney + parseInt(salary / 12);
             let totalDeductible = nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax;
             
+            //16개
             let finalJson = {
                 sabunOrName: sabunOrName,
                 retrieveDate: retrieveDate,
                 day: day,
                 연봉: salary,
                 월급: monthPay,
+
                 일반근무시간: normalWorkTime,
                 연장근무금액: overMoney,
                 연장근무시간: overWorkTime,
                 야간근무금액: nightMoney,
                 야간근무시간: nightWorkTime,
+                
                 휴일근무금액: restMoney,
                 휴일근무시간: restWorkTime,
                 국민연금: nationalPension,
                 건강보험: healthInsurance,
                 장기요양: longCare,
-                고용보험: employmentInsurance,
+                
+                고용보험: employmentInsurance, 
                 근로소득세: incomeTax,
                 주민세: residentTax,
                 총지급액: totalMoney,
                 총공제액: totalDeductible,
+                
                 실수령액: totalMoney - totalDeductible
             }
             console.log(finalJson);
