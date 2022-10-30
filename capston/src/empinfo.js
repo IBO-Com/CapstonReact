@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import testimg from "./img/testimg.jpg";
+import testimg from "./img/user.png";
 import "./css/empinfo/empinfo.css";
 import Empbase from "./empInfo_detail/Empbase";
 import Appointment from "./empInfo_detail/Appointment";
@@ -25,7 +25,7 @@ const App = () => {
   const [team, setTeam] = useState("");
   const [rank, setRank] = useState("");
   const [center, setCenter] = useState("");
-
+  const [picture, setPicture] = useState(null);
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
 
@@ -36,6 +36,13 @@ const App = () => {
     let postParam = qs.stringify({
       sabunOrName: data["id"],
     });
+
+    axios
+      .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
+      .then((response) => {
+        console.log(response);
+        setPicture(response.data.ITEMS[0].picture);
+      });
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
@@ -87,7 +94,11 @@ const App = () => {
       <div className="plzEmp">
         <div>
           <div className="empWrapimg">
-            <img className="empimg" src={testimg} alt="이미지" />
+            {picture === null ? (
+              <img className="empimg" src={testimg} alt="이미지" />
+            ) : (
+              <img className="empimg" src={picture} alt={"사진"} />
+            )}
           </div>
         </div>
 
