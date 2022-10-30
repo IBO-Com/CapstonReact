@@ -5,6 +5,7 @@ import * as GetFinalTax from "../modules/getFinalTax";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
+import ReactApexChart from "react-apexcharts";
 import "../css/PersonalSalary/PersonalSalary.css";
 
 const App = () => {
@@ -141,6 +142,102 @@ const App = () => {
     setTotalMoney(overMoney + nightMoney + restMoney + parseInt(salary / 12));
   }, [overMoney, nightMoney, restMoney, salary]);
 
+  const [monthlyBar, setMonthlyBar] = useState({
+    series: [
+      {
+        name: "실수령액",
+        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: "top", // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#304758"], //퍼센트 색
+        },
+      },
+
+      xaxis: {
+        categories: [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ],
+        position: "bottom", //카테고리의 방향
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: false, //마우스 호버할 때 카테고리에 잡히는 말풍선 모양
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false, //표 왼쪽 세로로 마감처리 하냐 마냐
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: true, //옆에 최대 최소값 표시하냐 마냐
+          formatter: function (val) {
+            return val + "%";
+          },
+        },
+      },
+      title: {
+        text: "Monthly Inflation in Argentina, 2002",
+        floating: true,
+        offsetY: 330,
+        align: "center",
+        style: {
+          color: "#444",
+        },
+      },
+    },
+  });
+
   return (
     <div className="PersonalSalary_conatainer">
       <div className="PersonalSalary_search">
@@ -219,11 +316,11 @@ const App = () => {
             </tr>
             <tr>
               <th>직책</th>
-              <td> {rank}</td>
+              <td>{rank}</td>
             </tr>
             <tr>
               <th>성명</th>
-              <td> {empData["name"]}</td>
+              <td>{empData["name"]}</td>
             </tr>
             <tr>
               <th>급여일자</th>
@@ -238,7 +335,15 @@ const App = () => {
             </tr>
           </table>
         </div>
-        <div className="PersonalSalary_monthlyGraph">월간 급여 그래프</div>
+        <div className="PersonalSalary_monthlyGraph">
+          <ReactApexChart
+            options={monthlyBar.options}
+            series={monthlyBar.series}
+            type="bar"
+            height={240}
+            width={900}
+          />
+        </div>
       </div>
       <div className="PersonalSalary_payrollContainer">
         <div className="PersonalSalary_payrollTitle">
@@ -267,7 +372,7 @@ const App = () => {
             </thead>
             <tbody>
               <tr>
-                <th colSpan={2}>실수령액</th>
+                <th colSpan={2} className='perSal_total'>실수령액</th>
                 <td>{(totalMoney - totalDeductible).toLocaleString()}</td>
                 <td></td>
                 <td></td>
@@ -284,18 +389,18 @@ const App = () => {
               <tr>
                 <th rowSpan={4}>지급내역</th>
                 <th>기본급</th>
-                <td>{parseInt(salary / 12).toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td className="perSal_month1">{parseInt(salary / 12).toLocaleString()}</td>
+                <td className="perSal_month2"></td>
+                <td className="perSal_month3"></td>
+                <td className="perSal_month4"></td>
+                <td className="perSal_month5"></td>
+                <td className="perSal_month6"></td>
+                <td className="perSal_month7"></td>
+                <td className="perSal_month8"></td>
+                <td className="perSal_month9"></td>
+                <td className="perSal_month10"></td>
+                <td className="perSal_month11"></td>
+                <td className="perSal_month12"></td>
               </tr>
               <tr>
                 <th>연장근무</th>

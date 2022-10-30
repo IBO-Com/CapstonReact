@@ -34,7 +34,7 @@ const App = () => {
                         <div class="userHeader_dropdown">
                             <ul>
                                 <li><Link to="/" className="userHeader_logout">로그아웃</Link></li>
-                                <li><Link to="../login/changepw" className="userHeader_changepw">비밀번호 변경</Link></li>
+                                <li><Link to="/changepw" className="userHeader_changepw">비밀번호 변경</Link></li>
                             </ul>
                         </div>
                     </div>
