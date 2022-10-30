@@ -3,6 +3,8 @@ import Login from "./login";
 import Empinfo from "./empinfo";
 import Findpw from "./login/findpw";
 import MainNav from "./mainNav";
+import Changepw from "./login/changepw";
+
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 //import "jqwidgets-scripts/jqwidgets/styles/jqx.material-purple.css";
 
@@ -35,6 +37,9 @@ const App = () => {
           <>
             {/* 비밀번호 찾기 */}
             <Route path="/findpw/" element={<Findpw />} />
+
+            {/* 비밀번호 변경 */}
+            <Route path="/changepw/" element={<Changepw />} />
 
             {/* 네비게이션으로 이동 */}
             <Route path="/mainNav/*" element={<MainNav />} />

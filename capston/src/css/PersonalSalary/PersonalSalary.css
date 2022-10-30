@@ -3,12 +3,14 @@
   width: 98%;
   height: 790px;
 }
+
 .PersonalSalary_search {
   display: flex;
   height: 60px;
   border-bottom: 2px solid #d9d9d9;
   margin: 20px 20px 20px 20px;
 }
+
 .PersonalSalary_searchBtn {
   width: 97px;
   height: 36px;
@@ -20,15 +22,18 @@
   border: 0;
   outline: 0;
 }
+
 .PersonalSalary_input {
   border: 1px solid #c4c4c4;
   border-radius: 4px;
   margin-left: 20px;
 }
+
 .PersonalSalary_basicInfo {
   margin: 10px 50px 0px 50px;
   display: flex;
 }
+
 .personalSalary_userInfo span {
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -38,12 +43,14 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
+
 .personalSalary_userInfo table {
   margin-top: 10px;
   border-collapse: collapse;
   border: 1px solid #d9d9d9;
   margin-right: 50px;
 }
+
 .personalSalary_userInfo th {
   font-size: 12px;
   color: #515966;
@@ -53,6 +60,7 @@
   background-color: #ebeff2;
   padding: 10px;
 }
+
 .personalSalary_userInfo td {
   padding: 8px;
   font-size: 12px;
@@ -63,10 +71,12 @@
 .PersonalSalary_payrollContainer {
   margin: 0px 50px 10px 50px;
 }
+
 .PersonalSalary_payrollTitle {
   display: flex;
   justify-content: space-between;
 }
+
 .PersonalSalary_payrollTitle span {
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -76,21 +86,24 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
+
 .PersonalSalary_copyBtn {
-  width: 100px;
+  width: 113px;
   height: 30px;
   background-color: #e78854;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 0;
   outline: 0;
 }
+
 .PersonalSalary_payrollTable table {
   width: 100%;
   margin-top: 10px;
   border-collapse: collapse;
   border: 1px solid #d9d9d9;
 }
+
 .PersonalSalary_payrollTable thead tr {
   font-size: 12px;
   color: #515966;
@@ -99,11 +112,13 @@
   font-weight: 700;
   background-color: #ebeff2;
 }
+
 .PersonalSalary_payrollTable thead td {
   padding: 10px;
   border-collapse: collapse;
   border: 1px solid #d9d9d9;
 }
+
 .PersonalSalary_payrollTable tbody th {
   font-size: 12px;
   color: #515966;
@@ -113,14 +128,34 @@
   background-color: #ebeff2;
   padding: 10px;
 }
+
 .PersonalSalary_payrollTable tbody td {
   padding: 8px;
   font-size: 12px;
   border-collapse: collapse;
   border: 1px solid #d9d9d9;
 }
+
 .PersonalSalary_payrollTable tr,
 .PersonalSalary_payrollTablet td {
   border: 1px solid #d9d9d9;
   text-align: center;
+}
+
+.perSal_month1,
+.perSal_month2,
+.perSal_month3,
+.perSal_month4,
+.perSal_month5,
+.perSal_month6,
+.perSal_month7,
+.perSal_month8,
+.perSal_month9,
+.perSal_month10,
+.perSal_month11,
+.perSal_month12
+{
+padding: 0px 0px 0px 0px;
+margin: 0px 0px 0px 0px;
+width: 80px;
 }

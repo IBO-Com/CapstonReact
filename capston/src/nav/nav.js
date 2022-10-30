@@ -108,8 +108,8 @@ const nav = {
     ],
   },
   테스트: {
-    menu: ["주소 API 테스트"],
-    link: ["/mainNav/Test"],
+    menu: ["주소 API 테스트", "비밀번호 변경"],
+    link: ["/mainNav/Test", "/changepw"],
   },
 };
 

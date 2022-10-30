@@ -145,7 +145,7 @@ const App = () => {
   const [monthlyBar, setMonthlyBar] = useState({
     series: [
       {
-        name: "Inflation",
+        name: "실수령액",
         data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
       },
     ],
@@ -170,7 +170,7 @@ const App = () => {
         offsetY: -20,
         style: {
           fontSize: "12px",
-          colors: ["#304758"],
+          colors: ["#304758"], //퍼센트 색
         },
       },
 
@@ -189,7 +189,7 @@ const App = () => {
           "11월",
           "12월",
         ],
-        position: "top",
+        position: "bottom", //카테고리의 방향
         axisBorder: {
           show: false,
         },
@@ -209,18 +209,18 @@ const App = () => {
           },
         },
         tooltip: {
-          enabled: true,
+          enabled: false, //마우스 호버할 때 카테고리에 잡히는 말풍선 모양
         },
       },
       yaxis: {
         axisBorder: {
-          show: false,
+          show: false, //표 왼쪽 세로로 마감처리 하냐 마냐
         },
         axisTicks: {
           show: false,
         },
         labels: {
-          show: false,
+          show: true, //옆에 최대 최소값 표시하냐 마냐
           formatter: function (val) {
             return val + "%";
           },
@@ -316,11 +316,11 @@ const App = () => {
             </tr>
             <tr>
               <th>직책</th>
-              <td> {rank}</td>
+              <td>{rank}</td>
             </tr>
             <tr>
               <th>성명</th>
-              <td> {empData["name"]}</td>
+              <td>{empData["name"]}</td>
             </tr>
             <tr>
               <th>급여일자</th>
@@ -372,7 +372,7 @@ const App = () => {
             </thead>
             <tbody>
               <tr>
-                <th colSpan={2}>실수령액</th>
+                <th colSpan={2} className='perSal_total'>실수령액</th>
                 <td>{(totalMoney - totalDeductible).toLocaleString()}</td>
                 <td></td>
                 <td></td>
@@ -389,18 +389,18 @@ const App = () => {
               <tr>
                 <th rowSpan={4}>지급내역</th>
                 <th>기본급</th>
-                <td>{parseInt(salary / 12).toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td className="perSal_month1">{parseInt(salary / 12).toLocaleString()}</td>
+                <td className="perSal_month2"></td>
+                <td className="perSal_month3"></td>
+                <td className="perSal_month4"></td>
+                <td className="perSal_month5"></td>
+                <td className="perSal_month6"></td>
+                <td className="perSal_month7"></td>
+                <td className="perSal_month8"></td>
+                <td className="perSal_month9"></td>
+                <td className="perSal_month10"></td>
+                <td className="perSal_month11"></td>
+                <td className="perSal_month12"></td>
               </tr>
               <tr>
                 <th>연장근무</th>
