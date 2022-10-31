@@ -124,6 +124,11 @@
     display: flex;
 }
 
+.perCard_box {
+    overflow: auto;
+    height: 100%;
+}
+
 .Card_viewer {
     width: 700px;
     height: 600px;

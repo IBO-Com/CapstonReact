@@ -25,6 +25,11 @@
 
 }
 
+.formProofofempMain {
+    overflow: auto;
+    height: 100%;
+}
+
 .formProofofempMain .footer_info_form{
     margin-top: 130px;
     text-align: center;
