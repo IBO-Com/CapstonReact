@@ -34,9 +34,18 @@
 
 
 .formProofofempMain .footer_info_form P:not(:last-of-type){
-    margin-bottom: 90px;
+    margin-bottom: 80px;
 }
 
 .formProofofempMain .footer_info_form .mbt{
     margin-bottom: 10px !important; 
+}
+
+.formProof {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 765px;
+    left: 386px;
+    box-shadow: 0px 0px 4px #f00;
 }

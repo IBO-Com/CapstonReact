@@ -3,6 +3,7 @@ import "../css/personnelcard/formProofEmp.css";
 import * as GetCDTR from "../modules/getCDTR";
 import axios from "axios";
 import qs from "qs";
+import IBOstamp from "../img/stamp.png";
 
 const App = ({ componentRef, sabun }) => {
    const [today, setToday] = useState(new Date());
@@ -80,8 +81,9 @@ const App = ({ componentRef, sabun }) => {
             <p>상기와 같이 재직하고 있음을 증명합니다.</p>   
             <p>2022년 10월 9일</p>
             <p className="mbt">IBO</p>
-            <p>대표이사 담 당 자 (인)</p>
+            <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
          </div>   
+         <img className="formProof" src={IBOstamp} alt="직인" />
     </div>
   );
 };
