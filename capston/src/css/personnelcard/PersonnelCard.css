@@ -1,6 +1,13 @@
+.mainContetnsBox {
+    overflow: hidden;
+    min-width: 1100px;
+}
+
 .CardInfoTable {
+    min-width: 500px;
     margin: 20px 0px 0px 120px;
     overflow-y: scroll;
+    height: 645px;
 }
 
 .CardInfoTable span {
@@ -55,6 +62,7 @@
 
 
 .CardInfoTable .hrCardInfo table {
+    overflow: scroll;
     border-collapse: collapse;
     width: 600px;
     border: 1px solid #D9D9D9;
@@ -108,15 +116,18 @@
 
 .personnelCard_box {
     height: 790px;
-    overflow: hidden;
+    display: flex;
+}
+
+.personnelCard_Flex {
+    overflow-x: hidden;
     display: flex;
 }
 
 .Card_viewer {
-    position: absolute;
     width: 700px;
     height: 600px;
-    overflow-y: scroll;
+    overflow: hidden;
     margin-left: 80px;
 
     border: 2px solid #D9D9D9;

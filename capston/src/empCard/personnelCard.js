@@ -145,7 +145,7 @@ const App = () => {
 
         <hr className="card_lineBar"></hr>
 
-        <div className="personnelCard_box">
+        <div className="personnelCard_Flex">
           <div className="CardInfoTable">
             <span>직원 목록</span>
 
