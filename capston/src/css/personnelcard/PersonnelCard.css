@@ -1,5 +1,6 @@
 .CardInfoTable {
-    margin: 20px 0px 48px 120px;
+    margin: 20px 0px 0px 120px;
+    overflow-y: scroll;
 }
 
 .CardInfoTable span {
