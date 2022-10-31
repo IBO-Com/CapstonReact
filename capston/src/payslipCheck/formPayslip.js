@@ -14,25 +14,25 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
         day: 0,
         연봉: 0,
         월급: 0,
-  
+
         일반근무시간: 0,
         연장근무금액: 0,
         연장근무시간: 0,
         야간근무금액: 0,
         야간근무시간: 0,
-        
+
         휴일근무금액: 0,
         휴일근무시간: 0,
         국민연금: 0,
         건강보험: 0,
         장기요양: 0,
-        
+
         고용보험: 0,
         근로소득세: 0,
         주민세: 0,
         총지급액: 0,
         총공제액: 0,
-        
+
         실수령액: 0
     });
 
@@ -143,7 +143,10 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
                     <p>귀하의 노고에 감사드립니다.</p>
                     <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
                     <p className="mbt">IBO</p>
-                    <p className="payslip_zzang">대표이사 담 당 자 (인)</p>
+                    <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+                    <div className="formProofDiv">
+                        <img className="formProof" src={IBOstamp} alt="직인" />
+                    </div>
                 </div>
             </div>
         </div>

@@ -91,9 +91,8 @@ const nav = {
     ],
   },
   급여관리: {
-    menu: ["급여기본관리", "개인급여관리", "월급여조회", "급여명세서조회"],
+    menu: ["개인급여관리", "월급여조회", "급여명세서조회"],
     link: [
-      "/mainNav/d1",
       "/mainNav/personalsalary",
       "/mainNav/monthlySalaryCheck",
       "/mainNav/payslipCheck",
@@ -108,8 +107,8 @@ const nav = {
     ],
   },
   테스트: {
-    menu: ["주소 API 테스트", "비밀번호 변경"],
-    link: ["/mainNav/Test", "/changepw"],
+    menu: ["테스트 필요하면 쓰세욥"],
+    link: ["/mainNav/t1"],
   },
 };
 

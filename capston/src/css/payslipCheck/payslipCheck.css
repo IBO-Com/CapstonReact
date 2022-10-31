@@ -34,14 +34,9 @@
     width: 100%;
 }
 
-.payslipCheck_box {
-    background-color: white;
-    width: 98%;
-    display: flex;
-}
-
 .payslipInfoTable {
-    margin: 20px 0px 48px 120px;
+    margin: 20px 0px 0px 120px;
+    
 }
 
 .payslipInfoTable span {
@@ -60,6 +55,7 @@
     width: 600px;
     border: 1px solid #D9D9D9;
     margin-top: 10px;
+    overflow-y: scroll;
 }
 
 .payslipInfoTable .payslipInfo table thead tr {
@@ -69,7 +65,6 @@
     font-style: normal;
     font-weight: 700;
     background-color: #EBEFF2;
-
 }
 
 .payslipInfoTable .payslipInfo table thead th {

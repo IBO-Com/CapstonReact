@@ -4,8 +4,18 @@ import * as GetCDTR from "../modules/getCDTR";
 import * as GetYearOfWork from "../modules/getYearOfWork";
 import axios from "axios";
 import qs from "qs";
+import IBOstamp from "../img/stamp.png";
 
 const App = ({componentRef, sabun}) => {
+   const todayTime = () => {
+      let now = new Date();
+      let todayYear = now.getFullYear();
+      let todayMonth = now.getMonth() + 1;
+      let toDayDate = now.getDate();
+
+      return todayYear + "-" + todayMonth + "-" + toDayDate;
+  }
+
    const [today, setToday] = useState(new Date());
    const [endDate, setEndDate] = useState(new Date());
    const [defaultYear, setDefaultYear] = useState("19");
@@ -92,7 +102,7 @@ const App = ({componentRef, sabun}) => {
                <td>{rank}</td>
             </tr>
             <tr className="formProofofeFirst formProofofeSecond">
-               <td>재직기간</td>
+               <td className="formProofofe_wid">재직기간</td>
                <td colSpan={3} className="enterForm">
                   <div className='date_form'>
                      <div className='date'>
@@ -118,10 +128,13 @@ const App = ({componentRef, sabun}) => {
         </table>
 
          <div className="footer_info_form">
-            <p>상기와 같이 재직하고 있음을 증명합니다.</p>   
-            <p>2022년 10월 9일</p>
+            <p>상기와 같이 경력을 증명합니다.</p>   
+            <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 {todayTime().slice(8, 10)}일</p>
             <p className="mbt">IBO</p>
-            <p>대표이사 담 당 자 (인)</p>
+            <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+            <div className="formProofDiv">
+               <img className="formProof" src={IBOstamp} alt="직인" />
+            </div>
          </div>   
       </div>
    );
