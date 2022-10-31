@@ -26,6 +26,7 @@ import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
 import AttendanceRegister from "./attendance/attendanceRegister";
 import RetirementApproval from "./Retirement/RetirementApproval";
 import PersonalSalary from "./PersonalSalary/PersonalSalary"; //개인급여관리
+import SeverancePayCal from "./SeverancePayCal/SeverancePayCal";
 
 //근태관리 탭
 import VacationManage from "./vacationManage/vacationManage"; //휴가관리
@@ -121,6 +122,8 @@ const App = () => {
             path="retirementapproval"
             element={<RetirementApproval />}
           ></Route>
+          {/* 퇴직금 산정 */}
+          <Route path="severancepaycal" element={<SeverancePayCal />}></Route>
           {/* 퇴직금명세서 */}
           <Route path="severancepay" element={<SeverancePay />}></Route>
 
