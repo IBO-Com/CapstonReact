@@ -149,6 +149,8 @@ export const getAllTax = (sabunOrName, retrieveDate, setSalary, setDay, setNorma
         console.log(Error);
     })
 }
+
+
 /**
  * 세금을 Json으로 변경하는 함수
  * @param {*} sabunOrName 사번 혹은 성명 
@@ -291,6 +293,160 @@ export const getAllTaxToJson = async(sabunOrName, retrieveDate, saveData) => {
         }).catch((Error) => {
             alert("Error Code : 100");
         })
+    }).catch((Error) => {
+        console.log(Error);
+    })
+}
+
+
+const monthFormat = (month) => {
+    return month < 10 ? "0" + String(month) : String(month)
+} 
+
+/**
+ * 세금을 Json으로 변경하는 함수
+ * @param {*} sabunOrName 사번 혹은 성명 
+ * @param {*} retrieveDate 년도  ex. 2022
+ * @param {*} saveData 저장할 데이터
+ * @returns 
+ */
+ export const getAllTaxToJsonAllMonth = async(sabunOrName, retrieveDate, saveData) => {
+    let finalJson = {};
+    /* 쿼리 문 작성 */
+    let postParam = {};
+    let query = {};
+    if (sabunOrName.trim() == '') {
+        delete query["sabunOrName"];
+        alert("사번/성명을 입력해주세요.");
+        return;
+    } else {
+        query["sabunOrName"] = sabunOrName;
+    }
+
+    postParam = qs.stringify(
+        query
+    );
+
+    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => { //값 가져오고 없으면 초기화
+        for(let i = 1; i <= 12; i ++) { //1월부터 12월까지
+            let salary = 0;
+            let data = res.data.ITEMS;
+            let incomeTax = 0;
+            let residentTax = 0;
+
+            if(data.length == 0) {
+                return;
+            }
+            /* 기본연금 측정 */
+            let postParam2 = {
+                rank : data[0].rank
+            }
+
+            postParam2 = qs.stringify(postParam2)
+            axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then(async(res2) => { // 연봉 데이터
+                let data2 = res2.data.ITEMS;
+                salary = parseInt(data2[0].salary); //연봉
+                let monthPay = Math.floor(salary / 12); //월급
+
+                let postParam = {
+                    monthPay: parseInt(monthPay)
+                }
+                postParam = qs.stringify(postParam);
+                await axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
+                    let data = res.data.ITEMS;
+                    incomeTax = parseInt(data.incomeTax);
+                    residentTax = (parseInt(parseInt(data.incomeTax) / 10));
+                }).catch((Error) => {
+                    alert("Error Code : 103");
+                })
+                console.log("---- data Pass 01 ----");
+                let moneyData = parseInt(monthPay / 1000) * 1000; //뒷 3자리 0으로 ex. 123456789 -> 123456000
+
+                //연금 계산
+                let nationalPension = parseInt(moneyData * defaultValue.np);
+                let healthInsurance = parseInt(moneyData * defaultValue.health);
+                let longCare = parseInt((moneyData * defaultValue.health) * defaultValue.longCare);
+                let employmentInsurance = parseInt(moneyData * defaultValue.emp);
+
+                /* 근무시간 측정 */
+                postParam2 = {
+                    start_date:(retrieveDate + monthFormat(i) + "01").replace("-", ""),
+                    retire_date:(retrieveDate + monthFormat(i) + "32").replace("-", ""),
+                    sabunOrName:sabunOrName
+                }
+
+                let normalWorkTime = 0;
+                let restWorkTime = 0;
+                let restMoney = 0;
+                postParam2 = qs.stringify(postParam2)
+                await axios.post("http://43.200.115.198:8080/getAttendanceTime.jsp", postParam2).then((res2) => { 
+                    let data2 = res2.data.ITEMS;
+                    normalWorkTime = parseInt(data2.s_normal_work_time == undefined ? 0 : data2.s_normal_work_time); //일반 근무시간
+                    restWorkTime = parseInt(data2.s_rest_work_time == undefined ? 0 : data2.s_rest_work_time);
+                    restMoney = Math.floor(((salary / 12 / 209) * defaultValue.payRest * parseFloat(restWorkTime / 60).toFixed(1)));
+                    console.log("Response Data : ", data2);
+                }).catch((Error) => {
+                    alert("Error Code : 101");
+                })
+                console.log("---- data Pass 02 ----");
+        
+                let overWorkTime = 0;
+                let overMoney = 0;
+                let nightWorkTime = 0;
+                let nightMoney = 0;
+                let day = 0;
+                /* 근무 외 시간 측정 */
+                await axios.post("http://43.200.115.198:8080/getAttendanceOverTime.jsp", postParam2).then((res2) => {
+                    let data2 = res2.data.ITEMS;
+                    overWorkTime = parseInt(data2.s_over_datetime == undefined ? 0 : data2.s_over_datetime); //연장시간
+                    overMoney = Math.floor(((salary / 12 / 209) * defaultValue.payOver * parseFloat(overWorkTime / 60).toFixed(1)));
+                    console.log("overWork Time : ", overWorkTime);
+
+                    nightWorkTime = parseInt(data2.s_night_datetime == undefined ? 0 : data2.s_night_datetime); //야근시간
+                    nightMoney = Math.floor(((salary / 12 / 209) * defaultValue.payNight * parseFloat(nightWorkTime / 60).toFixed(1)));
+                    day = parseInt(data2.day == undefined ? 0 : data2.day); //일한일수
+                }).catch((Error) => {
+                    alert("Error Code : 102");
+                })
+                console.log("---- data Pass 03 ----");
+                let totalMoney = overMoney + nightMoney + restMoney + parseInt(salary / 12);
+                let totalDeductible = nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax;
+                
+                //16개
+                let tempJson = {
+                    sabunOrName: sabunOrName,
+                    retrieveDate: retrieveDate + "-" + monthFormat(i),
+                    day: day,
+                    연봉: salary,
+                    월급: monthPay,
+
+                    일반근무시간: normalWorkTime,
+                    연장근무금액: overMoney,
+                    연장근무시간: overWorkTime,
+                    야간근무금액: nightMoney,
+                    야간근무시간: nightWorkTime,
+                    
+                    휴일근무금액: restMoney,
+                    휴일근무시간: restWorkTime,
+                    국민연금: nationalPension,
+                    건강보험: healthInsurance,
+                    장기요양: longCare,
+                    
+                    고용보험: employmentInsurance, 
+                    근로소득세: incomeTax,
+                    주민세: residentTax,
+                    총지급액: totalMoney,
+                    총공제액: totalDeductible,
+                    
+                    실수령액: totalMoney - totalDeductible
+                }
+                finalJson[retrieveDate + "-" + monthFormat(i)] = tempJson;
+                //getAttendanceOverTime.jsp
+            }).catch((Error) => {
+                alert("Error Code : 100");
+            })   
+        }
+        console.log("finalJson : ", finalJson);
     }).catch((Error) => {
         console.log(Error);
     })
