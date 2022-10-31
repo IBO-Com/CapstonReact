@@ -1,0 +1,37 @@
+.SeverancePayCal_container {
+  background-color: #ffffff;
+  height: 790px;
+  width: 98%;
+}
+.SeverancePayCal_search {
+  height: 60px;
+  border-bottom: 2px solid #d9d9d9;
+  margin: 20px 20px 20px 20px;
+  display: flex;
+}
+.SeverancePayCal_search span {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 7px;
+  font-size: 16px;
+  color: #5a6163;
+}
+.SeverancePayCal_dept {
+  margin-left: 20px;
+}
+.SeverancePayCal_input {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-top: 1px;
+}
+.SeverancePayCal_searchBtn {
+  width: 97px;
+  height: 36px;
+  margin-left: 30px;
+  margin-top: 2px;
+  background-color: #537aaa;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 0;
+  outline: 0;
+}

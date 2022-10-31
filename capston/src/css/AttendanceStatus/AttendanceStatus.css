@@ -90,6 +90,11 @@
   padding-bottom: 5px;
 }
 
+.AttendanceStatus_table {
+  height: 550px;
+  overflow: auto;
+}
+
 .AttendanceStatus_table table {
   border-collapse: collapse;
   width: 100%;

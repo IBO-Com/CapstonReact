@@ -102,7 +102,7 @@ const nav = {
     menu: ["퇴직승인", "퇴직금산정", "퇴직금명세서"],
     link: [
       "/mainNav/retirementapproval",
-      "/mainNav/e2",
+      "/mainNav/severancepaycal",
       "/mainNav/severancepay",
     ],
   },
