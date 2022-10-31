@@ -113,6 +113,7 @@ function AttendanceRegister() {
       align: "center",
       cellsalign: "center",
       datafield: "name",
+      editable: false,
       width: 150,
     },
     {

@@ -4,14 +4,11 @@
     display: flex;
 }
 
-.severancePay_search_box {
-    height: 790px;
-    background-color: white;
-}
-
 .severancePay_dateBox {
     padding: 20px 20px;
     margin-left: 83px;
+    display: flex;
+    margin-top: 5px;
 }
 
 .severancePay_dateBox .severancePay_search_btn {
@@ -35,14 +32,8 @@
     width: 100%;
 }
 
-.severancePay_box {
-    background-color: white;
-    width: 98%;
-    display: flex;
-}
-
 .severancePay_InfoTable {
-    margin: 20px 0px 48px 120px;
+    margin: 20px 0px 0px 120px;
 }
 
 .severancePay_InfoTable span {
@@ -70,7 +61,13 @@
     font-style: normal;
     font-weight: 700;
     background-color: #EBEFF2;
+}
 
+.severancePayInfo {
+    height: 622px;
+    margin-bottom: 20px;
+    padding: 0;
+    min-width: 620px;
 }
 
 .severancePay_InfoTable .severancePayInfo table thead th {
@@ -109,7 +106,7 @@
     position: absolute;
     width: 700px;
     height: 600px;
-    overflow: scroll;
+    overflow: auto;
     margin-left: 80px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
@@ -121,11 +118,6 @@
     width: 73px;
     position: relative;
     top: 3px;
-}
-
-.severancePay_dateBox {
-    display: flex;
-    margin-top: 5px;
 }
 
 .severancePay_dateBox .startDate {

@@ -4,11 +4,6 @@
     display: flex;
 }
 
-.payslip_search_box {
-    height: 790px;
-    background-color: white;
-}
-
 .payslip_dateBox {
     padding: 20px 20px;
     margin-left: 83px;
@@ -36,7 +31,6 @@
 
 .payslipInfoTable {
     margin: 20px 0px 0px 120px;
-    
 }
 
 .payslipInfoTable span {
@@ -50,12 +44,20 @@
     color: #5a6163;
 }
 
+.payslipInfo {
+    overflow-y: auto;
+    height: 627px;
+    margin-bottom: 20px;
+    padding: 0;
+    min-width: 620px;
+}
+
 .payslipInfoTable .payslipInfo table {
     border-collapse: collapse;
     width: 600px;
     border: 1px solid #D9D9D9;
     margin-top: 10px;
-    overflow-y: scroll;
+    overflow: auto;
 }
 
 .payslipInfoTable .payslipInfo table thead tr {
@@ -102,7 +104,7 @@
     position: absolute;
     width: 700px;
     height: 600px;
-    overflow: scroll;
+    overflow: auto;
     margin-left: 80px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;

@@ -252,7 +252,7 @@ const App = () => {
                         <span>퇴직 사원 정보</span>
 
                         <div className="severancePayInfo">
-                            {!peopleData ? (
+                            {/*{!peopleData ? (
                                 "No data found"
                             ) : (
                                 <table>
@@ -270,26 +270,26 @@ const App = () => {
                                             return (
                                                 <>
                                                     <tr>
-                                                        <td>{index + 1}</td>
+                                                        <td>&nbsp;</td>
                                                         <td>
-                                                            <input
+                                                            {/* <input
                                                                 type="radio"
                                                                 name="userSelect" className="Card_radio"
                                                                 onChange={() => {
                                                                     radioBoxChange(name.sabun);
                                                                 }}
-                                                            />
+                                                            /> 
                                                         </td>
-                                                        <td>{name.sabun}</td>
-                                                        <td>{name.name}</td>
-                                                        <td>{name.dept === "01" ? "경영지원부" : "" || name.dept === "02" ? "경영관리" : "" || name.dept === "03" ? "침해대응부" : "" || name.dept === "04" ? "관제센터" : "" || name.dept === "05" ? "보안연구부" : "" || name.dept === "06" ? "보안취약점연구부" : ""}</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
                                                     </tr>
                                                 </>
                                             );
                                         })}
                                     </tbody>
                                 </table>
-                            )}
+                            )} */}
                         </div>
                     </div>
 

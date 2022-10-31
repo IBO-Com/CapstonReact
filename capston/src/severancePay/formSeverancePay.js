@@ -3,6 +3,7 @@ import "../css/severancePay/formSeverancePay.css";
 import * as GetCDTR from "../modules/getCDTR";
 import axios from "axios";
 import qs from "qs";
+import IBOstamp from "../img/stamp.png";
 
 const App = ({ componentRef, sabun }) => {
     const todayTime = () => {
@@ -144,10 +145,13 @@ const App = ({ componentRef, sabun }) => {
             </table>
 
             <div className="formSeverPay_footer">
-                <p>상기금액을 퇴직금으로 정히 영수합니다.</p>
+                <p>상기 금액을 퇴직금으로 정히 영수합니다.</p>
                 <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 {todayTime().slice(8, 10)}일</p>
                 <p className="mbt">IBO</p>
-                <p>대표이사 담 당 자 (인)</p>
+                <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+                <div className="formProofDiv">
+                    <img className="formProof" src={IBOstamp} alt="직인" />
+                </div>
             </div>
         </div>
     );
