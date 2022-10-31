@@ -442,7 +442,11 @@ const monthFormat = (month) => {
             })   
         }
         console.log("finalJson : ", finalJson);
-        saveData(finalJson);
+        if(Object.keys(finalJson).length == 0) {
+            saveData(null);
+        } else {
+            saveData(finalJson);
+        }
     }).catch((Error) => {
         console.log(Error);
     })
