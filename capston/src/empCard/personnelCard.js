@@ -233,11 +233,11 @@ const App = () => {
                 <FormProofofemp componentRef={componentRef} sabun={sabun} />
               ) : (
                 ""
-              )}
+              )} 
               {toogleState === 3 ? (
                 <FormCareercert componentRef={componentRef} sabun={sabun} />
               ) : (
-                ""
+                "" 
               )}
             </div>
           </div>
