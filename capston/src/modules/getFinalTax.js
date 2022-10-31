@@ -359,7 +359,6 @@ const monthFormat = (month) => {
                 }).catch((Error) => {
                     alert("Error Code : 103");
                 })
-                console.log("---- data Pass 01 ----");
                 let moneyData = parseInt(monthPay / 1000) * 1000; //뒷 3자리 0으로 ex. 123456789 -> 123456000
 
                 //연금 계산
@@ -384,11 +383,9 @@ const monthFormat = (month) => {
                     normalWorkTime = parseInt(data2.s_normal_work_time == undefined ? 0 : data2.s_normal_work_time); //일반 근무시간
                     restWorkTime = parseInt(data2.s_rest_work_time == undefined ? 0 : data2.s_rest_work_time);
                     restMoney = Math.floor(((salary / 12 / 209) * defaultValue.payRest * parseFloat(restWorkTime / 60).toFixed(1)));
-                    console.log("Response Data : ", data2);
                 }).catch((Error) => {
                     alert("Error Code : 101");
                 })
-                console.log("---- data Pass 02 ----");
         
                 let overWorkTime = 0;
                 let overMoney = 0;
@@ -400,7 +397,6 @@ const monthFormat = (month) => {
                     let data2 = res2.data.ITEMS;
                     overWorkTime = parseInt(data2.s_over_datetime == undefined ? 0 : data2.s_over_datetime); //연장시간
                     overMoney = Math.floor(((salary / 12 / 209) * defaultValue.payOver * parseFloat(overWorkTime / 60).toFixed(1)));
-                    console.log("overWork Time : ", overWorkTime);
 
                     nightWorkTime = parseInt(data2.s_night_datetime == undefined ? 0 : data2.s_night_datetime); //야근시간
                     nightMoney = Math.floor(((salary / 12 / 209) * defaultValue.payNight * parseFloat(nightWorkTime / 60).toFixed(1)));
@@ -408,7 +404,6 @@ const monthFormat = (month) => {
                 }).catch((Error) => {
                     alert("Error Code : 102");
                 })
-                console.log("---- data Pass 03 ----");
                 let totalMoney = overMoney + nightMoney + restMoney + parseInt(salary / 12);
                 let totalDeductible = nationalPension + healthInsurance + longCare + employmentInsurance + incomeTax + residentTax;
                 
@@ -447,6 +442,7 @@ const monthFormat = (month) => {
             })   
         }
         console.log("finalJson : ", finalJson);
+        saveData(finalJson);
     }).catch((Error) => {
         console.log(Error);
     })
