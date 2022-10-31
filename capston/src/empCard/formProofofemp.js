@@ -82,8 +82,10 @@ const App = ({ componentRef, sabun }) => {
             <p>2022년 10월 9일</p>
             <p className="mbt">IBO</p>
             <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+            <div className="formProofDiv">
+               <img className="formProof" src={IBOstamp} alt="직인" />
+            </div>
          </div>   
-         <img className="formProof" src={IBOstamp} alt="직인" />
     </div>
   );
 };
