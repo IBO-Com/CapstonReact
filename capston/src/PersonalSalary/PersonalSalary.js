@@ -403,7 +403,6 @@ const App = () => {
       <div className="PersonalSalary_payrollContainer">
         <div className="PersonalSalary_payrollTitle">
           <span>급여현황표</span>
-          <button className="PersonalSalary_copyBtn">전월급여복사</button>
         </div>
 
         <div className="PersonalSalary_payrollTable">
