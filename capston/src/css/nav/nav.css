@@ -27,15 +27,21 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
+
+  .nav_tab_img {
+    width: 20px;
+    height: 20px;
+  }
   
+
   .nav_title h3 {
+    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
   .nav_title {
     color: #848E91;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     cursor: pointer;
   }

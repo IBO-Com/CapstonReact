@@ -157,7 +157,7 @@ const App = () => {
                   colorFrom: "#D8E3F0",
                   colorTo: "#BED1E6",
                   stops: [0, 100],
-                  opacityFrom: 0.4,
+                  opacityFrom: 0.1,
                   opacityTo: 0.5,
                 },
               },

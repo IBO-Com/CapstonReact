@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import "../css/nav/nav.css";
-import Basic from "../img/basic.png";
-import Person from "../img/person.png";
-import Calendar from "../img/calendar.png";
-import Paid from "../img/paid.png";
-import Leave from "../img/leave.png";
+
 import { useState } from "react";
 
+import Plus from "../img/nav/TabPlus.png";
+import PlusN from "../img/nav/TabPlusN.png";
+import User from "../img/nav/TabUser.png";
+import UserN from "../img/nav/TabUserN.png";
+import Cal from "../img/nav/TabCal.png";
+import CalN from "../img/nav/TabCalN.png";
+import Won from "../img/nav/TabWon.png";
+import WonN from "../img/nav/TabWonN.png";
+import Leave from "../img/nav/TabLeave.png";
+import LeaveN from "../img/nav/TabLeaveN.png";
+
 function App({ currentClick, setCurrentClick }) {
+  let icons = [Plus, User, Cal, Won, Leave];
+  let iconsN = [PlusN, UserN, CalN, WonN, LeaveN];
   const [selected, setSelected] = useState(null);
   const toggle = (i) => {
     if (selected === i) {
@@ -28,7 +37,9 @@ function App({ currentClick, setCurrentClick }) {
         {Object.keys(nav).map((item, i) => (
           <div className={selected == i ? "nav_item_show" : "nav_item"}>
             <div className="nav_title" onClick={() => toggle(i)}>
-              <h3>{item}</h3>
+              
+              <img src={selected == i ? icons[i] : iconsN[i]} className="nav_tab_img"/>
+              <h3 className="nav_title_text">{item}</h3>
             </div>
             <div className={selected === i ? "nav_menu_show" : "nav_menu"}>
               {nav[item].menu.map((item2, i2) => (
