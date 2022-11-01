@@ -322,7 +322,7 @@ function AttendanceRegister() {
               width: "8vw",
               height: "3.5vh",
               marginRight: "2vw",
-              backgroundColor: "orange",
+              backgroundColor: "#E5A360",
               color: "#FFFFFF",
             }}
             onClick={() => onClickAddButton()}
