@@ -38,7 +38,7 @@ const App = () => {
    const [textName, setTextName] = useState('');
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
-
+   const [tempPack, setTempPack] = useState({});
    const [taxPack, setTaxPack] = useState({ //기본 데이터 꼭 필요함
       sabunOrName: 0,
       retrieveDate: 0,
@@ -79,6 +79,7 @@ const App = () => {
 
    const sendSubmit = () => {
       GetFinalTax.getAllTaxToJson(textName, retrieveDate, setTaxPack);
+      GetFinalTax.getAllTaxToJsonAllMonth("이정재", "2022", setTempPack);
    }
 
    return (
@@ -199,7 +200,7 @@ const App = () => {
             </tr>
             <tr className="monthlyOne">
                <td>기본급</td>
-               <td>{taxPack.월급}원</td>
+               <td>{taxPack.월급.toLocaleString()}원</td>
                <td>국민연금</td>
                <td>{taxPack.국민연금.toLocaleString()}원</td>
             </tr>
