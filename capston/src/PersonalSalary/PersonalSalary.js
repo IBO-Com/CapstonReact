@@ -16,7 +16,6 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
-    console.log(e.target.value);
   };
 
   const todayTime = () => {
@@ -28,34 +27,15 @@ const App = () => {
     return todayYear + "-" + todayMonth + "-" + toDayDate;
   };
 
-  const [salary, setSalary] = useState("");
-  const [normalWorkTime, setNormalWorkTime] = useState(0); //기본 시간
-  const [restWorkTime, setRestWorkTime] = useState(0); //휴일 시간
-  const [overWorkTime, setOverWorkTime] = useState(0); //연장시간
-  const [nightWorkTime, setNightWorkTime] = useState(0); //야근시간
-  const [day, setDay] = useState(0); //일한시간
-
-  const [overMoney, setOverMoney] = useState(0); //연장 돈
-  const [nightMoney, setNightMoney] = useState(0); //야근 돈
-  const [restMoney, setRestMoney] = useState(0); //휴일 돈
-  const [totalMoney, setTotalMoney] = useState(0); //총 금액
-
-  const [nationalPension, setNationalPension] = useState(0); //국민연금
-  const [healthInsurance, setHealthInsurance] = useState(0); //건강 보험
-  const [longCare, setLongCare] = useState(0); //장기요양
-  const [employmentInsurance, setEmploymentInsurance] = useState(0); //고용보험
-  const [incomeTax, setIncomTax] = useState(0); //근로소득세
-  const [residentTax, setResidentTax] = useState(0); //주민세
-  const [totalDeductible, setTotalDeductible] = useState(0); //총 공제액
-
-  const [empData, setEmpData] = useState("");
+  const [textName, setTextName] = useState("");
+  const [center, setCenter] = useState("");
   const [dept, setDept] = useState("");
   const [team, setTeam] = useState("");
+  const [empData, setEmpData] = useState();
   const [rank, setRank] = useState("");
-  const [center, setCenter] = useState("");
-  const [textName, setTextName] = useState("");
-  const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+  const [taxPack, setTaxPack] = useState();
+  const [year, setYear] = useState(new Date().getFullYear())
 
   function getFormatDate(date) {
     var year = date.getFullYear(); //yyyy
@@ -65,27 +45,6 @@ const App = () => {
   }
 
   const sendSubmit = () => {
-    GetFinalTax.getAllTax(
-      textName,
-      retrieveDate,
-      setSalary,
-      setDay,
-      setNormalWorkTime,
-      setOverMoney,
-      setOverWorkTime,
-      setNightMoney,
-      setNightWorkTime,
-      setRestMoney,
-      setRestWorkTime,
-      setNationalPension,
-      setHealthInsurance,
-      setLongCare,
-      setEmploymentInsurance,
-      setIncomTax,
-      setResidentTax,
-      setTotalMoney,
-      setTotalDeductible
-    );
     /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
@@ -97,6 +56,9 @@ const App = () => {
     }
 
     postParam = qs.stringify(query);
+
+    //1월 부터 12월까지 데이터 받아오는 함수
+    GetFinalTax.getAllTaxToJsonAllMonth(textName, year, setTaxPack);
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
@@ -117,36 +79,127 @@ const App = () => {
         );
       });
   };
-
+  
   useEffect(() => {
-    //총 공제액
-    setTotalDeductible(
-      nationalPension +
-        healthInsurance +
-        longCare +
-        employmentInsurance +
-        incomeTax +
-        residentTax
-    );
-  }, [
-    nationalPension,
-    healthInsurance,
-    longCare,
-    employmentInsurance,
-    incomeTax,
-    residentTax,
-  ]);
+    if(!taxPack) return;
+    setMonthlyBar(
+      {
+        series: [
+          {
+            name: "실수령액",
+            data: [
+              parseInt(taxPack["2022-01"].실수령액 / 10000), 
+              parseInt(taxPack["2022-02"].실수령액 / 10000),
+              parseInt(taxPack["2022-03"].실수령액 / 10000),
+              parseInt(taxPack["2022-04"].실수령액 / 10000),
+              parseInt(taxPack["2022-05"].실수령액 / 10000),
+              parseInt(taxPack["2022-06"].실수령액 / 10000),
+              parseInt(taxPack["2022-07"].실수령액 / 10000),
+              parseInt(taxPack["2022-08"].실수령액 / 10000),
+              parseInt(taxPack["2022-09"].실수령액 / 10000),
+              parseInt(taxPack["2022-10"].실수령액 / 10000),
+              parseInt(taxPack["2022-11"].실수령액 / 10000),
+              parseInt(taxPack["2022-12"].실수령액 / 10000),
+            ],
+          },
+        ],
+        options: {
+          chart: {
+            height: 350,
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 5, //표 테두리 둥글게
+              dataLabels: {
+                position: "top", // 데이터 값 표시 위치 top, center, bottom
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true, //값 보여줄거야 말거야
+            formatter: function (val) {
+              return val;
+            },
+            offsetY: -20,
+            style: {
+              fontSize: "12px",
+              colors: ["#304758"], //표 바로 위에 글자색
+            },
+          },
+    
+          xaxis: {
+            categories: [
+              "1월",
+              "2월",
+              "3월",
+              "4월",
+              "5월",
+              "6월",
+              "7월",
+              "8월",
+              "9월",
+              "10월",
+              "11월",
+              "12월",
+            ],
+            position: "bottom", //카테고리의 방향
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            crosshairs: {
+              fill: {
+                type: "gradient",
+                gradient: {
+                  colorFrom: "#D8E3F0",
+                  colorTo: "#BED1E6",
+                  stops: [0, 100],
+                  opacityFrom: 0.4,
+                  opacityTo: 0.5,
+                },
+              },
+            },
+            tooltip: {
+              enabled: false, //마우스 호버할 때 카테고리에 잡히는 말풍선 모양
+            },
+          },
+          yaxis: {
+            axisBorder: {
+              show: false, //표 왼쪽 세로로 마감처리 하냐 마냐
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              show: true, //옆에 최대 최소값 표시하냐
+              formatter: function (val) {
+                return val + "만원";
+              },
+            },
+          },
+          title: {
+            text: "", //표 타이틀 필요없어서 텍스트 지움
+            floating: true,
+            offsetY: 0,
+            align: "center",
+            style: {
+              color: "#000000",
+            },
+          },
+        },
+      }
+    )
+  }, [taxPack]);
 
-  useEffect(() => {
-    //총 지급액
-    setTotalMoney(overMoney + nightMoney + restMoney + parseInt(salary / 12));
-  }, [overMoney, nightMoney, restMoney, salary]);
-
+  //초기값
   const [monthlyBar, setMonthlyBar] = useState({
     series: [
       {
         name: "실수령액",
-        data: [300, 218, 431, 550, 540, 338, 468, 388, 551, 368, 279, 261],
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       },
     ],
     options: {
@@ -320,7 +373,7 @@ const App = () => {
             </tr>
             <tr>
               <th>성명</th>
-              <td>{empData["name"]}</td>
+              <td>{empData ? empData["name"] : ""}</td>
             </tr>
             <tr>
               <th>급여일자</th>
@@ -336,6 +389,7 @@ const App = () => {
           </table>
         </div>
         <div className="PersonalSalary_monthlyGraph">
+          
           <ReactApexChart
             options={monthlyBar.options}
             series={monthlyBar.series}
@@ -343,12 +397,12 @@ const App = () => {
             height={240}
             width={1210}
           />
+        
         </div>
       </div>
       <div className="PersonalSalary_payrollContainer">
         <div className="PersonalSalary_payrollTitle">
           <span>급여현황표</span>
-          <button className="PersonalSalary_copyBtn">전월급여복사</button>
         </div>
 
         <div className="PersonalSalary_payrollTable">
@@ -373,140 +427,140 @@ const App = () => {
             <tbody>
               <tr>
                 <th colSpan={2} className='perSal_total'>실수령액</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{(totalMoney - totalDeductible).toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-08"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].실수령액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].실수령액.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th rowSpan={4}>지급내역</th>
                 <th>기본급</th>
-                <td className="perSal_month1"></td>
-                <td className="perSal_month2"></td>
-                <td className="perSal_month3"></td>
-                <td className="perSal_month4"></td>
-                <td className="perSal_month5"></td>
-                <td className="perSal_month6"></td>
-                <td className="perSal_month7"></td>
-                <td className="perSal_month8"></td>
-                <td className="perSal_month9"></td>
-                <td className="perSal_month10"></td>
-                <td className="perSal_month11">{parseInt(salary / 12).toLocaleString()}</td>
-                <td className="perSal_month12"></td>
+                <td className="perSal_month1">{taxPack ? taxPack[year + "-01"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month2">{taxPack ? taxPack[year + "-02"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month3">{taxPack ? taxPack[year + "-03"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month4">{taxPack ? taxPack[year + "-04"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month5">{taxPack ? taxPack[year + "-05"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month6">{taxPack ? taxPack[year + "-06"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month7">{taxPack ? taxPack[year + "-07"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month8">{taxPack ? taxPack[year + "-08"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month9">{taxPack ? taxPack[year + "-09"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month10">{taxPack ? taxPack[year + "-10"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month11">{taxPack ? taxPack[year + "-11"].월급.toLocaleString() : 0}원</td>
+                <td className="perSal_month12">{taxPack ? taxPack[year + "-12"].월급.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>연장근무</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{overMoney.toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-01"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].연장근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].연장근무금액.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>야간근무</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{nightMoney.toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-08"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].야간근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].야간근무금액.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>휴일근무</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{restMoney.toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-08"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].휴일근무금액.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].휴일근무금액.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th rowSpan={4}>공제내역</th>
                 <th>국민연금</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{nationalPension.toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-08"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].국민연금.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].국민연금.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>건강보험외</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{parseInt(healthInsurance + longCare).toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? (taxPack[year + "-01"].건강보험 + taxPack[year + "-01"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-02"].건강보험 + taxPack[year + "-02"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-03"].건강보험 + taxPack[year + "-03"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-04"].건강보험 + taxPack[year + "-04"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-05"].건강보험 + taxPack[year + "-05"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-06"].건강보험 + taxPack[year + "-06"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-07"].건강보험 + taxPack[year + "-07"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-08"].건강보험 + taxPack[year + "-08"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-09"].건강보험 + taxPack[year + "-09"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-10"].건강보험 + taxPack[year + "-10"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-11"].건강보험 + taxPack[year + "-11"].장기요양).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-12"].건강보험 + taxPack[year + "-12"].장기요양).toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>고용보험</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{employmentInsurance.toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? taxPack[year + "-01"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-02"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-03"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-04"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-05"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-06"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-07"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-08"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-09"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-10"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-11"].고용보험.toLocaleString() : 0}원</td>
+                <td>{taxPack ? taxPack[year + "-12"].고용보험.toLocaleString() : 0}원</td>
               </tr>
               <tr>
                 <th>근로소득세외</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{(incomeTax + residentTax).toLocaleString()}</td>
-                <td></td>
+                <td>{taxPack ? (taxPack[year + "-01"].근로소득세 + taxPack[year + "-01"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-02"].근로소득세 + taxPack[year + "-02"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-03"].근로소득세 + taxPack[year + "-03"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-04"].근로소득세 + taxPack[year + "-04"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-05"].근로소득세 + taxPack[year + "-05"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-06"].근로소득세 + taxPack[year + "-06"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-07"].근로소득세 + taxPack[year + "-07"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-08"].근로소득세 + taxPack[year + "-08"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-09"].근로소득세 + taxPack[year + "-09"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-10"].근로소득세 + taxPack[year + "-10"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-11"].근로소득세 + taxPack[year + "-11"].주민세).toLocaleString() : 0}원</td>
+                <td>{taxPack ? (taxPack[year + "-12"].근로소득세 + taxPack[year + "-12"].주민세).toLocaleString() : 0}원</td>
               </tr>
             </tbody>
           </table>

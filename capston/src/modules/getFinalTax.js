@@ -335,7 +335,7 @@ const monthFormat = (month) => {
         query
     );
 
-    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((res) => { //값 가져오고 없으면 초기화
+    axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then(async (res) => { //값 가져오고 없으면 초기화
         for(let i = 1; i <= 12; i ++) { //1월부터 12월까지
             let salary = 0;
             let data = res.data.ITEMS;
@@ -351,7 +351,7 @@ const monthFormat = (month) => {
             }
 
             postParam2 = qs.stringify(postParam2)
-            axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then(async(res2) => { // 연봉 데이터
+            await axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then(async(res2) => { // 연봉 데이터
                 let data2 = res2.data.ITEMS;
 
                 salary = parseInt(data2[0].salary); //연봉
@@ -452,9 +452,9 @@ const monthFormat = (month) => {
                 alert("Error Code : 100");
             })   
         }
-        console.log("finalJson : ", finalJson);
         if(Object.keys(finalJson).length == 0) {
             saveData(null);
+            console.log("save null");
         } else {
             saveData(finalJson);
         }
