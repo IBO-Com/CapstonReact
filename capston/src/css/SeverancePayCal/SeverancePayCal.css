@@ -35,3 +35,231 @@
   border: 0;
   outline: 0;
 }
+.SeverancePayCal_contnet {
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+}
+.SeverancePayCal_empInfo {
+  margin-right: 60px;
+  width: 800px;
+}
+.SeverancePayCal_empInfo span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+
+.SeverancePayCal_empTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  margin-top: 10px;
+}
+.SeverancePayCal_empTable tr,
+.SeverancePayCal_empTable td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}
+.SeverancePayCal_empTable thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+}
+.SeverancePayCal_empTable thead td {
+  padding: 10px;
+}
+.SeverancePayCal_empTable tbody td {
+  padding: 8px;
+  font-size: 12px;
+}
+.SeverancePayCal_calInfo {
+  width: 100%;
+  height: 670px;
+}
+.SeverancePayCal_btns {
+  text-align: right;
+}
+.SeverancePayCal_btn1 {
+  width: 120px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  margin-right: 10px;
+}
+.SeverancePaycal_btn2 {
+  width: 80px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  margin-right: 10px;
+}
+.SeverancePaycal_btn3 {
+  width: 80px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  margin-right: 10px;
+}
+.SeverancePaycal_btn4 {
+  width: 80px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.SeverancePayCal_date table {
+  margin-top: 5px;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+}
+.SeverancePayCal_date tr,
+.SeverancePayCal_date td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}
+.SeverancePayCal_date td {
+  width: 100px;
+  padding: 8px;
+  font-size: 12px;
+}
+.SeverancePaycal_item {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+}
+.SeverancePayCal_date span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+  font-size: 14px;
+}
+.SeverancePayCal_total {
+  margin-top: 10px;
+}
+.SeverancePayCal_total span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.SeverancePayCal_total table {
+  margin-top: 5px;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+}
+.SeverancePayCal_total thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
+}
+.SeverancePayCal_total thead td {
+  padding: 10px;
+}
+.SeverancePayCal_total tbody td {
+  padding: 8px;
+  font-size: 12px;
+  width: 120px;
+  height: 30px;
+}
+.SeverancePayCal_total tr,
+.SeverancePayCal_total td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+}
+.SeverancePayCal_bonus {
+  margin-top: 15px;
+}
+.SeverancePayCal_bonusHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.SeverancePayCal_bonusHeader span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.SeverancePayCal_bonusBtn {
+  width: 110px;
+  height: 30px;
+  background-color: #e78854;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+}
+.SeverancePayCal_bonus table {
+  margin-top: 5px;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+}
+.SeverancePayCal_bonus td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+  width: 100px;
+}
+.SeverancePayCal_calculator {
+  margin-top: 15px;
+}
+.SeverancePayCal_calculator span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.SeverancePayCal_calculator table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  margin-top: 5px;
+}
+.SeverancePayCal_calculator td {
+  border: 1px solid #d9d9d9;
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+  width: 100px;
+}
