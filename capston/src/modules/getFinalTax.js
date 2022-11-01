@@ -189,11 +189,10 @@ export const getAllTaxToJson = async(sabunOrName, retrieveDate, saveData) => {
             rank : data[0].rank
         }
 
-        postParam2 = qs.stringify(postParam2)
+        postParam2 = qs.stringify(postParam2);
         axios.post("http://43.200.115.198:8080/getPayCommon.jsp", postParam2).then(async(res2) => { // 연봉 데이터
-            let data2 = res2.data.ITEMS;
+            let data2 = res2.data.ITEMS; 
             salary = parseInt(data2[0].salary); //연봉
-          
             /* 근무시간 측정 */
             postParam2 = {
                 start_date:(retrieveDate + "01").replace("-", ""),
@@ -214,8 +213,6 @@ export const getAllTaxToJson = async(sabunOrName, retrieveDate, saveData) => {
             }).catch((Error) => {
                 alert("Error Code : 101");
             })
-            console.log("---- data Pass 02 ----");
-    
             let overWorkTime = 0;
             let overMoney = 0;
             let nightWorkTime = 0;

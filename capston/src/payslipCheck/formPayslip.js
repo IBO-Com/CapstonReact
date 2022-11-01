@@ -75,14 +75,14 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
     return (
         <div className="payslip_box" ref={componentRef}>
             <div className="payslip_title">
-                <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 급여명세서</p>
+                <p>{retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 급여명세서</p>
             </div>
             <div className="payslip_data">
                 <div className="formPayslip_empInfo">
                     <p>성명 : {userData ? userData["name"] : ""}</p>
                     <p>부서명 : {dept}</p>
                     <p>직책 : {rank}</p>
-                    <p>지급일 : {todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
+                    <p>지급일 : {retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</p>
                 </div>
 
                 <table className="formPayslipTable">
@@ -141,7 +141,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
 
                 <div className="payslip_form_footer">
                     <p>귀하의 노고에 감사드립니다.</p>
-                    <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</p>
+                    <p>{retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</p>
                     <p className="mbt">IBO</p>
                     <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
                     <div className="formProofDiv">

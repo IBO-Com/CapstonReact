@@ -124,12 +124,12 @@ const App = () => {
          <hr className='monthlyPay_lineBar'></hr>
 
          <div className="monthlyPay_title">
-            <span>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 총 급여액</span>
+            <span>{retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 총 급여액</span>
          </div>
 
          <div className="monthlyPay_viewer">
             <div className="monthlyPay_ment">
-               <span>급여지급일 {todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일</span>
+               <span>급여지급일 {retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</span>
                <button className="monthlyPay_Btn">(주) IBO</button>
             </div>
             <div className="monthlyPay_total">
