@@ -341,7 +341,7 @@ const App = () => {
             series={monthlyBar.series}
             type="bar"
             height={240}
-            width={900}
+            width={1210}
           />
         </div>
       </div>
@@ -373,23 +373,23 @@ const App = () => {
             <tbody>
               <tr>
                 <th colSpan={2} className='perSal_total'>실수령액</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{(totalMoney - totalDeductible).toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th rowSpan={4}>지급내역</th>
                 <th>기본급</th>
-                <td className="perSal_month1">{parseInt(salary / 12).toLocaleString()}</td>
+                <td className="perSal_month1"></td>
                 <td className="perSal_month2"></td>
                 <td className="perSal_month3"></td>
                 <td className="perSal_month4"></td>
@@ -399,113 +399,113 @@ const App = () => {
                 <td className="perSal_month8"></td>
                 <td className="perSal_month9"></td>
                 <td className="perSal_month10"></td>
-                <td className="perSal_month11"></td>
+                <td className="perSal_month11">{parseInt(salary / 12).toLocaleString()}</td>
                 <td className="perSal_month12"></td>
               </tr>
               <tr>
                 <th>연장근무</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{overMoney.toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>야간근무</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{nightMoney.toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>휴일근무</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{restMoney.toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th rowSpan={4}>공제내역</th>
                 <th>국민연금</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{nationalPension.toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>건강보험외</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{parseInt(healthInsurance + longCare).toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>고용보험</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{employmentInsurance.toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>근로소득세외</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{(incomeTax + residentTax).toLocaleString()}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
             </tbody>
