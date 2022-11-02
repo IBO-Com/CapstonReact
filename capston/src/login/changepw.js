@@ -1,37 +1,40 @@
 import React from 'react';
-import "../css/login/change.css"
+import "../css/login/changepw.css"
 import { Link } from 'react-router-dom';
 
 const App = () => {
     return (
         <div>
-            <div className='findpwBox'>
+            <div className='changepwBox'>
                 <div>
-                    <span className='findpwTitle'>비밀번호 변경</span>
-                    <span className='findpwContent'>안전한 사용을 위해, 기존의 비밀번호를 변경합니다.<br></br>새로운 비밀번호를 입력해주세요.</span>
+                    <span className='changepwTitle'>비밀번호 변경</span>
+                    <span className='changepwContent'>안전한 사용을 위해, 기존의 비밀번호를 변경합니다.<br></br>새로운 비밀번호를 입력해주세요.</span>
                 </div>
 
-                <div className='userFindpw'>
-                    <form className="findpwInput">
-                        <div className="findpwInputName">
-                            <input type="text" name="findpwName" id="findpwName" autocomplete="off" placeholder="현재 비밀번호" />
+                <div className='userchangepw'>
+                    <form className="changepwInput">
+                        <div className="changepwInputName">
+                            <input type="text" name="changepwName" id="changepwName" autocomplete="off" placeholder="현재 비밀번호" />
                         </div>
-                        <div className="findpwInputSabun">
-                            <input type="text" name="findpwSabun" id="findpwSabun" autocomplete="off" placeholder="새 비밀번호" />
+                        <div className="changepwInputSabun">
+                            <input type="text" name="changepwSabun" id="changepwSabun" autocomplete="off" placeholder="새 비밀번호" />
                         </div>
-                        <div className="findpwInputEmail">
-                            <input type="text" name="findpwEmail" id="findpwEmail" autocomplete="off" placeholder="비밀번호 확인" />
+                        <div className="changepwInputEmail">
+                            <input type="text" name="changepwEmail" id="changepwEmail" autocomplete="off" placeholder="비밀번호 확인" />
                         </div>
 
-                        <Link to="../login">
-                            <button className="findpwBtn" type="button">등록</button>
-                        </Link>
+                        <div className='changpw_box'>
+                            <Link to="/mainNav">
+                                <button className="changepwBack" type="button">이전으로</button>
+                            </Link>
+                            <Link to="/login">
+                                <button className="changepwBtn" type="button">변경</button>
+                            </Link>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        //<Empinfo />
     );
 };
 

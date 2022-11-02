@@ -1,5 +1,13 @@
+.mainContetnsBox {
+    overflow: hidden;
+    min-width: 1100px;
+} 
+
 .CardInfoTable {
-    margin: 20px 0px 48px 120px;
+    min-width: 500px;
+    margin: 20px 0px 0px 120px;
+    overflow-y: auto;
+    height: 645px;
 }
 
 .CardInfoTable span {
@@ -54,6 +62,7 @@
 
 
 .CardInfoTable .hrCardInfo table {
+    overflow: auto;
     border-collapse: collapse;
     width: 600px;
     border: 1px solid #D9D9D9;
@@ -106,18 +115,26 @@
 }
 
 .personnelCard_box {
-    background-color:white;
-    width: 98%;
+    height: 790px;
     display: flex;
 }
 
+.personnelCard_Flex {
+    overflow-x: hidden;
+    display: flex;
+}
+
+.perCard_box {
+    overflow: auto;
+    height: 100%;
+}
+
 .Card_viewer {
-    position: absolute;
     width: 700px;
     height: 600px;
-    overflow-y: scroll;
+    overflow: hidden;
     margin-left: 80px;
-    background: #FDFDFD;
+
     border: 2px solid #D9D9D9;
     border-radius: 3px;
 }
@@ -129,8 +146,8 @@
 
 .card_lineBar {
     border: 1px solid #D9D9D9;
-    margin-left: 70px;
-    width: 100%;
+    margin-left: 60px;
+    width: 92%;
 }
 
 .card_dateBox .card_search_btn {
@@ -153,7 +170,7 @@
 }
 
 .card_search_box {
-    height: 790px;
+    width: 98%;
     background-color: white;
 }
 

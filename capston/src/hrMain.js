@@ -1,99 +1,118 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 
 import "./css/hrMain.css";
 
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
 import User from "../src/img/user.png";
-import ApexCharts from 'react-apexcharts';
+import ApexCharts from "react-apexcharts";
+
+import axios from "axios";
+import qs from "qs";
+import * as Cookie from "./cookies/cookies";
 
 const App = () => {
   let maxAnnual = 15;
-  const [annual, setAnnual] = useState(12.5); //연차 개수 
+  const [annual, setAnnual] = useState(12.5); //연차 개수
+  const [picture, setPicture] = useState(null);
+
+  useEffect(() => {
+    let data = Cookie.getCookie("employeeInfo");
+    let userInfo = {};
+
+    let postParam = qs.stringify({
+      sabunOrName: data["id"],
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
+      .then((response) => {
+        console.log(response);
+        setPicture(response.data.ITEMS[0].picture);
+      });
+  }, []);
 
   const [data, setData] = useState({
-    series: [100 / maxAnnual * annual], //100 -> 12
+    series: [(100 / maxAnnual) * annual], //100 -> 12
     options: {
       chart: {
         height: 0,
-        type: 'radialBar',
+        type: "radialBar",
         toolbar: {
-          show: true
-        }
+          show: true,
+        },
       },
       plotOptions: {
         radialBar: {
           startAngle: 0,
           endAngle: 360,
-           hollow: {
+          hollow: {
             margin: 0,
-            size: '85%',
-            background: '#fff',
+            size: "85%",
+            background: "#fff",
             image: undefined,
             imageOffsetX: 0,
             imageOffsetY: 0,
-            position: 'front',
+            position: "front",
             dropShadow: {
               enabled: true,
               top: 3,
               left: 0,
               blur: 4,
-              opacity: 0.24
-            }
+              opacity: 0.24,
+            },
           },
           track: {
-            background: '#fff',
-            strokeWidth: '50%',
+            background: "#fff",
+            strokeWidth: "50%",
             margin: 0, // margin is in pixels
             dropShadow: {
               enabled: true,
               top: -3,
               left: 0,
               blur: 4,
-              opacity: 0.35
-            }
+              opacity: 0.35,
+            },
           },
-      
+
           dataLabels: {
             show: true,
             name: {
               offsetY: -10,
               show: true,
-              color: '#888',
-              fontSize: '17px'
+              color: "#888",
+              fontSize: "17px",
             },
             value: {
-              formatter: function(val) {
-
-                return annual + "개"
+              formatter: function (val) {
+                return annual + "개";
               },
-              color: '#111',
-              fontSize: '20px',
+              color: "#111",
+              fontSize: "20px",
               show: true,
-            }
-          }
-        }
+            },
+          },
+        },
       },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
-          shade: 'dark',
-          type: 'horizontal',
+          shade: "dark",
+          type: "horizontal",
           shadeIntensity: 0.5,
-          gradientToColors: ['#ABE5A1'],
+          gradientToColors: ["#ABE5A1"],
           inverseColors: true,
           opacityFrom: 1,
           opacityTo: 1,
-          stops: [0, 100]
-        }
+          stops: [0, 100],
+        },
       },
       stroke: {
-        lineCap: 'round'
+        lineCap: "round",
       },
-      labels: ['잔여연차'],
+      labels: ["잔여연차"],
     },
-}
-  );
+  });
 
   return (
     <div className="hrMain">
@@ -103,7 +122,11 @@ const App = () => {
             <h4>사용자 정보</h4>
             <div className="hrMain_userInfo">
               <div className="hrMain_userImg">
-                <img src={User} alt="userImg" />
+                {picture === null ? (
+                  <img className="empimg" src={User} alt="이미지" />
+                ) : (
+                  <img className="empimg" src={picture} alt={"사진"} />
+                )}
               </div>
               <div className="hrMain_userDetail">
                 <li className="hrMain_userName">김명지</li>
@@ -118,18 +141,30 @@ const App = () => {
             <div>
               <h4>근무 정보</h4>
               <div className="hrMain_workInfo">
-                <div style={{padding: "15px", fontSize: "20px", fontWeight: "bold"}}>2022.10.27 (목)</div>
+                <div
+                  style={{
+                    padding: "15px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  2022.10.27 (목)
+                </div>
                 <div className="hrMain_workInfo_work">
                   <div className="hrMain_workState"> 출근 </div>
                   <div className="hrMain_workDate"> 2022-07-29 </div>
                   <div className="hrMain_workTime"> 08:49</div>
                 </div>
 
-                <ApexCharts options={data.options} series={data.series} type="radialBar" height={200}/>
+                <ApexCharts
+                  options={data.options}
+                  series={data.series}
+                  type="radialBar"
+                  height={200}
+                />
                 <div className="hrMain_workBottomText">2022년 17개 갱신</div>
               </div>
             </div>
-
           </div>
 
           <div className="hrMain_work_container">
@@ -163,7 +198,6 @@ const App = () => {
                 </table>
               </div>
             </div>
-
           </div>
         </div>
 

@@ -82,6 +82,11 @@
   border: 0;
   outline: 0;
 }
+.RetirementApproval_table {
+  height: 610px;
+  overflow: auto;
+}
+
 .RetirementApproval_table table {
   border-collapse: collapse;
   width: 100%;

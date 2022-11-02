@@ -23,12 +23,12 @@ const App = ({isLogin, setIsLogin}) => {
       alert("아이디 또는 비밀번호를 다시 확인해주세요.");
       return; //초기값 설정 시, 로그인 안됐을 때
     }
-
     Cookie.setCookie("loginInfo", JSON.stringify(loginInfo[0]));
+    Cookie.setCookie("employeeInfo", JSON.stringify(loginInfo[0]));
     setIsLogin(true);
     //로그인 성공시 
     console.log("Login Success : ", Cookie.getCookie("loginInfo"));
-    navigate('/MainNav');
+    navigate('/mainNav');
   }, [loginInfo])
 
   const Submit = (e) => {

@@ -10,7 +10,7 @@ import OrganizeSetting from "./emp/OrganizeSetting";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
 import EmpSelect from "./emp/EmpSelect";
-import "./css/mainNav.css";
+import "./css/mainNav.css"; 
 
 import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
@@ -25,6 +25,8 @@ import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
 import AttendanceRegister from "./attendance/attendanceRegister";
 import RetirementApproval from "./Retirement/RetirementApproval";
+import PersonalSalary from "./PersonalSalary/PersonalSalary"; //개인급여관리
+import SeverancePayCal from "./SeverancePayCal/SeverancePayCal";
 
 //근태관리 탭
 import VacationManage from "./vacationManage/vacationManage"; //휴가관리
@@ -98,6 +100,9 @@ const App = () => {
           {/* 근태/급여 현황 */}
           <Route path="attendancestatus" element={<AttendanceStatus />}></Route>
 
+          {/* 개인급여관리 */}
+          <Route path="personalsalary" element={<PersonalSalary />}></Route>
+
           {/* 월급여조회 페이지 */}
           <Route path="monthlySalaryCheck" element={<MonthlySalaryCheck />}>
             {" "}
@@ -113,10 +118,14 @@ const App = () => {
           <Route path="workManage" element={<WorkManage />}></Route>
 
           {/* 퇴직승인 */}
-          <Route path="retirementapproval" element={<RetirementApproval />}></Route>
+          <Route
+            path="retirementapproval"
+            element={<RetirementApproval />}
+          ></Route>
+          {/* 퇴직금 산정 */}
+          <Route path="severancepaycal" element={<SeverancePayCal />}></Route>
           {/* 퇴직금명세서 */}
           <Route path="severancepay" element={<SeverancePay />}></Route>
-
 
           {/* 페이지 찾을 수 없음 */}
           <Route path="*" element={<NotFound />}></Route>

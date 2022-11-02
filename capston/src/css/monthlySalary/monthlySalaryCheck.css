@@ -134,19 +134,34 @@
     font-family: 'Noto Sans KR';
     line-height: 22px;
     letter-spacing: 0.1em;
-    margin-left: 60px;
-    padding-top: 20px;
+    margin: 0px 0px 0px 45px;
+    padding: 20px 0px 0px 0px;
+    display: flex;
+    width: 150px;
 }
 
-.monthlytotalWork_ment,
+.monthlytotalWork_ment {
+    color: #5A6163;
+    font-family: 'Noto Sans KR';
+    font-weight: bold;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    margin: 0px 40px 0px 50px;
+    padding-top: 60px;
+    display: flex;
+    width: 170px;
+}
+
 .monthlyWorkTime_ment {
     color: #5A6163;
     font-family: 'Noto Sans KR';
     font-weight: bold;
     line-height: 22px;
     letter-spacing: 0.1em;
-    margin-left: 75px;
+    margin: 0px 30px 0px 0px;
     padding-top: 60px;
+    display: flex;
+    width: 190px;
 }
 
 .monthlyPayCheck_title {
@@ -199,10 +214,12 @@
 
 .TabletotalPay {
     color: blue;
+    font-weight: bold;
 }
 
 .TabletotalDeduct {
     color: red;
+    font-weight: bold;
 }
 
 .monthlyPayDebuct {

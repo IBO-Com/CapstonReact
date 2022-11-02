@@ -145,7 +145,7 @@ const App = () => {
 
         <hr className="card_lineBar"></hr>
 
-        <div className="personnelCard_box">
+        <div className="personnelCard_Flex">
           <div className="CardInfoTable">
             <span>직원 목록</span>
 
@@ -233,11 +233,11 @@ const App = () => {
                 <FormProofofemp componentRef={componentRef} sabun={sabun} />
               ) : (
                 ""
-              )}
+              )} 
               {toogleState === 3 ? (
                 <FormCareercert componentRef={componentRef} sabun={sabun} />
               ) : (
-                ""
+                "" 
               )}
             </div>
           </div>

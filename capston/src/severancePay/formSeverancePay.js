@@ -3,6 +3,7 @@ import "../css/severancePay/formSeverancePay.css";
 import * as GetCDTR from "../modules/getCDTR";
 import axios from "axios";
 import qs from "qs";
+import IBOstamp from "../img/stamp.png";
 
 const App = ({ componentRef, sabun }) => {
     const todayTime = () => {
@@ -49,11 +50,11 @@ const App = ({ componentRef, sabun }) => {
 
     return (
         <div ref={componentRef} className="formSeverPay_box">
-            <div className="perCardtitle">
+            <div className="formSeverancePaytitle">
                 <p>퇴직금명세서</p>
             </div>
             <table className="formRetireTable">
-                <tr className="formRetire_boldcolor">
+                <tr className="formSeverance_boldcolor">
                     <td colSpan={5}>퇴직자 정보</td>
                 </tr>
 
@@ -96,7 +97,7 @@ const App = ({ componentRef, sabun }) => {
                 </tr>
 
 
-                <tr className="formRetire_boldcolor">
+                <tr className="formSeverance_boldcolor">
                     <td colSpan={5}>퇴직금 산출내역</td>
                 </tr>
 
@@ -133,8 +134,15 @@ const App = ({ componentRef, sabun }) => {
                     <td colSpan={2} className="formRetire_noBack"></td>
                 </tr>
 
+                <tr className="formSeverance_boldcolor">
+                    <td colSpan={5}>상여금</td>
+                </tr>
 
-                <tr className="formRetire_boldcolor">
+                <tr>
+                    <td colSpan={5}>원</td>
+                </tr>
+
+                <tr className="formSeverance_boldcolor">
                     <td colSpan={5}>퇴직총액</td>
                 </tr>
 
@@ -144,10 +152,13 @@ const App = ({ componentRef, sabun }) => {
             </table>
 
             <div className="formSeverPay_footer">
-                <p>상기금액을 퇴직금으로 정히 영수합니다.</p>
+                <p>상기 금액을 퇴직금으로 정히 영수합니다.</p>
                 <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 {todayTime().slice(8, 10)}일</p>
                 <p className="mbt">IBO</p>
-                <p>대표이사 담 당 자 (인)</p>
+                <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+                <div className="formSeverDiv">
+                    <img className="formSever" src={IBOstamp} alt="직인" />
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,8 @@
 .HrInfoTable {
-  margin: 20px 62px 48px 65px;
+  margin: 15px 62px 48px 65px;
+  height: 750px;
+  overflow-y: auto;
+  
 }
 .HrInfoTable p {
   font-family: "Noto Sans KR";
@@ -18,6 +21,7 @@
     width: 1042px;
     height: 694px;
 } */
+
 
 .HrInfoTable .info_Table table {
   border-collapse: collapse;

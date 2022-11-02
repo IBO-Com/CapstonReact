@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import testimg from "../img/testimg.jpg";
+import testimg from "../img/user.png";
 import koLocale from "date-fns/locale/ko";
 import * as Cookie from "../cookies/cookies";
 
@@ -45,14 +45,19 @@ const HelloBaseTab = () => {
   const [center, setCenter] = useState("H-경영관리본부");
   const [dept, setDept] = useState("01-경영지원부");
   const [team, setTeam] = useState("101-인사관리팀");
-  const [rank, setRank] = useState(1);
-  const [rankTest, setRankTest] = useState("");
+  const [rank, setRank] = useState("1");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
+  const [rankList, setRankList] = useState("");
+  const [picture, setPicture] = useState({
+    img_base64: "",
+    img: "",
+  });
 
-  //const urlSave = "http://43.200.115.198:8080/empregister.jsp";
-  const urlGetCls = "http://43.200.115.198:8080/empGetRank.jsp";
-  const urlSave = "http://localhost:8080/empregister.jsp";
-  //const urlGetCls = "http://localhost:8080/empGetRank.jsp";
+  const urlSave = "http://43.200.115.198:8080/empregister.jsp";
+  const urlSavePicture = "http://43.200.115.198:8080/empsavepicture.jsp";
+  const urlGetCls = "http://43.200.115.198:8080/empGetOrg.jsp";
+  //const urlSave = "http://localhost:8080/empregister.jsp";
+  //const urlGetCls = "http://localhost:8080/empGetOrg.jsp";
 
   const handleDateChange = (date) => {
     setDateComeIn(getFormatDate(date));
@@ -73,12 +78,45 @@ const HelloBaseTab = () => {
     setTeam(event.target.value);
   };
   const handleSelectRank = (event) => {
+    console.log(event.target.value);
     setRank(event.target.value);
+  };
+  const handleFileOnChange = (event) => {
+    event.preventDefault();
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    if (file !== undefined) {
+      reader.onloadend = () => {
+        setPicture({
+          img_base64: file,
+          img: reader.result,
+        });
+        console.log(reader.resultStrin);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   useEffect(() => {
+    let array_center = [];
+    let array_dept = [];
+    let array_team = [];
+    let array_rank = [];
+
     axios.get(urlGetCls).then((response) => {
-      setRankTest(response.data.ITEMS);
+      for (let i = 0; i < response.data.ITEMS.length; i++) {
+        let items = response.data.ITEMS[i];
+        if (items.cls == "001") {
+          array_center.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "002") {
+          array_dept.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "003") {
+          array_team.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "004") {
+          array_rank.push(items);
+        }
+      }
+      setRankList(array_rank);
     });
   }, []);
 
@@ -91,6 +129,21 @@ const HelloBaseTab = () => {
     let findTeam = center_list[center][dept][0];
     setTeam(findTeam);
   }, [dept]);
+
+  const center_list = {
+    "H-경영관리본부": {
+      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
+      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
+    },
+    "C-사이버보안본부": {
+      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
+      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
+    },
+    "S-보안연구본부": {
+      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
+      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
+    },
+  };
 
   const clickSaveButton = () => {
     if (formRef.current.reportValidity()) {
@@ -110,7 +163,8 @@ const HelloBaseTab = () => {
           team: team.split("-")[0],
           rank: rank,
           dateComeIn: dateComeIn,
-          loginId: Cookie.getCookie("loginInfo").id,
+          loginId: Cookie.getCookie("employeeInfo").id,
+          img_base64: picture.img,
         });
 
         axios.post(urlSave, postParam).then((response) => {
@@ -125,24 +179,9 @@ const HelloBaseTab = () => {
     }
   };
 
-  const center_list = {
-    "H-경영관리본부": {
-      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
-      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
-    },
-    "C-사이버보안본부": {
-      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
-      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
-    },
-    "S-보안연구본부": {
-      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
-      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
-    },
-  };
   return (
     <div>
       <Button
-        className={styles.buttonStyle}
         style={{
           marginLeft: "92%",
           marginRight: "2.5vw",
@@ -163,11 +202,23 @@ const HelloBaseTab = () => {
                   <td rowSpan={3} colSpan={2}>
                     <div style={{ display: "flex" }}>
                       <div className={styles.empWrapimg}>
-                        <img
-                          className={styles.empimg}
-                          src={testimg}
-                          alt="이미지"
-                        />
+                        {picture.img === "" ? (
+                          <>
+                            <img
+                              className={styles.empimg}
+                              src={testimg}
+                              alt="이미지"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              className={styles.empimg}
+                              src={picture.img}
+                              alt="이미지"
+                            />
+                          </>
+                        )}
                       </div>
                       <div className={styles.inputStyle}>
                         <input
@@ -178,7 +229,7 @@ const HelloBaseTab = () => {
                           name="profile_img"
                           id="profile_img"
                           accept="image/*"
-                          //onChange={(event) => handleFileOnChange(event, "img_1")}
+                          onChange={(event) => handleFileOnChange(event)}
                         />
                         <label
                           className={styles.inputFileButton}
@@ -324,8 +375,8 @@ const HelloBaseTab = () => {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectRank}
                       >
-                        {rankTest.length > 0 ? (
-                          rankTest.map((item) => (
+                        {rankList.length > 0 ? (
+                          rankList.map((item) => (
                             <MenuItem value={item.code_cd}>
                               {item.code_nm}
                             </MenuItem>
