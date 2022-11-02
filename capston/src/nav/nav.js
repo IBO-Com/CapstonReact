@@ -15,17 +15,6 @@ import WonN from "../img/nav/TabWonN.png";
 import Leave from "../img/nav/TabLeave.png";
 import LeaveN from "../img/nav/TabLeaveN.png";
 
-import Plus from "../img/nav/TabPlus.png";
-import PlusN from "../img/nav/TabPlusN.png";
-import User from "../img/nav/TabUser.png";
-import UserN from "../img/nav/TabUserN.png";
-import Cal from "../img/nav/TabCal.png";
-import CalN from "../img/nav/TabCalN.png";
-import Won from "../img/nav/TabWon.png";
-import WonN from "../img/nav/TabWonN.png";
-import Leave from "../img/nav/TabLeave.png";
-import LeaveN from "../img/nav/TabLeaveN.png";
-
 function App({ currentClick, setCurrentClick }) {
   let icons = [Plus, User, Cal, Won, Leave];
   let iconsN = [PlusN, UserN, CalN, WonN, LeaveN];
