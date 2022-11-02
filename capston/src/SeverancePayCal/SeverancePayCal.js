@@ -146,10 +146,7 @@ const App = () => {
         <div className="SeverancePayCal_calInfo">
           <div className="SeverancePayCal_date">
             <div className="SeverancePayCal_btns">
-              <button className="SeverancePayCal_btn1">급상여가져오기</button>
-              <button className="SeverancePaycal_btn2">재계산</button>
-              <button className="SeverancePaycal_btn3">인쇄</button>
-              <button className="SeverancePaycal_btn4">저장</button>
+              <button className="SeverancePaycal_saveBtn">저장</button>
             </div>
             <table>
               <tr>
@@ -221,9 +218,6 @@ const App = () => {
           <div className="SeverancePayCal_bonus">
             <div className="SeverancePayCal_bonusHeader">
               <span>퇴직간 1년간 상여내역</span>
-              <button className="SeverancePayCal_bonusBtn">
-                내역 상세보기
-              </button>
             </div>
 
             <table>

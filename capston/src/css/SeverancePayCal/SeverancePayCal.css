@@ -87,37 +87,8 @@
 .SeverancePayCal_btns {
   text-align: right;
 }
-.SeverancePayCal_btn1 {
-  width: 120px;
-  height: 30px;
-  background-color: #e78854;
-  color: #ffffff;
-  border-radius: 5px;
-  border: 0;
-  outline: 0;
-  margin-right: 10px;
-}
-.SeverancePaycal_btn2 {
-  width: 80px;
-  height: 30px;
-  background-color: #e78854;
-  color: #ffffff;
-  border-radius: 5px;
-  border: 0;
-  outline: 0;
-  margin-right: 10px;
-}
-.SeverancePaycal_btn3 {
-  width: 80px;
-  height: 30px;
-  background-color: #e78854;
-  color: #ffffff;
-  border-radius: 5px;
-  border: 0;
-  outline: 0;
-  margin-right: 10px;
-}
-.SeverancePaycal_btn4 {
+
+.SeverancePaycal_saveBtn {
   width: 80px;
   height: 30px;
   background-color: #e78854;
@@ -216,15 +187,7 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
-.SeverancePayCal_bonusBtn {
-  width: 110px;
-  height: 30px;
-  background-color: #e78854;
-  color: #ffffff;
-  border-radius: 5px;
-  border: 0;
-  outline: 0;
-}
+
 .SeverancePayCal_bonus table {
   margin-top: 5px;
   border-collapse: collapse;
