@@ -10,7 +10,8 @@ import OrganizeSetting from "./emp/OrganizeSetting";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
 import EmpSelect from "./emp/EmpSelect";
-import "./css/mainNav.css"; 
+import "./css/mainNav.css";
+import CodeCommonSetting from "./common/CommonCodeSetting";
 
 import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
@@ -63,6 +64,9 @@ const App = () => {
         <UserHeader />
 
         <Routes>
+          {/* 공통 코드정보*/}
+          <Route path="/setCodeCommon" element={<CodeCommonSetting />}></Route>
+
           {/* 기본 페이지 */}
           <Route path="/" element={<HRMain />}></Route>
           <Route path="/empinfo" element={<Empinfo />}></Route>
