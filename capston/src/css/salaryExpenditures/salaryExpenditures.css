@@ -87,8 +87,10 @@
     color: #5a6163;
 }
 
-.SalaryEx_payrollTable {
-    overflow-y: scroll;
+.SalaryEx_payrollContainer table tbody {
+    overflow-y: scroll !important;
+    height: 300px !important;
+    background-color: lightpink;
 }
 
 .SalaryEx_payrollTable table {
@@ -158,9 +160,12 @@
     background-color: #ebeff2;
 }
 
-.SalaryEx_SecondTable .SalaryEx_totalTitle {
+.SalaryEx_totalFooter {
     color: red;
     font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    height: 40px;
 }
 
 .SalaryEx_1,

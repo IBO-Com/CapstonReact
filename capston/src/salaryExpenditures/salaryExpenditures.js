@@ -546,25 +546,9 @@ const App = () => {
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr className="SalaryEx_totalTitle">
+                        </tbody>
+                        <tfoot>
+                            <tr className="SalaryEx_totalFooter">
                                 <td colSpan={4} className="SalaryEx_total">총 합계</td>
                                 <td>99,999,999</td>
                                 <td></td>
@@ -577,8 +561,9 @@ const App = () => {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                             </tr>
-                        </tbody>
+                        </tfoot>
                     </table>
                 </div>
             </div>
