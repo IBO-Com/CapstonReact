@@ -12,7 +12,6 @@ const App = () => {
     axios
       .post("http://43.200.115.198:8080/empselect.jsp")
       .then((res) => {
-        console.log(res);
         setPeopleData(res.data.ITEMS);
       })
       .catch((Error) => {

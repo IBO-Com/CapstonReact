@@ -11,7 +11,6 @@ const App = ({ isLogin, setIsLogin }) => {
   const [loginInfo, setLoginInfo] = useState();
   const [inputId, setInputId] = useState("1012210000");
   const [inputPw, setInputPw] = useState("1234");
-  const urlgetCodeCommon = "http://43.200.115.198:8080/getcommoncode.jsp";
 
   useEffect(() => {
     window.sessionStorage.clear();
@@ -30,6 +29,7 @@ const App = ({ isLogin, setIsLogin }) => {
     }
 
     Cookie.setCookie("loginInfo", JSON.stringify(loginInfo[0]));
+    Cookie.setCookie("empInfo", JSON.stringify(loginInfo[0]));
 
     setIsLogin(true);
     //로그인 성공시
@@ -49,18 +49,7 @@ const App = ({ isLogin, setIsLogin }) => {
     axios
       .post("http://43.200.115.198:8080/loginCheck.jsp", postParam)
       .then((res) => {
-        axios.get(urlgetCodeCommon).then((response) => {
-          sessionStorage.setItem(
-            "code_common",
-            JSON.stringify(response.data.dataDetail)
-          );
-          axios
-            .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
-            .then((response) => {
-              sessionStorage.setItem("picture", response.data.ITEMS[0].picture);
-              setLoginInfo(res.data.ITEMS);
-            });
-        });
+        setLoginInfo(res.data.ITEMS);
       })
       .catch((Error) => {
         console.log(Error);

@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
 
 import "./css/hrMain.css";
-
+import axios from "axios";
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
 import User from "../src/img/user.png";
 import ApexCharts from "react-apexcharts";
+import * as Cookie from "./cookies/cookies";
+import qs from "qs";
 
 const App = () => {
   let maxAnnual = 15;
   const [annual, setAnnual] = useState(12.5); //연차 개수
-  const [picture, setPicture] = useState(null);
+  const [picture, setPicture] = useState("null");
 
   useEffect(() => {
-    setPicture(window.sessionStorage.getItem("picture"));
+    let empInfo = Cookie.getCookie("empInfo");
+    let postParam = qs.stringify({
+      id: empInfo["id"],
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
+      .then((response) => {
+        sessionStorage.setItem("picture", response.data.ITEMS[0].picture);
+        setPicture(window.sessionStorage.getItem("picture"));
+      });
   }, []);
 
   const [data, setData] = useState({
