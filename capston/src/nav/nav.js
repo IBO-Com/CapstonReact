@@ -106,11 +106,12 @@ const nav = {
     ],
   },
   급여관리: {
-    menu: ["개인급여관리", "월급여조회", "급여명세서조회"],
+    menu: ["개인급여관리", "월급여조회", "급여명세서조회", "급여지출현황"],
     link: [
       "/mainNav/personalsalary",
       "/mainNav/monthlySalaryCheck",
       "/mainNav/payslipCheck",
+      "/mainNav/salaryExpenditures",
     ],
   },
   퇴직관리: {
