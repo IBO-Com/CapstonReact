@@ -5,7 +5,10 @@ import JqxGrid, { jqx } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxgrid";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.material-purple.css";
 import koLocale from "date-fns/locale/ko";
+import { blue } from "@mui/material/colors";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -24,13 +27,33 @@ function AttendanceRegister() {
   const myGrid = useRef();
   const [itemList, setItemList] = useState([]);
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+  const [workFormTest, setWorkFormTest] = useState({
+    value: "test",
+    label: "test",
+  });
 
   //const urlRetrieve = "http://localhost:8080/attretrieve.jsp";
   //const urlSave = "http://localhost:8080/attsave.jsp";
   //const urlClosing = "http://localhost:8080/attclosing.jsp";
+  const urlgetCodeCommon = "http://43.200.115.198:8080/getcommoncode.jsp";
   const urlRetrieve = "http://43.200.115.198:8080/attretrieve.jsp";
   const urlSave = "http://43.200.115.198:8080/attsave.jsp";
+  const urlDelete = "http://43.200.115.198:8080/attdelete.jsp";
   const urlClosing = "http://43.200.115.198:8080/attclosing.jsp";
+
+  useEffect(() => {
+    axios.get(urlgetCodeCommon).then((response) => {
+      console.log(response);
+      setWorkFormTest([
+        { value: "NM", label: "일반" },
+        { value: "OW", label: "외근" },
+        { value: "BT", label: "출장" },
+        { value: "HW", label: "재택" },
+        { value: "EW", label: "연장" },
+        { value: "RW", label: "휴일" },
+      ]);
+    });
+  }, []);
 
   const handleDateChange = (date) => {
     setRetrieveDate(getFormatDate(date));
@@ -51,7 +74,7 @@ function AttendanceRegister() {
       { name: "label", type: "string" },
       { name: "value", type: "string" },
     ],
-    localdata: work_form_list,
+    localdata: workFormTest,
   };
 
   let workFormAdapter = new jqx.dataAdapter(workFormSource, {
@@ -93,6 +116,44 @@ function AttendanceRegister() {
       text: "",
       width: 50,
       textSize: "14px",
+    },
+    {
+      text: "",
+      align: "center",
+      cellsalign: "center",
+      buttonclick: (row) => {
+        console.log(myGrid.current.getrowdata(row));
+        if (myGrid.current.getrowdata(row).sabun !== "") {
+          if (window.confirm("해당 데이터를 삭제하시겠습니까?")) {
+            axios
+              .get(urlDelete, {
+                params: {
+                  in_date: myGrid.current
+                    .getrowdata(row)
+                    .in_date.replaceAll("-", ""),
+                  sabun: myGrid.current.getrowdata(row).sabun,
+                  work_form_cd: myGrid.current.getrowdata(row).work_form_cd,
+                },
+              })
+              .then((response) => {
+                console.log(response);
+                if (response.data.result === "success") {
+                  alert("저장되었습니다.");
+                  onClickRetrieveButton();
+                } else {
+                  alert("error");
+                }
+              });
+          }
+        } else {
+          myGrid.current.deleterow(row);
+        }
+      },
+      cellsrenderer: () => {
+        return "삭제";
+      },
+      columntype: "button",
+      width: 60,
     },
     {
       text: "일자",
@@ -168,15 +229,6 @@ function AttendanceRegister() {
     myGrid.current.addrow(null, {});
   };
 
-  const onClickDeleteButton = () => {
-    const selectedrowindex = myGrid.current.getselectedcell().rowindex;
-    const rowscount = myGrid.current.getdatainformation().rowscount;
-    if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
-      const id = myGrid.current.getrowid(selectedrowindex);
-      myGrid.current.deleterow(id);
-    }
-  };
-
   const onClickRetrieveButton = () => {
     axios
       .get(urlRetrieve, {
@@ -185,7 +237,6 @@ function AttendanceRegister() {
         },
       })
       .then((response) => {
-        console.log(response);
         setItemList(response.data.DATA);
       });
   };
@@ -215,7 +266,7 @@ function AttendanceRegister() {
         let hour = parseInt(split_time[0]);
         let min = parseInt(split_time[1]);
         let sec = (hour * 60 + min) * 60;
-        if (end_datetime > "1800" && end_datetime < "2200") {
+        if (end_datetime > "1800" && end_datetime <= "2200") {
           data[i].over_datetime = String((sec - 64800) / 60);
         } else {
           // 10시 이후 퇴근
@@ -343,19 +394,7 @@ function AttendanceRegister() {
           >
             추가
           </Button>
-          <Button
-            style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
-            }}
-            onClick={() => onClickDeleteButton()}
-            variant="contained"
-          >
-            삭제
-          </Button>
+
           <Button
             style={{
               width: "3.5vw",
@@ -406,7 +445,7 @@ function AttendanceRegister() {
             }}
             ref={myGrid}
             width={"90%"}
-            height={450}
+            height={600}
             altrows={true}
             selectionmode={"singlecell"}
             editable={true}
