@@ -28,7 +28,7 @@ const App = () => {
         setAppointmentData(res.data.ITEMS);
       })
       .catch((Error) => {
-        alert("Error Code : 103");
+        alert("에러!!");
       });
   }, []);
 
@@ -175,6 +175,7 @@ const App = () => {
                   <td>성명</td>
                 </tr>
               </thead>
+
               {appointmentData ? (
                 <tbody>
                   {appointmentData.map((item, index) => (
