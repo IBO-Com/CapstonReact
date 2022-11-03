@@ -17,13 +17,13 @@ class koLocalizedUtils extends DateFnsUtils {
 const App = () => {
   const [startDate, setStartDate] = useState(new Date("2020-01-01"));
   const [endDate, setEndDate] = useState(new Date());
-  const [appointmentData, setAppointmentData] = useState();
+  const [appointmentData, setAppointmentData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   // console.log(openModal);
 
   useEffect(() => {
     axios
-      .post("http://localhost:8080/CapstonProject/personnelAppointment.jsp")
+      .post("http://43.200.115.198:8080/personnelAppointment.jsp")
       .then((res) => {
         setAppointmentData(res.data.ITEMS);
       })
@@ -125,41 +125,42 @@ const App = () => {
                   <td>성명</td>
                 </tr>
               </thead>
-              {appointmentData ? (
-                <tbody>
-                  {appointmentData.map((item, index) => (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td style={{ minWidth: "20px" }}>
-                        {item.app_date.slice(0, 4)}년&nbsp;{" "}
-                        {item.app_date.slice(4, 6)}월&nbsp;{" "}
-                        {item.app_date.slice(6, 8)}일&nbsp;
-                      </td>
-
-                      <td style={{ width: "150px" }}></td>
-                      <td style={{ width: "150px" }}>
-                        {item.dept === "01"
-                          ? "경영지원부"
-                          : " " || item.dept === "02"
-                          ? "경영관리부"
-                          : " " || item.dept === "03"
-                          ? "침해대응부"
-                          : " " || item.dept === "04"
-                          ? "관제센터"
-                          : " " || item.dept === "05"
-                          ? "보안연구부"
-                          : " " || item.dept === "06"
-                          ? "보안취약점연구부"
-                          : " "}
-                      </td>
-                      <td>{item.sabun}</td>
-                      <td>{item.name}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              ) : (
-                <div></div>
-              )}
+              <tbody>
+                {appointmentData.map((item, index) => (
+                  <tr>
+                    {item.app_state === "1" ? (
+                      <>
+                        <td>{index + 1}</td>
+                        <td style={{ minWidth: "20px" }}>
+                          {item.app_date.slice(0, 4)}년&nbsp;{" "}
+                          {item.app_date.slice(4, 6)}월&nbsp;{" "}
+                          {item.app_date.slice(6, 8)}일&nbsp;
+                        </td>
+                        <td></td>
+                        <td style={{ width: "150px" }}>
+                          {item.dept === "01"
+                            ? "경영지원부"
+                            : " " || item.dept === "02"
+                            ? "경영관리부"
+                            : " " || item.dept === "03"
+                            ? "침해대응부"
+                            : " " || item.dept === "04"
+                            ? "관제센터"
+                            : " " || item.dept === "05"
+                            ? "보안연구부"
+                            : " " || item.dept === "06"
+                            ? "보안취약점연구부"
+                            : " "}
+                        </td>
+                        <td>{item.sabun}</td>
+                        <td>{item.name}</td>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
           <div className="PersonnelAppointment_rank">
@@ -175,43 +176,46 @@ const App = () => {
                   <td>성명</td>
                 </tr>
               </thead>
+              <tbody>
+                {appointmentData.map((item, index) => (
+                  <tr>
+                    {item.app_state === "2" ? (
+                      <>
+                        <td>{index + 1}</td>
+                        <td style={{ minWidth: "20px" }}>
+                          {item.app_date.slice(0, 4)}년&nbsp;{" "}
+                          {item.app_date.slice(4, 6)}월&nbsp;{" "}
+                          {item.app_date.slice(6, 8)}일&nbsp;
+                        </td>
 
-              {appointmentData ? (
-                <tbody>
-                  {appointmentData.map((item, index) => (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td style={{ minWidth: "20px" }}>
-                        {item.app_date.slice(0, 4)}년&nbsp;{" "}
-                        {item.app_date.slice(4, 6)}월&nbsp;{" "}
-                        {item.app_date.slice(6, 8)}일&nbsp;
-                      </td>
-                      <td></td>
-                      <td>
-                        {item.rank === "1"
-                          ? "사원"
-                          : " " || item.rank === "2"
-                          ? "대리"
-                          : " " || item.rank === "3"
-                          ? "과장"
-                          : "" || item.rank === "4"
-                          ? "차장"
-                          : " " || item.rank === "5"
-                          ? "이사"
-                          : "" || item.rank === "6"
-                          ? "사장"
-                          : " " || item.rank === "7"
-                          ? "대표이사"
-                          : " "}
-                      </td>
-                      <td>{item.sabun}</td>
-                      <td>{item.name}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              ) : (
-                <div></div>
-              )}
+                        <td></td>
+                        <td>
+                          {" "}
+                          {item.rank === "1"
+                            ? "사원"
+                            : " " || item.rank === "2"
+                            ? "대리"
+                            : " " || item.rank === "3"
+                            ? "과장"
+                            : "" || item.rank === "4"
+                            ? "차장"
+                            : " " || item.rank === "5"
+                            ? "이사"
+                            : "" || item.rank === "6"
+                            ? "사장"
+                            : " " || item.rank === "7"
+                            ? "대표이사"
+                            : " "}
+                        </td>
+                        <td>{item.sabun}</td>
+                        <td>{item.name}</td>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
