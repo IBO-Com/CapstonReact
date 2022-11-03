@@ -31,14 +31,14 @@ const AppointmentModal = ({
   };
 
   // 발령일자
-  const [startDate, setStartDate] = useState(new Date("2022-10-01"));
+  const [startDate, setStartDate] = useState(new Date());
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
   // 발령구분
   const [selectType, setSelectType] = useState("*");
   const handleSelectType = (event) => {
-    setSelectDepart(event.target.value);
+    setSelectType(event.target.value);
   };
 
   // 부서선택
@@ -57,9 +57,7 @@ const AppointmentModal = ({
 
   const [empData, setEmpData] = useState();
   const [dept, setDept] = useState("");
-  const [team, setTeam] = useState("");
   const [rank, setRank] = useState("");
-  const [center, setCenter] = useState("");
 
   // 검색
   const sendSubmit = () => {
@@ -98,16 +96,7 @@ const AppointmentModal = ({
         setEmpData(res.data.ITEMS[0]);
         let empInfo = res.data.ITEMS[0];
 
-        GetCDTR.getCDTR(
-          empInfo["center"],
-          empInfo["dept"],
-          empInfo["team"],
-          empInfo["rank"],
-          setCenter,
-          setDept,
-          setTeam,
-          setRank
-        );
+        GetCDTR.getCDTR(empInfo["dept"], empInfo["rank"], setDept, setRank);
       })
       .catch((Error) => {
         console.log(Error);
