@@ -21,6 +21,7 @@ import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import PayslipCheck from "./payslipCheck/payslipCheck"; //급여명세서
 import SeverancePay from "./severancePay/severancepay"; //퇴직금명세서
 import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
+import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //급여지출현황
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
@@ -114,6 +115,9 @@ const App = () => {
 
           {/* 급여명세서조회 페이지 */}
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
+
+          {/* 급여지출현황 */}
+          <Route path="salaryExpenditures" element={<SalaryExpenditures />}></Route>
 
           {/* 휴가 관리 */}
           <Route path="vacationManage" element={<VacationManage />}></Route>

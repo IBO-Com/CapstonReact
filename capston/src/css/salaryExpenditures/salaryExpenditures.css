@@ -1,0 +1,180 @@
+.SalaryEx_conatainer {
+    background-color: #ffffff;
+    width: 98%;
+    height: 790px;
+}
+
+.SalaryEx_search {
+    display: flex;
+    height: 60px;
+    border-bottom: 2px solid #d9d9d9;
+    margin: 20px 20px 20px 20px;
+}
+
+.SalaryEx_searchBtn {
+    width: 97px;
+    height: 36px;
+    margin-left: 30px;
+    margin-top: 2px;
+    background-color: #537aaa;
+    color: #ffffff;
+    border-radius: 2px;
+    border: 0;
+    outline: 0;
+}
+
+.SalaryEx_input {
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    margin-left: 20px;
+}
+
+.SalaryEx_basicInfo {
+    margin: 10px 50px 0px 50px;
+    display: flex;
+}
+
+.SalaryEx_userInfo span {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    letter-spacing: 0.1em;
+    color: #5a6163;
+}
+
+.SalaryEx_userInfo table {
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid #d9d9d9;
+    margin-right: 50px;
+}
+
+.SalaryEx_userInfo th {
+    font-size: 12px;
+    color: #515966;
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    background-color: #ebeff2;
+    padding: 10px;
+}
+
+.SalaryEx_userInfo td {
+    padding: 8px;
+    font-size: 12px;
+    text-align: center;
+    width: 200px;
+}
+
+.SalaryEx_payrollContainer {
+    margin: 0px 50px 10px 50px;
+}
+
+.SalaryEx_payrollTitle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SalaryEx_payrollTitle span {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    letter-spacing: 0.1em;
+    color: #5a6163;
+}
+
+.SalaryEx_payrollTable {
+    overflow-y: scroll;
+}
+
+.SalaryEx_payrollTable table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid #d9d9d9;
+}
+
+.SalaryEx_payrollTable thead tr {
+    font-size: 12px;
+    color: #515966;
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    background-color: #ebeff2;
+}
+
+.SalaryEx_payrollTable thead td {
+    padding: 10px;
+    border-collapse: collapse;
+    border: 1px solid #d9d9d9;
+}
+
+.SalaryEx_payrollTable tbody th {
+    font-size: 12px;
+    color: #515966;
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    background-color: #ebeff2;
+    padding: 10px;
+}
+
+.SalaryEx_payrollTable tbody td {
+    padding: 8px;
+    font-size: 12px;
+    border-collapse: collapse;
+    border: 1px solid #d9d9d9;
+}
+
+.SalaryEx_payrollTable tr,
+.SalaryEx_payrollTable td {
+    border: 1px solid #d9d9d9;
+    text-align: center;
+}
+
+.SalaryEx_SecondTable tr td {
+    height: 20px;
+    padding: 8px 0px 8px 0px;
+}
+
+.SalaryEx_index {
+    width: 30px;
+}
+
+.SalaryEx_dept {
+    width: 120px;
+}
+
+.SalaryEx_rank,
+.SalaryEx_name {
+    width: 80px;
+}
+
+.SalaryEx_total {
+    background-color: #ebeff2;
+}
+
+.SalaryEx_SecondTable .SalaryEx_totalTitle {
+    color: red;
+    font-weight: bold;
+}
+
+.SalaryEx_1,
+.SalaryEx_2,
+.SalaryEx_3,
+.SalaryEx_4,
+.SalaryEx_5,
+.SalaryEx_6,
+.SalaryEx_7,
+.SalaryEx_8,
+.SalaryEx_9,
+.SalaryEx_10,
+.SalaryEx_11,
+.SalaryEx_12 {
+    width: 80px;
+    padding: 0px 0px 0px 0px;
+}
