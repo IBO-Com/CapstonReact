@@ -61,8 +61,32 @@
   border: 0;
   outline: 0;
 }
-
-.PersonnelAppointmet_table thead tr {
+.PersonnelAppointment_tables {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.PersonnelAppointment_dept {
+  min-width: 730px;
+  height: 600px;
+}
+.PersonnelAppointment_dept span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.PersonnelAppointment_dept table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+}
+.PersonnelAppointment_dept thead tr {
   font-size: 12px;
   color: #515966;
   font-family: "Noto Sans KR";
@@ -70,21 +94,57 @@
   font-weight: 700;
   background-color: #ebeff2;
 }
-.PersonnelAppointmet_table table {
+
+.PersonnelAppointment_dept thead td {
+  padding: 10px;
+}
+.PersonnelAppointment_dept tbody td {
+  padding: 8px;
+  font-size: 12px;
+}
+.PersonnelAppointment_dept tr,
+.PersonnelAppointment_dept td {
+  border: 1px solid#D9D9D9;
+  text-align: center;
+}
+.PersonnelAppointment_rank {
+  min-width: 730px;
+  height: 600px;
+}
+.PersonnelAppointment_rank span {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
+}
+.PersonnelAppointment_rank table {
+  width: 100%;
+  margin-top: 10px;
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #d9d9d9;
 }
-.PersonnelAppointmet_table thead td {
-  padding: 10px;
+.PersonnelAppointment_rank thead tr {
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
 }
 
-.PersonnelAppointmet_table tbody td {
+.PersonnelAppointment_rank thead td {
+  padding: 10px;
+}
+.PersonnelAppointment_rank tbody td {
   padding: 8px;
   font-size: 12px;
 }
-.PersonnelAppointmet_table tr,
-.PersonnelAppointmet_table td {
+.PersonnelAppointment_rank tr,
+.PersonnelAppointment_rank td {
   border: 1px solid#D9D9D9;
   text-align: center;
 }

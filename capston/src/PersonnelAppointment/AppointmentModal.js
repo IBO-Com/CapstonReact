@@ -95,7 +95,6 @@ const AppointmentModal = ({
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {
-        // setPeopleData(res.data.ITEMS);
         setEmpData(res.data.ITEMS[0]);
         let empInfo = res.data.ITEMS[0];
 
@@ -197,10 +196,10 @@ const AppointmentModal = ({
             <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
               전체
             </MenuItem>
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
+            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
               부서이동
             </MenuItem>
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
+            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"22"}>
               승진
             </MenuItem>
           </Select>
