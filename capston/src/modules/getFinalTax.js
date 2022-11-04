@@ -397,8 +397,8 @@ const monthFormat = (month) => {
                 await axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
                     let data = res.data.ITEMS;
                     if(Object.keys(data).length == 0) {
-                        incomeTax = 0;
-                        residentTax = 0;
+                        incomeTax = 1010;
+                        residentTax = 100;
                     } else {
                         incomeTax = parseInt(data.incomeTax);
                         residentTax = (parseInt(parseInt(data.incomeTax) / 10));
@@ -460,7 +460,7 @@ const monthFormat = (month) => {
     })
 }
 
-export const getAllTaxToJsonFast = async(sabunOrName, startDate, endDate, saveData) => {
+export const getAllTaxToJsonFast = (sabunOrName, startDate, endDate, saveData) => {
     let postParam = {};
     if(sabunOrName.trim() != '') {
         postParam["sabunOrName"] = sabunOrName;
@@ -472,9 +472,79 @@ export const getAllTaxToJsonFast = async(sabunOrName, startDate, endDate, saveDa
     }
 
     postParam = qs.stringify(postParam);
-    axios.post("http://43.200.115.198:8080/getAttendanceTime2.jsp", postParam).then(async (res) => {
+    axios.post("http://43.200.115.198:8080/getAttendanceTime2.jsp", postParam).then((res) => {
+        let data = res.data.ITEMS;
+        let usersData = {};
+        let usersTotalMoney = 0;
         
-        console.log("getData : ", res.data.ITEMS);
+        for(let idx = 0; idx < data.length; idx ++) {
+            let workForm = data[idx].work_form;  //일한 종류
+            
+            let hourWage = parseInt(data[idx].salary) / 12 / 209; //시급
+            let dailyWage = hourWage * 8; //일급
+
+            let nightTime = data[idx].night_datetime == null ? 0 : (parseInt(data[idx].night_datetime) / 60).toFixed(2);  //야근 시간
+            let overTime = data[idx].over_datetime == null ? 0 : (parseInt(data[idx].over_datetime) / 60).toFixed(2); //연장 시간
+            let workTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
+
+            let nightMoney = parseInt(nightTime * hourWage * 0.5); //야간근무 일한시간 * 시급 * 0.5
+            let overMoney = parseInt(overTime * hourWage * 1.5);  //연장근무 일한시간 * 시급 * 1.5
+            let salary = parseInt(data[idx].salary);
+            let restMoney = workForm == "RW" ? parseInt(workTime * hourWage * 1.5) : 0;
+            let defaultMoney = workForm != "RW" ? parseInt(workTime * hourWage) : 0;
+            let totalMoney = nightMoney + overMoney + restMoney + defaultMoney;
+            
+            if(usersData[data[idx].name] == undefined) { //해당 사용자의 기본 데이터가 없을 때
+                usersData[data[idx].name] = {
+                    salary: salary,
+                    workForm: workForm,
+                    nightMoney: nightMoney,
+                    overMoney: overMoney,
+                    restMoney: restMoney,
+                    defaultMoney: defaultMoney,
+                    totalMoney: totalMoney
+                }
+            } else { //해당 사용자의 데이터가 있을 때
+                usersData[data[idx].name] = {
+                    salary: salary,
+                    workForm: workForm,
+                    nightMoney: usersData[data[idx].name].nightMoney + nightMoney,
+                    overMoney: usersData[data[idx].name].overMoney + overMoney,
+                    restMoney: usersData[data[idx].name].restMoney + restMoney,
+                    defaultMoney: usersData[data[idx].name].defaultMoney + defaultMoney,
+                    totalMoney: usersData[data[idx].name].totalMoney + totalMoney
+                }
+            }
+        }
+
+        Object.keys(usersData).map(async (item, index) => {
+            let postParam = {
+                monthPay: usersData[item].totalMoney
+            };
+            postParam = qs.stringify(postParam);
+            let incomeTax = 1010;
+            let residentTax = 100;
+            await axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
+                let data = res.data.ITEMS;
+                if(Object.keys(data).length != 0) {
+                    incomeTax = parseInt(data.incomeTax);
+                    residentTax = (parseInt(parseInt(data.incomeTax) / 10));
+                }
+                usersData[item].incomeTax = incomeTax;
+                usersData[item].residentTax = residentTax;
+            }).catch((Error) => {
+                alert("Error Code : 103");
+            })
+        })
+        
+
+        Object.keys(usersData).map((item, index) => {
+            usersTotalMoney += usersData[item].totalMoney;
+        })
+
+        usersData["usersTotalMoney"] = usersTotalMoney;
+        saveData(usersData);
+
     }).catch((Error) => {
         console.log(Error)
     })

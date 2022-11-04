@@ -37,6 +37,20 @@ const App = () => {
     const [year, setYear] = useState(new Date().getFullYear())
     const [salaryEx, setSalaryEx] = useState([]);
 
+    const [JanTax, setJanTax] = useState({usersTotalMoney:0}); //1월
+    const [FebTax, setFebTax] = useState({usersTotalMoney:0}); //2월
+    const [MarTax, setMarTax] = useState({usersTotalMoney:0}); //3월
+    const [AprTax, setAprTax] = useState({usersTotalMoney:0}); //4월
+    const [MayTax, setMayTax] = useState({usersTotalMoney:0}); //5월
+    const [JunTax, setJunTax] = useState({usersTotalMoney:0}); //6월
+    const [JulTax, setJulTax] = useState({usersTotalMoney:0}); //7월
+    const [AugTax, setAugTax] = useState({usersTotalMoney:0}); //8월
+    const [SepTax, setSepTax] = useState({usersTotalMoney:0}); //9월
+    const [OctTax, setOctTax] = useState({usersTotalMoney:0}); //10월
+    const [NovTax, setNovTax] = useState({usersTotalMoney:0}); //11월
+    const [DecTax, setDecTax] = useState({usersTotalMoney:0}); //12월
+
+
     useEffect(() => {
         axios
             .post("http://43.200.115.198:8080/salaryEx.jsp")
@@ -56,7 +70,20 @@ const App = () => {
     }
 
     const sendSubmit = () => {
-        GetFinalTax.getAllTaxToJsonFast('', '20221001', '20221032', taxPack);
+        GetFinalTax.getAllTaxToJsonFast('', '20220101', '20220132', setJanTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220201', '20220232', setFebTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220301', '20220332', setMarTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220401', '20220432', setAprTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220501', '20220532', setMayTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220601', '20220632', setJunTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220701', '20220732', setJulTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220801', '20220832', setAugTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20220901', '20220932', setSepTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20221001', '20221032', setOctTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20221101', '20221132', setNovTax);
+        GetFinalTax.getAllTaxToJsonFast('', '20221201', '20221232', setDecTax);
+        
+        console.log("getData : ", getData);
     };
 
     useEffect(() => {
@@ -67,18 +94,7 @@ const App = () => {
                     {
                         name: "실수령액",
                         data: [
-                            parseInt(taxPack["2022-01"].실수령액 / 10000),
-                            parseInt(taxPack["2022-02"].실수령액 / 10000),
-                            parseInt(taxPack["2022-03"].실수령액 / 10000),
-                            parseInt(taxPack["2022-04"].실수령액 / 10000),
-                            parseInt(taxPack["2022-05"].실수령액 / 10000),
-                            parseInt(taxPack["2022-06"].실수령액 / 10000),
-                            parseInt(taxPack["2022-07"].실수령액 / 10000),
-                            parseInt(taxPack["2022-08"].실수령액 / 10000),
-                            parseInt(taxPack["2022-09"].실수령액 / 10000),
-                            parseInt(taxPack["2022-10"].실수령액 / 10000),
-                            parseInt(taxPack["2022-11"].실수령액 / 10000),
-                            parseInt(taxPack["2022-12"].실수령액 / 10000),
+                            0,0,0,0,0,0,0,0,0,0,0,0
                         ],
                     },
                 ],
@@ -313,22 +329,6 @@ const App = () => {
                         </MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl>
-                    <input
-                        style={{
-                            lineHeight: "33px",
-                            width: "170px",
-                            height: "33px",
-                        }}
-                        placeholder="사번 / 성명"
-                        type="text"
-                        className="SalaryEx_input"
-                        label="사번/성명"
-                        variant="outlined"
-                        size="small"
-                        onChange={textNameHandle}
-                    />
-                </FormControl>
                 <button
                     className="SalaryEx_searchBtn"
                     onClick={() => {
@@ -386,39 +386,54 @@ const App = () => {
                                     <td>{item.deptKR}</td>
                                     <td>{item.rankKR}</td>
                                     <td>{item.name}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{JanTax[item.name] ? JanTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{FebTax[item.name] ? FebTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{MarTax[item.name] ? MarTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{AprTax[item.name] ? AprTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{MayTax[item.name] ? MayTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{JunTax[item.name] ? JunTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{JulTax[item.name] ? JulTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{AugTax[item.name] ? AugTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{SepTax[item.name] ? SepTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{OctTax[item.name] ? OctTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{NovTax[item.name] ? NovTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{DecTax[item.name] ? DecTax[item.name].totalMoney.toLocaleString() : 0}</td>
                                 </tr>
                             ))}
                         </tbody>
                         <tfoot>
                             <tr className="SalaryEx_totalFooter">
                                 <td colSpan={4} className="SalaryEx_total">총 합계</td>
-                                <td>99,999,999</td>
+                                <td>
+                                    {
+                                        (JanTax.usersTotalMoney +
+                                        FebTax.usersTotalMoney +
+                                        MarTax.usersTotalMoney + 
+                                        AprTax.usersTotalMoney + 
+                                        MayTax.usersTotalMoney + 
+                                        JunTax.usersTotalMoney + 
+                                        JulTax.usersTotalMoney + 
+                                        AugTax.usersTotalMoney + 
+                                        SepTax.usersTotalMoney + 
+                                        OctTax.usersTotalMoney +
+                                        NovTax.usersTotalMoney + 
+                                        DecTax.usersTotalMoney).toLocaleString()
+                                    }
+                                </td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{JanTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{FebTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{MarTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{AprTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{MayTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{JunTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{JulTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{AugTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{SepTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{OctTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{NovTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{DecTax.usersTotalMoney.toLocaleString()}</td>
                             </tr>
                         </tfoot>
                     </table>
