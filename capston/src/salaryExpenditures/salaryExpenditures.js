@@ -26,7 +26,6 @@ const App = () => {
 
         return todayYear + "-" + todayMonth + "-" + toDayDate;
     };
-
     const [textName, setTextName] = useState("");
     const [center, setCenter] = useState("");
     const [dept, setDept] = useState("");
@@ -45,39 +44,7 @@ const App = () => {
     }
 
     const sendSubmit = () => {
-        /* 쿼리 문 작성 */
-        let postParam = {};
-        let query = {};
-
-        if (textName.trim() == "") {
-            delete query["sabunOrName"];
-        } else {
-            query["sabunOrName"] = textName;
-        }
-
-        postParam = qs.stringify(query);
-
-        //1월 부터 12월까지 데이터 받아오는 함수
-        GetFinalTax.getAllTaxToJsonAllMonth(textName, year, setTaxPack);
-
-        axios
-            .post("http://43.200.115.198:8080/empselect.jsp", postParam)
-            .then((res) => {
-                // setPeopleData(res.data.ITEMS);
-                setEmpData(res.data.ITEMS[0]);
-                let empInfo = res.data.ITEMS[0];
-
-                GetCDTR.getCDTR(
-                    empInfo["center"],
-                    empInfo["dept"],
-                    empInfo["team"],
-                    empInfo["rank"],
-                    setCenter,
-                    setDept,
-                    setTeam,
-                    setRank
-                );
-            });
+        GetFinalTax.getAllTaxToJsonFast('', '20221001', '20221032', taxPack);
     };
 
     useEffect(() => {
