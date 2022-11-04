@@ -459,3 +459,23 @@ const monthFormat = (month) => {
         console.log(Error);
     })
 }
+
+export const getAllTaxToJsonFast = async(sabunOrName, startDate, endDate, saveData) => {
+    let postParam = {};
+    if(sabunOrName.trim() != '') {
+        postParam["sabunOrName"] = sabunOrName;
+    }
+
+    if(startDate.trim() != '' && endDate.trim() != '') {
+        postParam["startDate"] = startDate;
+        postParam["endDate"] = endDate;
+    }
+
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getAttendanceTime2.jsp", postParam).then(async (res) => {
+        
+        console.log("getData : ", res.data.ITEMS);
+    }).catch((Error) => {
+        console.log(Error)
+    })
+}

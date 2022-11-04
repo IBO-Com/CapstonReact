@@ -26,7 +26,6 @@ const App = () => {
 
         return todayYear + "-" + todayMonth + "-" + toDayDate;
     };
-
     const [textName, setTextName] = useState("");
     const [center, setCenter] = useState("");
     const [dept, setDept] = useState("");
@@ -36,6 +35,18 @@ const App = () => {
     const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
     const [taxPack, setTaxPack] = useState();
     const [year, setYear] = useState(new Date().getFullYear())
+    const [salaryEx, setSalaryEx] = useState([]);
+
+    useEffect(() => {
+        axios
+            .post("http://43.200.115.198:8080/salaryEx.jsp")
+            .then((res) => {
+                setSalaryEx(res.data.ITEMS);
+            })
+            .catch((Error) => {
+                alert("급여지출현황 오류!!");
+            });
+    }, []);
 
     function getFormatDate(date) {
         var year = date.getFullYear(); //yyyy
@@ -45,39 +56,7 @@ const App = () => {
     }
 
     const sendSubmit = () => {
-        /* 쿼리 문 작성 */
-        let postParam = {};
-        let query = {};
-
-        if (textName.trim() == "") {
-            delete query["sabunOrName"];
-        } else {
-            query["sabunOrName"] = textName;
-        }
-
-        postParam = qs.stringify(query);
-
-        //1월 부터 12월까지 데이터 받아오는 함수
-        GetFinalTax.getAllTaxToJsonAllMonth(textName, year, setTaxPack);
-
-        axios
-            .post("http://43.200.115.198:8080/empselect.jsp", postParam)
-            .then((res) => {
-                // setPeopleData(res.data.ITEMS);
-                setEmpData(res.data.ITEMS[0]);
-                let empInfo = res.data.ITEMS[0];
-
-                GetCDTR.getCDTR(
-                    empInfo["center"],
-                    empInfo["dept"],
-                    empInfo["team"],
-                    empInfo["rank"],
-                    setCenter,
-                    setDept,
-                    setTeam,
-                    setRank
-                );
-            });
+        GetFinalTax.getAllTaxToJsonFast('', '20221001', '20221032', taxPack);
     };
 
     useEffect(() => {
@@ -367,7 +346,7 @@ const App = () => {
                         options={monthlyBar.options}
                         series={monthlyBar.series}
                         type="bar"
-                        height={240}
+                        height={280}
                         width={1560}
                     />
 
@@ -401,151 +380,26 @@ const App = () => {
                             </tr>
                         </thead>
                         <tbody className="SalaryEx_SecondTable">
-                            <tr>
-                                <td>1</td>
-                                <td>보안취약점연구부</td>
-                                <td>사원</td>
-                                <td>김똥깨</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            {salaryEx.map((item, index) => (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td>{item.deptKR}</td>
+                                    <td>{item.rankKR}</td>
+                                    <td>{item.name}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            ))}
                         </tbody>
                         <tfoot>
                             <tr className="SalaryEx_totalFooter">
@@ -562,12 +416,15 @@ const App = () => {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -49,6 +49,8 @@
     border-collapse: collapse;
     border: 1px solid #d9d9d9;
     margin-right: 50px;
+    word-break: keep-all;
+
 }
 
 .SalaryEx_userInfo th {
@@ -62,19 +64,20 @@
 }
 
 .SalaryEx_userInfo td {
-    padding: 8px;
     font-size: 12px;
     text-align: center;
-    width: 200px;
 }
 
+/* 여기부터 급여지출 현황 테이블 */
 .SalaryEx_payrollContainer {
-    margin: 0px 50px 10px 50px;
+   margin-left: 60px;
+   
 }
 
 .SalaryEx_payrollTitle {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .SalaryEx_payrollTitle span {
@@ -87,17 +90,24 @@
     color: #5a6163;
 }
 
-.SalaryEx_payrollContainer table tbody {
-    overflow-y: scroll !important;
-    height: 300px !important;
-    background-color: lightpink;
-}
-
+/* 테이블 */
 .SalaryEx_payrollTable table {
-    width: 100%;
+    width: 1540px;
     margin-top: 10px;
+    display: block;
+    table-layout: fixed;
     border-collapse: collapse;
     border: 1px solid #d9d9d9;
+}
+
+.SalaryEx_payrollTable table td {
+    padding: 10px;
+    border-collapse: collapse;
+    border: 1px solid #d9d9d9;
+    font-size: 12px;
+    table-layout: fixed;
+    word-break: keep-all;
+    width: 72px;
 }
 
 .SalaryEx_payrollTable thead tr {
@@ -109,28 +119,18 @@
     background-color: #ebeff2;
 }
 
-.SalaryEx_payrollTable thead td {
-    padding: 10px;
-    border-collapse: collapse;
-    border: 1px solid #d9d9d9;
-}
+.SalaryEx_payrollContainer table tbody {
+    display: block;
+    height: 230px;
+    overflow: auto;
 
-.SalaryEx_payrollTable tbody th {
-    font-size: 12px;
-    color: #515966;
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 700;
-    background-color: #ebeff2;
-    padding: 10px;
 }
 
 .SalaryEx_payrollTable tbody td {
-    padding: 8px;
-    font-size: 12px;
-    border-collapse: collapse;
-    border: 1px solid #d9d9d9;
 }
+
+
+
 
 .SalaryEx_payrollTable tr,
 .SalaryEx_payrollTable td {
@@ -139,26 +139,45 @@
 }
 
 .SalaryEx_SecondTable tr td {
-    height: 20px;
-    padding: 8px 0px 8px 0px;
+    /* padding: 8px 0px 8px 0px; */
 }
 
-.SalaryEx_index {
-    width: 30px;
+
+.SalaryEx_payrollTable td:nth-child(1){
+    width: 40px !important;
+    table-layout: fixed;
+    word-break: keep-all;
 }
 
-.SalaryEx_dept {
+.SalaryEx_payrollTable td:nth-child(2){
+    width: 120px !important;
+    table-layout: fixed;
+    word-break: keep-all;
+
+}
+
+.SalaryEx_payrollTable td:nth-child(3), .SalaryEx_payrollTable td:nth-child(4){
+    width: 80px !important;
+    table-layout: fixed;
+    word-break: keep-all;
+}
+/* .SalaryEx_payrollTable td:nth-child(5), .SalaryEx_payrollTable td:nth-child(6), .SalaryEx_payrollTable td:nth-child(7), .SalaryEx_payrollTable td:nth-child(8),.SalaryEx_payrollTable td:nth-child(9),.SalaryEx_payrollTable td:nth-child(10),.SalaryEx_payrollTable td:nth-child(11),.SalaryEx_payrollTable td:nth-child(12),.SalaryEx_payrollTable td:nth-child(13),.SalaryEx_payrollTable td:nth-child(14),.SalaryEx_payrollTable td:nth-child(15), .SalaryEx_payrollTable td:nth-child(16){ */
+    /* width: 70px; */
+/* } */
+
+
+/* .SalaryEx_dept {
     width: 120px;
 }
 
 .SalaryEx_rank,
 .SalaryEx_name {
     width: 80px;
-}
+} 
 
 .SalaryEx_total {
     background-color: #ebeff2;
-}
+} */
 
 .SalaryEx_totalFooter {
     color: red;
@@ -168,18 +187,3 @@
     height: 40px;
 }
 
-.SalaryEx_1,
-.SalaryEx_2,
-.SalaryEx_3,
-.SalaryEx_4,
-.SalaryEx_5,
-.SalaryEx_6,
-.SalaryEx_7,
-.SalaryEx_8,
-.SalaryEx_9,
-.SalaryEx_10,
-.SalaryEx_11,
-.SalaryEx_12 {
-    width: 80px;
-    padding: 0px 0px 0px 0px;
-}
