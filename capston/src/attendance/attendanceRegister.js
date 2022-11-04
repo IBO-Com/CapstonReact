@@ -277,7 +277,6 @@ function AttendanceRegister() {
   };
 
   const onClickRetrieveButton = () => {
-    console.log(name.current.value);
     axios
       .get(urlRetrieve, {
         params: {
