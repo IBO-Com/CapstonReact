@@ -367,7 +367,7 @@ const App = () => {
                         options={monthlyBar.options}
                         series={monthlyBar.series}
                         type="bar"
-                        height={240}
+                        height={280}
                         width={1560}
                     />
 
