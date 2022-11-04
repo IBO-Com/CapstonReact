@@ -80,7 +80,7 @@ function App({ currentClick, setCurrentClick }) {
   );
 }
 
-// 관리자
+// 관리자 프로그램 리스트
 const nav_admin = {
   기본정보: {
     menu: ["공통코드정보", "조직도"],
@@ -107,9 +107,16 @@ const nav_admin = {
     ],
   },
   근태관리: {
-    menu: ["근태등록", "근무관리", "휴가관리", "근태/근무현황"],
+    menu: [
+      "근태등록",
+      "근태/근무신청",
+      "근무관리",
+      "휴가관리",
+      "근태/근무현황",
+    ],
     link: [
       "/mainNav/attendanceregister",
+      "/mainNav/attendancerequest",
       "/mainNav/workManage",
       "/mainNav/vacationManage",
       "/mainNav/attendancestatus",
@@ -137,16 +144,18 @@ const nav_admin = {
     link: ["/mainNav/t1"],
   },
 };
-// 일반유저
+
+// 일반유저 프로그램 리스트
 const nav_user = {
   "인사/조직관리": {
     menu: ["인사정보", "인사기록카드"],
     link: ["/mainNav/empinfo", "/mainNav/personnelcard"],
   },
   근태관리: {
-    menu: ["근무관리", "휴가관리", "근태/근무현황"],
+    menu: ["근무관리", "근태/근무신청", "휴가관리", "근태/근무현황"],
     link: [
       "/mainNav/workManage",
+      "/mainNav/attendancerequest",
       "/mainNav/vacationManage",
       "/mainNav/attendancestatus",
     ],

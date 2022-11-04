@@ -25,7 +25,8 @@ import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //급�
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
-import AttendanceRegister from "./attendance/attendanceRegister";
+import AttendanceRegister from "./Attendance/AttendanceRegister";
+import AttendanceRequest from "./Attendance/AttendanceRequest";
 import RetirementApproval from "./Retirement/RetirementApproval";
 import PersonalSalary from "./PersonalSalary/PersonalSalary"; //개인급여관리
 import SeverancePayCal from "./SeverancePayCal/SeverancePayCal";
@@ -89,10 +90,16 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
 
+          {/* 근태 페이지 */}
           <Route
             path="/attendanceRegister"
             element={<AttendanceRegister />}
           ></Route>
+          <Route
+            path="/attendanceRequest"
+            element={<AttendanceRequest />}
+          ></Route>
+
           {/* 인사명령(발령) 페이지 */}
           <Route
             path="/personnelappointment"
@@ -117,7 +124,10 @@ const App = () => {
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
 
           {/* 급여지출현황 */}
-          <Route path="salaryExpenditures" element={<SalaryExpenditures />}></Route>
+          <Route
+            path="salaryExpenditures"
+            element={<SalaryExpenditures />}
+          ></Route>
 
           {/* 휴가 관리 */}
           <Route path="vacationManage" element={<VacationManage />}></Route>
