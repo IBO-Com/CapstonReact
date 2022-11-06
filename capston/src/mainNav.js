@@ -25,6 +25,8 @@ import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //급�
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
+//import AttendanceRegister from "./Attendance/AttendanceRegister";
+//import AttendanceRequest from "./Attendance/AttendanceRequest";
 import AttendanceRegister from "./Attendance/AttendanceRegister";
 import AttendanceRequest from "./Attendance/AttendanceRequest";
 import RetirementApproval from "./Retirement/RetirementApproval";
@@ -125,8 +127,11 @@ const App = () => {
 
           {/* 급여지출현황 */}
           <Route
+           
             path="salaryExpenditures"
+           
             element={<SalaryExpenditures />}
+          
           ></Route>
 
           {/* 휴가 관리 */}
