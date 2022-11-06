@@ -25,8 +25,6 @@ import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //ê¸‰ì
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
-//import AttendanceRegister from "./Attendance/AttendanceRegister";
-//import AttendanceRequest from "./Attendance/AttendanceRequest";
 import AttendanceRegister from "./Attendance/AttendanceRegister";
 import AttendanceRequest from "./Attendance/AttendanceRequest";
 import RetirementApproval from "./Retirement/RetirementApproval";
