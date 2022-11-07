@@ -145,6 +145,7 @@ const App = () => {
           ></Route>
           {/* 퇴직금 산정 */}
           <Route path="severancepaycal" element={<SeverancePayCal />}></Route>
+          
           {/* 퇴직금명세서 */}
           <Route path="severancepay" element={<SeverancePay />}></Route>
 

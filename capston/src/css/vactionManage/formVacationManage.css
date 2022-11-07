@@ -1,0 +1,21 @@
+.formProofofeFirstZu td:nth-child(odd) {
+    background: #EBEFF2;
+}
+
+.formProofofeFirstZu {
+    color: red;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+}
+
+.formProofofempMain .footer_vm_form{
+    margin-top: 130px;
+    text-align: center;
+    color:#515966;
+    margin-bottom: 50px;
+}
+
+
+.formProofofempMain .footer_vm_form P:not(:last-of-type){
+    margin-bottom: 50px;
+}

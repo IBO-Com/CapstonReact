@@ -32,17 +32,6 @@ body {
     border-radius: 2px;
 }
 
-.vactionManage_App .vm_okBtn {
-    margin-left: 70px;
-    margin-top: 30px;
-    width: 97px;
-    color: #FFFFFF;
-    height: 40px;
-    border: none;
-    background: #537AAA;
-    border-radius: 2px;
-}
-
 .vm_kind p {
     font-family: "Noto Sans KR";
     font-style: normal;
@@ -56,11 +45,11 @@ body {
 
 .vm_kind {
     margin-left: 70px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-.vm_yeon, .vm_ban, .vm_hu, .vm_sick {
+.vm_yeon, .vm_ban, .vm_hu, .vm_sick, .vm_mon {
     margin-right: 40px;
 }
 
@@ -75,17 +64,10 @@ body {
     color: #5a6163;
 }
 
-.vm_perInfo {
-    margin-left: 70px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 .vm_InfoTable {
     overflow: auto;
     width: 600px;
-    margin-top: 10px;
-    height: 80px;
+    height: 70px;
 }
 
 .vm_InfoTable thead th {
@@ -104,40 +86,47 @@ body {
     margin: 0px;
 }
 
-.vm_timedate {
-    margin-left: 70px;
-    margin-top: 10px;
-    width: 500px;
-    margin-bottom: 20px;
-}
-
-.vm_timedate p {
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 25px;
-    /* identical to box height */
-    letter-spacing: 0.1em;
-    color: #5a6163;
-}
-
 .vm_reason {
-    margin-left: 70px;
-    margin-top: 10px;
+    resize: none;
 }
 
-.vm_reason p {
+.vm_viewer {
+    width: 700px;
+    height: 600px;
+    overflow: hidden;
+    margin-left: 800px;
+    border: 2px solid #D9D9D9;
+    border-radius: 3px;
+}
+
+.vmInfoTable {
+    min-width: 500px;
+    margin: 5px 0px 0px 120px;
+    overflow-y: auto;
+    height: 645px;
+}
+
+.vmInfoTable p {
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 400;
     font-size: 17px;
     line-height: 25px;
-    /* identical to box height */
     letter-spacing: 0.1em;
     color: #5a6163;
 }
 
-.vm_reason textarea {
-    resize: none;
+form input {
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.vm_bisang input {
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.vm_daesin {
+    font-size: 13px;
+    color: red;
 }
