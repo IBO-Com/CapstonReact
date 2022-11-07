@@ -485,17 +485,32 @@ export const getAllTaxToJsonFast = async (sabunOrName, startDate, endDate, saveD
 
             let nightTime = data[idx].night_datetime == null ? 0 : (parseInt(data[idx].night_datetime) / 60).toFixed(2);  //야근 시간
             let overTime = data[idx].over_datetime == null ? 0 : (parseInt(data[idx].over_datetime) / 60).toFixed(2); //연장 시간
-            let workTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
-
+            let restTime = 0;
+            let workTime = 0;
+            
+            if(workForm == "RW") {
+                restTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
+            } else {
+                workTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
+            }
+            
             let nightMoney = parseInt(nightTime * hourWage * 0.5); //야간근무 일한시간 * 시급 * 0.5
             let overMoney = parseInt(overTime * hourWage * 1.5);  //연장근무 일한시간 * 시급 * 1.5
             let salary = parseInt(data[idx].salary);
-            let restMoney = workForm == "RW" ? parseInt(workTime * hourWage * 1.5) : 0;
+            let restMoney = parseInt(restTime * hourWage * 1.5);
             let defaultMoney = workForm != "RW" ? parseInt(workTime * hourWage) : 0;
             let totalMoney = nightMoney + overMoney + restMoney + defaultMoney;
+            let day = data[idx].day;
             
             if(usersData[data[idx].name] == undefined) { //해당 사용자의 기본 데이터가 없을 때
                 usersData[data[idx].name] = {
+                    day: parseInt(day),
+
+                    nightTime: parseFloat(nightTime),
+                    overTime:  parseFloat(overTime),
+                    restTime:  parseFloat(restTime),
+                    workTime:  parseFloat(workTime),
+
                     salary: salary,
                     hourWage: hourWage,
                     workForm: workForm,
@@ -507,6 +522,13 @@ export const getAllTaxToJsonFast = async (sabunOrName, startDate, endDate, saveD
                 }
             } else { //해당 사용자의 데이터가 있을 때
                 usersData[data[idx].name] = {
+                    day: parseInt(usersData[data[idx].name].day) + parseInt(day),
+
+                    nightTime: parseFloat(usersData[data[idx].name].nightTime) + parseFloat(nightTime),
+                    overTime:  parseFloat(usersData[data[idx].name].overTime )+  parseFloat(overTime),
+                    restTime:  parseFloat(usersData[data[idx].name].restTime )+  parseFloat(restTime),
+                    workTime:  parseFloat(usersData[data[idx].name].workTime )+  parseFloat(workTime),
+
                     salary: salary,
                     hourWage: hourWage,
                     workForm: workForm,
@@ -553,6 +575,7 @@ export const getAllTaxToJsonFast = async (sabunOrName, startDate, endDate, saveD
                 }
             })
 
+            usersData[userName].employmentInsurance = employmentInsurance;
             usersData[userName].nationalPension = nationalPension;
             usersData[userName].healthInsurance = healthInsurance;
             usersData[userName].longCare = healthInsurance;

@@ -405,18 +405,18 @@ const App = () => {
                                     <td>{item.deptKR}</td>
                                     <td>{item.rankKR}</td>
                                     <td>{item.name}</td>
-                                    <td>{JanTax[item.name] ? JanTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{FebTax[item.name] ? FebTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{MarTax[item.name] ? MarTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{AprTax[item.name] ? AprTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{MayTax[item.name] ? MayTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{JunTax[item.name] ? JunTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{JulTax[item.name] ? JulTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{AugTax[item.name] ? AugTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{SepTax[item.name] ? SepTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{OctTax[item.name] ? OctTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{NovTax[item.name] ? NovTax[item.name].totalMoney.toLocaleString() : 0}</td>
-                                    <td>{DecTax[item.name] ? DecTax[item.name].totalMoney.toLocaleString() : 0}</td>
+                                    <td>{JanTax[item.name] ? JanTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{FebTax[item.name] ? FebTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{MarTax[item.name] ? MarTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{AprTax[item.name] ? AprTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{MayTax[item.name] ? MayTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{JunTax[item.name] ? JunTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{JulTax[item.name] ? JulTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{AugTax[item.name] ? AugTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{SepTax[item.name] ? SepTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{OctTax[item.name] ? OctTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{NovTax[item.name] ? NovTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
+                                    <td>{DecTax[item.name] ? DecTax[item.name].finalUserMoney.toLocaleString() : 0}</td>
                                 </tr>
                             ))}
                         </tbody>

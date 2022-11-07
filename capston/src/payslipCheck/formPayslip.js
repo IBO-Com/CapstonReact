@@ -8,33 +8,7 @@ import * as GetFinalTax from "../modules/getFinalTax";
 
 const App = ({ componentRef, sabun, retrieveDate }) => {
 
-    const [taxPack, setTaxPack] = useState({ //기본 데이터 꼭 필요함
-        sabunOrName: 0,
-        retrieveDate: 0,
-        day: 0,
-        연봉: 0,
-        월급: 0,
-
-        일반근무시간: 0,
-        연장근무금액: 0,
-        연장근무시간: 0,
-        야간근무금액: 0,
-        야간근무시간: 0,
-
-        휴일근무금액: 0,
-        휴일근무시간: 0,
-        국민연금: 0,
-        건강보험: 0,
-        장기요양: 0,
-
-        고용보험: 0,
-        근로소득세: 0,
-        주민세: 0,
-        총지급액: 0,
-        총공제액: 0,
-
-        실수령액: 0
-    });
+    const [taxPack, setTaxPack] = useState();
 
     const [userData, setUserData] = useState();
     const [dept, setDept] = useState("");
@@ -59,8 +33,8 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
         let postParam = qs.stringify({
             sabunOrName: sabun
         });
-
-        GetFinalTax.getAllTaxToJson(sabun, retrieveDate, setTaxPack);
+        
+        GetFinalTax.getAllTaxToJsonFast(sabun, retrieveDate.replace("-", "") + "01", retrieveDate.replace("-", "") + "32", setTaxPack);
 
         axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((response) => {
             setUserData(response.data.ITEMS[0]);
@@ -71,6 +45,10 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
         });
 
     }, [sabun, retrieveDate]);
+    
+    useEffect(() => {
+        console.log("Tax : ", taxPack);
+    }, [taxPack]);
 
     return (
         <div className="payslip_box" ref={componentRef}>
@@ -95,37 +73,37 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
                     <tbody>
                         <tr className="payslip_money">
                             <td>기본급</td>
-                            <td>{taxPack.월급.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].defaultMoney.toLocaleString() : 0}원</td>
                             <td>국민연금</td>
-                            <td>{taxPack.국민연금.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].nationalPension.toLocaleString() : 0}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>연장근무</td>
-                            <td>{taxPack.연장근무금액.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].overMoney.toLocaleString() : 0}원</td>
                             <td>건강보험외</td>
-                            <td>{(taxPack.건강보험 + taxPack.장기요양).toLocaleString()}원</td>
+                            <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].healthInsurance + taxPack[Object.keys(taxPack)[1]].longCare).toLocaleString() : 0}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>야간근무</td>
-                            <td>{taxPack.야간근무금액.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].nightMoney.toLocaleString() : 0}원</td>
                             <td>고용보험</td>
-                            <td>{taxPack.고용보험.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].employmentInsurance.toLocaleString() : 0}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td>휴일근무</td>
-                            <td>{taxPack.휴일근무금액.toLocaleString()}원</td>
+                            <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].restMoney.toLocaleString() : 0}원</td>
                             <td>근로소득세외</td>
-                            <td>{(taxPack.근로소득세 + taxPack.주민세).toLocaleString()}원</td>
+                            <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].incomeTax + taxPack[Object.keys(taxPack)[1]].residentTax).toLocaleString() : 0}원</td>
                         </tr>
 
                         <tr className="payslip_money">
                             <td className="payslip_pay">총 지급액</td>
-                            <td className="payslip_pay_sub">{taxPack.총지급액.toLocaleString()}원</td>
+                            <td className="payslip_pay_sub">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalMoney.toLocaleString() : 0}원</td>
                             <td className="payslip_deduct">총 공제액</td>
-                            <td className="payslip_deduct_sub">{taxPack.총공제액.toLocaleString()}원</td>
+                            <td className="payslip_deduct_sub">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalDeductible.toLocaleString() : 0}원</td>
                         </tr>
 
                         <tr className="payslip_TotalPayTitle">
@@ -133,7 +111,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
                         </tr>
 
                         <tr className="payslip_TotalPay">
-                            <td colSpan={4}>{taxPack.실수령액.toLocaleString()}원</td>
+                            <td colSpan={4}>{taxPack ? taxPack[Object.keys(taxPack)[1]].finalUserMoney.toLocaleString() : 0}원</td>
                         </tr>
 
                     </tbody>
