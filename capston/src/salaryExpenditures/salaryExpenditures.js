@@ -13,7 +13,7 @@ const App = () => {
     const handleSelectDepart = (event) => {
         setSelectDepart(event.target.value);
     };
-
+ 
     const textNameHandle = (e) => {
         setTextName(e.target.value);
     };
@@ -36,19 +36,20 @@ const App = () => {
     const [taxPack, setTaxPack] = useState();
     const [year, setYear] = useState(new Date().getFullYear())
     const [salaryEx, setSalaryEx] = useState([]);
+    const [loading, setLoading] = useState({});
 
-    const [JanTax, setJanTax] = useState({usersTotalMoney:0}); //1월
-    const [FebTax, setFebTax] = useState({usersTotalMoney:0}); //2월
-    const [MarTax, setMarTax] = useState({usersTotalMoney:0}); //3월
-    const [AprTax, setAprTax] = useState({usersTotalMoney:0}); //4월
-    const [MayTax, setMayTax] = useState({usersTotalMoney:0}); //5월
-    const [JunTax, setJunTax] = useState({usersTotalMoney:0}); //6월
-    const [JulTax, setJulTax] = useState({usersTotalMoney:0}); //7월
-    const [AugTax, setAugTax] = useState({usersTotalMoney:0}); //8월
-    const [SepTax, setSepTax] = useState({usersTotalMoney:0}); //9월
-    const [OctTax, setOctTax] = useState({usersTotalMoney:0}); //10월
-    const [NovTax, setNovTax] = useState({usersTotalMoney:0}); //11월
-    const [DecTax, setDecTax] = useState({usersTotalMoney:0}); //12월
+    const [JanTax, setJanTax] = useState({usersTotalMoney: 0}); //1월
+    const [FebTax, setFebTax] = useState({usersTotalMoney: 0}); //2월
+    const [MarTax, setMarTax] = useState({usersTotalMoney: 0}); //3월
+    const [AprTax, setAprTax] = useState({usersTotalMoney: 0}); //4월
+    const [MayTax, setMayTax] = useState({usersTotalMoney: 0}); //5월
+    const [JunTax, setJunTax] = useState({usersTotalMoney: 0}); //6월
+    const [JulTax, setJulTax] = useState({usersTotalMoney: 0}); //7월
+    const [AugTax, setAugTax] = useState({usersTotalMoney: 0}); //8월
+    const [SepTax, setSepTax] = useState({usersTotalMoney: 0}); //9월
+    const [OctTax, setOctTax] = useState({usersTotalMoney: 0}); //10월
+    const [NovTax, setNovTax] = useState({usersTotalMoney: 0}); //11월
+    const [DecTax, setDecTax] = useState({usersTotalMoney: 0}); //12월
 
 
     useEffect(() => {
@@ -62,6 +63,10 @@ const App = () => {
             });
     }, []);
 
+    useEffect(() => {
+        if(!OctTax) return;
+    }, [OctTax, NovTax])
+
     function getFormatDate(date) {
         var year = date.getFullYear(); //yyyy
         var month = 1 + date.getMonth(); //M
@@ -69,32 +74,46 @@ const App = () => {
         return year + "-" + month;
     }
 
-    const sendSubmit = () => {
-        GetFinalTax.getAllTaxToJsonFast('', '20220101', '20220132', setJanTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220201', '20220232', setFebTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220301', '20220332', setMarTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220401', '20220432', setAprTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220501', '20220532', setMayTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220601', '20220632', setJunTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220701', '20220732', setJulTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220801', '20220832', setAugTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20220901', '20220932', setSepTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20221001', '20221032', setOctTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20221101', '20221132', setNovTax);
-        GetFinalTax.getAllTaxToJsonFast('', '20221201', '20221232', setDecTax);
-        
-        console.log("getData : ", getData);
+    const sendSubmit = async() => {
+        let confYear = '2022';
+
+        setLoading({opacity:0.5});
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0101', confYear + '0132', setJanTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0201', confYear + '0232', setFebTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0301', confYear + '0332', setMarTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0401', confYear + '0432', setAprTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0501', confYear + '0532', setMayTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0601', confYear + '0632', setJunTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0701', confYear + '0732', setJulTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0801', confYear + '0832', setAugTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '0901', confYear + '0932', setSepTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '1001', confYear + '1032', setOctTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '1101', confYear + '1132', setNovTax);
+        await GetFinalTax.getAllTaxToJsonFast('', confYear + '1201', confYear + '1232', setDecTax);
+        setLoading({});
     };
 
+
     useEffect(() => {
-        if (!taxPack) return;
+        if (!DecTax) return;
         setMonthlyBar(
             {
                 series: [
                     {
                         name: "실수령액",
                         data: [
-                            0,0,0,0,0,0,0,0,0,0,0,0
+                            parseInt(JanTax.usersTotalMoney / 10000),
+                            parseInt(FebTax.usersTotalMoney / 10000),
+                            parseInt(MarTax.usersTotalMoney / 10000),
+                            parseInt(AprTax.usersTotalMoney / 10000),
+                            parseInt(MayTax.usersTotalMoney / 10000),
+                            parseInt(JunTax.usersTotalMoney / 10000),
+                            parseInt(JulTax.usersTotalMoney / 10000),
+                            parseInt(AugTax.usersTotalMoney / 10000),
+                            parseInt(SepTax.usersTotalMoney / 10000),
+                            parseInt(OctTax.usersTotalMoney / 10000),
+                            parseInt(NovTax.usersTotalMoney / 10000),
+                            parseInt(DecTax.usersTotalMoney / 10000)
                         ],
                     },
                 ],
@@ -187,7 +206,7 @@ const App = () => {
                 },
             }
         )
-    }, [taxPack]);
+    }, [DecTax]);
 
     //초기값
     const [monthlyBar, setMonthlyBar] = useState({
@@ -287,7 +306,7 @@ const App = () => {
     });
 
     return (
-        <div className="SalaryEx_conatainer">
+        <div className="SalaryEx_conatainer" style={loading}>
             <div className="SalaryEx_search">
                 <FormControl>
                     <Select
@@ -405,35 +424,35 @@ const App = () => {
                             <tr className="SalaryEx_totalFooter">
                                 <td colSpan={4} className="SalaryEx_total">총 합계</td>
                                 <td>
-                                    {
-                                        (JanTax.usersTotalMoney +
-                                        FebTax.usersTotalMoney +
-                                        MarTax.usersTotalMoney + 
-                                        AprTax.usersTotalMoney + 
-                                        MayTax.usersTotalMoney + 
-                                        JunTax.usersTotalMoney + 
-                                        JulTax.usersTotalMoney + 
-                                        AugTax.usersTotalMoney + 
-                                        SepTax.usersTotalMoney + 
-                                        OctTax.usersTotalMoney +
-                                        NovTax.usersTotalMoney + 
-                                        DecTax.usersTotalMoney).toLocaleString()
-                                    }
+                                  {
+                                    (JanTax.usersTotalMoney + 
+                                    FebTax.usersTotalMoney + 
+                                    MarTax.usersTotalMoney + 
+                                    AprTax.usersTotalMoney + 
+                                    MayTax.usersTotalMoney + 
+                                    JunTax.usersTotalMoney + 
+                                    JulTax.usersTotalMoney + 
+                                    AugTax.usersTotalMoney + 
+                                    SepTax.usersTotalMoney + 
+                                    OctTax.usersTotalMoney +
+                                    NovTax.usersTotalMoney +
+                                    DecTax.usersTotalMoney).toLocaleString()
+                                  }
                                 </td>
                                 <td></td>
                                 <td></td>
-                                <td>{JanTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{FebTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{MarTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{AprTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{MayTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{JunTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{JulTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{AugTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{SepTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{OctTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{NovTax.usersTotalMoney.toLocaleString()}</td>
-                                <td>{DecTax.usersTotalMoney.toLocaleString()}</td>
+                                <td>{JanTax ? JanTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{FebTax ? FebTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{MarTax ? MarTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{AprTax ? AprTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{MayTax ? MayTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{JunTax ? JunTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{JulTax ? JulTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{AugTax ? AugTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{SepTax ? SepTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{OctTax ? OctTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{NovTax ? NovTax.usersTotalMoney.toLocaleString() : 0}</td>
+                                <td>{DecTax ? DecTax.usersTotalMoney.toLocaleString() : 0}</td>
                             </tr>
                         </tfoot>
                     </table>
