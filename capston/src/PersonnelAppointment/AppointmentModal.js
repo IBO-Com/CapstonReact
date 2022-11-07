@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../css/PersonnelAppointment/AppointmentModal.css";
 import testimg from "../img/testimg.jpg";
 import FormControl from "@mui/material/FormControl";
@@ -10,23 +10,16 @@ import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
-
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
 }
-const AppointmentModal = ({
-  peopleData,
-  setPeopleData,
-  openModal,
-  setOpenModal,
-}) => {
+const AppointmentModal = ({ setOpenModal }) => {
   // 사번 성명 인풋
   const [textName, setTextName] = useState("");
   const textNameHandle = (e) => {
     setTextName(e.target.value);
-
     console.log(e.target.value);
   };
 
@@ -46,63 +39,77 @@ const AppointmentModal = ({
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
   };
-
   // 직책선택
   const [selectRank, setSeletRank] = useState("*");
   const handleSelectRank = (event) => {
     setSeletRank(event.target.value);
   };
-
   // 등록
-
-  const [empData, setEmpData] = useState();
-  const [dept, setDept] = useState("");
-  const [rank, setRank] = useState("");
+  const formRef = useRef();
+  const saveBtn = () => {
+    if (formRef.current.reportValidity()) {
+      if (window.confirm("등록하시겠습니까?")) {
+        let postParm2 = qs.stringify({
+          app_sabun: empData["sabun"],
+          app_name: empData["name"],
+          app_state: selectType,
+          app_rank: selectRank,
+          app_date: startDate,
+          app_dept: selectDepart,
+        });
+        axios
+          .post("url", postParm2)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((Error) => {
+            console.log(Error);
+          });
+      }
+    }
+  };
 
   // 검색
+  const [empData, setEmpData] = useState([]);
+  const [dept, setDept] = useState("");
+  const [team, setTeam] = useState("");
+  const [rank, setRank] = useState("");
+  const [center, setCenter] = useState("");
+
   const sendSubmit = () => {
     console.log("send submit");
-    /* 날짜 포멧 */
-    let sYear = String(startDate.getFullYear());
-    let sMonth = startDate.getMonth() + 1;
-    let sDay = startDate.getDate();
-
-    if (sMonth < 10) {
-      sMonth = "0" + sMonth;
-    }
-    if (sDay < 10) {
-      sDay = "0" + sDay;
-    }
-
-    let sDate = sYear + sMonth + sDay;
 
     /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
-
-    query["startDate"] = sDate;
-
     if (textName.trim() == "") {
       delete query["sabunOrName"];
     } else {
       query["sabunOrName"] = textName;
     }
-
+    console.log("query : ", query);
     postParam = qs.stringify(query);
-
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {
         setEmpData(res.data.ITEMS[0]);
         let empInfo = res.data.ITEMS[0];
-
-        GetCDTR.getCDTR(empInfo["dept"], empInfo["rank"], setDept, setRank);
+        console.log("data : ", empInfo);
+        GetCDTR.getCDTR(
+          empInfo["center"],
+          empInfo["dept"],
+          empInfo["team"],
+          empInfo["rank"],
+          setCenter,
+          setDept,
+          setTeam,
+          setRank
+        );
       })
       .catch((Error) => {
         console.log(Error);
       });
   };
-
   return (
     <div className="AppointmentModal_container">
       <div className="AppointmentModal_title">
@@ -133,220 +140,209 @@ const AppointmentModal = ({
           검색
         </button>
       </div>
-
-      <div className="AppointmentModal_userInfo">
-        <div className="AppointmentModal_userImg">
-          <img className="AppointmentModal_img" src={testimg} alt="이미지" />
-        </div>
-        <div className="AppointmentModal_infoTable">
-          <table>
-            <tr>
-              <td>사번</td>
-              <td>성명</td>
-              <td>직책</td>
-            </tr>
-            <tr>
-              <td>{empData ? empData["sabun"] : ""}</td>
-              <td>{empData ? empData["name"] : ""}</td>
-              <td>{dept}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div className="AppointmentModal_appointment">
-        <span>발령일자</span>
-        <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
-          <DatePicker
-            autoOk
-            variant="inline"
-            views={["year", "month", "date"]}
-            format="yyyy-MM-dd"
-            value={startDate}
-            inputVariant="outlined"
-            showTodayButton
-            className="startDate"
-            size="small"
-            todayLabel="오늘"
-            onChange={handleStartDateChange}
-          />
-        </MuiPickersUtilsProvider>
-        <span className="AppointmentModal_state">발령구분</span>
-        <FormControl>
-          <Select
-            value={selectType || ""}
-            onChange={handleSelectType}
-            sx={{
-              minWidth: "153px",
-              height: 39,
-              marginLeft: "15px",
-              marginRight: "26px",
-            }}
-          >
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-              전체
-            </MenuItem>
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
-              부서이동
-            </MenuItem>
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"22"}>
-              승진
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <div className="AppointmentModal_table">
-          <table>
-            <thead>
+      <form ref={formRef}>
+        <div className="AppointmentModal_userInfo">
+          <div className="AppointmentModal_userImg">
+            <img className="AppointmentModal_img" src={testimg} alt="이미지" />
+          </div>
+          <div className="AppointmentModal_infoTable">
+            <table>
               <tr>
-                <td>발령항목</td>
-                <td>발령 전</td>
-                <td>발령 후</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>부서</td>
-                <td>{dept}</td>
-                <td>
-                  <FormControl>
-                    <Select
-                      value={selectDepart || ""}
-                      sx={{
-                        minWidth: "153px",
-                        height: 39,
-                        marginLeft: "15px",
-                        marginRight: "26px",
-                      }}
-                      onChange={handleSelectDepart}
-                    >
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"*"}
-                      >
-                        전체부서
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"01"}
-                      >
-                        경영지원부
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"02"}
-                      >
-                        경영관리부
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"03"}
-                      >
-                        침해대응부
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"04"}
-                      >
-                        관제센터
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"05"}
-                      >
-                        보안연구부
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"06"}
-                      >
-                        보안취약점연구부
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </td>
-              </tr>
-              <tr>
+                <td>사번</td>
+                <td>성명</td>
                 <td>직책</td>
-                <td>{rank}</td>
-                <td>
-                  <FormControl>
-                    <Select
-                      value={selectRank || ""}
-                      sx={{
-                        minWidth: "153px",
-                        height: 39,
-                        marginLeft: "15px",
-                        marginRight: "26px",
-                      }}
-                      onChange={handleSelectRank}
-                    >
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"*"}
-                      >
-                        사원
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"01"}
-                      >
-                        대리
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"02"}
-                      >
-                        과장
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"03"}
-                      >
-                        차장
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"04"}
-                      >
-                        부장
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"05"}
-                      >
-                        이사
-                      </MenuItem>
-
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"06"}
-                      >
-                        사장
-                      </MenuItem>
-                      <MenuItem
-                        sx={{ minWidth: "153px", height: 30 }}
-                        value={"07"}
-                      >
-                        대표이사
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </td>
               </tr>
-            </tbody>
-          </table>
+              <tr>
+                <td>{empData ? empData["sabun"] : ""}</td>
+                <td>{empData ? empData["name"] : ""}</td>
+                <td>{dept}</td>
+              </tr>
+            </table>
+          </div>
         </div>
-      </div>
+        <div className="AppointmentModal_appointment">
+          <span>발령일자</span>
+          <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
+            <DatePicker
+              autoOk
+              variant="inline"
+              views={["year", "month", "date"]}
+              format="yyyy-MM-dd"
+              value={startDate}
+              inputVariant="outlined"
+              showTodayButton
+              className="startDate"
+              size="small"
+              todayLabel="오늘"
+              onChange={handleStartDateChange}
+            />
+          </MuiPickersUtilsProvider>
+          <span className="AppointmentModal_state">발령구분</span>
+          <FormControl>
+            <Select
+              value={selectType || ""}
+              onChange={handleSelectType}
+              sx={{
+                minWidth: "153px",
+                height: 39,
+                marginLeft: "15px",
+                marginRight: "26px",
+              }}
+            >
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                전체
+              </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
+                부서이동
+              </MenuItem>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"22"}>
+                승진
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <div className="AppointmentModal_table">
+            <table>
+              <thead>
+                <tr>
+                  <td>발령항목</td>
+                  <td>발령 전</td>
+                  <td>발령 후</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>부서</td>
+                  <td>{dept}</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={selectDepart || ""}
+                        sx={{
+                          minWidth: "153px",
+                          height: 39,
+                          marginLeft: "15px",
+                          marginRight: "26px",
+                        }}
+                        onChange={handleSelectDepart}
+                      >
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"*"}
+                        >
+                          전체부서
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"01"}
+                        >
+                          경영지원부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"02"}
+                        >
+                          경영관리부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"03"}
+                        >
+                          침해대응부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"04"}
+                        >
+                          관제센터
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"05"}
+                        >
+                          보안연구부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"06"}
+                        >
+                          보안취약점연구부
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
+                <tr>
+                  <td>직책</td>
+                  <td>{rank}</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={selectRank || ""}
+                        sx={{
+                          minWidth: "153px",
+                          height: 39,
+                          marginLeft: "15px",
+                          marginRight: "26px",
+                        }}
+                        onChange={handleSelectRank}
+                      >
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"*"}
+                        >
+                          사원
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"01"}
+                        >
+                          대리
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"02"}
+                        >
+                          과장
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"03"}
+                        >
+                          차장
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"04"}
+                        >
+                          부장
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"05"}
+                        >
+                          이사
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"06"}
+                        >
+                          사장
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"07"}
+                        >
+                          대표이사
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
 
       <div className="AppointmentModal_btns">
         <button
@@ -355,10 +351,17 @@ const AppointmentModal = ({
         >
           취소
         </button>
-        <button className="AppointmentModal_registerBtn">등록</button>
+        <button
+          className="AppointmentModal_registerBtn"
+          onClick={() => {
+            saveBtn();
+            setOpenModal(false);
+          }}
+        >
+          등록
+        </button>
       </div>
     </div>
   );
 };
-
 export default AppointmentModal;

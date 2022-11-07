@@ -6,8 +6,6 @@ import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import "../css/PersonnelAppointment/PersonnelAppointment.css";
 import AppointmentModal from "./AppointmentModal";
-import * as GetCDTR from "../modules/getCDTR";
-import qs from "qs";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
