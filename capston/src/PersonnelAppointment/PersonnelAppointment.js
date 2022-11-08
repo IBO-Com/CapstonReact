@@ -18,6 +18,8 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [appointmentData, setAppointmentData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  let leftIndex = 1;
+  let rightIndex = 1;
 
   useEffect(() => {
     axios
@@ -180,7 +182,7 @@ const App = () => {
                   <tr>
                     {item.app_state === "1" ? (
                       <>
-                        <td>{index + 1}</td>
+                        <td>{leftIndex ++}</td>
                         <td style={{ minWidth: "20px" }}>
                           {item.app_date.slice(0, 4)}년&nbsp;{" "}
                           {item.app_date.slice(4, 6)}월&nbsp;{" "}
@@ -206,7 +208,7 @@ const App = () => {
                         <td>{item.name}</td>
                       </>
                     ) : (
-                      <div></div>
+                      <></>
                     )}
                   </tr>
                 ))}
@@ -231,7 +233,7 @@ const App = () => {
                   <tr>
                     {item.app_state === "2" ? (
                       <>
-                        <td>{index + 1}</td>
+                        <td>{rightIndex++}</td>
                         <td style={{ minWidth: "20px" }}>
                           {item.app_date.slice(0, 4)}년&nbsp;{" "}
                           {item.app_date.slice(4, 6)}월&nbsp;{" "}
@@ -259,7 +261,7 @@ const App = () => {
                         <td>{item.name}</td>
                       </>
                     ) : (
-                      <div></div>
+                      <></>
                     )}
                   </tr>
                 ))}
