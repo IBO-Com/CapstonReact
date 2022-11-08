@@ -4,6 +4,7 @@ import koLocale from "date-fns/locale/ko";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
+import qs from "qs";
 import "../css/PersonnelAppointment/PersonnelAppointment.css";
 import AppointmentModal from "./AppointmentModal";
 
@@ -13,11 +14,10 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 const App = () => {
-  const [startDate, setStartDate] = useState(new Date("2020-01-01"));
+  const [startDate, setStartDate] = useState(new Date("2022-10-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [appointmentData, setAppointmentData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  // console.log(openModal);
 
   useEffect(() => {
     axios
@@ -42,6 +42,53 @@ const App = () => {
 
   const handleEndDatetDateChange = (date) => {
     setEndDate(date);
+  };
+
+  const sendSubmit = () => {
+    console.log("send submit");
+    /* 날짜 포멧 */
+    let sYear = String(startDate.getFullYear());
+    let sMonth = startDate.getMonth() + 1;
+    let sDay = startDate.getDate();
+
+    let eYear = String(endDate.getFullYear());
+    let eMonth = endDate.getMonth() + 1;
+    let eDay = endDate.getDate();
+
+    if (sMonth < 10) {
+      sMonth = "0" + sMonth;
+    }
+    if (sDay < 10) {
+      sDay = "0" + sDay;
+    }
+
+    if (eMonth < 10) {
+      eMonth = " 0" + eMonth;
+    }
+    if (eDay < 10) {
+      eDay = " 0" + eDay;
+    }
+
+    let sDate = sYear + sMonth + sDay;
+    let eDate = eYear + eMonth + eDay;
+
+    /* 쿼리 문 작성 */
+    let postParam2 = {};
+    let query = {};
+
+    query["startDate"] = sDate;
+    query["endDate"] = eDate;
+
+    postParam2 = qs.stringify(query);
+
+    axios
+      .post("http://43.200.115.198:8080/personnelAppointment.jsp", postParam2)
+      .then((res) => {
+        setAppointmentData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
   };
 
   return (
@@ -75,7 +122,7 @@ const App = () => {
             format="yyyy-MM-dd"
             value={endDate}
             inputVariant="outlined"
-            className="startDate"
+            className="endDate"
             showTodayButton
             size="small"
             todayLabel="오늘"
@@ -83,7 +130,12 @@ const App = () => {
           />
         </MuiPickersUtilsProvider>
 
-        <button className="PersonnelAppointment_searchBtn">검색</button>
+        <button
+          className="PersonnelAppointment_searchBtn"
+          onClick={() => sendSubmit()}
+        >
+          검색
+        </button>
       </div>
       <div className="PersonnelAppointment_content">
         <div className="PersonnelAppointment_title">
@@ -117,7 +169,7 @@ const App = () => {
                 <tr>
                   <td>번호</td>
                   <td>발령일자</td>
-                  <td>발령 전 부서</td>
+
                   <td>발령 후 부서</td>
                   <td>사번</td>
                   <td>성명</td>
@@ -134,7 +186,7 @@ const App = () => {
                           {item.app_date.slice(4, 6)}월&nbsp;{" "}
                           {item.app_date.slice(6, 8)}일&nbsp;
                         </td>
-                        <td></td>
+
                         <td style={{ width: "150px" }}>
                           {item.dept === "01"
                             ? "경영지원부"
@@ -168,7 +220,7 @@ const App = () => {
                 <tr>
                   <td>번호</td>
                   <td>발령일자</td>
-                  <td>발령 전 직책</td>
+
                   <td>발령 후 직책</td>
                   <td>사번</td>
                   <td>성명</td>
@@ -185,8 +237,6 @@ const App = () => {
                           {item.app_date.slice(4, 6)}월&nbsp;{" "}
                           {item.app_date.slice(6, 8)}일&nbsp;
                         </td>
-
-                        <td></td>
                         <td>
                           {" "}
                           {item.rank === "1"
