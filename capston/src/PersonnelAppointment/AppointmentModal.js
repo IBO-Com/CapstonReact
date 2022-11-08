@@ -50,7 +50,7 @@ const AppointmentModal = ({ setOpenModal }) => {
 
   const dateFormatString = (dateString) => {
     let year = dateString.getFullYear();
-    let month = dateString.getMonth() < 10 ? "0" + dateString.getMonth() : dateString.getMonth();
+    let month = dateString.getMonth() < 10 ? "0" + (dateString.getMonth() + 1) : (dateString.getMonth() + 1);
     let day = dateString.getDate() < 10 ? "0" + dateString.getDate() : dateString.getDate()();
     return year + "" + month + "" + day; 
   }
