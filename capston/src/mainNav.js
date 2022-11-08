@@ -106,7 +106,7 @@ const App = () => {
             path="/personnelappointment"
             element={<PersonnelAppointment />}
           ></Route>
- 
+
           {/* 인사기록카드 페이지 */}
           <Route path="/Test" element={<Test />}></Route>
 
@@ -126,11 +126,8 @@ const App = () => {
 
           {/* 급여지출현황 */}
           <Route
-           
             path="salaryExpenditures"
-           
             element={<SalaryExpenditures />}
-          
           ></Route>
 
           {/* 휴가 관리 */}

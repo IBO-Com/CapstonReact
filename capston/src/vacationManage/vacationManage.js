@@ -194,14 +194,31 @@ const App = () => {
 
             <p><br></br>대체 업무자</p> {/* 폼에 출력시 >> 이과학 대리 << 로 출력*/}
             <form>
-              <label>직책&nbsp; : &nbsp;&nbsp;<input type="text" autocomplete="off" name="rank"></input></label><br></br>
+            <label className="vm_relationship">직책&nbsp; : &nbsp;&nbsp;</label>
+              <select name="relationship" id="vm_select">
+                <option value="" disabled selected>&nbsp;-- 선택해주세요 --&nbsp;</option>
+                <option value="vm_one">사원</option>
+                <option value="vm_two">대리</option>
+                <option value="vm_th">과장</option>
+                <option value="vm_fo">차장</option>
+                <option value="vm_fi">부장</option>
+              </select><br></br>
               <label>이름&nbsp; : &nbsp;&nbsp;<input type="text" autocomplete="off" name="name"></input></label>
             </form>
             <span className="vm_daesin">대체 업무자는 같은 팀 직원만 가능합니다!</span>
 
             <p><br></br>비상연락망</p> {/* 폼에 출력시 >> 모 ) 010-0000-0000 << 로 출력*/}
             <div className="vm_bisang">
-              <label>관계&nbsp; : &nbsp;&nbsp;<input type="text" name="team" autocomplete="off"></input></label><br></br>
+              <label className="vm_relationship">관계&nbsp; : &nbsp;&nbsp;</label>
+              <select name="relationship" id="vm_select">
+                <option value="" disabled selected>&nbsp;-- 선택해주세요 --&nbsp;</option>
+                <option value="vm_dad">부</option>
+                <option value="vm_mom">모</option>
+                <option value="vm_brother">형제</option>
+                <option value="vm_sister">자매</option>
+                <option value="vm_colleague">직장동료</option>
+                <option value="vm_friend">친구</option>
+              </select><br></br>
               <label>전화번호&nbsp; : &nbsp;&nbsp;<input type="text" name="cellPhone" autocomplete="off" id="cellPhone" maxlength="13" /></label><br></br>
             </div>
             <br></br>

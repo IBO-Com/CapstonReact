@@ -182,7 +182,7 @@ const App = () => {
                   <tr>
                     {item.app_state === "1" ? (
                       <>
-                        <td>{leftIndex ++}</td>
+                        <td>{leftIndex++}</td>
                         <td style={{ minWidth: "20px" }}>
                           {item.app_date.slice(0, 4)}년&nbsp;{" "}
                           {item.app_date.slice(4, 6)}월&nbsp;{" "}
