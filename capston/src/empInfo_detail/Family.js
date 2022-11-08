@@ -1,7 +1,43 @@
+import axios from "axios";
+import qs from "qs";
 import React from "react";
+import { useEffect } from "react";
 import "../css/empinfo/Family.css";
+import { useCookies } from "react-cookie";
+import { useState } from "react";
 
 const App = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [family, setFamily] = useState([]);
+  const [defaultYear, setDefaultYear] = useState(19);
+  let relation = {
+    "0" : "부",
+    "1" : "모",
+    "2" : "배우자",
+    "3" : "자녀"
+  }
+  let cohabitation = {
+    "0" : "별거",
+    "1" : "동거"
+  }
+
+  useEffect(() => {
+    let loginInfo = cookies["loginInfo"];
+    let postParam = {
+      sabun: loginInfo.id
+    }
+
+
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getFamily.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS;
+      console.log(data);
+      setFamily(data);
+    }).catch((Error) => {
+      console.log(Error);
+    })
+  }, []);
+
   return (
     <div className="Family_container">
       <div className="Family_header">
@@ -25,20 +61,30 @@ const App = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>
-                <input
-                  type="radio"
-                  name="familySelect"
-                  className="family_radioBtn"
-                />
-              </td>
-              <td>배우자</td>
-              <td>김우굥</td>
-              <td>1991-05-09</td>
-              <td>동거</td>
-            </tr>
+            {
+              family.map((item, index) => {
+                
+                return(
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>
+                      <input
+                        type="radio"
+                        name="familySelect"
+                        className="family_radioBtn"
+                      />
+                    </td>
+                    <td>{relation[item.relation]}</td>
+                    <td>{item.name}</td>
+                    <td>{
+                      new Date().getFullYear() - 2000 < parseInt(item.identity.slice(0, 2)) ? "19" : "20" + 
+                      item.identity.slice(0, 2) + "-" + item.identity.slice(2, 4) + "-" + item.identity.slice(4, 6) 
+                      }</td>
+                    <td>{item.cohabitation == "0" ? "별거" : "동거"}</td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
       </div>
