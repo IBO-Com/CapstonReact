@@ -36,10 +36,22 @@ const AppointmentModal = ({ setOpenModal }) => {
     setSelectType(event.target.value);
   };
 
+  // 본부선택
+  const [selectCenter, setSelectCenter] = useState("H");
+  const handleSelectCenter = (event) => {
+    setSelectCenter(event.target.value);
+  };
+
   // 부서선택
-  const [selectDepart, setSelectDepart] = useState("*");
+  const [selectDepart, setSelectDepart] = useState("01");
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
+  };
+
+  // 팀 선택
+  const [selectTeam, setSelectTeam] = useState("101");
+  const handleSelectTeam = (event) => {
+    setSelectTeam(event.target.value);
   };
 
   // 직책선택
@@ -72,6 +84,8 @@ const AppointmentModal = ({ setOpenModal }) => {
           app_rank: selectRank,
           app_date: dateFormatString(startDate),
           app_dept: selectDepart,
+          app_center: selectCenter,
+          app_team: selectTeam,
         };
         console.log(postParm2);
         postParm2 = qs.stringify(postParm2);
@@ -80,9 +94,6 @@ const AppointmentModal = ({ setOpenModal }) => {
           .post("http://43.200.115.198:8080/appointmentregister.jsp", postParm2)
           .then((response) => {
             console.log(response);
-            if (response.data.result === "success") {
-              alert("등록되었습니다.");
-            }
           })
           .catch((Error) => {
             console.log(Error);
@@ -176,7 +187,7 @@ const AppointmentModal = ({ setOpenModal }) => {
               <tr>
                 <td>{empData ? empData["sabun"] : ""}</td>
                 <td>{empData ? empData["name"] : ""}</td>
-                <td>{dept}</td>
+                <td>{rank}</td>
               </tr>
             </table>
           </div>
@@ -225,12 +236,49 @@ const AppointmentModal = ({ setOpenModal }) => {
             <table>
               <thead>
                 <tr>
-                  <td>발령항목</td>
-                  <td>발령 전</td>
+                  <td style={{ width: "120px" }}>발령항목</td>
+                  <td style={{ width: "120px" }}>발령 전</td>
                   <td>발령 후</td>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td>본부</td>
+                  <td>{center}</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={selectCenter || ""}
+                        sx={{
+                          minWidth: "153px",
+                          height: 39,
+                          marginLeft: "15px",
+                          marginRight: "26px",
+                        }}
+                        onChange={handleSelectCenter}
+                      >
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"H"}
+                        >
+                          경영관리본부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"C"}
+                        >
+                          사이버보안본부
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"S"}
+                        >
+                          보안연구본부
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
                 <tr>
                   <td>부서</td>
                   <td>{dept}</td>
@@ -246,12 +294,6 @@ const AppointmentModal = ({ setOpenModal }) => {
                         }}
                         onChange={handleSelectDepart}
                       >
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"*"}
-                        >
-                          전체부서
-                        </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
                           value={"01"}
@@ -287,6 +329,97 @@ const AppointmentModal = ({ setOpenModal }) => {
                           value={"06"}
                         >
                           보안취약점연구부
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
+                <tr>
+                  <td>팀</td>
+                  <td>{team}</td>
+                  <td>
+                    <FormControl>
+                      <Select
+                        value={selectTeam || ""}
+                        sx={{
+                          minWidth: "153px",
+                          height: 39,
+                          marginLeft: "15px",
+                          marginRight: "26px",
+                        }}
+                        onChange={handleSelectTeam}
+                      >
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"101"}
+                        >
+                          인사관리팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"102"}
+                        >
+                          마케팅팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"201"}
+                        >
+                          총무회계팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"202"}
+                        >
+                          경리팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"301"}
+                        >
+                          침해대응팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"302"}
+                        >
+                          위협분석팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"401"}
+                        >
+                          보안관제팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"402"}
+                        >
+                          정보보호팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"501"}
+                        >
+                          연구팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"502"}
+                        >
+                          연구기획팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"601"}
+                        >
+                          종합분석팀
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ minWidth: "153px", height: 30 }}
+                          value={"602"}
+                        >
+                          취약점분석팀
                         </MenuItem>
                       </Select>
                     </FormControl>

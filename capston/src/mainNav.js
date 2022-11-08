@@ -97,7 +97,7 @@ const App = () => {
             element={<AttendanceRegister />}
           ></Route>
           <Route
-            path="/attendanceRequest"
+            path="/AttendanceRequest"
             element={<AttendanceRequest />}
           ></Route>
 

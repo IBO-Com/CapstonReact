@@ -17,6 +17,8 @@ const App = ({ componentRef, sabun }) => {
   const [rank, setRank] = useState("");
   const [center, setCenter] = useState("");
 
+
+
   const [picture, setPicture] = useState(null);
 
   function getParametersForUnsplash({width, height, quality, format}) { //이미지 최적화
@@ -132,7 +134,7 @@ const App = ({ componentRef, sabun }) => {
               <td>관계</td>
               <td>성명</td>
               <td>생년월일</td>
-              <td>동기여부</td>
+              <td>동거여부</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
