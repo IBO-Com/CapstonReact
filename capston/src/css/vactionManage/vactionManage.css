@@ -40,6 +40,7 @@ body {
     background: #F09336;
     margin-top: 2px;
     border-radius: 2px;
+    margin-bottom: 20px;
 }
 
 .vm_kind p {
@@ -130,11 +131,19 @@ body {
 form input {
     height: 30px;
     margin-bottom: 10px;
+    width: 100px;
 }
 
 .vm_bisang input {
     height: 30px;
     margin-bottom: 10px;
+}
+
+#vm_select {
+    height: 30px;
+    margin-bottom: 10px;
+    width: 140px;
+    height: 35px;
 }
 
 .vm_daesin {
