@@ -52,6 +52,10 @@ const App = () => {
    }
 
    const sendSubmit = () => {
+      if(textName.trim() == '') {
+         alert("사번/성명을 입력해주세요.");
+         return;
+      }
       //taxPack의 내용은 로그를 확인할 것
       GetFinalTax.getAllTaxToJsonFast(textName, retrieveDate.replace("-", "") + "01", retrieveDate.replace("-", "") + "32", setTaxPack);
    }

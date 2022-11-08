@@ -10,6 +10,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
+
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
@@ -28,6 +29,7 @@ const AppointmentModal = ({ setOpenModal }) => {
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
+
   // 발령구분
   const [selectType, setSelectType] = useState("*");
   const handleSelectType = (event) => {
@@ -39,28 +41,45 @@ const AppointmentModal = ({ setOpenModal }) => {
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
   };
+
   // 직책선택
-  const [selectRank, setSeletRank] = useState("*");
+  const [selectRank, setSeletRank] = useState("1");
   const handleSelectRank = (event) => {
     setSeletRank(event.target.value);
   };
+
+  const dateFormatString = (dateString) => {
+    let year = dateString.getFullYear();
+    let month = dateString.getMonth() < 10 ? "0" + dateString.getMonth() : dateString.getMonth();
+    let day = dateString.getDate() < 10 ? "0" + dateString.getDate() : dateString.getDate()();
+    return year + "" + month + "" + day; 
+  }
   // 등록
   const formRef = useRef();
   const saveBtn = () => {
     if (formRef.current.reportValidity()) {
       if (window.confirm("등록하시겠습니까?")) {
-        let postParm2 = qs.stringify({
-          app_sabun: empData["sabun"],
-          app_name: empData["name"],
+        let postParm2 = {
+          app_sabun: empData.sabun,
+          app_name: empData.name,
           app_state: selectType,
           app_rank: selectRank,
-          app_date: startDate,
+          app_date: dateFormatString(startDate),
           app_dept: selectDepart,
-        });
+        };
+        console.log(postParm2);
+        postParm2 = qs.stringify(postParm2);
+
         axios
-          .post("url", postParm2)
+          .post(
+            "http://localhost:8080/CapstonProject/test.jsp",
+            postParm2
+          )
           .then((response) => {
             console.log(response);
+            if (response.data.result === "success") {
+              alert("등록되었습니다.");
+            }
           })
           .catch((Error) => {
             console.log(Error);
@@ -79,7 +98,6 @@ const AppointmentModal = ({ setOpenModal }) => {
   const sendSubmit = () => {
     console.log("send submit");
 
-    /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
     if (textName.trim() == "") {
@@ -195,7 +213,7 @@ const AppointmentModal = ({ setOpenModal }) => {
               <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
                 부서이동
               </MenuItem>
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"22"}>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"2"}>
                 승진
               </MenuItem>
             </Select>
@@ -288,49 +306,49 @@ const AppointmentModal = ({ setOpenModal }) => {
                       >
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"*"}
+                          value={"1"}
                         >
                           사원
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"01"}
+                          value={"2"}
                         >
                           대리
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"02"}
+                          value={"3"}
                         >
                           과장
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"03"}
+                          value={"4"}
                         >
                           차장
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"04"}
+                          value={"5"}
                         >
                           부장
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"05"}
+                          value={"6"}
                         >
                           이사
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"06"}
+                          value={"7"}
                         >
                           사장
                         </MenuItem>
                         <MenuItem
                           sx={{ minWidth: "153px", height: 30 }}
-                          value={"07"}
+                          value={"8"}
                         >
                           대표이사
                         </MenuItem>
