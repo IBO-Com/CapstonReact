@@ -173,8 +173,8 @@ const App = () => {
 
             <p className="vm_class">연차/휴가 분류</p>
             <input type="radio" name="kind_name"></input> <label className="vm_yeon">연차</label>
-            <input type="radio" name="kind_name"></input> <label className="vm_ban">반차</label>
-            <input type="radio" name="kind_name"></input> <label className="vm_mon">월차</label>
+            <input type="radio" name="kind_name"></input> <label className="vm_ban">오전반차</label>
+            <input type="radio" name="kind_name"></input> <label className="vm_mon">오후반차</label>
             <input type="radio" name="kind_name"></input> <label className="vm_hu">경조휴가</label>
             <input type="radio" name="kind_name"></input> <label className="vm_sick">병가</label>
             <input type="radio" name="kind_name"></input> <label className="vm_other">기타</label>
@@ -190,7 +190,7 @@ const App = () => {
             />
 
             <p>사유</p>
-            <textarea placeholder="연차/휴가 사유를 자세히 적어주세요." className="vm_reason" name="reason" rows={2} cols={80}></textarea>
+            <textarea placeholder="연차/휴가 사유를 적어주세요." className="vm_reason" name="reason" rows={2} cols={70}></textarea>
 
             <p><br></br>대체 업무자</p> {/* 폼에 출력시 >> 이과학 대리 << 로 출력*/}
             <form>
@@ -204,6 +204,8 @@ const App = () => {
               <label>관계&nbsp; : &nbsp;&nbsp;<input type="text" name="team" autocomplete="off"></input></label><br></br>
               <label>전화번호&nbsp; : &nbsp;&nbsp;<input type="text" name="cellPhone" autocomplete="off" id="cellPhone" maxlength="13" /></label><br></br>
             </div>
+            <br></br>
+            <button className="vm_save_btn">입력</button>
           </div>
 
           <div className="card_empCard">

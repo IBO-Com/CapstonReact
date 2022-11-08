@@ -52,6 +52,20 @@ const App = ({ componentRef, sabun }) => {
             <div className="perCardtitle">
                 <p>휴가신청서</p>
             </div>
+
+            <table className="formVmTable">
+                <tr className="form_vm_sign">
+                    <td>담<br></br>당</td>
+                    <td></td>
+                    <td>과<br></br>장</td>
+                    <td></td>
+                    <td>부<br></br>장</td>
+                    <td></td>
+                    <td>대<br></br>표</td>
+                    <td></td>
+                </tr>
+            </table>
+            <br></br>
             <table className="formProofofeTable">
                 <tr className="formProofofeFirst">
                     <td>성명</td>

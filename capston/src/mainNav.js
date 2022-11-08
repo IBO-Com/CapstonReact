@@ -33,6 +33,7 @@ import SeverancePayCal from "./SeverancePayCal/SeverancePayCal";
 
 //근태관리 탭
 import VacationManage from "./vacationManage/vacationManage"; //휴가관리
+import VacationCheck from "./vacationCheck/vacationCheck"; //휴가현황
 import WorkManage from "./workManage/workManage"; //근무관리
 
 import Inbo from "./img/Group 23.png";
@@ -105,7 +106,7 @@ const App = () => {
             path="/personnelappointment"
             element={<PersonnelAppointment />}
           ></Route>
-
+ 
           {/* 인사기록카드 페이지 */}
           <Route path="/Test" element={<Test />}></Route>
 
@@ -135,6 +136,9 @@ const App = () => {
           {/* 휴가 관리 */}
           <Route path="vacationManage" element={<VacationManage />}></Route>
 
+          {/* 휴가 관리 */}
+          <Route path="vacationCheck" element={<VacationCheck />}></Route>
+
           {/* 근무 관리 */}
           <Route path="workManage" element={<WorkManage />}></Route>
 
@@ -145,7 +149,7 @@ const App = () => {
           ></Route>
           {/* 퇴직금 산정 */}
           <Route path="severancepaycal" element={<SeverancePayCal />}></Route>
-          
+
           {/* 퇴직금명세서 */}
           <Route path="severancepay" element={<SeverancePay />}></Route>
 

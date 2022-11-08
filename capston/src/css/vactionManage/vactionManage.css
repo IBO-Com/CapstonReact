@@ -32,6 +32,16 @@ body {
     border-radius: 2px;
 }
 
+.vm_save_btn {
+    width: 97px;
+    color: #FFFFFF;
+    height: 36px;
+    border: none;
+    background: #F09336;
+    margin-top: 2px;
+    border-radius: 2px;
+}
+
 .vm_kind p {
     font-family: "Noto Sans KR";
     font-style: normal;
@@ -50,7 +60,7 @@ body {
 }
 
 .vm_yeon, .vm_ban, .vm_hu, .vm_sick, .vm_mon {
-    margin-right: 40px;
+    margin-right: 30px;
 }
 
 .vm_perInfo p {
@@ -66,8 +76,9 @@ body {
 
 .vm_InfoTable {
     overflow: auto;
-    width: 600px;
+    width: 550px;
     height: 70px;
+    margin-right: 50px;
 }
 
 .vm_InfoTable thead th {
