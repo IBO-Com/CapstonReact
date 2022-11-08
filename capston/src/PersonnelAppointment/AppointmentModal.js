@@ -50,10 +50,16 @@ const AppointmentModal = ({ setOpenModal }) => {
 
   const dateFormatString = (dateString) => {
     let year = dateString.getFullYear();
-    let month = dateString.getMonth() < 10 ? "0" + dateString.getMonth() : dateString.getMonth();
-    let day = dateString.getDate() < 10 ? "0" + dateString.getDate() : dateString.getDate()();
-    return year + "" + month + "" + day; 
-  }
+    let month =
+      dateString.getMonth() < 10
+        ? "0" + (dateString.getMonth() + 1)
+        : dateString.getMonth() + 1;
+    let day =
+      dateString.getDate() < 10
+        ? "0" + dateString.getDate()
+        : dateString.getDate()();
+    return year + "" + month + "" + day;
+  };
   // 등록
   const formRef = useRef();
   const saveBtn = () => {
@@ -71,10 +77,7 @@ const AppointmentModal = ({ setOpenModal }) => {
         postParm2 = qs.stringify(postParm2);
 
         axios
-          .post(
-            "http://localhost:8080/CapstonProject/test.jsp",
-            postParm2
-          )
+          .post("http://43.200.115.198:8080/appointmentregister.jsp", postParm2)
           .then((response) => {
             console.log(response);
             if (response.data.result === "success") {
