@@ -139,9 +139,15 @@ const App = () => {
 
                 <hr className="card_lineBar"></hr>
                 <div className="vc_Flex">
-                    <div className="vc_Request"> {/** */}
+                    <div className="vc_Request"> 
                     <p className="vc_Request_title">연차/휴가 요청</p>
-                        <div className="vacationWrap">
+                        {/** 
+                         * 1. vactionWrap 데이터 1~2개
+                         * 2. vactionWrap 승인, 반려
+                         * 3. 승인 시 완료된 요청
+                         * 4. 잘자~~
+                         */}
+                        <div className="vacationWrap"> 
                             <div className="vacationBox">
                                 <p className="vc_name">연차 신청 - 김누구</p> {/* 오전반차면 오전반차 신청 - 김누구 */}
                                 <p className="vc_date">일시&nbsp; : &nbsp;2022년 11월 20일</p>
