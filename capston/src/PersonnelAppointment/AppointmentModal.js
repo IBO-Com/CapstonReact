@@ -48,24 +48,31 @@ const AppointmentModal = ({ setOpenModal }) => {
     setSeletRank(event.target.value);
   };
 
+  const dateFormatString = (dateString) => {
+    let year = dateString.getFullYear();
+    let month = dateString.getMonth() < 10 ? "0" + dateString.getMonth() : dateString.getMonth();
+    let day = dateString.getDate() < 10 ? "0" + dateString.getDate() : dateString.getDate()();
+    return year + "" + month + "" + day; 
+  }
   // 등록
   const formRef = useRef();
   const saveBtn = () => {
     if (formRef.current.reportValidity()) {
       if (window.confirm("등록하시겠습니까?")) {
-        let postParm2 = qs.stringify({
-          app_sabun: empData["sabun"],
-          app_name: empData["name"],
+        let postParm2 = {
+          app_sabun: empData.sabun,
+          app_name: empData.name,
           app_state: selectType,
           app_rank: selectRank,
-          app_date: startDate,
+          app_date: dateFormatString(startDate),
           app_dept: selectDepart,
-        });
+        };
         console.log(postParm2);
+        postParm2 = qs.stringify(postParm2);
 
         axios
           .post(
-            "http://localhost:8080/CapstonProject/appointmentregister.jsp",
+            "http://localhost:8080/CapstonProject/test.jsp",
             postParm2
           )
           .then((response) => {
@@ -206,7 +213,7 @@ const AppointmentModal = ({ setOpenModal }) => {
               <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
                 부서이동
               </MenuItem>
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"22"}>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"2"}>
                 승진
               </MenuItem>
             </Select>
