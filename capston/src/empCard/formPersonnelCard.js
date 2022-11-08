@@ -17,8 +17,17 @@ const App = ({ componentRef, sabun }) => {
   const [rank, setRank] = useState("");
   const [center, setCenter] = useState("");
 
-
-
+  const [family, setFamily] = useState([]);
+  let relation = {
+    "0" : "부",
+    "1" : "모",
+    "2" : "배우자",
+    "3" : "자녀"
+  }
+  let cohabitation = {
+    "0" : "별거",
+    "1" : "동거"
+  }
   const [picture, setPicture] = useState(null);
 
   function getParametersForUnsplash({width, height, quality, format}) { //이미지 최적화
@@ -70,6 +79,20 @@ const App = ({ componentRef, sabun }) => {
           console.log(response);
           setPicture(response.data.ITEMS[0].picture);
         });
+
+
+      postParam = {
+        sabun: sabun
+      }
+  
+  
+      postParam = qs.stringify(postParam);
+      axios.post("http://43.200.115.198:8080/getFamily.jsp", postParam).then((res) => {
+        let data = res.data.ITEMS;
+        setFamily(data);
+      }).catch((Error) => {
+        console.log(Error);
+      })
       console.log("change sabun : ", sabun);
   }, [sabun]);
 
@@ -129,31 +152,54 @@ const App = ({ componentRef, sabun }) => {
               <td colSpan={3}>{userData ? userData["address"] : ""}</td>
             </tr>
 
-            <tr className="firsttable family_td">
-              <td rowSpan={4}>가족사항</td>
-              <td>관계</td>
-              <td>성명</td>
-              <td>생년월일</td>
-              <td>동거여부</td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+            {
+            family.length > 0 ? (
+              <>
+              <tr className="firsttable family_td">
+                <td rowSpan={family.length + 1}>가족사항</td>
+                <td>관계</td>
+                <td>성명</td>
+                <td>생년월일</td>
+                <td>동거여부</td>
+              </tr>
+              
+              {
+                family.map((item, index) => {
+                  return (
+                    <tr>
+                      <td>{relation[item.relation]}</td>
+                      <td>{item.name}</td>
+                      <td>{
+                        new Date().getFullYear() - 2000 < parseInt(item.identity.slice(0, 2)) ? "19" : "20" + 
+                        item.identity.slice(0, 2) + "년 " + item.identity.slice(2, 4) + "월 " + item.identity.slice(4, 6) + "일"
+                        }</td>
+                      <td>{item.cohabitation == "0" ? "별거" : "동거"}</td>
+                    </tr>
+                  )
+                })
+              }
+            </>  
+            ) : (
+              <>
+                <tr className="firsttable family_td">
+                  <td rowSpan={2}>가족사항</td>
+                  <td>관계</td>
+                  <td>성명</td>
+                  <td>생년월일</td>
+                  <td>동거여부</td>
+                </tr>
+                
+                <tr>
+                  <td>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+              </>
+            )
+            }
+            
 
             <tr className="firsttable family_td">
               <td rowSpan={4}>경력사항</td>
