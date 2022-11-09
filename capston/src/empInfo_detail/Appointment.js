@@ -17,7 +17,7 @@ const Appointment = () => {
     let loginInfo = cookies["loginInfo"];
 
     let postParam = {
-      sabun: loginInfo.id  
+      sabunOrName: loginInfo.id  
     }
 
     postParam = qs.stringify(postParam);
