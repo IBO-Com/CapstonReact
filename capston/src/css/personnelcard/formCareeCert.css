@@ -1,5 +1,6 @@
  .enterForm{
     background-color: #fff !important;
+    height: 50px;
 }
 
 .enterForm .date_form{
@@ -8,8 +9,13 @@
 }
 
 .enterForm .date_form .date2{
-    margin-left: 50px;
-    margin-top: 12px;
+    margin-left: 20px;
+}
+
+.enterForm .date_form .date{
+    width: 100px;
+    padding-top: 13px;
+    font-weight: bold;
 }
 
 .formProofofeTable .formProofofeFirst .formProofofe_wid {
