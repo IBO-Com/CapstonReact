@@ -96,7 +96,7 @@ const App = ({ componentRef, sabun }) => {
 
 
                 <tr className="formRetire_boldcolor">
-                    <td colSpan={5}>퇴직총액</td>
+                    <td colSpan={5}>퇴직 실수령액</td>
                 </tr>
 
                 <tr>

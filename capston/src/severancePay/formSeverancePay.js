@@ -75,7 +75,7 @@ const App = ({ componentRef, sabun }) => {
                 <tr className="formSeverance_Info">
                     <td>직책</td>
                     <td>{rank}</td>
-                    <td>총 근무기간</td>
+                    <td>근속년수</td>
                     <td></td>
                 </tr>
 
@@ -120,30 +120,22 @@ const App = ({ componentRef, sabun }) => {
 
                 <tr className="formRetire_RetireMoney">
                     <td rowSpan={3}>퇴직금액 내역</td>
-                    <td className="formRetire_noBack">1일 평균임금</td>
+                    <td className="formRetire_noBack">퇴직수당</td>
                     <td colSpan={2} className="formRetire_noBack"></td>
                 </tr>
 
                 <tr className="formRetire_money">
-                    <td className="formRetire_noBack">최근 3개월 근무일수</td>
+                    <td className="formRetire_noBack">퇴직총액</td>
                     <td colSpan={2} className="formRetire_noBack"></td>
                 </tr>
 
                 <tr className="formRetire_money">
-                    <td className="formRetire_noBack">재직일수</td>
+                    <td className="formRetire_noBack">퇴직소득세</td>
                     <td colSpan={2} className="formRetire_noBack"></td>
                 </tr>
 
                 <tr className="formSeverance_boldcolor">
-                    <td colSpan={5}>상여금</td>
-                </tr>
-
-                <tr>
-                    <td colSpan={5}>원</td>
-                </tr>
-
-                <tr className="formSeverance_boldcolor">
-                    <td colSpan={5}>퇴직총액</td>
+                    <td colSpan={5}>퇴직 실수령액</td>
                 </tr>
 
                 <tr>

@@ -210,20 +210,20 @@ const App = () => {
             <span>퇴직금 계산</span>
             <table className="SeverancePaycal_SecondTable">
               <tr>
-                <td className="SeverancePaycal_item">일평균임금</td>
-                <td></td>
-                <td className="SeverancePaycal_item">일통상임금</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td className="SeverancePaycal_item">퇴직소득세</td>
-                <td></td>
                 <td className="SeverancePaycal_item">마지막 달 급여</td>
                 <td></td>
+                <td className="SeverancePaycal_item">퇴직수당</td>
+                <td>1년 미만 ~ 4년 : 1.5배 / 5년 이상 : 2배</td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직총액</td>
-                <td colSpan={3}>여기에는 (마지막 달 급여 * 근속년수) 값이 들어가용</td>
+                <td></td>
+                <td className="SeverancePaycal_item">퇴직소득세</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="SeverancePaycal_item">퇴직 실수령액</td>
+                <td colSpan={3}>(마지막 달 급여 * 근속년수) + 퇴직수당 - 퇴직소득세 = 실지급액</td>
               </tr>
             </table>
           </div>
