@@ -79,9 +79,16 @@
   height: 100%;
   border-width: 0px;
   text-align: center;
+  transition: 0.5s;
 }
 
 .License_input:focus {
   z-index: 100;
   transition: 0.5s;
 }
+
+.License_td_noneData {
+  transition: 0.5s;
+  background-color: #f1c9cd57;
+}
+

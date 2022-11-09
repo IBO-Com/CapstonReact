@@ -17,6 +17,12 @@ const App = () => {
     cer_number: "",
     cer_center: ""
   }
+  const autoHyphen = (target) => {
+    console.log(target);
+    target.value = target.value
+      .replace(/[^0-9]/g, '')
+     .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+   }
 
   function YMDFormatter(num){ //날짜 자동으로 하이픈 넣기
     if(!num) return "";
@@ -25,11 +31,10 @@ const App = () => {
     num=num.replace(/\s/gi, "");
     try{
          if(num.length == 8) {
-              formatNum = num.replace(/(\d{4})(\d{2})(\d{2})/, '$1년 $2월 $3일');
+              formatNum = num.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
          }
     } catch(e) {
          formatNum = num;
-         console.log(e);
     }
     return formatNum;
   }
@@ -54,6 +59,50 @@ const App = () => {
     setLicense(tempTable);
   }
 
+  const saveBtnClick = () => { //저장 버튼
+    let licenseTable = document.querySelectorAll(".Licnese_table tbody tr");
+    let isReady = true;
+    let data = [];
+    for(let i = 0; i < licenseTable.length; i ++) {
+      let tempArr = [];
+      for(let j = 2; j <= 5; j++) {
+        let element = licenseTable[i].querySelectorAll("td")[j].querySelector("input");
+        let val = element.value;
+        if(j == 2) val = val.replace(/\-/g, ""); //날짜는 하이픈 없앰
+
+        if(val.trim() == '') { //값이 없을 때
+          isReady = false;
+          element.className = "License_input License_td_noneData";
+        } else {
+          element.className = "License_input";
+        }
+        tempArr.push(val.replace(",", "."));
+      }
+      data.push(tempArr);
+    }
+    if(isReady == false) {
+      alert("입력란에 공백이 존재합니다.");
+      return;
+    }
+    let loginInfo = cookies["loginInfo"];
+    let postParam = {
+      sabun: loginInfo.id,
+      length: data.length
+    }
+    for(let i = 0; i < data.length; i ++) {
+      let row = data[i].join(",");
+      postParam["data" + i] = row;
+    }
+    console.log(postParam);
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/updateLicense.jsp", postParam).then((res) => {
+      alert("저장이 완료되었습니다.");
+    }).catch((Error) => {
+      alert("오류가 발생했습니다.");
+      console.log(Error)
+    })
+  }
+
   useEffect(() => {
     let loginInfo = cookies["loginInfo"];
     
@@ -64,7 +113,6 @@ const App = () => {
     postParam = qs.stringify(postParam);
     axios.post("http://43.200.115.198:8080/getLicense.jsp", postParam).then((res) => {
       let data = res.data.ITEMS;
-      console.log(data);
       setLicense(data);
     })
   }, [])
@@ -76,7 +124,7 @@ const App = () => {
         <div className="License_btn">
           <button className="License_removeBtn" onClick={()=> {removeBtnClick()}}>삭제</button>
           <button className="License_addBtn" onClick={() => {addBtnClick()}}>추가</button>
-          <button className="License_saveBtn">저장</button>
+          <button className="License_saveBtn" onClick={() => {saveBtnClick()}}>저장</button>
         </div>
       </div>
       <div className="Licnese_table">
@@ -105,7 +153,7 @@ const App = () => {
                         onChange={() => {radioChange(index)}}
                       />
                     </td>
-                    <td><input className="License_input" Value={YMDFormatter(item.acq_date)}></input></td>
+                    <td><input className="License_input" onInput={(e) => {autoHyphen(e.target)}} Value={YMDFormatter(item.acq_date)} maxLength={10}></input></td>
                     <td><input className="License_input" Value={item.cer_title}></input></td>
                     <td><input className="License_input" Value={item.cer_number}></input></td>
                     <td><input className="License_input" Value={item.cer_center}></input></td>
