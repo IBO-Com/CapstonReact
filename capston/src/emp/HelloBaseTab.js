@@ -54,7 +54,6 @@ const HelloBaseTab = () => {
   });
 
   const urlSave = "http://43.200.115.198:8080/empregister.jsp";
-  const urlSavePicture = "http://43.200.115.198:8080/empsavepicture.jsp";
   const urlGetCls = "http://43.200.115.198:8080/empGetOrg.jsp";
   //const urlSave = "http://localhost:8080/empregister.jsp";
   //const urlGetCls = "http://localhost:8080/empGetOrg.jsp";

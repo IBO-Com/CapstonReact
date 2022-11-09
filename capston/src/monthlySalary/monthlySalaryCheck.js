@@ -39,33 +39,7 @@ const App = () => {
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
    const [tempPack, setTempPack] = useState({});
-   const [taxPack, setTaxPack] = useState({ //기본 데이터 꼭 필요함
-      sabunOrName: 0,
-      retrieveDate: 0,
-      day: 0,
-      연봉: 0,
-      월급: 0,
-
-      일반근무시간: 0,
-      연장근무금액: 0,
-      연장근무시간: 0,
-      야간근무금액: 0,
-      야간근무시간: 0,
-      
-      휴일근무금액: 0,
-      휴일근무시간: 0,
-      국민연금: 0,
-      건강보험: 0,
-      장기요양: 0,
-      
-      고용보험: 0,
-      근로소득세: 0,
-      주민세: 0,
-      총지급액: 0,
-      총공제액: 0,
-      
-      실수령액: 0
-  });
+   const [taxPack, setTaxPack] = useState();
 
    //console.log(monthlyPayDebuct);
 
@@ -78,9 +52,17 @@ const App = () => {
    }
 
    const sendSubmit = () => {
-      GetFinalTax.getAllTaxToJson(textName, retrieveDate, setTaxPack);
-      GetFinalTax.getAllTaxToJsonAllMonth("이정재", "2022", setTempPack);
+      if(textName.trim() == '') {
+         alert("사번/성명을 입력해주세요.");
+         return;
+      }
+      //taxPack의 내용은 로그를 확인할 것
+      GetFinalTax.getAllTaxToJsonFast(textName, retrieveDate.replace("-", "") + "01", retrieveDate.replace("-", "") + "32", setTaxPack);
    }
+
+   useEffect(() => {
+      console.log("taxPack : ", taxPack);
+   }, [taxPack]);
 
    return (
       <div className="monthlyPay_background">
@@ -134,15 +116,15 @@ const App = () => {
             </div>
             <div className="monthlyPay_total">
                <p>총 급여</p>
-               <span className="totalPay">{taxPack.총지급액.toLocaleString()}원</span>
+               <span className="totalPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalMoney.toLocaleString() : 0}원</span>
             </div>
             <div className="monthlyPay_deduct">
                <p>공제액</p>
-               <span className="deductPay">{taxPack.총공제액.toLocaleString()}원</span>
+               <span className="deductPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalDeductible.toLocaleString() : 0}원</span>
             </div>
             <div className="monthlyPay_amount">
                <p>실수령액</p>
-               <span className="amountPay">{taxPack.실수령액.toLocaleString()}원</span>
+               <span className="amountPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].finalUserMoney.toLocaleString() : 0}원</span>
             </div>
          </div>
 
@@ -153,27 +135,27 @@ const App = () => {
          <div className="monthlyWork_viewer">
             <div className="monthlyNormalWork_ment">
                <span>일반근무&nbsp;</span>
-               <span>{(taxPack.일반근무시간 / 60).toFixed(1)}시간</span>
+               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].workTime.toFixed(1) : 0}시간</span>
             </div>
             <div className="monthlyOvertimeWork_ment">
                <span>연장근무&nbsp;</span>
-               <span>{(taxPack.연장근무시간 / 60).toFixed(1)}시간</span>
+               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].overTime.toFixed(1) : 0}시간</span>
             </div>
             <div className="monthlyNightWork_ment">
                <span>야간근무&nbsp;</span>
-               <span>{(taxPack.야간근무시간 / 60).toFixed(1)}시간</span>
+               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].nightTime.toFixed(1) : 0}시간</span>
             </div>
             <div className="monthlyHolidayWork_ment">
                <span>휴일근무&nbsp;</span>
-               <span>{(taxPack.휴일근무시간 / 60).toFixed(1)}시간</span>
+               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].restTime.toFixed(1) : 0}시간</span>
             </div>
             <div className="monthlytotalWork_ment">
                <span>총 근무일수&nbsp;</span>
-               <span>{taxPack.day}일</span>
+               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].day : 0}일</span>
             </div>
             <div className="monthlyWorkTime_ment">
                <span>총 근로시간&nbsp;</span>
-               <span>{parseFloat((taxPack.일반근무시간 / 60).toFixed(1)) + parseFloat((taxPack.연장근무시간 / 60).toFixed(1)) + parseFloat((taxPack.야간근무시간 / 60).toFixed(1)) + parseFloat((taxPack.휴일근무시간 / 60).toFixed(1))}시간</span>
+               <span>{taxPack ? (taxPack[Object.keys(taxPack)[1]].workTime + taxPack[Object.keys(taxPack)[1]].overTime + taxPack[Object.keys(taxPack)[1]].nightTime + taxPack[Object.keys(taxPack)[1]].restTime).toFixed(1) : 0}시간</span>
             </div>
          </div>
 
@@ -200,33 +182,33 @@ const App = () => {
             </tr>
             <tr className="monthlyOne">
                <td>기본급</td>
-               <td>{taxPack.월급.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].defaultMoney.toLocaleString() : 0}원</td>
                <td>국민연금</td>
-               <td>{taxPack.국민연금.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].nationalPension.toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyTwo">
                <td>연장근무</td>
-               <td>{taxPack.연장근무금액.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].overMoney.toLocaleString() : 0}원</td>
                <td>건강보험외</td>
-               <td>{parseInt(taxPack.건강보험 + taxPack.장기요양).toLocaleString()}원</td>
+               <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].healthInsurance + taxPack[Object.keys(taxPack)[1]].longCare).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyThree">
                <td>야간근무</td>
-               <td>{taxPack.야간근무금액.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].overMoney.toLocaleString() : 0}원</td>
                <td>고용보험</td>
-               <td>{taxPack.고용보험.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].employmentInsurance.toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyFour">
                <td>휴일근무</td>
-               <td>{taxPack.휴일근무금액.toLocaleString()}원</td>
+               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].restMoney.toLocaleString() : 0}원</td>
                <td>근로소득세외</td>
-               <td>{(taxPack.근로소득세 + taxPack.주민세).toLocaleString()}원</td>
+               <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].incomeTax + taxPack[Object.keys(taxPack)[1]].residentTax).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyFive">
                <td className="TabletotalPay">총 지급액</td>
-               <td className="TabletotalPay">{taxPack.총지급액.toLocaleString()}원</td>
+               <td className="TabletotalPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalMoney.toLocaleString() : 0}원</td>
                <td className="TabletotalDeduct">총 공제액</td>
-               <td className="TabletotalDeduct">{taxPack.총공제액.toLocaleString()}원</td>
+               <td className="TabletotalDeduct">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalDeductible.toLocaleString() : 0}원</td>
             </tr>
          </table>
       </div>

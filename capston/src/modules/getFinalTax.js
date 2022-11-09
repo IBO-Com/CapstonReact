@@ -397,8 +397,8 @@ const monthFormat = (month) => {
                 await axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
                     let data = res.data.ITEMS;
                     if(Object.keys(data).length == 0) {
-                        incomeTax = 0;
-                        residentTax = 0;
+                        incomeTax = 1010;
+                        residentTax = 100;
                     } else {
                         incomeTax = parseInt(data.incomeTax);
                         residentTax = (parseInt(parseInt(data.incomeTax) / 10));
@@ -457,5 +457,140 @@ const monthFormat = (month) => {
         }
     }).catch((Error) => {
         console.log(Error);
+    })
+}
+
+export const getAllTaxToJsonFast = async (sabunOrName, startDate, endDate, saveData) => {
+    let postParam = {};
+    if(sabunOrName.trim() != '') {
+        postParam["sabunOrName"] = sabunOrName;
+    }
+
+    if(startDate.trim() != '' && endDate.trim() != '') {
+        postParam["startDate"] = startDate;
+        postParam["endDate"] = endDate;
+    }
+
+    postParam = qs.stringify(postParam);
+    await axios.post("http://43.200.115.198:8080/getAttendanceTime2.jsp", postParam).then(async (res) => {
+        let data = res.data.ITEMS;
+        let usersData = {usersTotalMoney: 0};
+        let usersTotalMoney = 0;
+        
+        for(let idx = 0; idx < data.length; idx ++) {
+            let workForm = data[idx].work_form;  //일한 종류
+            
+            let hourWage = parseInt(data[idx].salary) / 12 / 209; //시급
+            let dailyWage = hourWage * 8; //일급
+
+            let nightTime = data[idx].night_datetime == null ? 0 : (parseInt(data[idx].night_datetime) / 60).toFixed(2);  //야근 시간
+            let overTime = data[idx].over_datetime == null ? 0 : (parseInt(data[idx].over_datetime) / 60).toFixed(2); //연장 시간
+            let restTime = 0;
+            let workTime = 0;
+            
+            if(workForm == "RW") {
+                restTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
+            } else {
+                workTime = data[idx].work_time == null ? 0 : (parseInt(data[idx].work_time) / 60).toFixed(2); //일한 시간
+            }
+            
+            let nightMoney = parseInt(nightTime * hourWage * 0.5); //야간근무 일한시간 * 시급 * 0.5
+            let overMoney = parseInt(overTime * hourWage * 1.5);  //연장근무 일한시간 * 시급 * 1.5
+            let salary = parseInt(data[idx].salary);
+            let restMoney = parseInt(restTime * hourWage * 1.5);
+            let defaultMoney = workForm != "RW" ? parseInt(workTime * hourWage) : 0;
+            let totalMoney = nightMoney + overMoney + restMoney + defaultMoney;
+            let day = data[idx].day;
+            
+            if(usersData[data[idx].name] == undefined) { //해당 사용자의 기본 데이터가 없을 때
+                usersData[data[idx].name] = {
+                    day: parseInt(day),
+
+                    nightTime: parseFloat(nightTime),
+                    overTime:  parseFloat(overTime),
+                    restTime:  parseFloat(restTime),
+                    workTime:  parseFloat(workTime),
+
+                    salary: salary,
+                    hourWage: hourWage,
+                    workForm: workForm,
+                    nightMoney: nightMoney,
+                    overMoney: overMoney,
+                    restMoney: restMoney,
+                    defaultMoney: defaultMoney,
+                    totalMoney: totalMoney
+                }
+            } else { //해당 사용자의 데이터가 있을 때
+                usersData[data[idx].name] = {
+                    day: parseInt(usersData[data[idx].name].day) + parseInt(day),
+
+                    nightTime: parseFloat(usersData[data[idx].name].nightTime) + parseFloat(nightTime),
+                    overTime:  parseFloat(usersData[data[idx].name].overTime )+  parseFloat(overTime),
+                    restTime:  parseFloat(usersData[data[idx].name].restTime )+  parseFloat(restTime),
+                    workTime:  parseFloat(usersData[data[idx].name].workTime )+  parseFloat(workTime),
+
+                    salary: salary,
+                    hourWage: hourWage,
+                    workForm: workForm,
+                    nightMoney: usersData[data[idx].name].nightMoney + nightMoney,
+                    overMoney: usersData[data[idx].name].overMoney + overMoney,
+                    restMoney: usersData[data[idx].name].restMoney + restMoney,
+                    defaultMoney: usersData[data[idx].name].defaultMoney + defaultMoney,
+                    totalMoney: usersData[data[idx].name].totalMoney + totalMoney
+                }
+            }
+        }
+
+        let usersKey = Object.keys(usersData);
+        for(let i = 0; i < usersKey.length; i ++) {
+            let userName = usersKey[i];
+            if(userName == "usersTotalMoney") continue;
+
+            let hourWage = parseInt(usersData[userName].salary / 12 / 209); //시급
+            let defaultMoney = usersData[userName].defaultMoney;
+            let nationalPension = parseInt(defaultMoney * 0.045);
+            let healthInsurance = parseInt(defaultMoney * 0.03495);
+            let longCare = parseInt(healthInsurance * 0.1227);
+            let employmentInsurance = parseInt(defaultMoney * 0.009);
+            let totalDeductible = nationalPension + healthInsurance + longCare + employmentInsurance;
+            let finalUserMoney = usersData[userName].totalMoney - totalDeductible;
+            
+            let postParam = {
+                monthPay: usersData[userName].totalMoney
+            };
+            let incomeTax = 1010;
+            let residentTax = 100;
+
+            if(usersData[userName].totalMoney == 0) {
+                incomeTax = 0;
+                residentTax = 0;
+            }
+
+            postParam = qs.stringify(postParam);
+            await axios.post("http://43.200.115.198:8080/getIncomTax.jsp", postParam).then((res) => { //근로소득세, 주민세 계산
+                let data = res.data.ITEMS;
+                if(Object.keys(data).length != 0) {
+                    incomeTax = parseInt(data.incomeTax);
+                    residentTax = (parseInt(parseInt(data.incomeTax) / 10));
+                }
+            })
+
+            usersData[userName].employmentInsurance = employmentInsurance;
+            usersData[userName].nationalPension = nationalPension;
+            usersData[userName].healthInsurance = healthInsurance;
+            usersData[userName].longCare = healthInsurance;
+            usersData[userName].incomeTax = incomeTax;
+            usersData[userName].residentTax = residentTax;
+            usersData[userName].totalDeductible = totalDeductible;
+            usersData[userName].finalUserMoney = finalUserMoney;
+            usersData.usersTotalMoney += finalUserMoney;
+        } 
+
+        console.log(usersData);
+
+        saveData(usersData);
+
+    }).catch((Error) => {
+        console.log(Error)
     })
 }

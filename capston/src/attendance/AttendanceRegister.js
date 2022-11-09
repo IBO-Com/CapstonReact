@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import { Button, TextField } from "@mui/material";
 import JqxGrid, { jqx } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxgrid";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
+import qs from "qs";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.material-purple.css";
 import koLocale from "date-fns/locale/ko";
+import { ExcelRenderer } from "react-excel-renderer";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -20,8 +24,30 @@ function getFormatDate(date) {
   return year + "-" + month;
 }
 
+function isNullOrEmpty(value) {
+  var returnValue = false;
+  try {
+    if (
+      (value != 0) & !value ||
+      typeof value == "undefined" ||
+      value == null ||
+      (typeof value == "object" &&
+        Object.prototype.toString.call(value) != "[object Date]" &&
+        !Object.keys(value).length) ||
+      (typeof value == "string" && value.trim() == "") ||
+      (typeof value == "number" && isNaN(value))
+    ) {
+      returnValue = true;
+    }
+  } catch (e) {
+    returnValue = false;
+  }
+  return returnValue;
+}
+
 function AttendanceRegister() {
   const myGrid = useRef();
+  const name = useRef();
   const [itemList, setItemList] = useState([]);
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
@@ -30,19 +56,42 @@ function AttendanceRegister() {
   //const urlClosing = "http://localhost:8080/attclosing.jsp";
   const urlRetrieve = "http://43.200.115.198:8080/attretrieve.jsp";
   const urlSave = "http://43.200.115.198:8080/attsave.jsp";
+  const urlDelete = "http://43.200.115.198:8080/attdelete.jsp";
   const urlClosing = "http://43.200.115.198:8080/attclosing.jsp";
 
   const handleDateChange = (date) => {
     setRetrieveDate(getFormatDate(date));
   };
 
-  const work_form_list = [
-    { value: "NM", label: "일반" },
-    { value: "OW", label: "외근" },
-    { value: "BT", label: "출장" },
-    { value: "HW", label: "재택" },
-    { value: "EW", label: "연장" },
-    { value: "RW", label: "휴일" },
+  let workForm = [
+    {
+      value: "BK",
+      label: "연차",
+    },
+    {
+      value: "BT",
+      label: "출장",
+    },
+    {
+      value: "EW",
+      label: "연장",
+    },
+    {
+      value: "HW",
+      label: "재택",
+    },
+    {
+      value: "NM",
+      label: "일반",
+    },
+    {
+      value: "OW",
+      label: "외근",
+    },
+    {
+      value: "RW",
+      label: "휴일",
+    },
   ];
 
   const workFormSource = {
@@ -51,7 +100,7 @@ function AttendanceRegister() {
       { name: "label", type: "string" },
       { name: "value", type: "string" },
     ],
-    localdata: work_form_list,
+    localdata: workForm,
   };
 
   let workFormAdapter = new jqx.dataAdapter(workFormSource, {
@@ -93,6 +142,44 @@ function AttendanceRegister() {
       text: "",
       width: 50,
       textSize: "14px",
+    },
+    {
+      text: "",
+      align: "center",
+      cellsalign: "center",
+      buttonclick: (row) => {
+        console.log(myGrid.current.getrowdata(row));
+        if (myGrid.current.getrowdata(row).sabun !== "") {
+          if (window.confirm("해당 데이터를 삭제하시겠습니까?")) {
+            axios
+              .get(urlDelete, {
+                params: {
+                  in_date: myGrid.current
+                    .getrowdata(row)
+                    .in_date.replaceAll("-", ""),
+                  sabun: myGrid.current.getrowdata(row).sabun,
+                  work_form_cd: myGrid.current.getrowdata(row).work_form_cd,
+                },
+              })
+              .then((response) => {
+                console.log(response);
+                if (response.data.result === "success") {
+                  alert("저장되었습니다.");
+                  onClickRetrieveButton();
+                } else {
+                  alert("error");
+                }
+              });
+          }
+        } else {
+          myGrid.current.deleterow(row);
+        }
+      },
+      cellsrenderer: () => {
+        return "삭제";
+      },
+      columntype: "button",
+      width: 60,
     },
     {
       text: "일자",
@@ -164,17 +251,29 @@ function AttendanceRegister() {
     },
   ]);
 
-  const onClickAddButton = () => {
-    myGrid.current.addrow(null, {});
+  const importExcel = (event) => {
+    let fileObj = event.target.files[0];
+    let test = [];
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(resp.rows);
+        for (let i = 1; i < resp.rows.length; i++) {
+          test.push({
+            in_date: resp.rows[i][0],
+            sabun: resp.rows[i][1],
+            start_datetime: resp.rows[i][2],
+            end_datetime: resp.rows[i][3],
+          });
+        }
+        setItemList(test);
+      }
+    });
   };
 
-  const onClickDeleteButton = () => {
-    const selectedrowindex = myGrid.current.getselectedcell().rowindex;
-    const rowscount = myGrid.current.getdatainformation().rowscount;
-    if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
-      const id = myGrid.current.getrowid(selectedrowindex);
-      myGrid.current.deleterow(id);
-    }
+  const onClickAddButton = () => {
+    myGrid.current.addrow(null, {});
   };
 
   const onClickRetrieveButton = () => {
@@ -182,10 +281,10 @@ function AttendanceRegister() {
       .get(urlRetrieve, {
         params: {
           retrieveDate: retrieveDate.replaceAll("-", ""),
+          sabunOrName: name.current.value == "" ? null : name.current.value,
         },
       })
       .then((response) => {
-        console.log(response);
         setItemList(response.data.DATA);
       });
   };
@@ -195,6 +294,7 @@ function AttendanceRegister() {
     let lengths = data.length;
     let confirm = 0;
     data = { ...data };
+
     if (window.confirm("저장 하시겠습니까?")) {
       confirm = 1;
       for (let i = 0; i < lengths; i++) {
@@ -210,43 +310,72 @@ function AttendanceRegister() {
           return;
         }
 
+        delete data[i]["uniqueid"];
+        delete data[i]["boundindex"];
+        delete data[i]["uniqueid"];
+        delete data[i]["uid"];
+        delete data[i]["visibleindex"];
+
         let end_datetime = data[i].end_datetime.replace(":", "");
         let split_time = data[i].end_datetime.split(":");
         let hour = parseInt(split_time[0]);
         let min = parseInt(split_time[1]);
         let sec = (hour * 60 + min) * 60;
-        if (end_datetime > "1800" && end_datetime < "2200") {
+
+        if (end_datetime >= "1830" && end_datetime <= "2200") {
           data[i].over_datetime = String((sec - 64800) / 60);
-        } else {
-          // 10시 이후 퇴근
+          if (
+            isNullOrEmpty(data[i].work_form_cd) ||
+            data[i].work_form_cd == "NM"
+          ) {
+            data[i].work_form_cd = "EW";
+          }
+        } // 10시 이후 퇴근
+        else if (end_datetime > "2200" && end_datetime <= "2400") {
           data[i].over_datetime = "240";
-          if (end_datetime > "2200" && end_datetime <= "2400") {
-            data[i].night_datetime = String((sec - 79200) / 60);
-          } else if (end_datetime <= "0600") {
-            data[i].night_datetime = String((7200 + sec) / 60);
-          } else {
-            data[i].over_datetime = "";
+          data[i].night_datetime = String((sec - 79200) / 60);
+          if (
+            isNullOrEmpty(data[i].work_form_cd) ||
+            data[i].work_form_cd == "NM"
+          ) {
+            data[i].work_form_cd = "EW";
+          }
+        } else if (end_datetime <= "0600") {
+          data[i].over_datetime = "240";
+          data[i].night_datetime = String((7200 + sec) / 60);
+          if (
+            isNullOrEmpty(data[i].work_form_cd) ||
+            data[i].work_form_cd == "NM"
+          ) {
+            data[i].work_form_cd = "EW";
+          }
+        } else {
+          data[i].over_datetime = "";
+          data[i].night_datetime = "";
+          if (
+            isNullOrEmpty(data[i].work_form_cd) ||
+            data[i].work_form_cd == "EW"
+          ) {
+            data[i].work_form_cd = "NM";
           }
         }
       }
     }
 
     if (confirm == 1) {
-      axios
-        .get(urlSave, {
-          params: {
-            data: JSON.stringify(data),
-            lengths: lengths,
-          },
-        })
-        .then((response) => {
-          if (response.data.result === "success") {
-            alert("저장되었습니다.");
-            onClickRetrieveButton();
-          } else {
-            alert("error");
-          }
-        });
+      let postParam = qs.stringify({
+        data: JSON.stringify(data),
+        lengths: lengths,
+      });
+      console.log(data);
+      axios.post(urlSave, postParam).then((response) => {
+        if (response.data.result === "success") {
+          alert("저장되었습니다.");
+          onClickRetrieveButton();
+        } else {
+          alert("error");
+        }
+      });
     }
   };
 
@@ -316,20 +445,51 @@ function AttendanceRegister() {
                 onChange={handleDateChange}
               />
             </MuiPickersUtilsProvider>
+            <div
+              style={{
+                display: "inline",
+                lineHeight: "30px",
+                paddingLeft: "30px",
+                marginRight: "10px",
+              }}
+            >
+              사번/이름
+            </div>
+            <TextField
+              inputRef={name}
+              InputProps={{ sx: { width: 180, height: 40 } }}
+            />
           </div>
-          <Button
+          <div
             style={{
-              width: "8vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
+              marginTop: "6px",
             }}
-            onClick={() => onClickAddButton()}
-            variant="contained"
           >
-            엑셀업로드
-          </Button>
+            <input
+              type="file"
+              onChange={(e) => importExcel(e)}
+              style={{
+                display: "none",
+              }}
+              name="excel_upload"
+              id="excel_upload"
+            />
+            <label
+              style={{
+                padding: "6px 20px",
+                marginRight: "2vw",
+                width: "3.5vw",
+                height: "3.5vh",
+                backgroundColor: "#E5A360",
+                borderRadius: "5px",
+                color: "#FFFFFF",
+                cursor: "pointer",
+              }}
+              for="excel_upload"
+            >
+              엑셀업로드
+            </label>
+          </div>
           <Button
             style={{
               width: "3.5vw",
@@ -343,19 +503,7 @@ function AttendanceRegister() {
           >
             추가
           </Button>
-          <Button
-            style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
-            }}
-            onClick={() => onClickDeleteButton()}
-            variant="contained"
-          >
-            삭제
-          </Button>
+
           <Button
             style={{
               width: "3.5vw",
@@ -406,7 +554,7 @@ function AttendanceRegister() {
             }}
             ref={myGrid}
             width={"90%"}
-            height={450}
+            height={600}
             altrows={true}
             selectionmode={"singlecell"}
             editable={true}

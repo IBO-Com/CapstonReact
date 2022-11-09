@@ -9,7 +9,6 @@ body {
     min-width: 1000px;
     height: 790px;
     background-color: white;
-
     display: flex;
     flex-direction: column;
 }
@@ -17,76 +16,137 @@ body {
 .vactionManage_line {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
     width: 96%;
     min-width: 980px;
     border-bottom: 3px solid lightgray;
 }
 
-
-.vactionManage_card {
-    margin-bottom: 30px;
-    width: 510px;
-    max-width: 510px;
-    height: 140px;
-    max-height: 140px;
-    border: 2px solid #D9D9D9;
-    border-radius: 5px;
+.vactionManage_App .vm_searchBtn {
+    width: 97px;
+    color: #FFFFFF;
+    height: 36px;
+    border: none;
+    background: #537AAA;
+    margin-top: 2px;
+    border-radius: 2px;
 }
 
-.vactionManage_card_state {
-    letter-spacing: 10%;
-    font-family: 'Noto Sans KR';
-    font-size: 15px;
-    text-align: center;
-    line-height: 33px;
-    width: 128px;
-    height: 33px;
-    background-color: #F09336;
-    color: white;
-    
+.vm_save_btn {
+    width: 97px;
+    color: #FFFFFF;
+    height: 36px;
+    border: none;
+    background: #F09336;
+    margin-top: 2px;
+    border-radius: 2px;
+    margin-bottom: 20px;
 }
 
-.vactionManage_card_flex {
-    margin-left: 15px;
-    margin-top: 9px;
-    display: flex;
-    flex-direction: row;
+.vm_kind p {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
 }
 
-.vactionManage_card_text {
-    margin-left: 15px;
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.vactionManage_card_text2 {
-    color: #5A6163;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 10px;
-    height: 33px;
-    line-height: 33px;
-}
-
-.vactionManage_card_title {
+.vm_kind {
+    margin-left: 70px;
+    margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 19px;
-    font-weight: bold;
 }
 
-.vacationManage_contents {
-    display: flex;
-    flex-direction: row;
+.vm_yeon, .vm_ban, .vm_hu, .vm_sick, .vm_mon {
+    margin-right: 30px;
 }
 
-.vacationManage_contents_left {
-    margin-left: 66px;
-    margin-top: 20px;
+.vm_perInfo p {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    color: #5a6163;
 }
 
-.vacationManage_contents_right {
-    margin-left: 50px;
-    margin-top: 20px;
+.vm_InfoTable {
+    overflow: auto;
+    width: 550px;
+    height: 70px;
+    margin-right: 50px;
+}
+
+.vm_InfoTable thead th {
+    border: 0px;
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;    
+    padding: 0px;
+    margin: 0px;
+    background-color: #EBEFF2;
+}
+
+.vm_InfoTable tbody td{
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+.vm_reason {
+    resize: none;
+}
+
+.vm_viewer {
+    width: 700px;
+    height: 600px;
+    overflow: hidden;
+    margin-left: 800px;
+    border: 2px solid #D9D9D9;
+    border-radius: 3px;
+}
+
+.vmInfoTable {
+    min-width: 500px;
+    margin: 5px 0px 0px 120px;
+    overflow-y: auto;
+    height: 645px;
+}
+
+.vmInfoTable p {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    letter-spacing: 0.1em;
+    color: #5a6163;
+}
+
+form input {
+    height: 30px;
+    margin-bottom: 10px;
+    width: 100px;
+}
+
+.vm_bisang input {
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+#vm_select {
+    height: 30px;
+    margin-bottom: 10px;
+    width: 140px;
+    height: 35px;
+}
+
+.vm_daesin {
+    font-size: 13px;
+    color: red;
 }

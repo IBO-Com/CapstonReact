@@ -25,7 +25,9 @@ const App = () => {
   const [team, setTeam] = useState("");
   const [rank, setRank] = useState("");
   const [center, setCenter] = useState("");
-  const [picture, setPicture] = useState(null);
+  const [picture, setPicture] = useState(
+    window.sessionStorage.getItem("picture")
+  );
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
 
@@ -36,13 +38,6 @@ const App = () => {
     let postParam = qs.stringify({
       sabunOrName: data["id"],
     });
-
-    axios
-      .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
-      .then((response) => {
-        console.log(response);
-        setPicture(response.data.ITEMS[0].picture);
-      });
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
@@ -94,7 +89,7 @@ const App = () => {
       <div className="plzEmp">
         <div>
           <div className="empWrapimg">
-            {picture === null ? (
+            {picture === "null" ? (
               <img className="empimg" src={testimg} alt="이미지" />
             ) : (
               <img className="empimg" src={picture} alt={"사진"} />

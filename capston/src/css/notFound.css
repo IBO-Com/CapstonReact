@@ -1,0 +1,21 @@
+.notFound_App {
+    width: 98%;
+    height: 790px;
+    background-color: white;
+    text-align: center;
+}
+
+.notFound_div {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+.notFound_icon {
+    font-size: 4em;
+}
+
+.notFound_text {
+    font-size: 1.5em;
+    color: #999;
+}

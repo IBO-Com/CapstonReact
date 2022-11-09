@@ -5,9 +5,6 @@ import Findpw from "./login/findpw";
 import MainNav from "./mainNav";
 import Changepw from "./login/changepw";
 
-import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
-//import "jqwidgets-scripts/jqwidgets/styles/jqx.material-purple.css";
-
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import NotFound from "./NotFound";
 import * as Cookie from "./cookies/cookies";

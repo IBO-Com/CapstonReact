@@ -10,7 +10,8 @@ import OrganizeSetting from "./emp/OrganizeSetting";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
 import EmpSelect from "./emp/EmpSelect";
-import "./css/mainNav.css"; 
+import "./css/mainNav.css";
+import CodeCommonSetting from "./common/CommonCodeSetting";
 
 import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
@@ -20,16 +21,19 @@ import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import PayslipCheck from "./payslipCheck/payslipCheck"; //급여명세서
 import SeverancePay from "./severancePay/severancepay"; //퇴직금명세서
 import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
+import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //급여지출현황
 import EmpBasicInfo from "./empBasicInfo";
 import PersonnelAppointment from "./PersonnelAppointment/PersonnelAppointment";
 import AttendanceStatus from "./AttendanceStatus/AttendanceStatus";
-import AttendanceRegister from "./attendance/attendanceRegister";
+import AttendanceRegister from "./Attendance/AttendanceRegister";
+import AttendanceRequest from "./Attendance/AttendanceRequest";
 import RetirementApproval from "./Retirement/RetirementApproval";
 import PersonalSalary from "./PersonalSalary/PersonalSalary"; //개인급여관리
 import SeverancePayCal from "./SeverancePayCal/SeverancePayCal";
 
 //근태관리 탭
 import VacationManage from "./vacationManage/vacationManage"; //휴가관리
+import VacationCheck from "./vacationCheck/vacationCheck"; //휴가현황
 import WorkManage from "./workManage/workManage"; //근무관리
 
 import Inbo from "./img/Group 23.png";
@@ -63,6 +67,9 @@ const App = () => {
         <UserHeader />
 
         <Routes>
+          {/* 공통 코드정보*/}
+          <Route path="/setCodeCommon" element={<CodeCommonSetting />}></Route>
+
           {/* 기본 페이지 */}
           <Route path="/" element={<HRMain />}></Route>
           <Route path="/empinfo" element={<Empinfo />}></Route>
@@ -84,10 +91,16 @@ const App = () => {
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
 
+          {/* 근태 페이지 */}
           <Route
             path="/attendanceRegister"
             element={<AttendanceRegister />}
           ></Route>
+          <Route
+            path="/AttendanceRequest"
+            element={<AttendanceRequest />}
+          ></Route>
+
           {/* 인사명령(발령) 페이지 */}
           <Route
             path="/personnelappointment"
@@ -111,8 +124,17 @@ const App = () => {
           {/* 급여명세서조회 페이지 */}
           <Route path="payslipCheck" element={<PayslipCheck />}></Route>
 
+          {/* 급여지출현황 */}
+          <Route
+            path="salaryExpenditures"
+            element={<SalaryExpenditures />}
+          ></Route>
+
           {/* 휴가 관리 */}
           <Route path="vacationManage" element={<VacationManage />}></Route>
+
+          {/* 휴가 관리 */}
+          <Route path="vacationCheck" element={<VacationCheck />}></Route>
 
           {/* 근무 관리 */}
           <Route path="workManage" element={<WorkManage />}></Route>
@@ -124,6 +146,7 @@ const App = () => {
           ></Route>
           {/* 퇴직금 산정 */}
           <Route path="severancepaycal" element={<SeverancePayCal />}></Route>
+
           {/* 퇴직금명세서 */}
           <Route path="severancepay" element={<SeverancePay />}></Route>
 

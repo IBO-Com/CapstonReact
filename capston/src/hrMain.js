@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from "react";
 
 import "./css/hrMain.css";
-
+import axios from "axios";
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
 import User from "../src/img/user.png";
 import ApexCharts from "react-apexcharts";
-
-import axios from "axios";
-import qs from "qs";
 import * as Cookie from "./cookies/cookies";
+import qs from "qs";
 
 const App = () => {
   let maxAnnual = 15;
   const [annual, setAnnual] = useState(12.5); //연차 개수
-  const [picture, setPicture] = useState(null);
+  const [picture, setPicture] = useState("null");
 
   useEffect(() => {
-    let data = Cookie.getCookie("employeeInfo");
-    let userInfo = {};
-
+    let empInfo = Cookie.getCookie("empInfo");
     let postParam = qs.stringify({
-      sabunOrName: data["id"],
+      id: empInfo["id"],
     });
 
     axios
       .post("http://43.200.115.198:8080/getpicture.jsp", postParam)
       .then((response) => {
-        console.log(response);
-        setPicture(response.data.ITEMS[0].picture);
+        sessionStorage.setItem("picture", response.data.ITEMS[0].picture);
+        setPicture(window.sessionStorage.getItem("picture"));
       });
   }, []);
 
@@ -122,7 +118,7 @@ const App = () => {
             <h4>사용자 정보</h4>
             <div className="hrMain_userInfo">
               <div className="hrMain_userImg">
-                {picture === null ? (
+                {picture === "null" ? (
                   <img className="empimg" src={User} alt="이미지" />
                 ) : (
                   <img className="empimg" src={picture} alt={"사진"} />

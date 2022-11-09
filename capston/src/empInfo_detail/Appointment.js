@@ -1,11 +1,36 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
+import axios from "axios";
+import qs from "qs";
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import "../css/empinfo/Appointment.css";
 const Appointment = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [tableList, setTableList] = useState("*");
+  const [appointment, setAppointment] = useState([]);
+
   const handleTableList = (event) => {
     setTableList(event.target.value);
   };
+  useEffect(() => {
+    let loginInfo = cookies["loginInfo"];
+
+    let postParam = {
+      sabun: loginInfo.id  
+    }
+
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getAppointment.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS;
+      setAppointment(data);
+    }).catch((Error) => {
+      console.log(Error);
+    })
+    
+
+  }, []);
+
   return (
     <div className="Appointment_main">
       <div className="Appointment_header">
@@ -38,181 +63,23 @@ const Appointment = () => {
                     <td>발령일자</td>
                     <td>발령소속</td>
                     <td>직책</td>
-                    <td>근무지</td>
-                    <td>재직상태</td>
-                    <td>사원구분</td>
-                    <td>급여유형</td>
-                    <td>파견/겸직소속</td>
-                    <td>퇴직사유</td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr> <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr> <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr><tr>
-                    <td>1</td>
-                    <td>부서이동</td>
-                    <td>2018-01-01</td>
-                    <td>기술연구소</td>
-                    <td>상무보</td>
-                    <td>판교</td>
-                    <td>재직</td>
-                    <td>임원</td>
-                    <td>연봉제</td>
-                    <td>TEST-3777</td>
-                    <td></td>
-                </tr>
+              {
+                appointment.map((item, index) => {
+                  return (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{item.app_state == "1" ? "부서이동" : "승진"}</td>
+                      <td>{item.app_date.slice(0, 4) + "년 " + item.app_date.slice(4, 6) + "월 " + item.app_date.slice(6, 8) + "일"}</td>
+                      <td>{item.deptKR}</td>
+                      <td>{item.rankKR}</td>
+                  </tr>
+                  )
+                })
+              }
+                
             </tbody>
         </table>
       </div>

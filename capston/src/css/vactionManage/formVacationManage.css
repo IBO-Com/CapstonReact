@@ -1,0 +1,43 @@
+.formProofofeFirstZu td:nth-child(odd) {
+    background: #EBEFF2;
+}
+
+.formProofofeFirstZu {
+    color: red;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+}
+
+.formProofofempMain .footer_vm_form{
+    margin-top: 130px;
+    text-align: center;
+    color:#515966;
+    margin-bottom: 20px;
+}
+
+
+.formProofofempMain .footer_vm_form P:not(:last-of-type){
+    margin-bottom: 20px;
+}
+
+.formVmTable{
+    width: 60%;
+    border: 1px solid #D9D9D9;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.formVmTable tr td:nth-child(even) {
+    padding: 15px 10px;   
+    font-size: 12px;
+    border: 1px solid #D9D9D9;
+    width: 80px;
+}
+
+.formVmTable tr td:nth-child(odd) {
+    padding: 15px 10px;   
+    font-size: 12px;
+    border: 1px solid #D9D9D9;
+    width: 20px;
+    background-color: #EBEFF2;
+}

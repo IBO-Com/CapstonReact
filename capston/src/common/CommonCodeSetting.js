@@ -13,9 +13,9 @@ function CommonCodeSetting() {
     onClickRetrieveButton();
   }, []);
 
-  //const urlRetrieve = "http://localhost:8080/setcommoncode.jsp";
+  //const urlRetrieve = "http://localhost:8080/getcommoncode.jsp";
   //const urlSave = "http://localhost:8080/saveorganize.jsp";
-  const urlRetrieve = "http://43.200.115.198:8080/setcommoncode.jsp";
+  const urlRetrieve = "http://43.200.115.198:8080/getcommoncode.jsp";
   const urlSave = "http://43.200.115.198:8080/saveorganize.jsp";
 
   const sourceMaster = {

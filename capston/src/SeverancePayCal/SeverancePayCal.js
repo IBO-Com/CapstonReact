@@ -121,7 +121,7 @@ const App = () => {
       </div>
       <div className="SeverancePayCal_contnet">
         <div className="SeverancePayCal_empInfo">
-          <span>사원정보</span>
+          <span>퇴직 사원 정보</span>
           <table className="SeverancePayCal_empTable">
             <thead>
               <tr>
@@ -146,98 +146,69 @@ const App = () => {
         <div className="SeverancePayCal_calInfo">
           <div className="SeverancePayCal_date">
             <div className="SeverancePayCal_btns">
-              <button className="SeverancePayCal_btn1">급상여가져오기</button>
-              <button className="SeverancePaycal_btn2">재계산</button>
-              <button className="SeverancePaycal_btn3">인쇄</button>
-              <button className="SeverancePaycal_btn4">저장</button>
+              <button className="SeverancePaycal_saveBtn">저장</button>
             </div>
-            <table>
+            <table className="SeverancePaycal_FirstTable">
               <tr>
                 <td className="SeverancePaycal_item">입사일</td>
                 <td></td>
+                <td className="SeverancePaycal_item">근속년수</td>
+                <td></td>
+              </tr>
+              <tr>
                 <td className="SeverancePaycal_item">퇴직일</td>
                 <td></td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
                 <td></td>
-                <td className="SeverancePaycal_item">근속일수</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td className="SeverancePaycal_item">퇴직기준일</td>
-                <td colSpan={3}></td>
-                <td className="SeverancePaycal_item">
-                  퇴직소득세 <br></br> 근속기간
-                </td>
-                <td colSpan={3}></td>
               </tr>
             </table>
+
             <span>! 근로기준법 일할계산 적용합니다.</span>
+
+            <div>
+              <span>&nbsp;</span>
+            </div>
           </div>
           <div className="SeverancePayCal_total">
-            <span>퇴직전 3개월 임금총액 계산내역</span>
-            <table>
+            <span>퇴직전 3개월 임금 내역</span>
+            <table className="SeverancePayCal_moneyListTable">
               <thead>
                 <tr>
-                  <td>퇴직금 근속기간</td>
-                  <td>퇴직금 일수</td>
-                  <td>기본급</td>
-                  <td>기타수당</td>
+                  <td>근속기간</td>
+                  <td>일수</td>
+                  <td>실수령액</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="SeverancePayCal_moneyList">
                 <tr>
+                  <td>월</td>
                   <td></td>
-                  <td>일</td>
-                  <td>원</td>
-                  <td>원</td>
+                  <td></td>
                 </tr>
                 <tr>
+                  <td>월</td>
                   <td></td>
-                  <td>일</td>
-                  <td>원</td>
-                  <td>원</td>
+                  <td></td>
                 </tr>
                 <tr>
+                  <td>월</td>
                   <td></td>
-                  <td>일</td>
-                  <td>원</td>
-                  <td>원</td>
-                </tr>
-                <tr>
                   <td></td>
-                  <td>일</td>
-                  <td>원</td>
-                  <td>원</td>
                 </tr>
                 <tr>
                   <td>합계</td>
                   <td>일</td>
                   <td>원</td>
-                  <td>원</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="SeverancePayCal_bonus">
-            <div className="SeverancePayCal_bonusHeader">
-              <span>퇴직간 1년간 상여내역</span>
-              <button className="SeverancePayCal_bonusBtn">
-                내역 상세보기
-              </button>
-            </div>
-
-            <table>
-              <tr>
-                <td className="SeverancePaycal_item">연차수당</td>
-                <td></td>
-                <td className="SeverancePaycal_item">상여금</td>
-                <td></td>
-              </tr>
-            </table>
+          <div>
+            <span>&nbsp;</span>
           </div>
           <div className="SeverancePayCal_calculator">
             <span>퇴직금 계산</span>
-            <table>
+            <table className="SeverancePaycal_SecondTable">
               <tr>
                 <td className="SeverancePaycal_item">일평균임금</td>
                 <td></td>
@@ -247,8 +218,12 @@ const App = () => {
               <tr>
                 <td className="SeverancePaycal_item">퇴직소득세</td>
                 <td></td>
-                <td className="SeverancePaycal_item">퇴직금</td>
+                <td className="SeverancePaycal_item">마지막 달 급여</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td className="SeverancePaycal_item">퇴직총액</td>
+                <td colSpan={3}>여기에는 (마지막 달 급여 * 근속년수) 값이 들어가용</td>
               </tr>
             </table>
           </div>
