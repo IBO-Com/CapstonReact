@@ -91,7 +91,10 @@ const AppointmentModal = ({ setOpenModal }) => {
         postParm2 = qs.stringify(postParm2);
 
         axios
-          .post("http://43.200.115.198:8080/appointmentregister.jsp", postParm2)
+          .post(
+            "http://localhost:8080/CapstonProject/appointmentregister.jsp",
+            postParm2
+          )
           .then((response) => {
             console.log(response);
           })

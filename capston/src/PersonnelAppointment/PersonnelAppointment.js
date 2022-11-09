@@ -20,6 +20,15 @@ const App = () => {
   const [appointmentData, setAppointmentData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
+  const deptObj = {
+    "01": "경영지원부",
+    "02": "경영관리부",
+    "03": "침해대응부",
+    "04": "관제센터",
+    "05": "보안연구부",
+    "06": "보안취약점연구부",
+  };
+
   let leftIndex = 1;
   let rightIndex = 1;
 
@@ -202,19 +211,7 @@ const App = () => {
                             : ""}
                         </td>
                         <td style={{ minWidth: "20px" }}>
-                          {item.dept === "01"
-                            ? "경영지원부"
-                            : " " || item.dept === "02"
-                            ? "경영관리부"
-                            : " " || item.dept === "03"
-                            ? "침해대응부"
-                            : " " || item.dept === "04"
-                            ? "관제센터"
-                            : " " || item.dept === "05"
-                            ? "보안연구부"
-                            : " " || item.dept === "06"
-                            ? "보안취약점연구부"
-                            : " "}
+                          {deptObj[item.dept]}
                         </td>
                         <td style={{ minWidth: "20px" }}>
                           {item.team === "101"
