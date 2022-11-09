@@ -10,7 +10,7 @@ import OrganizeSetting from "./emp/OrganizeSetting";
 import NotFound from "./NotFound";
 import Nav from "./nav/nav";
 import EmpSelect from "./emp/EmpSelect";
-import "./css/mainNav.css";
+import "./css/mainNav.css"; 
 
 import UserHeader from "./userHeader";
 import HRorganization from "./HRorganization/HRorganization";
