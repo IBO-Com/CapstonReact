@@ -26,7 +26,7 @@ function RequestBT() {
     setDateEnd(date.target.value);
   };
 
-  const urlSave = "http://43.200.115.198:8080/attrequest.jsp";
+  const urlSave = "http://43.200.115.198:8080/attrequestBT.jsp";
   //const urlSave = "http://localhost:8080/attrequestBT.jsp";
 
   const clickSaveButton = () => {
