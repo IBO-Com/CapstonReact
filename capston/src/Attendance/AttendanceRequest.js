@@ -4,6 +4,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import RequestOW from "./RequestOW";
+import RequestBT from "./RequestBT";
+import RequestHW from "./RequestHW";
+import RequestRW from "./RequestRW";
 
 function AttendanceRequest() {
   const [radioValue, setRadioValue] = React.useState("OW");
@@ -25,7 +28,7 @@ function AttendanceRequest() {
           marginLeft: "60px",
         }}
       >
-        <p>근태/근무신청 구분</p>
+        <p>근태/근무신청</p>
       </div>
 
       <hr className="card_lineBar" align="left" />
@@ -52,6 +55,9 @@ function AttendanceRequest() {
         </FormControl>
       </div>
       <div>{radioValue === "OW" ? <RequestOW /> : ""}</div>
+      <div>{radioValue === "BT" ? <RequestBT /> : ""}</div>
+      <div>{radioValue === "HW" ? <RequestHW /> : ""}</div>
+      <div>{radioValue === "RW" ? <RequestRW /> : ""}</div>
     </div>
   );
 }

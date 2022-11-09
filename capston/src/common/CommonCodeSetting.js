@@ -197,49 +197,10 @@ function CommonCodeSetting() {
               backgroundColor: "#E5A360",
               color: "#FFFFFF",
             }}
-            onClick={() => onClickAddButton()}
-            variant="contained"
-          >
-            추가
-          </Button>
-          <Button
-            style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
-            }}
-            onClick={() => onClickDeleteButton()}
-            variant="contained"
-          >
-            삭제
-          </Button>
-          <Button
-            style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
-            }}
             onClick={() => onClickRetrieveButton()}
             variant="contained"
           >
             조회
-          </Button>
-          <Button
-            style={{
-              width: "3.5vw",
-              height: "3.5vh",
-              marginRight: "2vw",
-              backgroundColor: "#E5A360",
-              color: "#FFFFFF",
-            }}
-            onClick={() => onClickSaveButton()}
-            variant="contained"
-          >
-            저장
           </Button>
         </div>
         <hr className="empFirstLine" align="left" />
