@@ -125,7 +125,7 @@ const nav_admin = {
     ],
   },
   급여관리: {
-    menu: ["개인급여관리", "월급여조회", "급여명세서조회", "급여지출현황"],
+    menu: ["개인급여관리", "월급여조회", "급여명세서", "급여지출현황"],
     link: [
       "/mainNav/personalsalary",
       "/mainNav/monthlySalaryCheck",

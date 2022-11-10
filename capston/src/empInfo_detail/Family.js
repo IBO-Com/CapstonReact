@@ -164,10 +164,10 @@ const App = () => {
                     </td>
                     <td style={{width:"200px"}}>
                     <select  className="Family_select" defaultValue={item.relation}>
-                      <option key="banana" value="0">부</option>
-                      <option key="apple" value="1">모</option>
-                      <option key="orange" value="2">배우자</option>
-                      <option key="orange" value="3">자녀</option>
+                      <option key="bu" value="0">부</option>
+                      <option key="mo" value="1">모</option>
+                      <option key="be" value="2">배우자</option>
+                      <option key="ja" value="3">자녀</option>
                     </select>
                     </td>
                     <td style={{width:"100px"}}><input className="Family_input" Value={item.name}></input></td>
