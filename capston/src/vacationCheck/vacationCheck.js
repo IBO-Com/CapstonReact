@@ -50,7 +50,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:8080/CapstonProject/vacationCheck.jsp")
+      .post("http://43.200.115.198:8080/vacationCheck.jsp")
       .then((res) => {
         setVacationData(res.data.ITEMS);
       })
