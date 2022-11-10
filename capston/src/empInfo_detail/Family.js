@@ -116,7 +116,7 @@ const App = () => {
     postParam = qs.stringify(postParam);
 
     
-    axios.post("http://localhost:8080/CapstonProject/updateFamily.jsp", postParam).then((res) => {
+    axios.post("http://43.200.115.198:8080/updateFamily.jsp", postParam).then((res) => {
       alert("저장이 완료되었습니다.");
     }).catch((Error) => {
       alert("오류가 발생했습니다.");
