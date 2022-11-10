@@ -220,7 +220,7 @@ const App = ({ componentRef, sabun }) => {
                           <td>{item.name}</td>
                           <td>{
                             new Date().getFullYear() - 2000 < parseInt(item.identity.slice(0, 2)) ? "19" : "20" +
-                              item.identity.slice(0, 2) + "년 " + item.identity.slice(2, 4) + "월 " + item.identity.slice(4, 6) + "일"
+                              item.identity.slice(0, 2) + "년 " + item.identity.slice(4, 6) + "월 " + item.identity.slice(6, 8) + "일"
                           }</td>
                           <td>{item.cohabitation == "0" ? "별거" : "동거"}</td>
                         </tr>
