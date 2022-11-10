@@ -218,10 +218,7 @@ const App = ({ componentRef, sabun }) => {
                         <tr>
                           <td>{relation[item.relation]}</td>
                           <td>{item.name}</td>
-                          <td>{
-                            new Date().getFullYear() - 2000 < parseInt(item.identity.slice(0, 2)) ? "19" : "20" +
-                              item.identity.slice(0, 2) + "년 " + item.identity.slice(4, 6) + "월 " + item.identity.slice(6, 8) + "일"
-                          }</td>
+                          <td>{YMDFormatter(item.identity)}</td>
                           <td>{item.cohabitation == "0" ? "별거" : "동거"}</td>
                         </tr>
                       )
