@@ -67,6 +67,11 @@ body {
 	font-size: 13px;
 }
 
+.remembtn {
+	width: 20px;
+	height: 20px;
+}
+
 #userid {
 	text-indent: 20px;
 	color: #537AAA;
@@ -98,7 +103,7 @@ body {
 	font-size: 17px;
 	line-height: 23px;
 	color: white;
-	width: 120px;
+	width: 100px;
 	height: 35px;
 	background: #537AAA;
 	border-color: #537AAA;

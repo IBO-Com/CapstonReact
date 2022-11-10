@@ -96,7 +96,7 @@ const App = ({ isLogin, setIsLogin }) => {
           </div>
           <div>
             <span className="rememid">
-              <input type="checkbox" /> 아이디 저장
+              <input type="checkbox" className="remembtn"/> 아이디 저장
             </span>
           </div>
           <br />
