@@ -51,7 +51,7 @@ const App = () => {
 
   const removeBtnClick = () => { //삭제버튼
     let tempTable = [...license];
-    if(radioBtn == -1) { //라디오 버튼이 선택되지 않았을때
+    if(radioBtn == -1 || (tempTable.length-1) < radioBtn) { //라디오 버튼이 선택되지 않았을때
       alert("삭제할 데이터가 선택되지 않았습니다.");
       return;
     }
