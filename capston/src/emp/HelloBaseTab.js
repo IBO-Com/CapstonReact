@@ -162,7 +162,7 @@ const HelloBaseTab = () => {
           team: team.split("-")[0],
           rank: rank,
           dateComeIn: dateComeIn,
-          loginId: Cookie.getCookie("employeeInfo").id,
+          loginId: Cookie.getCookie("empInfo").id,
           img_base64: picture.img,
         });
 
