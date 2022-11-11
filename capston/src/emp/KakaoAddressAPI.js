@@ -15,12 +15,11 @@ const App = ({setModal, address, postcode}) => {
         <Postcode
             style={{width: 320, height: 480}}
             jsOptions={{ animation: true }}
-            onSelected={data => {
-            console.log(data);
-            //address.current.value = data.address;
-           // postcode.current.value = data.zonecode;
-            //setModal(false);
-
+            onComplete = {(data) => {
+              console.log(data);
+              address.current.value = data.address;
+              postcode.current.value = data.zonecode;
+              setModal(false);
             }}
         />
         </div>

@@ -17,6 +17,7 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/user.png";
 import koLocale from "date-fns/locale/ko";
 import * as Cookie from "../cookies/cookies";
+import Postcode from 'react-daum-postcode';
 import { border } from "@mui/system";
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -192,7 +193,8 @@ const HelloBaseTab = () => {
         isModal ? (
           <KakaoAddressApi setModal={setModal} address={address} postcode={postcode}/>
         ) : (
-          <></>
+          <>
+          </>
         )
       } 
      
