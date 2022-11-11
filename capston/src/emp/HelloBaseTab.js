@@ -4,6 +4,8 @@ import qs from "qs";
 import styles from "../css/emp/empRegister/empRegister.module.css";
 import format from "date-fns/format";
 import axios from "axios";
+import Postcode from '@actbase/react-daum-postcode';
+
 import {
   Button,
   FormControl,
@@ -15,6 +17,7 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/user.png";
 import koLocale from "date-fns/locale/ko";
 import * as Cookie from "../cookies/cookies";
+import { border } from "@mui/system";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -48,6 +51,7 @@ const HelloBaseTab = () => {
   const [rank, setRank] = useState("1");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
   const [rankList, setRankList] = useState("");
+  const [isModal, setModal] = useState(false); //주소찾기 모달 
   const [picture, setPicture] = useState({
     img_base64: "",
     img: "",
@@ -431,6 +435,34 @@ const HelloBaseTab = () => {
                       inputRef={address}
                     />
                   </td>
+                  <td>
+                      <button 
+                        style={{width: "80px", height: "40px", color:"white", backgroundColor:"#1976d2", border:"0px", borderRadius: "5px"}}
+                        onClick={() => {
+                          setModal(true);
+                        }}
+                      >
+                      주소 찾기
+                      </button>
+                  </td>
+                </tr>
+                <tr>
+                {
+                  isModal ? (
+                    <Postcode
+                      style={{position:"absolute", left:"50%", top:"50%", marginLeft:"-160px", marginTop:"-160px", width: 320, height: 320, border:"1px solid black"}}
+                      jsOptions={{ animation: true }}
+                      onSelected={data => {
+                        console.log(data);
+                        address.current.value = data.address;
+                        setModal(false);
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+                
                 </tr>
               </tbody>
             </table>
