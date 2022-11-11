@@ -45,7 +45,7 @@ const App = () => {
   };
 
   const textNameHandle = (e) => {
-    setTextName(e.target.value);
+    setNameText(e.target.value);
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const App = () => {
     postParam = qs.stringify(query);
 
     axios
-      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
       .then((res) => {
         setVacationData(res.data.ITEMS);
       })
