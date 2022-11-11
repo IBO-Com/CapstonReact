@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import FormControl from "@mui/material/FormControl";
+import { Button, MenuItem, TextField } from "@mui/material";
 
 import testimg from "./img/user.png";
 import "./css/empinfo/empinfo.css";
@@ -21,6 +23,11 @@ const App = () => {
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
 
+  const [selectDepart, setSelectDepart] = useState("*");
+  const [textName, setTextName] = useState("");
+  const [peopleData, setPeopleData] = useState();
+  const [sabun, setSabun] = useState();
+
   const [dept, setDept] = useState("");
   const [team, setTeam] = useState("");
   const [rank, setRank] = useState("");
@@ -30,6 +37,47 @@ const App = () => {
   );
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
+
+  const sendSubmit = () => {
+    console.log("send submit");
+
+    /* 쿼리 문 작성 */
+    let postParam = {};
+    let query = {};
+
+    if (textName.trim() == "") {
+      delete query["sabunOrName"];
+    } else {
+      query["sabunOrName"] = textName;
+    }
+    if (selectDepart == "*") {
+      delete query["dept"];
+    } else {
+      query["dept"] = selectDepart;
+    }
+
+    postParam = qs.stringify(query);
+
+    //console.log(query);
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((res) => {
+        setPeopleData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+  const handleSelectDepart = (event) => {
+    setSelectDepart(event.target.value);
+  };
+
+  const textNameHandle = (e) => {
+    setTextName(e.target.value);
+  };
+
 
   useEffect(() => {
     let data = Cookie.getCookie("loginInfo");
@@ -86,6 +134,29 @@ const App = () => {
 
   return (
     <div className="empInfo">
+      <div className="card_dateBox">
+        <span>사원 조회 &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <FormControl>
+          <TextField
+            id="outlined-card"
+            label="사번/성명"
+            variant="outlined"
+            size="small"
+            onChange={textNameHandle}
+          />
+        </FormControl>
+        <button
+          className="card_search_btn"
+          onClick={() => {
+            sendSubmit();
+          }}
+        >
+          검색
+        </button>
+      </div>
+
+      <hr className="empSearchBar"></hr>
+
       <div className="plzEmp">
         <div>
           <div className="empWrapimg">
@@ -134,20 +205,20 @@ const App = () => {
                 <td>
                   {userData["identity"]
                     ? defaultYear +
-                      userData["identity"].slice(0, 2) +
-                      "-" +
-                      userData["identity"].slice(2, 4) +
-                      "-" +
-                      userData["identity"].slice(4, 6)
+                    userData["identity"].slice(0, 2) +
+                    "-" +
+                    userData["identity"].slice(2, 4) +
+                    "-" +
+                    userData["identity"].slice(4, 6)
                     : "로딩중"}
                 </td>
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                      "-" +
-                      userData["start_date"].slice(4, 6) +
-                      "-" +
-                      userData["start_date"].slice(6, 8)
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td>
@@ -156,10 +227,10 @@ const App = () => {
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                      "-" +
-                      userData["start_date"].slice(4, 6) +
-                      "-" +
-                      userData["start_date"].slice(6, 8)
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td></td>
