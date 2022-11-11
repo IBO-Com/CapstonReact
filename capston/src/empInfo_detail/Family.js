@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import "../css/empinfo/Family.css";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
-import { Select } from 'antd';
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
