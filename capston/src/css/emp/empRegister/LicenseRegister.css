@@ -17,7 +17,7 @@
   color: #5a6163;
 }
 .LicenseRegister_removeBtn {
-  width: 50px;
+  width: 70px;
   height: 30px;
   margin-right: 20px;
   background-color: #e78854;
@@ -27,7 +27,7 @@
   outline: 0;
 }
 .LicenseRegister_addBtn {
-  width: 50px;
+  width: 70px;
   height: 30px;
   margin-right: 20px;
   background-color: #e78854;
@@ -37,7 +37,7 @@
   outline: 0;
 }
 .LicenseRegister_saveBtn {
-  width: 50px;
+  width: 70px;
   height: 30px;
   background-color: #e78854;
   color: #ffffff;

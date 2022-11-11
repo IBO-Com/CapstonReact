@@ -169,11 +169,11 @@ const App = () => {
         </div>
 
         <div className="nameAnddept">
-          <p className="empinfoName" style={{ fontSize: "20px" }}>
+          <p className="empinfoName">
             {userData["name"] ? userData["name"] : "로딩중"}
           </p>
 
-          <p className="empinfoDept" style={{ fontSize: "13px" }}>
+          <p className="empinfoDept">
             {center}
           </p>
         </div>
@@ -193,7 +193,7 @@ const App = () => {
                 <td>{dept ? dept : ""}</td>
                 <td>{rank ? rank : ""}</td>
               </tr>
-              <br></br>
+              <p></p>
               <tr>
                 <td>ㆍ생년월일</td>
                 <td>ㆍ입사일</td>
