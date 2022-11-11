@@ -42,7 +42,9 @@ const HelloBaseTab = () => {
   const identityNumberB = useRef();
   const email = useRef();
   const tel = useRef();
+  const address_detail = useRef();
   const address = useRef();
+  const postcode = useRef();
   const [gender, setGender] = useState(0);
   const [married, setMarried] = useState(0);
   const [center, setCenter] = useState("H-경영관리본부");
@@ -159,6 +161,8 @@ const HelloBaseTab = () => {
           email: email.current.value,
           tel: tel.current.value,
           address: address.current.value,
+          address_detail: address_detail.current.value,
+          postcode: postcode.current.value,
           gender: gender,
           married: married,
           center: center.split("-")[0],
@@ -425,14 +429,14 @@ const HelloBaseTab = () => {
                 </tr>
                 <tr>
                   <td className={styles.tdPaddingLeft}>
-                    <strong className={styles.redStar}>*</strong>주소
+                    <strong className={styles.redStar}>*</strong>우편번호
                   </td>
-                  <td colSpan={5}>
+                  <td colSpan={1}>
                     <TextField
                       required
                       InputProps={{ sx: { height: 40 } }}
                       fullWidth
-                      inputRef={address}
+                      inputRef={postcode}
                     />
                   </td>
                   <td>
@@ -445,7 +449,35 @@ const HelloBaseTab = () => {
                       주소 찾기
                       </button>
                   </td>
+
                 </tr>
+                <tr>
+                  <td className={styles.tdPaddingLeft}>
+                    <strong className={styles.redStar}>*</strong>도로명 주소
+                  </td>
+                  <td colSpan={3}>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      fullWidth
+                      inputRef={address}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className={styles.tdPaddingLeft}>
+                    <strong className={styles.redStar}>*</strong>상세 주소
+                  </td>
+                  <td colSpan={3}>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      fullWidth                  
+                      inputRef={address_detail}
+                      />
+                  </td>
+                </tr>
+
                 <tr>
                 {
                   isModal ? (
@@ -455,6 +487,8 @@ const HelloBaseTab = () => {
                       onSelected={data => {
                         console.log(data);
                         address.current.value = data.address;
+                        postcode.current.value = data.zonecode;
+
                         setModal(false);
                       }}
                     />
