@@ -7,6 +7,11 @@
   "resolved" "https://registry.npmjs.org/-/-/--0.0.1.tgz"
   "version" "0.0.1"
 
+"@actbase/react-daum-postcode@^1.0.4":
+  "integrity" "sha512-cTUnwfnKLM9LMh4dBPxbfGeCjpbJQcq/R6oW2aEJO20qz4i8cA7sPf0HkUyYqENfuGFU+vbsSJ8LJwNhTYoFLQ=="
+  "resolved" "https://registry.npmjs.org/@actbase/react-daum-postcode/-/react-daum-postcode-1.0.4.tgz"
+  "version" "1.0.4"
+
 "@adobe/css-tools@^4.0.1":
   "integrity" "sha512-+u76oB43nOHrF4DDWRLWDCtci7f3QJoEBigemIdIeTi1ODqjx6Tad9NCVnPRwewWlKkVab5PlK8DCtPTyX7S8g=="
   "resolved" "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.0.1.tgz"
