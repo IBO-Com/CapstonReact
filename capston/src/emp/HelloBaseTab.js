@@ -4,7 +4,7 @@ import qs from "qs";
 import styles from "../css/emp/empRegister/empRegister.module.css";
 import format from "date-fns/format";
 import axios from "axios";
-import Postcode from '@actbase/react-daum-postcode';
+import KakaoAddressApi from "./KakaoAddressAPI";
 
 import {
   Button,
@@ -188,6 +188,14 @@ const HelloBaseTab = () => {
 
   return (
     <div>
+      {
+        isModal ? (
+          <KakaoAddressApi setModal={setModal} address={address} postcode={postcode}/>
+        ) : (
+          <></>
+        )
+      } 
+     
       <Button
         style={{
           marginLeft: "92%",
@@ -440,14 +448,14 @@ const HelloBaseTab = () => {
                     />
                   </td>
                   <td>
-                      <button 
+                      <Button
                         style={{width: "80px", height: "40px", color:"white", backgroundColor:"#1976d2", border:"0px", borderRadius: "5px"}}
                         onClick={() => {
                           setModal(true);
                         }}
                       >
                       주소 찾기
-                      </button>
+                      </Button>
                   </td>
 
                 </tr>
@@ -476,27 +484,6 @@ const HelloBaseTab = () => {
                       inputRef={address_detail}
                       />
                   </td>
-                </tr>
-
-                <tr>
-                {
-                  isModal ? (
-                    <Postcode
-                      style={{position:"absolute", left:"50%", top:"50%", marginLeft:"-160px", marginTop:"-160px", width: 320, height: 320, border:"1px solid black"}}
-                      jsOptions={{ animation: true }}
-                      onSelected={data => {
-                        console.log(data);
-                        address.current.value = data.address;
-                        postcode.current.value = data.zonecode;
-
-                        setModal(false);
-                      }}
-                    />
-                  ) : (
-                    <></>
-                  )
-                }
-                
                 </tr>
               </tbody>
             </table>
