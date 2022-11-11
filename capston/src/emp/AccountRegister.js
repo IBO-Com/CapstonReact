@@ -30,7 +30,7 @@ const Account = () => {
     axios.post("http://43.200.115.198:8080/getBank.jsp", postParam).then((res) => {
       let data = res.data.ITEMS;
       setAccount(data);
-    }) // 지넌이 밥 먹어?
+    })
     .catch((Error) => {
         alert("계좌 오류!!");
     }); 
