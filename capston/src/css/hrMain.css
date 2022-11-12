@@ -5,22 +5,21 @@ body {
 }
 
 .hrMain {
-  overflow-x: scroll;
-  flex-grow: 1;
-  height: 100;
+  overflow: auto;
+  height: 790px;
   width: 98%;
-  background-color: white;
+  background-color:white;
   display: flex;
 }
 
 .hrMain_container {
   margin-left: 80px;
-  margin-top: 60px;
+  margin-top: 30px;
   padding-left: 50px;
   padding-right: 50px;
   width: 1000px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 }
 
 .hrMain_Flex {
@@ -100,7 +99,6 @@ body {
   height: 380px;
   border: 1px solid lightgray;
   border-radius: 5px;
-
 }
 
 .hrMain_workInfo ul {
@@ -109,9 +107,6 @@ body {
 
 .hrMain_workInfo progress {
   margin-left: 20px;
-}
-
-.hrMain_workInfo p {
 }
 
 .hrMain_workDate {
@@ -128,7 +123,6 @@ body {
   font-weight: bold;
 }
 
-
 .hrMain_workState {
   margin-left: 15px;
   border: 1px solid lightgray;
@@ -139,16 +133,12 @@ body {
   line-height: 28px;
   height: 30px;
   width: 50px;
-
 }
-.hrMain_table {
 
+.hrMain_table {
   width: 100%;
-
-}
-
-.hrMain_table {
   border-spacing: 0;
+  overflow-y: auto;
 }
 
 .hrMain_table thead {
@@ -164,6 +154,7 @@ body {
 .hrMain_table thead td{
   border-left: 1px solid lightgray;
   padding: 0px;
+  letter-spacing: 0.1em;
 }
 
 .hrMain_table thead td:nth-child(1){
@@ -176,7 +167,6 @@ body {
   text-align: center;
   line-height: 40px;
   color: black;
-  background-color: lightblue;
 }
 
 .hrMain_table tbody tr:nth-child(2n) {
@@ -190,12 +180,10 @@ body {
   border-bottom: 1px solid lightgray;
 }
 
-
 .hrMain_table tbody td {
   border-left: 1px solid lightgray;
   padding: 0px;
 }
-
 
 .hrMain_workInfo_work {
   display: flex;
@@ -230,7 +218,6 @@ body {
   text-align: center;
 }
 
-
 .hrMain_notice_container {
   width: 1332px;
   height: 200px;
@@ -242,3 +229,4 @@ body {
   border: 1px solid lightgray;
   border-radius: 5px;
 }
+
