@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Empbase = ({ userData, defaultYear }) => {
   const [startDate, setStartDate] = useState(new Date()); //입사일
-  const [groupStartDate, setGroupStartDate] = useState(new Date()); //그룹입사일
+  //const [groupStartDate, setGroupStartDate] = useState(new Date()); //그룹입사일
   const [birthDate, setBirthDate] = useState(new Date()); //생년월일
   const [foreign, setForeign] = useState("0"); //외국인 여부
   const [married, setMarried] = useState("0"); //결혼 여부
@@ -31,8 +31,13 @@ const Empbase = ({ userData, defaultYear }) => {
   const postcodeRef = useRef(); //우편번호
 
   const saveBtnHandler = () => {
-    //console.log(genderRef.current.value);
-    console.log(foreignRef.current);
+    let postParam = {
+      name: nameRef,
+      nameEng: nameEngRef,
+      birth: birthDate,
+      genter: genderRef
+    }
+    console.log(postParam);
   }
 
   useEffect(() => {
@@ -49,9 +54,13 @@ const Empbase = ({ userData, defaultYear }) => {
       let birthDay = userData["identity"].slice(4, 6);
       console.log(birthYear, birthMonth, birthDay);
       setBirthDate(new Date(birthYear, birthMonth, birthDay))
+      
+      let sd = userData["start_date"];
+      setStartDate(new Date(sd.slice(0, 4), parseInt(sd.slice(4, 6)) - 1, sd.slice(6, 8)));
       setForeign(userData["foreign"]);
+      setMarried(userData["married"]);
     } 
-  }, [])
+  }, [userData])
 
   return Object.keys(userData).length > 0 ? (
     <div className="baseInfo" style={{marginTop:"10px", marginLeft: "100px", marginRight: "10px", overflowX: "hidden",overflowY: "auto", height: "470px"}}>
@@ -95,7 +104,7 @@ const Empbase = ({ userData, defaultYear }) => {
           <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
             <div>그룹입사일</div>
             <div >
-              <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={groupStartDate} onChange={date => setGroupStartDate(date)} />
+              <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
             </div>
           </div>
 
@@ -116,14 +125,14 @@ const Empbase = ({ userData, defaultYear }) => {
         <div className="info_base_second info_box">
           <div className="info_margin">
             영문성명
-            <input className="empbase_input" Value={userData["eng_name"]}></input>
+            <input ref={nameEngRef} className="empbase_input" Value={userData["eng_name"]}></input>
           </div>
 
           <div className="info_margin" >
             주민등록번호
-            <input className="empbase_input" style={{width:"100px"}} Value={userData["identity"].slice(0, 6)}></input>
+            <input ref={identityLRef} className="empbase_input" style={{width:"100px"}} Value={userData["identity"].slice(0, 6)}></input>
             &nbsp;-&nbsp; 
-            <input className="empbase_input" style={{margin:"0px", width:"100px"}} Value={userData["identity"].slice(6, 13)}></input>
+            <input ref={identityRRef} className="empbase_input" style={{margin:"0px", width:"100px"}} Value={userData["identity"].slice(6, 13)}></input>
           </div>
           <div className="info_margin"  style={{display:"flex", flexDirection:"row"}}>
           <div >입사일</div>
@@ -134,13 +143,15 @@ const Empbase = ({ userData, defaultYear }) => {
 
           <div className="info_margin">
             결혼여부
-            <Checkbox onChange={(e) => {
+            <Checkbox 
+            checked={parseInt(married)}
+              onChange={(e) => {
               if(e.target.checked == true) {
-                //여기 해야함
+                setMarried("1");
               } else {
-                setForeign("0");
-              }}}
-              />
+                setMarried("0");
+            }}}></Checkbox>
+              
           </div>
         </div>
 
@@ -154,14 +165,14 @@ const Empbase = ({ userData, defaultYear }) => {
           </div>
           <div className="info_margin">
             재직상태
-            <select className="empbase_select" defaultValue={userData["retire_cls"]}>
+            <select ref={retireClsRef} className="empbase_select" defaultValue={userData["retire_cls"]}>
               <option value="0">재직</option>
               <option value="1">퇴직</option>
             </select>
           </div>
           <div className="info_margin">
             본부명
-            <input className="empbase_input" Value={userData["centerKR"]}></input>
+            <input ref={centerRef} className="empbase_input" Value={userData["centerKR"]}></input>
           </div>
         </div>
       </div>
@@ -171,25 +182,25 @@ const Empbase = ({ userData, defaultYear }) => {
         <div className="info_base_first info_box">
           <div className="info_margin">
             이메일
-            <input className="empbase_input" Value={userData["email"]}></input>
+            <input ref={emailRef} className="empbase_input" Value={userData["email"]}></input>
           </div>
         </div>
 
         <div className="info_base_second info_box">
           <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
             <div>휴대전화</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input style={{width:"30px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(0, 3)}></input> &nbsp;-&nbsp;
-            <input style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(3, 7)}></input>&nbsp;-&nbsp;
-            <input style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(7, 11)}></input>
+            <input ref={phone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(0, 3)}></input> &nbsp;-&nbsp;
+            <input ref={phone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(3, 7)}></input>&nbsp;-&nbsp;
+            <input ref={phone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(7, 11)}></input>
           </div>
         </div>
 
         <div className="info_base_third info_box">
         <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
             <div>사내번호</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input style={{width:"30px", margin:"0px"}} className="empbase_input" Value={"02"}></input> &nbsp;-&nbsp;
-            <input style={{width:"50px", margin:"0px"}} className="empbase_input" Value={"0" + userData["sabun"].slice(0, 3)}></input>&nbsp;-&nbsp;
-            <input style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["start_date"].slice(2, 4) + userData["sabun"].slice(8, 10)}></input>
+            <input ref={companyPhone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={"02"}></input> &nbsp;-&nbsp;
+            <input ref={companyPhone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={"0" + userData["sabun"].slice(0, 3)}></input>&nbsp;-&nbsp;
+            <input ref={companyPhone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["start_date"].slice(2, 4) + userData["sabun"].slice(8, 10)}></input>
           </div>
         </div>
       </div>
@@ -199,12 +210,12 @@ const Empbase = ({ userData, defaultYear }) => {
         <div className="info_base_first info_box address_box">
           <div className="info_margin">
             도로명 주소
-            <input style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address"]}></input>
+            <input ref={addressRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address"]}></input>
           </div>
 
           <div className="info_margin">
             상세주소 주소
-            <input style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address_detail"]}></input>
+            <input ref={addressDetailRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address_detail"]}></input>
           </div>
 
         </div>
@@ -212,7 +223,7 @@ const Empbase = ({ userData, defaultYear }) => {
         <div className="info_base_second info_box address_box2">
           <div className="info_margin">
             우편번호
-            <input className="empbase_input" Value={userData["postcode"]}></input>
+            <input ref={postcodeRef} className="empbase_input" Value={userData["postcode"]}></input>
           </div>
 
         </div>
