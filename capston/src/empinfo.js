@@ -100,11 +100,8 @@ const App = () => {
           setWorkMonth,
           setWorkDay
         );
-
-        if (
-          today.getFullYear() - 2000 <
-          parseInt(userInfo["identity"].slice(0, 2))
-        ) {
+        let identityBase = userInfo["identity"].slice(6, 7);
+        if (identityBase == "1" || identityBase == "2") {
           setDefaultYear("19");
         } else {
           setDefaultYear("20");
