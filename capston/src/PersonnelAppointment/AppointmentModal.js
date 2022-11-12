@@ -72,6 +72,7 @@ const AppointmentModal = ({ setOpenModal }) => {
         : dateString.getDate()();
     return year + "" + month + "" + day;
   };
+
   // 등록
   const formRef = useRef();
   const saveBtn = () => {
