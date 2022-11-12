@@ -72,13 +72,7 @@ const Empbase = ({ userData, defaultYear }) => {
           <div className="info_margin">
             본부명
             <span>
-              {userData["center"] == "H"
-                ? "경영관리본부"
-                : "" || userData["center"] == "C"
-                ? "사이버보안본부"
-                : "" || userData["center"] == "S"
-                ? "보안연구본부"
-                : ""}
+              {userData["centerKR"]}
             </span>
           </div>
         </div>

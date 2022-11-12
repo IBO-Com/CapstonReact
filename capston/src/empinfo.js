@@ -27,11 +27,7 @@ const App = () => {
   const [textName, setTextName] = useState("");
   const [peopleData, setPeopleData] = useState();
   const [sabun, setSabun] = useState();
-
-  const [dept, setDept] = useState("");
-  const [team, setTeam] = useState("");
-  const [rank, setRank] = useState("");
-  const [center, setCenter] = useState("");
+  
   const [picture, setPicture] = useState(
     window.sessionStorage.getItem("picture")
   );
@@ -114,17 +110,6 @@ const App = () => {
           setDefaultYear("20");
         }
         setUserData(response.data.ITEMS[0]);
-
-        GetCDTR.getCDTR(
-          userInfo["center"],
-          userInfo["dept"],
-          userInfo["team"],
-          userInfo["rank"],
-          setCenter,
-          setDept,
-          setTeam,
-          setRank
-        );
       });
   }, []);
 
@@ -148,10 +133,20 @@ const App = () => {
         <button
           className="card_search_btn"
           onClick={() => {
-            sendSubmit();
           }}
         >
           검색
+        </button>
+        
+        <button
+          style={{
+            marginLeft: "50%"
+          }}
+          className="card_search_btn"
+          onClick={() => {
+          }}
+        >
+          저장
         </button>
       </div>
 
@@ -174,7 +169,7 @@ const App = () => {
           </p>
 
           <p className="empinfoDept">
-            {center}
+          {userData["centerKR"] ? userData["centerKR"] : "로딩중"}
           </p>
         </div>
 
@@ -190,8 +185,8 @@ const App = () => {
               <tr>
                 <td>{userData["sabun"] ? userData["sabun"] : "로딩중"}</td>
                 <td>{userData["retire_cls"] == 0 ? "재직" : "퇴직"}</td>
-                <td>{dept ? dept : ""}</td>
-                <td>{rank ? rank : ""}</td>
+                <td>{userData["deptKR"] ? userData["deptKR"] : "로딩중"}</td>
+                <td>{userData["rankKR"] ? userData["rankKR"] : "로딩중"}</td>
               </tr>
               <p></p>
               <tr>
