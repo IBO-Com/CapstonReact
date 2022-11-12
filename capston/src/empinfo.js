@@ -137,17 +137,6 @@ const App = () => {
         >
           검색
         </button>
-        
-        <button
-          style={{
-            marginLeft: "50%"
-          }}
-          className="card_search_btn"
-          onClick={() => {
-          }}
-        >
-          저장
-        </button>
       </div>
 
       <hr className="empSearchBar"></hr>

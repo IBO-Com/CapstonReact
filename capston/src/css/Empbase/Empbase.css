@@ -49,3 +49,32 @@
 .baseInfo .info_base_div .info_box .info_margin > span{
     margin-left: 30px;
 }
+
+.empbase_input {
+    transition: 0.2s;
+    outline: none;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+    margin-left: 15px;
+    width: 160px;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 10px;
+}
+
+.empbase_input:focus {
+    transition: 0.5s;
+    border: 1px solid black;
+}
+
+.empbase_select {
+    transition: 0.2s;
+    outline: none;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+    margin-left: 15px;
+    width: 160px;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 10px;
+}
