@@ -63,6 +63,7 @@ body {
 
 .hrMain_userDetail li {
   list-style: none;
+  margin-bottom: 2px;
 }
 
 .hrMain_userName {
@@ -225,8 +226,13 @@ body {
 
 .hrMain_notice {
   width: 100%;
-  height: 130px;
+  height: 160px;
   border: 1px solid lightgray;
   border-radius: 5px;
+  overflow-y: auto;
 }
 
+.hrMain_notice p {
+  margin: 10px 0px 0px 5px;  
+  letter-spacing: 0.1em;
+}
