@@ -18,6 +18,14 @@ const App = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [vacationData, setVacationData] = useState([]);
+  const annualData = {
+    0: "연차",
+    "01": "오전반차",
+    "02": "오후반차",
+    "03": "경조휴가",
+    "04": "병결",
+    "05": "기타",
+  };
 
   function getFormatDate(date) {
     var year = date.getFullYear(); //yyyy
@@ -176,19 +184,7 @@ const App = () => {
                 {item.ann_state === "0" ? (
                   <div className="vacationBox">
                     <p className="vc_name">
-                      {item.vacation === "0"
-                        ? "연차"
-                        : "" || item.vacation === "1"
-                        ? "오전반차"
-                        : "" || item.vacation === "2"
-                        ? "오후반차"
-                        : "" || item.vacation === "3"
-                        ? "경조사휴가"
-                        : "" || item.vacation === "4"
-                        ? "병결"
-                        : "" || item.vacation === "5"
-                        ? "기타"
-                        : ""}
+                      {annualData[item.vacation]}
                       신청 - {item.name}
                     </p>{" "}
                     <p className="vc_date">
@@ -200,17 +196,7 @@ const App = () => {
                     </p>
                     <p className="vc_replace">
                       대체 업무자&nbsp; : &nbsp; {item.rep_name} &nbsp;
-                      {item.rep_rank === "1"
-                        ? "사원"
-                        : " " || item.rank === "2"
-                        ? "대리"
-                        : " " || item.rank === "3"
-                        ? "과장"
-                        : "" || item.rank === "4"
-                        ? "차장"
-                        : " " || item.rank === "5"
-                        ? "부장"
-                        : ""}
+                      {item.rep_rankKR}
                     </p>
                     <div className="vc_btnbox">
                       <button className="vc_approval_btn">승인</button>
@@ -234,15 +220,15 @@ const App = () => {
                     <p className="vc_name">
                       {item.vacation === "0"
                         ? "연차"
-                        : "" || item.vacation === "1"
+                        : "" || item.vacation === "01"
                         ? "오전반차"
-                        : "" || item.vacation === "2"
+                        : "" || item.vacation === "02"
                         ? "오후반차"
-                        : "" || item.vacation === "3"
+                        : "" || item.vacation === "03"
                         ? "경조사휴가"
-                        : "" || item.vacation === "4"
+                        : "" || item.vacation === "04"
                         ? "병결"
-                        : "" || item.vacation === "5"
+                        : "" || item.vacation === "05"
                         ? "기타"
                         : ""}
                       신청 - {item.name}
