@@ -137,7 +137,20 @@ form input {
   margin-bottom: 10px;
   width: 100px;
 }
-
+.vm_radioItem {
+  height: 13px;
+  width: 13px;
+  margin-bottom: 10px;
+}
+.vm_repName {
+  height: 30px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+.vm_emerTel {
+  height: 30px;
+  width: 150px;
+}
 .vm_bisang input {
   height: 30px;
   margin-bottom: 10px;

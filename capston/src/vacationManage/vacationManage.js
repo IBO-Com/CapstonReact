@@ -27,7 +27,7 @@ const App = () => {
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [textName, setTextName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(new Date());
   const [annualState, setAnnualState] = useState(); // 연차휴가 분류
   const [textReasone, setTextReason] = useState(""); // 사유
   const [repName, setRepName] = useState(""); // 대체 근무자명
@@ -82,7 +82,7 @@ const App = () => {
     postParam = qs.stringify(query);
 
     axios
-      .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
+      .post("http://43.200.115.198:8080/vacationcount.jsp", postParam)
       .then((res) => {
         setAnnualData(res.data.ITEMS[0]);
         let annual = res.data.ITEMS[0];
@@ -103,7 +103,9 @@ const App = () => {
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
+    console.log(startDate);
     setEndDate(end);
+    console.log(endDate);
   };
 
   // 사유
@@ -119,6 +121,7 @@ const App = () => {
 
   // 대체 업무자명
   const handleRepName = (e) => {
+    console.log(e.target.value);
     setRepName(e.target.value);
   };
 
@@ -130,31 +133,47 @@ const App = () => {
 
   // 비상연락망
   const handleEmerTel = (e) => {
+    console.log(e.target.value);
     setEmerTel(e.target.value);
   };
 
   // 입력(등록)
-  const saveSubmit = () => {
-    let postParam2 = {
-      id: annualData.id,
-      remain_annual: annualData.remain_annual,
-      ann_start_date: startDate,
-      use_annual: annualData.use_annual,
-      name: annualData.name,
-      rank: annualData.rank,
-      dept: annualData.dept,
-      ann_end_date: endDate,
-      vacation: annualState,
-      ann_reason: textReasone,
-      ann_stae: 0,
-      team: annualData.team,
-      rep_name: repName,
-      rep_rank: repRank,
-      emer_tel: emerTel,
-      emerRel: emerRel,
-    };
-    console.log(postParam2);
-    postParm2 = qs.stringify(postParm2);
+  const formRef = useRef();
+  const saveSubmit = (e) => {
+    e.preventDefault();
+    if (formRef.current.reportValidity()) {
+      if (window.confirm("신청하시겠습니까?")) {
+        let postParam2 = {
+          sabun: annualData.sabun,
+          remain_annual: annualData.remain_annual,
+          ann_start_date: startDate,
+          use_annual: annualData.use_annual,
+          name: annualData.name,
+          rank: annualData.rank,
+          dept: annualData.dept,
+          ann_end_date: endDate,
+          vacation: annualState,
+          ann_reason: textReasone,
+          ann_stae: 0,
+          team: annualData.team,
+          rep_name: repName,
+          rep_rank: repRank,
+          emer_tel: emerTel,
+          emer_rel: emerRel,
+        };
+        console.log(postParam2);
+        postParam2 = qs.stringify(postParam2);
+
+        axios
+          .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((Error) => {
+            console.log(Error);
+          });
+      }
+    }
   };
 
   return (
@@ -247,151 +266,162 @@ const App = () => {
                 </tr>
               </tbody>
             </table>
-            <p className="vm_class">연차/휴가 분류</p>
-            <input
-              type="radio"
-              value="0"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_yeon">연차</label>
-            <input
-              type="radio"
-              value="01"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_ban">오전반차</label>
-            <input
-              type="radio"
-              value="02"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_mon">오후반차</label>
-            <input
-              type="radio"
-              value="03"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_hu">경조휴가</label>
-            <input
-              type="radio"
-              value="04"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_sick">병가</label>
-            <input
-              type="radio"
-              value="05"
-              name="kind_name"
-              onChange={handleAnnualState}
-            ></input>{" "}
-            <label className="vm_other">기타</label>
-            <p>
-              <br></br>연차/휴가 일시
-            </p>
-            <DatePicker
-              selected={startDate}
-              onChange={onChange}
-              startDate={startDate}
-              endDate={endDate}
-              selectsRange
-              inline
-            />
-            <p>사유</p>
-            <textarea
-              placeholder="연차/휴가 사유를 적어주세요."
-              className="vm_reason"
-              name="reason"
-              rows={2}
-              cols={70}
-              onChange={handleTextReason}
-            ></textarea>
-            <p>
-              <br></br>대체 업무자
-            </p>{" "}
-            {/* 폼에 출력시 >> 이과학 대리 << 로 출력*/}
-            <form>
-              <label className="vm_relationship">
-                직책&nbsp; : &nbsp;&nbsp;
-              </label>
-              <select
-                name="relationship"
-                id="vm_select"
-                onChange={handleRepRank}
-              >
-                <option value="" disabled selected>
-                  &nbsp;-- 선택해주세요 --&nbsp;
-                </option>
-                <option value="01">사원</option>
-                <option value="02">대리</option>
-                <option value="03">과장</option>
-                <option value="04">차장</option>
-                <option value="05">부장</option>
-              </select>
+            <form ref={formRef}>
+              <p className="vm_class">연차/휴가 분류</p>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="0"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_yeon">연차</label>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="01"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_ban">오전반차</label>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="02"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_mon">오후반차</label>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="03"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_hu">경조휴가</label>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="04"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_sick">병가</label>
+              <input
+                className="vm_radioItem"
+                type="radio"
+                value="05"
+                name="kind_name"
+                onChange={handleAnnualState}
+              ></input>{" "}
+              <label className="vm_other">기타</label>
+              <p>
+                <br></br>연차/휴가 일시
+              </p>
+              <DatePicker
+                selected={startDate}
+                onChange={onChange}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+              />
+              <p>사유</p>
+              <textarea
+                placeholder="연차/휴가 사유를 적어주세요."
+                className="vm_reason"
+                name="reason"
+                rows={2}
+                cols={70}
+                onChange={handleTextReason}
+              ></textarea>
+              <p>
+                <br></br>대체 업무자
+              </p>{" "}
+              {/* 폼에 출력시 >> 이과학 대리 << 로 출력*/}
+              <form>
+                <label className="vm_relationship">
+                  직책&nbsp; : &nbsp;&nbsp;
+                </label>
+                <select
+                  name="relationship"
+                  id="vm_select"
+                  onChange={handleRepRank}
+                >
+                  <option value="" disabled selected>
+                    &nbsp;-- 선택해주세요 --&nbsp;
+                  </option>
+                  <option value="01">사원</option>
+                  <option value="02">대리</option>
+                  <option value="03">과장</option>
+                  <option value="04">차장</option>
+                  <option value="05">부장</option>
+                </select>
+                <br></br>
+                <label>
+                  이름&nbsp; : &nbsp;&nbsp;
+                  <input
+                    className="vm_repName"
+                    type="text"
+                    autocomplete="off"
+                    name="name"
+                    onChange={handleRepName}
+                  ></input>
+                </label>
+              </form>
+              <span className="vm_daesin">
+                대체 업무자는 같은 팀 직원만 가능합니다!
+              </span>
+              <p>
+                <br></br>비상연락망
+              </p>{" "}
+              {/* 폼에 출력시 >> 모 ) 010-0000-0000 << 로 출력*/}
+              <div className="vm_bisang">
+                <label className="vm_relationship">
+                  관계&nbsp; : &nbsp;&nbsp;
+                </label>
+                <select
+                  name="relationship"
+                  id="vm_select"
+                  onChange={handleEmerRel}
+                >
+                  <option value="" disabled selected>
+                    &nbsp;-- 선택해주세요 --&nbsp;
+                  </option>
+                  <option value="0">부</option>
+                  <option value="01">모</option>
+                  <option value="02">형제</option>
+                  <option value="03">자매</option>
+                  <option value="04">직장동료</option>
+                  <option value="05">친구</option>
+                </select>
+                <br></br>
+                <label>
+                  전화번호&nbsp; : &nbsp;&nbsp;
+                  <input
+                    className="vm_emerTel"
+                    type="text"
+                    name="cellPhone"
+                    autocomplete="off"
+                    id="cellPhone"
+                    maxlength="13"
+                    onChange={handleEmerTel}
+                  />
+                </label>
+                <br></br>
+              </div>
               <br></br>
-              <label>
-                이름&nbsp; : &nbsp;&nbsp;
-                <input
-                  type="text"
-                  autocomplete="off"
-                  name="name"
-                  onChange={handleRepName}
-                ></input>
-              </label>
+              <button
+                type={"button"}
+                className="vm_save_btn"
+                onClick={(e) => {
+                  saveSubmit(e);
+                }}
+              >
+                입력
+              </button>
             </form>
-            <span className="vm_daesin">
-              대체 업무자는 같은 팀 직원만 가능합니다!
-            </span>
-            <p>
-              <br></br>비상연락망
-            </p>{" "}
-            {/* 폼에 출력시 >> 모 ) 010-0000-0000 << 로 출력*/}
-            <div className="vm_bisang">
-              <label className="vm_relationship">
-                관계&nbsp; : &nbsp;&nbsp;
-              </label>
-              <select
-                name="relationship"
-                id="vm_select"
-                onChange={handleEmerRel}
-              >
-                <option value="" disabled selected>
-                  &nbsp;-- 선택해주세요 --&nbsp;
-                </option>
-                <option value="0">부</option>
-                <option value="01">모</option>
-                <option value="02">형제</option>
-                <option value="03">자매</option>
-                <option value="04">직장동료</option>
-                <option value="05">친구</option>
-              </select>
-              <br></br>
-              <label>
-                전화번호&nbsp; : &nbsp;&nbsp;
-                <input
-                  type="text"
-                  name="cellPhone"
-                  autocomplete="off"
-                  id="cellPhone"
-                  maxlength="13"
-                  onChange={handleEmerTel}
-                />
-              </label>
-              <br></br>
-            </div>
-            <br></br>
-            <button
-              className="vm_save_btn"
-              onClick={() => {
-                saveSubmit();
-              }}
-            >
-              입력
-            </button>
           </div>
 
           <div className="card_empCard">
