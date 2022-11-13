@@ -178,15 +178,15 @@ const App = () => {
                     <p className="vc_name">
                       {item.vacation === "0"
                         ? "연차"
-                        : "" || item.vacation === "1"
+                        : "" || item.vacation === "01"
                         ? "오전반차"
-                        : "" || item.vacation === "2"
+                        : "" || item.vacation === "02"
                         ? "오후반차"
-                        : "" || item.vacation === "3"
+                        : "" || item.vacation === "03"
                         ? "경조사휴가"
-                        : "" || item.vacation === "4"
+                        : "" || item.vacation === "04"
                         ? "병결"
-                        : "" || item.vacation === "5"
+                        : "" || item.vacation === "05"
                         ? "기타"
                         : ""}
                       신청 - {item.name}
@@ -234,15 +234,15 @@ const App = () => {
                     <p className="vc_name">
                       {item.vacation === "0"
                         ? "연차"
-                        : "" || item.vacation === "1"
+                        : "" || item.vacation === "01"
                         ? "오전반차"
-                        : "" || item.vacation === "2"
+                        : "" || item.vacation === "02"
                         ? "오후반차"
-                        : "" || item.vacation === "3"
+                        : "" || item.vacation === "03"
                         ? "경조사휴가"
-                        : "" || item.vacation === "4"
+                        : "" || item.vacation === "04"
                         ? "병결"
-                        : "" || item.vacation === "5"
+                        : "" || item.vacation === "05"
                         ? "기타"
                         : ""}
                       신청 - {item.name}

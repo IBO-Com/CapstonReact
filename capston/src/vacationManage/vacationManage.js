@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import qs from "qs";
 import ReactToPrint from "react-to-print";
+
 import FormVacationManage from "./formVacationManage";
 
 const App = () => {
@@ -22,9 +23,9 @@ const App = () => {
   const [annualData, setAnnualData] = useState([]);
   const [sabun, setSabun] = useState();
   const componentRef = useRef(null);
-  const [selectDep, setSelectDep] = useState("*");
+  // const [selectDep, setSelectDep] = useState("*");
   const [toogleState, setToggleState] = useState(1);
-  const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+  // const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [textName, setTextName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -35,19 +36,14 @@ const App = () => {
   const [emerRel, setEmerRel] = useState(); // 비상연락망 관계
   const [emerTel, setEmerTel] = useState(""); // 비상연락망
 
-  function getFormatDate(date) {
-    var year = date.getFullYear(); //yyyy
-    var month = 1 + date.getMonth(); //M
-    month = month >= 10 ? month : "0" + month; //month 두자리로 저장
-    return year + "-" + month;
-  }
+  const dateFormatString = (date) => {
+    // 20201010
 
-  const handleChange = (event) => {
-    setSelectDep(event.target.value);
-  };
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString().padStart(2, "0");
+    let day = date.getDate().toString().padStart(2, "0");
 
-  const handleStartDateChange = (date) => {
-    setRetrieveDate(getFormatDate(date));
+    return year + month + day;
   };
 
   // 부서 검색
@@ -99,15 +95,6 @@ const App = () => {
     setAnnualState(e.target.value);
   };
 
-  // 날짜 선택
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    console.log(startDate);
-    setEndDate(end);
-    console.log(endDate);
-  };
-
   // 사유
   const handleTextReason = (e) => {
     setTextReason(e.target.value);
@@ -146,15 +133,15 @@ const App = () => {
         let postParam2 = {
           sabun: annualData.sabun,
           remain_annual: annualData.remain_annual,
-          ann_start_date: startDate,
+          ann_start_date: dateFormatString(startDate),
           use_annual: annualData.use_annual,
           name: annualData.name,
           rank: annualData.rank,
           dept: annualData.dept,
-          ann_end_date: endDate,
+          ann_end_date: dateFormatString(endDate),
           vacation: annualState,
           ann_reason: textReasone,
-          ann_stae: 0,
+          ann_state: "0",
           team: annualData.team,
           rep_name: repName,
           rep_rank: repRank,
@@ -165,10 +152,11 @@ const App = () => {
         postParam2 = qs.stringify(postParam2);
 
         axios
-          .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
-          .then((response) => {
-            console.log(response);
-          })
+          .post(
+            "http://localhost:8080/CapstonProject/vacationregister.jsp",
+            postParam2
+          )
+          .then((response) => {})
           .catch((Error) => {
             console.log(Error);
           });
@@ -319,13 +307,27 @@ const App = () => {
               <p>
                 <br></br>연차/휴가 일시
               </p>
+              <span>시작일</span>
               <DatePicker
+                className="vm_date"
+                dateFormat="yyyy년 MM월 dd일"
                 selected={startDate}
-                onChange={onChange}
+                onChange={(date) => setStartDate(date)}
                 startDate={startDate}
                 endDate={endDate}
-                selectsRange
-                inline
+                minDate={new Date()}
+                selectsStart
+              />
+              <span>마지막일</span>
+              <DatePicker
+                className="vm_date"
+                dateFormat="yyyy년 MM월 dd일"
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                startDate={startDate}
+                endDate={endDate}
+                minDate={new Date()}
+                selectsEnd
               />
               <p>사유</p>
               <textarea
@@ -436,7 +438,7 @@ const App = () => {
                 <FormVacationManage
                   componentRef={componentRef}
                   sabun={sabun}
-                  retrieveDate={retrieveDate}
+                  //retrieveDate={retrieveDate}
                 />
               ) : (
                 ""

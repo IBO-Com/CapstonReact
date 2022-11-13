@@ -142,6 +142,12 @@ form input {
   width: 13px;
   margin-bottom: 10px;
 }
+
+.vm_date {
+  height: 30px;
+  width: 150px;
+  margin-bottom: 10px;
+}
 .vm_repName {
   height: 30px;
   width: 100px;
