@@ -14,7 +14,6 @@ import axios from "axios";
 import qs from "qs";
 import * as Cookie from "./cookies/cookies";
 import * as GetYearOfWork from "./modules/getYearOfWork";
-import * as GetCDTR from "./modules/getCDTR";
 
 const App = () => {
   const [today, setToday] = useState(new Date());
@@ -34,37 +33,7 @@ const App = () => {
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
 
-  const sendSubmit = () => {
-    console.log("send submit");
 
-    /* 쿼리 문 작성 */
-    let postParam = {};
-    let query = {};
-
-    if (textName.trim() == "") {
-      delete query["sabunOrName"];
-    } else {
-      query["sabunOrName"] = textName;
-    }
-    if (selectDepart == "*") {
-      delete query["dept"];
-    } else {
-      query["dept"] = selectDepart;
-    }
-
-    postParam = qs.stringify(query);
-
-    //console.log(query);
-
-    axios
-      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
-      .then((res) => {
-        setPeopleData(res.data.ITEMS);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-  };
 
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
@@ -74,6 +43,41 @@ const App = () => {
     setTextName(e.target.value);
   };
 
+  const searchBtnHandler = () => {
+    let data = textName;
+    let userInfo = {};
+
+    let postParam = qs.stringify({
+      sabunOrName: data,
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((response) => {
+        userInfo = response.data.ITEMS[0];
+      
+        let identityBase = userInfo["identity"].slice(6, 7);
+        if (identityBase == "1" || identityBase == "2") {
+          setDefaultYear("19");
+        } else {
+          setDefaultYear("20");
+        }
+        setUserData(userInfo);
+
+        let postParam2 = qs.stringify({
+          id: userInfo["sabun"],
+        });
+      
+        axios
+          .post("http://43.200.115.198:8080/getpicture.jsp", postParam2)
+          .then((response) => {
+            setPicture(response.data.ITEMS[0].picture);
+          });
+      });
+
+    
+  
+  }
 
   useEffect(() => {
     let data = Cookie.getCookie("loginInfo");
@@ -87,19 +91,7 @@ const App = () => {
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
-
-        let startDate = new Date(
-          userInfo["start_date"].slice(0, 4),
-          parseInt(userInfo["start_date"].slice(4, 6)) - 1, //Date 연산으로 인한 -1을 해주어야 함
-          userInfo["start_date"].slice(6, 8)
-        );
-        GetYearOfWork.getYearOfWork(
-          startDate,
-          today,
-          setWorkYear,
-          setWorkMonth,
-          setWorkDay
-        );
+      
         let identityBase = userInfo["identity"].slice(6, 7);
         if (identityBase == "1" || identityBase == "2") {
           setDefaultYear("19");
@@ -108,6 +100,7 @@ const App = () => {
         }
         setUserData(response.data.ITEMS[0]);
       });
+
   }, []);
 
   const toggleTab = (index) => {
@@ -130,6 +123,7 @@ const App = () => {
         <button
           className="card_search_btn"
           onClick={() => {
+            searchBtnHandler();
           }}
         >
           검색
