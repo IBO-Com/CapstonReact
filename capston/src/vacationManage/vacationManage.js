@@ -152,11 +152,10 @@ const App = () => {
         postParam2 = qs.stringify(postParam2);
 
         axios
-          .post(
-            "http://localhost:8080/CapstonProject/vacationregister.jsp",
-            postParam2
-          )
-          .then((response) => {})
+          .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
+          .then((response) => {
+            console.log(response);
+          })
           .catch((Error) => {
             console.log(Error);
           });

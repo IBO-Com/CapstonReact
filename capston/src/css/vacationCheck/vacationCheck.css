@@ -12,9 +12,8 @@
 
 .vacationWrap {
   display: flex;
-  flex-direction: row;
-  overflow-y: auto;
   flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .vc_compltion {
