@@ -269,7 +269,7 @@ const App = () => {
         <hr className="empFirstLine" align="left"></hr>
         <div>
           {toogleState === 1 ? (
-            <Empbase userData={userData} defaultYear={defaultYear} />
+            <Empbase userData={userData} setUserData={setUserData} defaultYear={defaultYear} />
           ) : (
             ""
           )}

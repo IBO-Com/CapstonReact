@@ -3,8 +3,10 @@ import "../css/Empbase/Empbase.css";
 import { Checkbox } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import qs from "qs";
 
-const Empbase = ({ userData, defaultYear }) => {
+const Empbase = ({ userData, setUserData, defaultYear }) => {
   const [startDate, setStartDate] = useState(new Date()); //입사일
   //const [groupStartDate, setGroupStartDate] = useState(new Date()); //그룹입사일
   const [birthDate, setBirthDate] = useState(new Date()); //생년월일
@@ -18,7 +20,6 @@ const Empbase = ({ userData, defaultYear }) => {
   const identityRRef = useRef(); //주민번호 오른쪽
   const retireClsRef = useRef(); //재직상태
   const centerRef = useRef(); //본부명
-  const foreignRef = useRef(); //외국인여부
   const emailRef = useRef(); //이메일
   const phone1Ref = useRef(); //휴대전화 1
   const phone2Ref = useRef(); //휴대전화 2
@@ -30,14 +31,58 @@ const Empbase = ({ userData, defaultYear }) => {
   const addressDetailRef = useRef(); //상세주소
   const postcodeRef = useRef(); //우편번호
 
+  const dateFormatString = (date) => {
+    
+    let year = date.getFullYear();
+    let month = (date.getMonth() - 1).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+
+    return year + month + day;
+
+  }
+
   const saveBtnHandler = () => {
     let postParam = {
-      name: nameRef,
-      nameEng: nameEngRef,
-      birth: birthDate,
-      genter: genderRef
+      sabun: userData["sabun"],
+      name: nameRef.current.value,
+      eng_name: nameEngRef.current.value,
+      birth: dateFormatString(birthDate),
+      gender: genderRef.current.value,
+      identity: identityLRef.current.value + identityRRef.current.value,
+      retire_cls: retireClsRef.current.value,
+      start_date: dateFormatString(startDate),
+      foreign: foreign,
+      married: married,
+      email: emailRef.current.value,
+      phone: phone1Ref.current.value + phone2Ref.current.value + phone3Ref.current.value,
+      companyPhone: companyPhone1Ref.current.value + companyPhone2Ref.current.value + companyPhone3Ref.current.value,
+      address: addressRef.current.value,
+      address_detail: addressDetailRef.current.value,
+      postcode: postcodeRef.current.value
     }
-    console.log(postParam);
+    console.log("postParam : ", postParam);
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/updateEmployee.jsp", postParam).then((res) => {
+      if(res.data == "error\r\n") {
+        alert("오류가 발생했습니다.");
+      } else {
+        alert("저장이 완료되었습니다.");
+
+        //수정 후 데이터 리로드
+        axios
+        .post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+          sabun: userData["sabun"]
+        }))
+        .then((res2) => {
+          setUserData(res2.data.ITEMS[0]);
+          console.log("reload Data : ", res2.data.ITEMS[0]);
+        }).catch((Error) => {
+          console.log("Error : ", Error);
+        })
+      }
+    }).catch((Error) => {
+      console.log("Error : ", Error);
+    })
   }
 
   useEffect(() => {
@@ -172,7 +217,7 @@ const Empbase = ({ userData, defaultYear }) => {
           </div>
           <div className="info_margin">
             본부명
-            <input ref={centerRef} className="empbase_input" Value={userData["centerKR"]}></input>
+            <input disabled ref={centerRef} className="empbase_input" Value={userData["centerKR"]}></input>
           </div>
         </div>
       </div>
