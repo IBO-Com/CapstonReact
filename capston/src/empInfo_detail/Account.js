@@ -5,8 +5,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import bankCode from "../bankCode";
 
-const Account = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+const Account = ({userData}) => {
   const [account, setAccount] = useState([]);
   const [radioBtn, setRadioBtn] = useState(-1);
 
@@ -17,10 +16,10 @@ const Account = () => {
   }
 
   useEffect(() => {
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
     
     let postParam = {
-      sabun: loginInfo.id
+      sabun: loginInfo["sabun"]
     }
     postParam = qs.stringify(postParam);
     axios.post("http://43.200.115.198:8080/getBank.jsp", postParam).then((res) => {
@@ -32,7 +31,7 @@ const Account = () => {
     });
 
 
-  }, []);
+  }, [userData]);
 
   const addBtnClick = () => { //추가 버튼
     let tempTable = [...account];
@@ -80,9 +79,8 @@ const Account = () => {
       alert("입력란에 공백이 존재합니다.");
       return;
     }
-    let loginInfo = cookies["loginInfo"];
     let postParam = {
-      sabun: loginInfo.id,
+      sabun: userData["sabun"],
       length: data.length
     }
     for(let i = 0; i < data.length; i ++) {

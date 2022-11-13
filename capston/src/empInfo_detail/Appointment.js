@@ -5,8 +5,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import "../css/empinfo/Appointment.css";
-const Appointment = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+const Appointment = ({userData}) => {
   const [tableList, setTableList] = useState("*");
   const [appointment, setAppointment] = useState([]);
 
@@ -14,10 +13,10 @@ const Appointment = () => {
     setTableList(event.target.value);
   };
   useEffect(() => {
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
 
     let postParam = {
-      sabunOrName: loginInfo.id  
+      sabunOrName: userData["sabun"] 
     }
 
     postParam = qs.stringify(postParam);
@@ -29,7 +28,7 @@ const Appointment = () => {
     })
     
 
-  }, []);
+  }, [userData]);
 
   return (
     <div className="Appointment_main">

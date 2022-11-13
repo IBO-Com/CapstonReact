@@ -6,16 +6,16 @@ import "../css/empinfo/Family.css";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 
-const App = () => {
+const App = ({userData}) => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [family, setFamily] = useState([]);
   const [defaultYear, setDefaultYear] = useState(19);
   const [radioBtn, setRadioBtn] = useState(-1);
 
   useEffect(() => {
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
     let postParam = {
-      sabun: loginInfo.id
+      sabun: userData["sabun"]
     }
     postParam = qs.stringify(postParam);
     axios.post("http://43.200.115.198:8080/getFamily.jsp", postParam).then((res) => {
@@ -25,7 +25,7 @@ const App = () => {
     }).catch((Error) => {
       console.log(Error);
     })
-  }, []);
+  }, [userData]);
 
   const addDefaultTable = {
     identity:"20000101",
@@ -102,9 +102,9 @@ const App = () => {
       alert("입력란에 공백이 존재합니다.");
       return;
     }
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
     let postParam = {
-      sabun: loginInfo.id,
+      sabun: userData["sabun"],
       length: data.length
     }
     for(let i = 0; i < data.length; i ++) {

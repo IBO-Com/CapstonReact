@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 
-const App = () => {
+const App = ({userData}) => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [license, setLicense] = useState([]);
   const [radioBtn, setRadioBtn] = useState(-1);
@@ -84,9 +84,9 @@ const App = () => {
       alert("입력란에 공백이 존재합니다.");
       return;
     }
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
     let postParam = {
-      sabun: loginInfo.id,
+      sabun: userData["sabun"],
       length: data.length
     }
     for(let i = 0; i < data.length; i ++) {
@@ -104,10 +104,10 @@ const App = () => {
   }
 
   useEffect(() => {
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = userData;
     
     let postParam = {
-      sabun: loginInfo.id
+      sabun: userData["sabun"]
     }
   
     postParam = qs.stringify(postParam);
@@ -115,7 +115,7 @@ const App = () => {
       let data = res.data.ITEMS;
       setLicense(data);
     })
-  }, [])
+  }, [userData])
 
   return (
     <div className="License_container">

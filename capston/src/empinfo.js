@@ -267,10 +267,10 @@ const App = () => {
           ) : (
             ""
           )}
-          {toogleState === 2 ? <Appointment /> : ""}
-          {toogleState === 3 ? <Account /> : ""}
-          {toogleState === 4 ? <Family /> : ""}
-          {toogleState === 5 ? <License /> : ""}
+          {toogleState === 2 ? <Appointment userData={userData}/> : ""}
+          {toogleState === 3 ? <Account userData={userData}/> : ""}
+          {toogleState === 4 ? <Family userData={userData}/> : ""}
+          {toogleState === 5 ? <License userData={userData}/> : ""}
         </div>
       </div>
     </div>
