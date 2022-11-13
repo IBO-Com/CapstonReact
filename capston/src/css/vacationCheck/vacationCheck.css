@@ -11,9 +11,16 @@
 }
 
 .vacationWrap {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  float: left;
+}
+.vacationBox {
+  width: 250px;
+  height: 200px;
+  border: 2px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 0px 0px 0px 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .vc_compltion {
@@ -34,16 +41,6 @@
   letter-spacing: 0.1em;
   color: #5a6163;
   margin-bottom: 30px;
-}
-
-.vacationBox {
-  width: 250px;
-  height: 200px;
-  border: 2px solid #d9d9d9;
-  border-radius: 5px;
-  padding: 0px 0px 0px 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
 }
 
 .vc_name {

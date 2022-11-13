@@ -353,11 +353,11 @@ const App = () => {
                   <option value="" disabled selected>
                     &nbsp;-- 선택해주세요 --&nbsp;
                   </option>
-                  <option value="01">사원</option>
-                  <option value="02">대리</option>
-                  <option value="03">과장</option>
-                  <option value="04">차장</option>
-                  <option value="05">부장</option>
+                  <option value="1">사원</option>
+                  <option value="2">대리</option>
+                  <option value="3">과장</option>
+                  <option value="4">차장</option>
+                  <option value="5">부장</option>
                 </select>
                 <br></br>
                 <label>
