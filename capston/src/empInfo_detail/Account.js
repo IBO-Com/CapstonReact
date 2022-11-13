@@ -8,6 +8,7 @@ import bankCode from "../bankCode";
 const Account = ({userData}) => {
   const [account, setAccount] = useState([]);
   const [radioBtn, setRadioBtn] = useState(-1);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const addDefaultTable = {
     bank:"011",
@@ -105,12 +106,16 @@ const Account = ({userData}) => {
       <div className="Account_header">
         <span>계좌</span>
         {
-          
-        <div className="Account_btns">
-          <button className="Family_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
-          <button className="Family_addBtn" onClick={() => {addBtnClick()}}>추가</button>
-          <button className="Family_saveBtn"onClick={() => {saveBtnClick()}}>저장</button>
-        </div>
+          cookies["loginInfo"].authority == '1' ? ( 
+            <div className="Account_btns">
+              <button className="Family_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
+              <button className="Family_addBtn" onClick={() => {addBtnClick()}}>추가</button>
+              <button className="Family_saveBtn"onClick={() => {saveBtnClick()}}>저장</button>
+            </div>
+          ) : (
+            <></>
+          )
+        
         }
       </div>
       <div className="Account_table">

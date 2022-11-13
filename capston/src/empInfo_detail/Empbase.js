@@ -3,6 +3,7 @@ import "../css/Empbase/Empbase.css";
 import { Checkbox } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 import qs from "qs";
 
@@ -12,6 +13,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
   const [birthDate, setBirthDate] = useState(new Date()); //생년월일
   const [foreign, setForeign] = useState("0"); //외국인 여부
   const [married, setMarried] = useState("0"); //결혼 여부
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const nameRef = useRef(); //이름
   const nameEngRef = useRef(); //영어이름
@@ -34,7 +36,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
   const dateFormatString = (date) => {
     
     let year = date.getFullYear();
-    let month = (date.getMonth() - 1).toString().padStart(2, '0');
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
     let day = date.getDate().toString().padStart(2, '0');
 
     return year + month + day;
@@ -108,54 +110,87 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
   }, [userData])
 
   return Object.keys(userData).length > 0 ? (
+    
     <div className="baseInfo" style={{marginTop:"10px", marginLeft: "100px", marginRight: "10px", overflowX: "hidden",overflowY: "auto", height: "470px"}}>
-     <div>
-      <button
-        style={{
-          marginBottom: "5px",
-          paddingBottom: "5px",
-          paddingTop: "5px",
-          height: "36px",
-          width: "97px",
-          backgroundColor: "#537AAA",
-          border: "none",
-          borderRadius: "2px",
-          color: "white"
-        }}
-        className="card_search_btn"
-        onClick={() => {
-          saveBtnHandler();
-        }}
-      >
-        저장
-      </button>
-    </div>
+      {
+        cookies["loginInfo"].authority == '1' ? ( //관리자일때
+        <>
+        <div>
+          <button
+            style={{
+              marginBottom: "5px",
+              paddingBottom: "5px",
+              paddingTop: "5px",
+              height: "36px",
+              width: "97px",
+              backgroundColor: "#537AAA",
+              border: "none",
+              borderRadius: "2px",
+              color: "white"
+            }}
+            className="card_search_btn"
+            onClick={() => {
+              saveBtnHandler();
+            }}
+          >
+            저장
+          </button>
+        </div>
+
+        </>
+      ) : (
+        <></>
+      )
+    }
+    
 
       <span className="baseRead">기본사항</span>
       <div className="info_base_div">
         <div className="info_base_first info_box">
           <div className="info_margin">
             성명
-            <input ref={nameRef} className="empbase_input" Value={userData["name"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <input ref={nameRef} className="empbase_input" Value={userData["name"]}></input>
+              ) : (
+                <span>{userData["name"]}</span>
+              )
+            }
+            
           </div>
 
           <div className="info_margin">
             성별
-            <select ref={genderRef} className="empbase_select" defaultValue={userData["gender"]}>
-              <option value="0">남자</option>
-              <option value="1">여자</option>
-            </select>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+              <select ref={genderRef} className="empbase_select" defaultValue={userData["gender"]}>
+                <option value="0">남자</option>
+                <option value="1">여자</option>
+              </select>
+              ) : (
+                <span>{userData["gender"] == '0' ? "남자" : "여자"}</span>
+              )
+            }
+            
           </div>
           <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
             <div>그룹입사일</div>
-            <div >
-              <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
-            </div>
+              {
+                cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                 <div >
+                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
+                  </div>
+                 ) : (
+                  <span>{dateFormatString(startDate).slice(0, 4) + "년 " + dateFormatString(startDate).slice(4, 6) + "월 " + dateFormatString(startDate).slice(6, 8) + "일"}</span>
+                )
+              }
+              
           </div>
 
           <div className="info_margin">
             외국인여부
             <Checkbox 
+              disabled={!parseInt(cookies["loginInfo"].authority)}
               checked={parseInt(foreign)}
               onChange={(e) => {
               if(e.target.checked == true) {
@@ -170,25 +205,48 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
         <div className="info_base_second info_box">
           <div className="info_margin">
             영문성명
-            <input ref={nameEngRef} className="empbase_input" Value={userData["eng_name"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? (
+                <input ref={nameEngRef} className="empbase_input" Value={userData["eng_name"]}></input>
+              ) : (
+                <span>{userData["eng_name"]}</span>
+              )
+            }
+           
           </div>
 
           <div className="info_margin" >
             주민등록번호
-            <input ref={identityLRef} className="empbase_input" style={{width:"100px"}} Value={userData["identity"].slice(0, 6)}></input>
-            &nbsp;-&nbsp; 
-            <input ref={identityRRef} className="empbase_input" style={{margin:"0px", width:"100px"}} Value={userData["identity"].slice(6, 13)}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? (
+                <>
+                <input ref={identityLRef} className="empbase_input" style={{width:"100px"}} Value={userData["identity"].slice(0, 6)}></input>
+                  &nbsp;-&nbsp; 
+                <input ref={identityRRef} className="empbase_input" style={{margin:"0px", width:"100px"}} Value={userData["identity"].slice(6, 13)}></input>
+                </>
+              ) : (
+                <span>{userData["identity"].slice(0, 6)} - {userData["identity"].slice(6, 13)}</span>
+              )
+            }
+            
           </div>
           <div className="info_margin"  style={{display:"flex", flexDirection:"row"}}>
           <div >입사일</div>
-            <div >
-              <DatePicker className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => setStartDate(date)} />
-            </div>
+           {
+            cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                 <div >
+                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
+                  </div>
+                 ) : (
+                  <span>{dateFormatString(startDate).slice(0, 4) + "년 " + dateFormatString(startDate).slice(4, 6) + "월 " + dateFormatString(startDate).slice(6, 8) + "일"}</span>
+                )
+           }
           </div>
 
           <div className="info_margin">
             결혼여부
             <Checkbox 
+             disabled={!parseInt(cookies["loginInfo"].authority)}
             checked={parseInt(married)}
               onChange={(e) => {
               if(e.target.checked == true) {
@@ -204,20 +262,40 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
           <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
             생년월일
             
-            <div >
-              <DatePicker className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={birthDate} onChange={date => setBirthDate(date)} />
-            </div>
+            {
+            cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                 <div >
+                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={birthDate} onChange={date => setBirthDate(date)} />
+                  </div>
+                 ) : (
+                  <span>{dateFormatString(birthDate).slice(0, 4) + "년 " + dateFormatString(birthDate).slice(4, 6) + "월 " + dateFormatString(birthDate).slice(6, 8) + "일"}</span>
+                )
+           }
           </div>
           <div className="info_margin">
             재직상태
-            <select ref={retireClsRef} className="empbase_select" defaultValue={userData["retire_cls"]}>
-              <option value="0">재직</option>
-              <option value="1">퇴직</option>
-            </select>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <select ref={retireClsRef} className="empbase_select" defaultValue={userData["retire_cls"]}>
+                  <option value="0">재직</option>
+                  <option value="1">퇴직</option>
+                </select>
+                 ) : (
+                  <span>{userData["retire_cls"] == '0' ? "재직" : "퇴직"}</span>
+                )
+            }
+            
           </div>
           <div className="info_margin">
             본부명
-            <input disabled ref={centerRef} className="empbase_input" Value={userData["centerKR"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <input disabled ref={centerRef} className="empbase_input" Value={userData["centerKR"]}></input>
+              ) : (
+                <span>{userData["centerKR"]}</span>
+              )
+            }
+           
           </div>
         </div>
       </div>
@@ -227,25 +305,54 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
         <div className="info_base_first info_box">
           <div className="info_margin">
             이메일
-            <input ref={emailRef} className="empbase_input" Value={userData["email"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <input ref={emailRef} className="empbase_input" Value={userData["email"]}></input>
+              ) : (
+                <span>{userData["email"]}</span>
+              )
+            }
+           
           </div>
         </div>
 
         <div className="info_base_second info_box">
           <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
-            <div>휴대전화</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input ref={phone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(0, 3)}></input> &nbsp;-&nbsp;
-            <input ref={phone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(3, 7)}></input>&nbsp;-&nbsp;
-            <input ref={phone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(7, 11)}></input>
+            <div>휴대전화</div>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input ref={phone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(0, 3)}></input> &nbsp;-&nbsp;
+                <input ref={phone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(3, 7)}></input>&nbsp;-&nbsp;
+                <input ref={phone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["tel_no"].slice(7, 11)}></input>
+                </>
+              ) : (
+                <span>{userData["tel_no"].slice(0, 3) + "-" + userData["tel_no"].slice(3, 7) + "-" + userData["tel_no"].slice(7, 11)}</span>
+              )
+            }
+            
           </div>
         </div>
 
         <div className="info_base_third info_box">
         <div className="info_margin" style={{display:"flex", flexDirection:"row"}}>
-            <div>사내번호</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input ref={companyPhone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={"02"}></input> &nbsp;-&nbsp;
-            <input ref={companyPhone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={"0" + userData["sabun"].slice(0, 3)}></input>&nbsp;-&nbsp;
-            <input ref={companyPhone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["start_date"].slice(2, 4) + userData["sabun"].slice(8, 10)}></input>
+            <div>사내번호</div>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+                <>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input ref={companyPhone1Ref} style={{width:"30px", margin:"0px"}} className="empbase_input" Value={"02"}></input> &nbsp;-&nbsp;
+                <input ref={companyPhone2Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={"0" + userData["sabun"].slice(0, 3)}></input>&nbsp;-&nbsp;
+                <input ref={companyPhone3Ref} style={{width:"50px", margin:"0px"}} className="empbase_input" Value={userData["start_date"].slice(2, 4) + userData["sabun"].slice(8, 10)}></input>
+                </>
+              ) : (
+                <>
+                <span>{"02-" + "0" + userData["sabun"].slice(0, 3) + "-" + userData["start_date"].slice(2, 4) + userData["sabun"].slice(8, 10)}</span>
+                </>
+              )
+            }
+           
           </div>
         </div>
       </div>
@@ -255,12 +362,26 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
         <div className="info_base_first info_box address_box">
           <div className="info_margin">
             도로명 주소
-            <input ref={addressRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+              <input ref={addressRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address"]}></input>
+              ) : (
+                <span>{userData["address"]}</span>
+              )
+            }
+            
           </div>
 
           <div className="info_margin">
             상세주소 주소
-            <input ref={addressDetailRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address_detail"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+              <input ref={addressDetailRef} style={{width:"500px", margin:"0px", marginLeft:"10px"}} className="empbase_input" Value={userData["address_detail"]}></input>
+              ) : (
+                <span>{userData["address_detail"]}</span>
+              )
+            }
+            
           </div>
 
         </div>
@@ -268,7 +389,14 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
         <div className="info_base_second info_box address_box2">
           <div className="info_margin">
             우편번호
-            <input ref={postcodeRef} className="empbase_input" Value={userData["postcode"]}></input>
+            {
+              cookies["loginInfo"].authority == '1' ? ( //관리자일때
+              <input ref={postcodeRef} className="empbase_input" Value={userData["postcode"]}></input>
+              ) : (
+                <span>{userData["postcode"]}</span>
+              )
+            }
+           
           </div>
 
         </div>

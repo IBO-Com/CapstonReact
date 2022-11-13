@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import { Button, MenuItem, TextField } from "@mui/material";
+import { useCookies } from "react-cookie";
 
 import testimg from "./img/user.png";
 import "./css/empinfo/empinfo.css";
@@ -12,7 +13,6 @@ import License from "./empInfo_detail/License";
 
 import axios from "axios";
 import qs from "qs";
-import * as Cookie from "./cookies/cookies";
 import * as GetYearOfWork from "./modules/getYearOfWork";
 
 const App = () => {
@@ -21,6 +21,7 @@ const App = () => {
   const [workMonth, setWorkMonth] = useState("0");
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
@@ -80,7 +81,8 @@ const App = () => {
   }
 
   useEffect(() => {
-    let data = Cookie.getCookie("loginInfo");
+    let data = cookies["loginInfo"];
+    console.log("cookies : ", data);
     let userInfo = {};
 
     let postParam = qs.stringify({
@@ -109,26 +111,36 @@ const App = () => {
 
   return (
     <div className="empInfo">
-      <div className="card_dateBox">
-        <span>사원 조회 &nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <FormControl>
-          <TextField
-            id="outlined-card"
-            label="사번/성명"
-            variant="outlined"
-            size="small"
-            onChange={textNameHandle}
-          />
-        </FormControl>
-        <button
-          className="card_search_btn"
-          onClick={() => {
-            searchBtnHandler();
-          }}
-        >
-          검색
-        </button>
-      </div>
+      {
+        cookies["loginInfo"].authority == '1' ? ( //관리자일때
+          <>
+          <div className="card_dateBox">
+            <span>사원 조회 &nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <FormControl>
+              <TextField
+                id="outlined-card"
+                label="사번/성명"
+                variant="outlined"
+                size="small"
+                onChange={textNameHandle}
+              />
+            </FormControl>
+
+            <button
+              className="card_search_btn"
+              onClick={() => {
+                searchBtnHandler();
+              }}
+            >
+              검색
+            </button>
+          </div>
+          </>
+        ) : (
+          <></>
+        )
+      }
+     
 
       <hr className="empSearchBar"></hr>
 

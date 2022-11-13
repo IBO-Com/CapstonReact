@@ -121,11 +121,17 @@ const App = ({userData}) => {
     <div className="License_container">
       <div className="License_header">
         <span>자격</span>
-        <div className="License_btn">
-          <button className="License_removeBtn" onClick={()=> {removeBtnClick()}}>삭제</button>
-          <button className="License_addBtn" onClick={() => {addBtnClick()}}>추가</button>
-          <button className="License_saveBtn" onClick={() => {saveBtnClick()}}>저장</button>
-        </div>
+        {
+          cookies["loginInfo"].authority == '1' ? ( 
+            <div className="Account_btns">
+              <button className="Family_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
+              <button className="Family_addBtn" onClick={() => {addBtnClick()}}>추가</button>
+              <button className="Family_saveBtn"onClick={() => {saveBtnClick()}}>저장</button>
+            </div>
+          ) : (
+            <></>
+          )
+        }
       </div>
       <div className="Licnese_table">
         <table>

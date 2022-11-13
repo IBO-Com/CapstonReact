@@ -128,11 +128,17 @@ const App = ({userData}) => {
     <div className="Family_container">
       <div className="Family_header">
         <span>가족</span>
-        <div className="Family_btns">
-          <button className="Family_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
-          <button className="Family_addBtn" onClick={() => {addBtnClick()}}>추가</button>
-          <button className="Family_saveBtn"onClick={() => {saveBtnClick()}}>저장</button>
-        </div>
+       {
+        cookies["loginInfo"].authority == '1' ? ( 
+            <div className="Account_btns">
+              <button className="Family_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
+              <button className="Family_addBtn" onClick={() => {addBtnClick()}}>추가</button>
+              <button className="Family_saveBtn"onClick={() => {saveBtnClick()}}>저장</button>
+            </div>
+          ) : (
+            <></>
+          )
+        }
       </div>
       <div className="Family_table">
         <table>
