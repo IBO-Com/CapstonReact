@@ -23,12 +23,12 @@ const App = () => {
   const [vacationData, setVacationData] = useState([]);
 
   const annualData = {
-    "0" : "연차",
-    "01" : "오전반차",
-    "02" : "오후반차",
-    "03" : "경조휴가",
-    "04" : "병결",
-    "05" : "기타"
+    "0": "연차",
+    "01": "오전반차",
+    "02": "오후반차",
+    "03": "경조휴가",
+    "04": "병결",
+    "05": "기타"
   }
 
   const todayTime = () => {
@@ -53,27 +53,27 @@ const App = () => {
   const pay = () => {
     if (daytime() >= 0) { //월급일은 매달 5일이기 때문에 5일에 보게함.
       return (
-        <div style={{ display: "flex", flexDirection: "row", marginLeft:"5px"}}>
+        <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
           <div style={{
-              lineHeight: "30px",
-              color: "white",
-              textAlign: "center",
-              width: "65px",
-              height: "30px",
-              backgroundColor: "cornflowerblue",
-              border: "1px solid cornflowerblue",
-              borderRadius: "5px",
-              boxShadow: "1px 1px 5px white",
-              
-            }}>정보</div>
-          <p style={{ marginLeft:"10px", marginTop: "0px", lineHeight:"30px" }}> {todayTime().slice(0, 10)} 급여가 들어왔어요!</p>
+            lineHeight: "30px",
+            color: "white",
+            textAlign: "center",
+            width: "65px",
+            height: "30px",
+            backgroundColor: "cornflowerblue",
+            border: "1px solid cornflowerblue",
+            borderRadius: "5px",
+            boxShadow: "1px 1px 5px white",
+
+          }}>정보</div>
+          <p style={{ marginLeft: "10px", marginTop: "0px", lineHeight: "30px" }}> {todayTime().slice(0, 10)} 급여가 들어왔어요!</p>
         </div>
-        );
+      );
     } else {
       return (<p>오늘도 좋은하루 되세요!</p>);
     }
   }
-//0 연차, 01 오전반차, 02 오후반차, 03 경조휴가, 04 병결, 05기타
+  //0 연차, 01 오전반차, 02 오후반차, 03 경조휴가, 04 병결, 05기타
   const annNotice = () => {
     let component = [];
     for (let i = 0; i < vacationData.length; i++) {
@@ -84,27 +84,26 @@ const App = () => {
         )
       } else if (data.ann_state == "1") {
         component.push(
-          <div style={{ display: "flex", flexDirection: "row", marginLeft:"5px"}}>
+          <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
             <div style={{
               lineHeight: "30px",
               color: "white",
               textAlign: "center",
               width: "65px",
-              height: "30px", 
+              height: "30px",
               backgroundColor: "#21BF54",
               border: "1px solid #21BF54", //3시얍
               borderRadius: "5px",
               boxShadow: "1px 1px 5px white",
-              
+
             }}>승인</div>
-            <p style={{ marginLeft:"10px", marginTop: "0px", lineHeight:"30px" }}> {annualData[data.vacation]} 신청이 승인됐어요!</p>
+            <p style={{ marginLeft: "10px", marginTop: "0px", lineHeight: "30px" }}> {annualData[data.vacation]} 신청이 승인됐어요!</p>
           </div>
         )
       }
     }
     return component;
   }
-
 
 
   useEffect(() => {
@@ -321,23 +320,11 @@ const App = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {vacationData.map(function (item) {
+                  {vacationData.map(function (item) {
                       return (
                         <>
                           <tr>
-                            <td style={{ minWidth: "80px" }}>{item.vacation === "0"
-                              ? "연차"
-                              : "" || item.vacation === "01"
-                                ? "오전반차"
-                                : "" || item.vacation === "02"
-                                  ? "오후반차"
-                                  : "" || item.vacation === "03"
-                                    ? "경조휴가"
-                                    : "" || item.vacation === "04"
-                                      ? "병결"
-                                      : "" || item.vacation === "05"
-                                        ? "기타"
-                                        : ""}</td>
+                            <td style={{ minWidth: "80px" }}>{annualData[item.vacation]}</td>
                             <td>{item.ann_start_date.slice(0, 4)}년&nbsp;{" "}
                               {item.ann_start_date.slice(4, 6)}월&nbsp;{" "}
                               {item.ann_start_date.slice(6, 8)}일&nbsp; ~ &nbsp;
@@ -356,7 +343,7 @@ const App = () => {
         </div>
 
         <div className="hrMain_notice_container">
-          <h4>공지사항</h4>
+          <h4>새로운 알림</h4>
           <div className="hrMain_notice">
             <p>{pay()}</p>
             <p>{
