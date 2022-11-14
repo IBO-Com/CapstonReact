@@ -7,25 +7,24 @@ const App = () => {
     return ( 
     <div className="OrganiztaionChart_App">
         <div className="OrganizationChart_container">
-        <div
-          style={{
-            padding: "15px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            }}>
-            
-            <h4>조직도</h4>
-              <div className="OrganizationChart_Img">
-                  <img className="organizationchart" src={organizationchart} alt={"사진"} />
-                  <div className="OrganizationChart_Description_Container">
-                  <h4>조직도 소개</h4>
-                  <div className="OrganizationChart_Description"></div>
+            <div className="OrganizationChart_Flex">
+                <div className="OrganizationChart_Img_container">
+                    <span>조직도</span>
+                    <div className="OrganizationChart_Img">
+                        <img className="organizationchart" src={organizationchart} alt={"사진"} />
+                    </div> 
                 </div>
-              </div>
             </div>
+        <div className="OrganizationChart_Description_Container">
+            <div className="OrganizationChart_Description_Flex">
+                <span>조직도 소개</span>
+                <div className="OrganizationChart_Description"></div>
             </div>
-            </div>
-       
+        </div>
+                        
+                    
+        </div>
+     </div>  
     )
 }
 
