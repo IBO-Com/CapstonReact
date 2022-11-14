@@ -13,10 +13,11 @@ import AccountRegister from "./AccountRegister";
 import FamilyRegister from "./FamilyRegister";
 import LicenseRegister from "./LicenseRegister";
 import HelloBaseTab from "./HelloBaseTab";
+import { useCookies } from "react-cookie";
 
 function EmpRegister() {
   const [toogleState, setToggleState] = useState(1);
-
+  const [cookies, setCookie, removeCookie] = useCookies();
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -41,6 +42,15 @@ function EmpRegister() {
           >
             인사기본
           </div>
+          {
+            cookies["empRegister_userInfo"] ? ( //최근 추가한 인사가 있다면
+              <>
+                추가함
+              </>
+            ) : (
+              <> ㄴㄴ</>
+            )
+          }
           <div
             className={styles.account}
             onClick={() => {

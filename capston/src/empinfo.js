@@ -63,6 +63,7 @@ const App = () => {
         } else {
           setDefaultYear("20");
         }
+        console.log("userInfo : ", userInfo);
         setUserData(userInfo);
 
         let postParam2 = qs.stringify({
@@ -75,9 +76,6 @@ const App = () => {
             setPicture(response.data.ITEMS[0].picture);
           });
       });
-
-    
-  
   }
 
   useEffect(() => {
@@ -86,7 +84,7 @@ const App = () => {
     let userInfo = {};
 
     let postParam = qs.stringify({
-      sabunOrName: data["id"],
+      sabunOrName: data['id']
     });
 
     axios

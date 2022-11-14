@@ -73,7 +73,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
         //수정 후 데이터 리로드
         axios
         .post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
-          sabun: userData["sabun"]
+          sabunOrName: userData["sabun"]
         }))
         .then((res2) => {
           setUserData(res2.data.ITEMS[0]);
@@ -99,6 +99,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
       let birthYear = year + userData["identity"].slice(0, 2);
       let birthMonth = (parseInt(userData["identity"].slice(2, 4))-1);
       let birthDay = userData["identity"].slice(4, 6);
+
       console.log(birthYear, birthMonth, birthDay);
       setBirthDate(new Date(birthYear, birthMonth, birthDay))
       
@@ -163,7 +164,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
             성별
             {
               cookies["loginInfo"].authority == '1' ? ( //관리자일때
-              <select ref={genderRef} className="empbase_select" defaultValue={userData["gender"]}>
+              <select ref={genderRef} className="empbase_select" value={userData["gender"]} onChange={(e) => {setUserData({...userData, "gender": e.target.value})}}>
                 <option value="0">남자</option>
                 <option value="1">여자</option>
               </select>
@@ -178,7 +179,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
               {
                 cookies["loginInfo"].authority == '1' ? ( //관리자일때
                  <div >
-                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
+                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => setStartDate(date)} />
                   </div>
                  ) : (
                   <span>{dateFormatString(startDate).slice(0, 4) + "년 " + dateFormatString(startDate).slice(4, 6) + "월 " + dateFormatString(startDate).slice(6, 8) + "일"}</span>
@@ -235,7 +236,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
            {
             cookies["loginInfo"].authority == '1' ? ( //관리자일때
                  <div >
-                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => startDate(date)} />
+                    <DatePicker  className="empbase_input" dateFormat={"yyyy년 MM월 dd일"} selected={startDate} onChange={date => setStartDate(date)} />
                   </div>
                  ) : (
                   <span>{dateFormatString(startDate).slice(0, 4) + "년 " + dateFormatString(startDate).slice(4, 6) + "월 " + dateFormatString(startDate).slice(6, 8) + "일"}</span>
@@ -276,7 +277,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
             재직상태
             {
               cookies["loginInfo"].authority == '1' ? ( //관리자일때
-                <select ref={retireClsRef} className="empbase_select" defaultValue={userData["retire_cls"]}>
+                <select ref={retireClsRef} className="empbase_select" value={userData["retire_cls"]} onChange={(e) => {setUserData({...userData, "retire_cls": e.target.value})}}>
                   <option value="0">재직</option>
                   <option value="1">퇴직</option>
                 </select>
