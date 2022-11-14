@@ -141,7 +141,7 @@ const App = () => {
       });
 
     postParam = {
-      name: cookies.loginInfo.name
+      sabunOrName: cookies.loginInfo.id
     }
     postParam = qs.stringify(postParam);
 
