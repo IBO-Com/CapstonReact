@@ -61,6 +61,7 @@ const App = () => {
       .post("http://43.200.115.198:8080/vacationCheck.jsp")
       .then((res) => {
         setVacationData(res.data.ITEMS);
+        console.log(vacationData);
       })
       .catch((Error) => {
         alert("에러");
@@ -98,6 +99,7 @@ const App = () => {
       .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
       .then((res) => {
         setVacationData(res.data.ITEMS);
+        console.log(vacationData);
       })
       .catch((Error) => {
         console.log(Error);
@@ -218,19 +220,7 @@ const App = () => {
                 {item.ann_state === "1" ? (
                   <div className="vacationBox">
                     <p className="vc_name">
-                      {item.vacation === "0"
-                        ? "연차"
-                        : "" || item.vacation === "01"
-                        ? "오전반차"
-                        : "" || item.vacation === "02"
-                        ? "오후반차"
-                        : "" || item.vacation === "03"
-                        ? "경조사휴가"
-                        : "" || item.vacation === "04"
-                        ? "병결"
-                        : "" || item.vacation === "05"
-                        ? "기타"
-                        : ""}
+                      {annualData[item.vacation]}
                       신청 - {item.name}
                     </p>{" "}
                     <p className="vc_date">
@@ -242,17 +232,7 @@ const App = () => {
                     </p>
                     <p className="vc_replace">
                       대체 업무자&nbsp; : &nbsp; {item.rep_name} &nbsp;
-                      {item.rep_rank === "1"
-                        ? "사원"
-                        : " " || item.rank === "2"
-                        ? "대리"
-                        : " " || item.rank === "3"
-                        ? "과장"
-                        : "" || item.rank === "4"
-                        ? "차장"
-                        : " " || item.rank === "5"
-                        ? "부장"
-                        : ""}
+                      {item.rep_rankKR}
                     </p>
                     <div className="vc_btnbox">
                       <button className="vc_approval_btn">처리완료</button>
