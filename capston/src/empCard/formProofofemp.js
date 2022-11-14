@@ -63,7 +63,7 @@ const App = ({ componentRef, sabun }) => {
 
             <tr className="formProofofeFirst">
                <td>주소</td>
-               <td colSpan={3}>{userData ? userData["address"] : ""}</td>
+               <td colSpan={3}>{userData ? userData["address"] : ""} {userData ? userData["address_detail"] : ""}</td>
             </tr>
 
             <tr className="formProofofeFirst">
