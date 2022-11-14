@@ -88,9 +88,8 @@ const nav_admin = {
   },
   "인사/조직관리": {
     menu: [
-      "인사정보",
+      "인사정보관리",
       "인사정보등록",
-      "인사/정보관리",
       "조직관리",
       "인사기록카드",
       "사원정보현황",
@@ -99,7 +98,6 @@ const nav_admin = {
     link: [
       "/mainNav/empinfo",
       "/mainNav/empregister",
-      "/mainNav/b3",
       "/mainNav/setorganize",
       "/mainNav/personnelcard",
       "/mainNav/hrorganization",
