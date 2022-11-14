@@ -21,7 +21,7 @@ const Account = () => {
 
 
   useEffect(() => {
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = cookies["empRegister_userInfo"];
     
     let postParam = {
       sabun: loginInfo.id
@@ -34,9 +34,6 @@ const Account = () => {
     .catch((Error) => {
         alert("계좌 오류!!");
     }); 
-    
-
-
   }, []);
 
   const addBtnClick = () => { //추가 버튼
@@ -86,7 +83,7 @@ const Account = () => {
       alert("입력란에 공백이 존재합니다.");
       return;
     }
-    let loginInfo = cookies["loginInfo"];
+    let loginInfo = cookies["empRegister_userInfo"];
     let postParam = {
       sabun: loginInfo.id,
       length: data.length
@@ -111,7 +108,7 @@ const Account = () => {
   return (
     <div className="accountRegister_container">
       <div className="accountRegister_title">
-        <span>이정재의 계좌</span>
+        <span>{cookies["empRegister_userInfo"].name}의 계좌</span>
         <div className="accountRegister_Btn">
           <button className="accountRegister_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
           <button className="accountRegister_addBtn" onClick={() => {addBtnClick()}}>추가</button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import koLocale from "date-fns/locale/ko";
@@ -7,6 +7,8 @@ import { Button } from "@mui/material";
 import styles from "../css/emp/empRegister/empRegister.module.css";
 import "../css/emp/empRegister/LicenseRegister.css";
 import { useCookies } from "react-cookie";
+import qs from "qs";
+import axios from "axios";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -15,13 +17,23 @@ class koLocalizedUtils extends DateFnsUtils {
 }
 
 const App = () => {
-  const [licenseDate, setLicenseDate] = useState(new Date("2020-01-01"));
   const [license, setLicense] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [radioBtn, setRadioBtn] = useState(-1);
 
-  const handleLicenseDateChange = (date) => {
-    setLicenseDate(date);
-  };
+  useEffect(() => {
+    let postParam = {
+      sabun: cookies["empRegister_userInfo"].id,
+    }
+  
+    console.log("data before : ", postParam);
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getLicense.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS;
+      console.log("data : ", data);
+      setLicense(data);
+    })
+  }, [])
 
   const addDefaultTable = {
     acq_date: "20000101",
@@ -95,7 +107,7 @@ const App = () => {
     }
     
     let postParam = {
-      sabun: cookies["loginInfo"].id,
+      sabun: cookies["empRegister_userInfo"].id,
       length: data.length
     }
     for(let i = 0; i < data.length; i ++) {
@@ -131,26 +143,26 @@ const App = () => {
       </Button>
       <div className="LicenseRegister_container">
         <div className="LicenseRegister_title">
-          <span>이정재의 자격</span>
+          <span>{cookies["empRegister_userInfo"].name}의 자격</span>
           <div className="LicenseRegister_btns">
             <button className="LicenseRegister_removeBtn" onClick={() => {removeBtnClick()}}>삭제</button>
             <button className="LicenseRegister_addBtn" onClick={() => {addBtnClick()}}>추가</button>
             <button className="LicenseRegister_saveBtn" onClick={() => {saveBtnClick()}}>저장</button>
           </div>
         </div>
-        <div className="LicenseRegister_table">
-          <table>
-            <thead>
-              <tr>
-                <td>번호</td>
-                <td>삭제</td>
-                <td>취득일자</td>
-                <td>자격면허명</td>
-                <td>자격번호</td>
-                <td>부여기관</td>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="Licnese_table">
+        <table>
+          <thead>
+            <tr>
+              <td>번호</td>
+              <td>삭제</td>
+              <td>취득일자</td>
+              <td>자격면허명</td>
+              <td>자격번호</td>
+              <td>부여기관</td>
+            </tr>
+          </thead>
+          <tbody>
             {
               license.map((item, index) => {
                 return (
@@ -161,7 +173,7 @@ const App = () => {
                         type="radio"
                         name="licenseSelect"
                         className="license_radioBtn"
-                        onChange={() => {radioChange(index)}}
+                        onChange={() => {setRadioBtn(index)}}
                       />
                     </td>
                     <td><input className="License_input" onInput={(e) => {autoHyphen(e.target)}} Value={YMDFormatter(item.acq_date)} maxLength={10}></input></td>
@@ -172,9 +184,11 @@ const App = () => {
                 )
               })
             }
-            </tbody>
-          </table>
-        </div>
+            
+
+          </tbody>
+        </table>
+      </div>
       </div>
     </>
   );

@@ -37,7 +37,7 @@ function EmpRegister() {
           <div
             className={styles.empBasic}
             onClick={() => {
-              toggleTab(1);
+              toggleTab(1); 
             }}
           >
             인사기본
@@ -45,36 +45,64 @@ function EmpRegister() {
           {
             cookies["empRegister_userInfo"] ? ( //최근 추가한 인사가 있다면
               <>
-                추가함
+              <div
+                className={styles.account}
+                onClick={() => {
+                  toggleTab(2);
+                }}
+              >
+                계좌
+              </div>
+              <div
+                className={styles.family}
+                onClick={() => {
+                  toggleTab(3);
+                }}
+              >
+                가족
+              </div>
+              <div
+                className={styles.license}
+                onClick={() => {
+                  toggleTab(4);
+                }}
+              >
+                자격
+              </div>
               </>
             ) : (
-              <> ㄴㄴ</>
+              <> 
+              <div
+                className={styles.account}
+                style={{color:"gray"}}
+                onClick={() => {
+                  alert("인사정보 추가가 필요합니다.");
+                }}
+              >
+                계좌
+              </div>
+              <div
+                className={styles.family}
+                style={{color:"gray"}}
+                onClick={() => {
+                  alert("인사정보 추가가 필요합니다.");
+                }}
+              >
+                가족
+              </div>
+              <div
+                className={styles.license}
+                style={{color:"gray"}}
+                onClick={() => {
+                  alert("인사정보 추가가 필요합니다.");
+                }}
+              >
+                자격
+              </div>
+              </>
             )
           }
-          <div
-            className={styles.account}
-            onClick={() => {
-              toggleTab(2);
-            }}
-          >
-            계좌
-          </div>
-          <div
-            className={styles.family}
-            onClick={() => {
-              toggleTab(3);
-            }}
-          >
-            가족
-          </div>
-          <div
-            className={styles.license}
-            onClick={() => {
-              toggleTab(4);
-            }}
-          >
-            자격
-          </div>
+          
         </div>
         <hr className={styles.empFirstLine} align="left" />
         <div>
