@@ -5,6 +5,7 @@ import styles from "../css/emp/empRegister/empRegister.module.css";
 import format from "date-fns/format";
 import axios from "axios";
 import KakaoAddressApi from "./KakaoAddressAPI";
+import { useCookies } from "react-cookie";
 
 import {
   Button,
@@ -36,6 +37,7 @@ function getFormatDate(date) {
 }
 
 const HelloBaseTab = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const formRef = useRef();
   const name = useRef();
   const englishName = useRef();
@@ -178,6 +180,13 @@ const HelloBaseTab = () => {
         axios.post(urlSave, postParam).then((response) => {
           console.log(response);
           if (response.data.result === "success") {
+            setCookie(
+              "empRegister_userInfo", {
+                authority: "0",
+                id: response.data.sabun,
+                name: name.current.value
+              }
+            )
             alert("저장되었습니다.");
           } else {
             alert("error");
