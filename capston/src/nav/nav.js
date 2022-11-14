@@ -84,7 +84,7 @@ function App({ currentClick, setCurrentClick }) {
 const nav_admin = {
   기본정보: {
     menu: ["공통코드정보", "조직도"],
-    link: ["/mainNav/setCodeCommon", "/mainNav/a2"],
+    link: ["/mainNav/setCodeCommon", "/mainNav/organizationChart"],
   },
   "인사/조직관리": {
     menu: [

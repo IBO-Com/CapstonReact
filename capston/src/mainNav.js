@@ -3,6 +3,7 @@ import { Routes, Route, Router, BrowserRouter, Link } from "react-router-dom";
 
 //각 탭 임포트
 import Empinfo from "./empinfo";
+import OrganizationChart from "./OrganizationChart/OrganizationChart";
 import Test from "./Test";
 import HRMain from "./hrMain";
 import EmpRegister from "./emp/EmpRegister";
@@ -87,6 +88,10 @@ const App = () => {
 
           {/* 인사 현황 페이지 */}
           <Route path="/hrorganization" element={<HRorganization />}></Route>
+
+          {/* 조직도 */}
+          <Route path="/organizationChart" element={<OrganizationChart />}></Route>
+
 
           {/* 인사기록카드 페이지 */}
           <Route path="/personnelCard" element={<PersonnelCard />}></Route>
