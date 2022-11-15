@@ -16,10 +16,10 @@ const App = () => {
                 </div>
             </div>
         <div className="OrganizationChart_Description_Container">
-            <div className="OrganizationChart_Description_Flex">
+            {/*<div className="OrganizationChart_Description_Flex">
                 <span>조직도 소개</span>
                 <div className="OrganizationChart_Description"></div>
-            </div>
+    </div>*/}
         </div>
                         
                     
