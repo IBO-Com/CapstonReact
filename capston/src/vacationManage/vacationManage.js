@@ -25,7 +25,7 @@ const App = () => {
   const componentRef = useRef(null);
   // const [selectDep, setSelectDep] = useState("*");
   const [toogleState, setToggleState] = useState(1);
-  // const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+  const [retrieveDate, setRetrieveDate] = useState(new Date());
   const [textName, setTextName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -161,6 +161,11 @@ const App = () => {
           });
       }
     }
+  };
+
+  const submitSabun = (sabun) => {
+    setSabun(sabun);
+    console.log(sabun);
   };
 
   return (
@@ -418,6 +423,7 @@ const App = () => {
                 className="vm_save_btn"
                 onClick={(e) => {
                   saveSubmit(e);
+                  submitSabun(annualData.sabun);
                 }}
               >
                 입력
@@ -437,7 +443,7 @@ const App = () => {
                 <FormVacationManage
                   componentRef={componentRef}
                   sabun={sabun}
-                  //retrieveDate={retrieveDate}
+                  retrieveDate={retrieveDate}
                 />
               ) : (
                 ""

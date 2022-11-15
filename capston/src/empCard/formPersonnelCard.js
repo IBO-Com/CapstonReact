@@ -197,7 +197,7 @@ const App = ({ componentRef, sabun }) => {
             </tr>
             <tr className="table_bg">
               <td>주소</td>
-              <td colSpan={3}>{userData ? userData["address"] : ""}</td>
+              <td colSpan={3}>{userData ? userData["address"] : ""} {userData ? userData["address_detail"] : ""}</td>
             </tr>
 
 
