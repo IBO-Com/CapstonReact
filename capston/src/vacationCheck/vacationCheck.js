@@ -18,6 +18,7 @@ const App = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [vacationData, setVacationData] = useState([]);
+  const [sabun, setSabun] = useState();
   const annualData = {
     0: "연차",
     "01": "오전반차",
@@ -54,6 +55,82 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setNameText(e.target.value);
+  };
+
+  //  승인
+  const approvalBtn = (index) => {
+    if (window.confirm("승인하시겠습니까?")) {
+      let tempVacationData = vacationData[index];
+      let postParam2 = {
+        sabun: tempVacationData.sabun,
+        remain_annual: tempVacationData.remain_annual,
+        ann_start_date: tempVacationData.ann_start_date,
+        use_annual: tempVacationData.use_annual,
+        name: tempVacationData.name,
+        rank: tempVacationData.rank,
+        dept: tempVacationData.dept,
+        ann_end_date: tempVacationData.ann_end_date,
+        vacation: tempVacationData.vacation,
+        ann_reason: tempVacationData.ann_reason,
+        ann_state: tempVacationData.ann_state,
+        team: tempVacationData.team,
+        rep_name: tempVacationData.rep_name,
+        rep_rank: tempVacationData.rep_rank,
+        emer_tel: tempVacationData.emer_tel,
+        emer_rel: tempVacationData.emer_rel,
+      };
+      console.log(postParam2);
+      postParam2 = qs.stringify(postParam2);
+
+      axios
+        .post("http://43.200.115.198:8080/vacationupdate.jsp", postParam2)
+        .then((res) => {
+          axios
+            .post("http://43.200.115.198:8080/vacationCheck.jsp")
+            .then((res) => {
+              setVacationData(res.data.ITEMS);
+            })
+            .catch((Error) => {
+              alert("에러");
+            });
+          console.log(res);
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    }
+  };
+
+  // 반려
+  const rejectBtn = (index) => {
+    if (window.confirm("반려하시겠습니까?")) {
+      let tempVacationData2 = vacationData[index];
+      let postParam3 = {
+        sabun: tempVacationData2.sabun,
+        ann_start_date: tempVacationData2.ann_start_date,
+        ann_end_date: tempVacationData2.ann_end_date,
+        vacation: tempVacationData2.vacation,
+      };
+      console.log(postParam3);
+      postParam3 = qs.stringify(postParam3);
+
+      axios
+        .post("http://43.200.115.198:8080/vacationdelete.jsp", postParam3)
+        .then((res) => {
+          axios
+            .post("http://43.200.115.198:8080/vacationCheck.jsp")
+            .then((res) => {
+              setVacationData(res.data.ITEMS);
+            })
+            .catch((Error) => {
+              alert("에러");
+            });
+          console.log(res);
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -99,7 +176,6 @@ const App = () => {
       .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
       .then((res) => {
         setVacationData(res.data.ITEMS);
-        console.log(vacationData);
       })
       .catch((Error) => {
         console.log(Error);
@@ -181,7 +257,7 @@ const App = () => {
              */}
             {/* 오전반차면 오전반차 신청 - 김누구 */}
 
-            {vacationData.map((item) => (
+            {vacationData.map((item, index) => (
               <div className="vacationWrap">
                 {item.ann_state === "0" ? (
                   <div className="vacationBox">
@@ -201,8 +277,22 @@ const App = () => {
                       {item.rep_rankKR}
                     </p>
                     <div className="vc_btnbox">
-                      <button className="vc_approval_btn">승인</button>
-                      <button className="vc_refusal_btn">반려</button>
+                      <button
+                        className="vc_approval_btn"
+                        onClick={() => {
+                          approvalBtn(index);
+                        }}
+                      >
+                        승인
+                      </button>
+                      <button
+                        className="vc_refusal_btn"
+                        onClick={() => {
+                          rejectBtn(index);
+                        }}
+                      >
+                        반려
+                      </button>
                     </div>
                   </div>
                 ) : (
