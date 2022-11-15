@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import DateFnsUtils from "@date-io/date-fns";
 import koLocale from "date-fns/locale/ko";
 import format from "date-fns/format";
+import { useCookies } from "react-cookie";
+
 import {
   FormControl,
   Select,
@@ -18,6 +20,7 @@ import ReactToPrint from "react-to-print";
 import FormVacationManage from "./formVacationManage";
 
 const App = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [selectDepart, setSelectDepart] = useState("*");
 
   const [annualData, setAnnualData] = useState([]);
@@ -56,26 +59,13 @@ const App = () => {
     setTextName(e.target.value);
   };
 
-  // 검색
-  const sendSubmit = () => {
-    console.log("send submit");
-
+  useEffect(() => {
     /* 쿼리 문 작성 */
-    let postParam = {};
-    let query = {};
-
-    if (textName.trim() == "") {
-      delete query["sabunOrName"];
-    } else {
-      query["sabunOrName"] = textName;
-    }
-    if (selectDepart == "*") {
-      delete query["dept"];
-    } else {
-      query["dept"] = selectDepart;
-    }
-
-    postParam = qs.stringify(query);
+    let postParam = {
+      sabunOrName: cookies["loginInfo"].id,
+    };
+    console.log("query : ", postParam);
+    postParam = qs.stringify(postParam);
 
     axios
       .post("http://43.200.115.198:8080/vacationcount.jsp", postParam)
@@ -87,7 +77,7 @@ const App = () => {
       .catch((Error) => {
         console.log(Error);
       });
-  };
+  }, []);
 
   // 연차/휴가 분류
   const handleAnnualState = (e) => {
@@ -171,67 +161,7 @@ const App = () => {
   return (
     <div className="personnelCard_box">
       <div className="card_search_box">
-        <div className="card_dateBox">
-          <FormControl>
-            <Select
-              value={selectDepart || ""}
-              sx={{
-                minWidth: "153px",
-                height: 39,
-                marginLeft: "15px",
-                marginRight: "26px",
-              }}
-              onChange={handleSelectDepart}
-            >
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                전체부서
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-                경영지원부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                경영관리부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-                침해대응부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-                관제센터
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-                보안연구부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-                보안취약점연구부
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <TextField
-              id="outlined-card"
-              label="사번/성명"
-              variant="outlined"
-              size="small"
-              onChange={handleTextName}
-            />
-          </FormControl>
-          <button
-            className="card_search_btn"
-            onClick={() => {
-              sendSubmit();
-            }}
-          >
-            검색
-          </button>
-        </div>
-
-        <hr className="card_lineBar"></hr>
+        <div className="card_dateBox"></div>
 
         <div className="personnelCard_Flex">
           <div className="vmInfoTable">
