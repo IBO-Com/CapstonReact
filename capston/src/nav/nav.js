@@ -130,8 +130,9 @@ const nav_admin = {
     ],
   },
   퇴직관리: {
-    menu: ["퇴직승인", "퇴직금산정", "퇴직금명세서"],
+    menu: ["퇴직신청", "퇴직승인", "퇴직금산정", "퇴직금명세서"],
     link: [
+      "/mainNav/retiremanage",
       "/mainNav/retirementapproval",
       "/mainNav/severancepaycal",
       "/mainNav/severancepay",
@@ -167,8 +168,8 @@ const nav_user = {
     ],
   },
   퇴직관리: {
-    menu: ["퇴직금산정", "퇴직금명세서"],
-    link: ["/mainNav/severancepaycal", "/mainNav/severancepay"],
+    menu: ["퇴직신청", "퇴직금산정", "퇴직금명세서"],
+    link: ["/mainNav/retiremanage", "/mainNav/severancepaycal", "/mainNav/severancepay"],
   },
 };
 

@@ -21,6 +21,7 @@ import AppointmentCheck from "./HrInfo/AppointmentCheck";
 import PersonnelCard from "./empCard/personnelCard"; //인사기록카드
 import PayslipCheck from "./payslipCheck/payslipCheck"; //급여명세서
 import SeverancePay from "./severancePay/severancepay"; //퇴직금명세서
+import RetireManage from "./retireManage/retiremanage"; //퇴직신청
 import MonthlySalaryCheck from "./monthlySalary/monthlySalaryCheck"; //월급여조회
 import SalaryExpenditures from "./salaryExpenditures/salaryExpenditures"; //급여지출현황
 import EmpBasicInfo from "./empBasicInfo";
@@ -143,6 +144,9 @@ const App = () => {
 
           {/* 근무 관리 */}
           <Route path="workManage" element={<WorkManage />}></Route>
+
+          {/* 퇴직 신청 */}
+          <Route path="retireManage" element={<RetireManage />}></Route>
 
           {/* 퇴직승인 */}
           <Route

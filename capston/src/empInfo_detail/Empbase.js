@@ -110,6 +110,12 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
     } 
   }, [userData])
 
+
+  function retireConfirm() {
+    console.log();
+  }
+
+
   return Object.keys(userData).length > 0 ? (
     
     <div className="baseInfo" style={{marginTop:"10px", marginLeft: "100px", marginRight: "10px", overflowX: "hidden",overflowY: "auto", height: "470px"}}>
