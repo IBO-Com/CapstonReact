@@ -10,6 +10,7 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.material-purple.css";
 import koLocale from "date-fns/locale/ko";
 import { ExcelRenderer } from "react-excel-renderer";
+import * as Utils from "../modules/utils";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -383,6 +384,7 @@ function AttendanceRegister() {
         lengths: lengths,
       });
       console.log(data);
+      Utils.AttendanceRegisterToPay(data);
       axios.post(urlSave, postParam).then((response) => {
         if (response.data.result === "success") {
           alert("저장되었습니다.");
