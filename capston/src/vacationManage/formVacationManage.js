@@ -53,7 +53,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
     });
 
     axios
-      .post("http://localhost:8080/CapstonProject/vacationCheck.jsp", postParam)
+      .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
       .then((response) => {
         setannualData(response.data.ITEMS[0]);
         let annualInfo = response.data.ITEMS[0];
@@ -141,8 +141,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
           </td>
           <td>대체 업무자</td>
           <td>
-            {annualData ? annualData["rep_name"] : " "}
-            {" "}
+            {annualData ? annualData["rep_name"] : " "}{" "}
             {annualData ? annualData["rep_rankKR"] : " "}
           </td>
         </tr>
