@@ -13,15 +13,14 @@ function getFormatDate(date) {
   return year + "-" + month + "-" + day;
 }
 
-function RequestOW() {
+function RequestHW() {
   const formRef = useRef();
-  const dateRef = useRef();
   const timeStart = useRef();
   const timeEnd = useRef();
-  const [owDate, setOwdate] = useState(getFormatDate(new Date()));
+  const [hwDate, setHwDate] = useState(getFormatDate(new Date()));
 
   const handleDateChange = (date) => {
-    setOwdate(date.target.value);
+    setHwDate(date.target.value);
   };
 
   const urlSave = "http://43.200.115.198:8080/attrequest.jsp";
@@ -32,7 +31,7 @@ function RequestOW() {
       if (window.confirm("신청하시겠습니까?")) {
         let start_time = timeStart.current.value.replace(":", "");
         let end_time = timeEnd.current.value.replace(":", "");
-        let date = dateRef.current.value;
+        let date = hwDate;
         let sabun = Cookie.getCookie("empInfo").id;
 
         let postParam = qs.stringify({
@@ -40,7 +39,7 @@ function RequestOW() {
           sabun: sabun,
           start_time: start_time,
           end_time: end_time,
-          work_form: "OW",
+          work_form: "HW",
         });
 
         console.log(postParam);
@@ -82,11 +81,10 @@ function RequestOW() {
               fontSize: "15px",
               marginRight: "20px",
             }}
-            ref={dateRef}
             type="date"
             id="start"
             name="trip-start"
-            value={owDate}
+            value={hwDate}
             onChange={handleDateChange}
             min="2022-01-01"
           ></input>
@@ -173,4 +171,4 @@ function RequestOW() {
   );
 }
 
-export default React.memo(RequestOW);
+export default React.memo(RequestHW);

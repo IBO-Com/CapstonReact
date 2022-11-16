@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import FormControl from "@mui/material/FormControl";
+import { Button, MenuItem, TextField } from "@mui/material";
+import { useCookies } from "react-cookie";
 
 import testimg from "./img/user.png";
 import "./css/empinfo/empinfo.css";
@@ -10,9 +13,7 @@ import License from "./empInfo_detail/License";
 
 import axios from "axios";
 import qs from "qs";
-import * as Cookie from "./cookies/cookies";
 import * as GetYearOfWork from "./modules/getYearOfWork";
-import * as GetCDTR from "./modules/getCDTR";
 
 const App = () => {
   const [today, setToday] = useState(new Date());
@@ -20,64 +21,86 @@ const App = () => {
   const [workMonth, setWorkMonth] = useState("0");
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
+  const [cookies, setCookie, removeCookie] = useCookies();
 
-  const [dept, setDept] = useState("");
-  const [team, setTeam] = useState("");
-  const [rank, setRank] = useState("");
-  const [center, setCenter] = useState("");
+  const [selectDepart, setSelectDepart] = useState("*");
+  const [textName, setTextName] = useState("");
+  const [peopleData, setPeopleData] = useState();
+  const [sabun, setSabun] = useState();
+  
   const [picture, setPicture] = useState(
     window.sessionStorage.getItem("picture")
   );
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    let data = Cookie.getCookie("loginInfo");
+
+
+  const handleSelectDepart = (event) => {
+    setSelectDepart(event.target.value);
+  };
+
+  const textNameHandle = (e) => {
+    setTextName(e.target.value);
+  };
+
+  const searchBtnHandler = () => {
+    let data = textName;
     let userInfo = {};
 
     let postParam = qs.stringify({
-      sabunOrName: data["id"],
+      sabunOrName: data,
     });
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
+      
+        let identityBase = userInfo["identity"].slice(6, 7);
+        if (identityBase == "1" || identityBase == "2") {
+          setDefaultYear("19");
+        } else {
+          setDefaultYear("20");
+        }
+        console.log("userInfo : ", userInfo);
+        setUserData(userInfo);
 
-        let startDate = new Date(
-          userInfo["start_date"].slice(0, 4),
-          parseInt(userInfo["start_date"].slice(4, 6)) - 1, //Date 연산으로 인한 -1을 해주어야 함
-          userInfo["start_date"].slice(6, 8)
-        );
-        GetYearOfWork.getYearOfWork(
-          startDate,
-          today,
-          setWorkYear,
-          setWorkMonth,
-          setWorkDay
-        );
+        let postParam2 = qs.stringify({
+          id: userInfo["sabun"],
+        });
+      
+        axios
+          .post("http://43.200.115.198:8080/getpicture.jsp", postParam2)
+          .then((response) => {
+            setPicture(response.data.ITEMS[0].picture);
+          });
+      });
+  }
 
-        if (
-          today.getFullYear() - 2000 <
-          parseInt(userInfo["identity"].slice(0, 2))
-        ) {
+  useEffect(() => {
+    let data = cookies["loginInfo"];
+    console.log("cookies : ", data);
+    let userInfo = {};
+
+    let postParam = qs.stringify({
+      sabunOrName: data['id']
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((response) => {
+        userInfo = response.data.ITEMS[0];
+      
+        let identityBase = userInfo["identity"].slice(6, 7);
+        if (identityBase == "1" || identityBase == "2") {
           setDefaultYear("19");
         } else {
           setDefaultYear("20");
         }
         setUserData(response.data.ITEMS[0]);
-
-        GetCDTR.getCDTR(
-          userInfo["center"],
-          userInfo["dept"],
-          userInfo["team"],
-          userInfo["rank"],
-          setCenter,
-          setDept,
-          setTeam,
-          setRank
-        );
       });
+
   }, []);
 
   const toggleTab = (index) => {
@@ -86,6 +109,39 @@ const App = () => {
 
   return (
     <div className="empInfo">
+      {
+        cookies["loginInfo"].authority == '1' ? ( //관리자일때
+          <>
+          <div className="card_dateBox">
+            <span>사원 조회 &nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <FormControl>
+              <TextField
+                id="outlined-card"
+                label="사번/성명"
+                variant="outlined"
+                size="small"
+                onChange={textNameHandle}
+              />
+            </FormControl>
+
+            <button
+              className="card_search_btn"
+              onClick={() => {
+                searchBtnHandler();
+              }}
+            >
+              검색
+            </button>
+          </div>
+          </>
+        ) : (
+          <></>
+        )
+      }
+     
+
+      <hr className="empSearchBar"></hr>
+
       <div className="plzEmp">
         <div>
           <div className="empWrapimg">
@@ -98,12 +154,12 @@ const App = () => {
         </div>
 
         <div className="nameAnddept">
-          <p className="empinfoName" style={{ fontSize: "20px" }}>
+          <p className="empinfoName">
             {userData["name"] ? userData["name"] : "로딩중"}
           </p>
 
-          <p className="empinfoDept" style={{ fontSize: "13px" }}>
-            {center}
+          <p className="empinfoDept">
+          {userData["centerKR"] ? userData["centerKR"] : "로딩중"}
           </p>
         </div>
 
@@ -119,10 +175,10 @@ const App = () => {
               <tr>
                 <td>{userData["sabun"] ? userData["sabun"] : "로딩중"}</td>
                 <td>{userData["retire_cls"] == 0 ? "재직" : "퇴직"}</td>
-                <td>{dept ? dept : ""}</td>
-                <td>{rank ? rank : ""}</td>
+                <td>{userData["deptKR"] ? userData["deptKR"] : "로딩중"}</td>
+                <td>{userData["rankKR"] ? userData["rankKR"] : "로딩중"}</td>
               </tr>
-              <br></br>
+              <p></p>
               <tr>
                 <td>ㆍ생년월일</td>
                 <td>ㆍ입사일</td>
@@ -134,20 +190,20 @@ const App = () => {
                 <td>
                   {userData["identity"]
                     ? defaultYear +
-                      userData["identity"].slice(0, 2) +
-                      "-" +
-                      userData["identity"].slice(2, 4) +
-                      "-" +
-                      userData["identity"].slice(4, 6)
+                    userData["identity"].slice(0, 2) +
+                    "-" +
+                    userData["identity"].slice(2, 4) +
+                    "-" +
+                    userData["identity"].slice(4, 6)
                     : "로딩중"}
                 </td>
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                      "-" +
-                      userData["start_date"].slice(4, 6) +
-                      "-" +
-                      userData["start_date"].slice(6, 8)
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td>
@@ -156,10 +212,10 @@ const App = () => {
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                      "-" +
-                      userData["start_date"].slice(4, 6) +
-                      "-" +
-                      userData["start_date"].slice(6, 8)
+                    "-" +
+                    userData["start_date"].slice(4, 6) +
+                    "-" +
+                    userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td></td>
@@ -217,14 +273,14 @@ const App = () => {
         <hr className="empFirstLine" align="left"></hr>
         <div>
           {toogleState === 1 ? (
-            <Empbase userData={userData} defaultYear={defaultYear} />
+            <Empbase userData={userData} setUserData={setUserData} defaultYear={defaultYear} />
           ) : (
             ""
           )}
-          {toogleState === 2 ? <Appointment /> : ""}
-          {toogleState === 3 ? <Account /> : ""}
-          {toogleState === 4 ? <Family /> : ""}
-          {toogleState === 5 ? <License /> : ""}
+          {toogleState === 2 ? <Appointment userData={userData}/> : ""}
+          {toogleState === 3 ? <Account userData={userData}/> : ""}
+          {toogleState === 4 ? <Family userData={userData}/> : ""}
+          {toogleState === 5 ? <License userData={userData}/> : ""}
         </div>
       </div>
     </div>

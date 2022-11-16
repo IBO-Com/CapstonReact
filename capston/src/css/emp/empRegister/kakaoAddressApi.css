@@ -1,0 +1,40 @@
+.kakaoAddressApi_div {
+    transition: 0.5s;
+    position: absolute;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 6px lightgray;
+    left: 50%;
+    top: 50%;
+    margin-top:-260px;
+    margin-left: -260px;
+    z-index: 1000;
+}
+
+.kakaoAddressApi_contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 360px;
+    height: 500px;
+}
+
+.kakaoAddressApi_title {
+    padding-top: 7px;
+    padding-bottom: 5px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.kakaoAddressApi_addTitle {
+    position: absolute;
+    left: 17px;
+    font-size: 20px;
+}
+
+.kakaoAddressApi_closeTitle {
+    position: absolute;
+    right: 10px;
+}

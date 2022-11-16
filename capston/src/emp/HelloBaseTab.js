@@ -4,6 +4,9 @@ import qs from "qs";
 import styles from "../css/emp/empRegister/empRegister.module.css";
 import format from "date-fns/format";
 import axios from "axios";
+import KakaoAddressApi from "./KakaoAddressAPI";
+import { useCookies } from "react-cookie";
+
 import {
   Button,
   FormControl,
@@ -15,6 +18,8 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/user.png";
 import koLocale from "date-fns/locale/ko";
 import * as Cookie from "../cookies/cookies";
+import Postcode from 'react-daum-postcode';
+import { border } from "@mui/system";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -32,6 +37,7 @@ function getFormatDate(date) {
 }
 
 const HelloBaseTab = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const formRef = useRef();
   const name = useRef();
   const englishName = useRef();
@@ -39,7 +45,9 @@ const HelloBaseTab = () => {
   const identityNumberB = useRef();
   const email = useRef();
   const tel = useRef();
+  const address_detail = useRef();
   const address = useRef();
+  const postcode = useRef();
   const [gender, setGender] = useState(0);
   const [married, setMarried] = useState(0);
   const [center, setCenter] = useState("H-경영관리본부");
@@ -48,6 +56,7 @@ const HelloBaseTab = () => {
   const [rank, setRank] = useState("1");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
   const [rankList, setRankList] = useState("");
+  const [isModal, setModal] = useState(false); //주소찾기 모달 
   const [picture, setPicture] = useState({
     img_base64: "",
     img: "",
@@ -155,6 +164,8 @@ const HelloBaseTab = () => {
           email: email.current.value,
           tel: tel.current.value,
           address: address.current.value,
+          address_detail: address_detail.current.value,
+          postcode: postcode.current.value,
           gender: gender,
           married: married,
           center: center.split("-")[0],
@@ -162,13 +173,20 @@ const HelloBaseTab = () => {
           team: team.split("-")[0],
           rank: rank,
           dateComeIn: dateComeIn,
-          loginId: Cookie.getCookie("employeeInfo").id,
+          loginId: Cookie.getCookie("empInfo").id,
           img_base64: picture.img,
         });
 
         axios.post(urlSave, postParam).then((response) => {
           console.log(response);
           if (response.data.result === "success") {
+            setCookie(
+              "empRegister_userInfo", {
+                authority: "0",
+                id: response.data.sabun,
+                name: name.current.value
+              }
+            )
             alert("저장되었습니다.");
           } else {
             alert("error");
@@ -180,6 +198,15 @@ const HelloBaseTab = () => {
 
   return (
     <div>
+      {
+        isModal ? (
+          <KakaoAddressApi setModal={setModal} address={address} postcode={postcode}/>
+        ) : (
+          <>
+          </>
+        )
+      } 
+     
       <Button
         style={{
           marginLeft: "92%",
@@ -421,15 +448,52 @@ const HelloBaseTab = () => {
                 </tr>
                 <tr>
                   <td className={styles.tdPaddingLeft}>
-                    <strong className={styles.redStar}>*</strong>주소
+                    <strong className={styles.redStar}>*</strong>우편번호
                   </td>
-                  <td colSpan={5}>
+                  <td colSpan={1}>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      fullWidth
+                      inputRef={postcode}
+                    />
+                  </td>
+                  <td>
+                      <Button
+                        style={{width: "80px", height: "40px", color:"white", backgroundColor:"#1976d2", border:"0px", borderRadius: "5px"}}
+                        onClick={() => {
+                          setModal(true);
+                        }}
+                      >
+                      주소 찾기
+                      </Button>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td className={styles.tdPaddingLeft}>
+                    <strong className={styles.redStar}>*</strong>도로명 주소
+                  </td>
+                  <td colSpan={3}>
                     <TextField
                       required
                       InputProps={{ sx: { height: 40 } }}
                       fullWidth
                       inputRef={address}
                     />
+                  </td>
+                </tr>
+                <tr>
+                  <td className={styles.tdPaddingLeft}>
+                    <strong className={styles.redStar}>*</strong>상세 주소
+                  </td>
+                  <td colSpan={3}>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      fullWidth                  
+                      inputRef={address_detail}
+                      />
                   </td>
                 </tr>
               </tbody>

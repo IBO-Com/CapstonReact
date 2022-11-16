@@ -84,13 +84,12 @@ function App({ currentClick, setCurrentClick }) {
 const nav_admin = {
   기본정보: {
     menu: ["공통코드정보", "조직도"],
-    link: ["/mainNav/setCodeCommon", "/mainNav/a2"],
+    link: ["/mainNav/setCodeCommon", "/mainNav/organizationChart"],
   },
   "인사/조직관리": {
     menu: [
-      "인사정보",
+      "인사정보관리",
       "인사정보등록",
-      "인사/정보관리",
       "조직관리",
       "인사기록카드",
       "사원정보현황",
@@ -99,7 +98,6 @@ const nav_admin = {
     link: [
       "/mainNav/empinfo",
       "/mainNav/empregister",
-      "/mainNav/b3",
       "/mainNav/setorganize",
       "/mainNav/personnelcard",
       "/mainNav/hrorganization",
@@ -110,22 +108,20 @@ const nav_admin = {
     menu: [
       "근태등록",
       "근태/근무신청",
-      "근무관리",
+      "근태/근무현황",
       "휴가신청",
       "휴가현황",
-      "근태/근무현황",
     ],
     link: [
       "/mainNav/attendanceregister",
       "/mainNav/attendancerequest",
-      "/mainNav/workManage",
-      "/mainNav/vacationManage",
-      "/mainNav/vacationCheck",
       "/mainNav/attendancestatus",
+      "/mainNav/vacationManage",
+      "/mainNav/vacationCheck",      
     ],
   },
   급여관리: {
-    menu: ["개인급여관리", "월급여조회", "급여명세서조회", "급여지출현황"],
+    menu: ["개인급여관리", "월급여조회", "급여명세서", "급여지출현황"],
     link: [
       "/mainNav/personalsalary",
       "/mainNav/monthlySalaryCheck",
@@ -134,8 +130,9 @@ const nav_admin = {
     ],
   },
   퇴직관리: {
-    menu: ["퇴직승인", "퇴직금산정", "퇴직금명세서"],
+    menu: ["퇴직신청", "퇴직승인", "퇴직금산정", "퇴직금명세서"],
     link: [
+      "/mainNav/retiremanage",
       "/mainNav/retirementapproval",
       "/mainNav/severancepaycal",
       "/mainNav/severancepay",
@@ -154,12 +151,11 @@ const nav_user = {
     link: ["/mainNav/empinfo", "/mainNav/personnelcard"],
   },
   근태관리: {
-    menu: ["근무관리", "근태/근무신청", "휴가신청", "근태/근무현황"],
+    menu: ["근태/근무신청", "근태/근무현황", "휴가신청"],
     link: [
-      "/mainNav/workManage",
       "/mainNav/attendancerequest",
-      "/mainNav/vacationManage",
       "/mainNav/attendancestatus",
+      "/mainNav/vacationManage",
     ],
   },
   급여관리: {
@@ -172,8 +168,8 @@ const nav_user = {
     ],
   },
   퇴직관리: {
-    menu: ["퇴직금산정", "퇴직금명세서"],
-    link: ["/mainNav/severancepaycal", "/mainNav/severancepay"],
+    menu: ["퇴직신청", "퇴직금산정", "퇴직금명세서"],
+    link: ["/mainNav/retiremanage", "/mainNav/severancepaycal", "/mainNav/severancepay"],
   },
 };
 

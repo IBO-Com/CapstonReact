@@ -116,6 +116,8 @@ function AttendanceRegister() {
       { name: "work_form_nm", type: "string" },
       { name: "start_datetime", type: "string" },
       { name: "end_datetime", type: "string" },
+      { name: "normal_datetime", type: "string" },
+      { name: "holiday_datetime", type: "string" },
       { name: "over_datetime", type: "string" },
       { name: "night_datetime", type: "string" },
     ],
@@ -201,7 +203,7 @@ function AttendanceRegister() {
       cellsalign: "center",
       datafield: "name",
       editable: false,
-      width: 150,
+      width: 120,
     },
     {
       text: "근무형태",
@@ -217,37 +219,53 @@ function AttendanceRegister() {
           valueMember: "value",
         });
       },
-      width: 150,
+      width: 80,
     },
     {
       text: "출근(시작)시간",
       align: "center",
       datafield: "start_datetime",
       cellsalign: "center",
-      width: 160,
+      width: 120,
     },
     {
       text: "퇴근(종료)시간",
       align: "center",
       cellsalign: "center",
       datafield: "end_datetime",
-      width: 160,
+      width: 120,
     },
     {
-      text: "연장시간(분)",
+      text: "일반근무시간(분)",
+      align: "center",
+      cellsalign: "center",
+      datafield: "normal_datetime",
+      editable: false,
+      width: 120,
+    },
+    {
+      text: "휴일근무시간(분)",
+      align: "center",
+      cellsalign: "center",
+      datafield: "holiday_datetime",
+      editable: false,
+      width: 120,
+    },
+    {
+      text: "연장근무시간(분)",
       align: "center",
       cellsalign: "center",
       datafield: "over_datetime",
       editable: false,
-      width: 160,
+      width: 120,
     },
     {
-      text: "야근시간(분)",
+      text: "야근근무시간(분)",
       align: "center",
       cellsalign: "center",
       datafield: "night_datetime",
       editable: false,
-      width: 160,
+      width: 120,
     },
   ]);
 
@@ -316,47 +334,44 @@ function AttendanceRegister() {
         delete data[i]["uid"];
         delete data[i]["visibleindex"];
 
-        let end_datetime = data[i].end_datetime.replace(":", "");
-        let split_time = data[i].end_datetime.split(":");
-        let hour = parseInt(split_time[0]);
-        let min = parseInt(split_time[1]);
-        let sec = (hour * 60 + min) * 60;
+        let split_StartTime = data[i].start_datetime.split(":");
+        let hour_start = parseInt(split_StartTime[0]);
+        let min_start = parseInt(split_StartTime[1]);
+        let sec_start = (hour_start * 60 + min_start) * 60;
 
-        if (end_datetime >= "1830" && end_datetime <= "2200") {
-          data[i].over_datetime = String((sec - 64800) / 60);
-          if (
-            isNullOrEmpty(data[i].work_form_cd) ||
-            data[i].work_form_cd == "NM"
-          ) {
-            data[i].work_form_cd = "EW";
-          }
-        } // 10시 이후 퇴근
-        else if (end_datetime > "2200" && end_datetime <= "2400") {
-          data[i].over_datetime = "240";
-          data[i].night_datetime = String((sec - 79200) / 60);
-          if (
-            isNullOrEmpty(data[i].work_form_cd) ||
-            data[i].work_form_cd == "NM"
-          ) {
-            data[i].work_form_cd = "EW";
-          }
-        } else if (end_datetime <= "0600") {
-          data[i].over_datetime = "240";
-          data[i].night_datetime = String((7200 + sec) / 60);
-          if (
-            isNullOrEmpty(data[i].work_form_cd) ||
-            data[i].work_form_cd == "NM"
-          ) {
-            data[i].work_form_cd = "EW";
-          }
-        } else {
+        let end_datetime = data[i].end_datetime.replace(":", "");
+        let split_endTime = data[i].end_datetime.split(":");
+        let hour_end = parseInt(split_endTime[0]);
+        let min_end = parseInt(split_endTime[1]);
+        let sec_end = (hour_end * 60 + min_end) * 60;
+
+        if (data[i].work_form_cd == "RW") {
+          data[i].normal_datetime = "";
           data[i].over_datetime = "";
           data[i].night_datetime = "";
-          if (
-            isNullOrEmpty(data[i].work_form_cd) ||
-            data[i].work_form_cd == "EW"
-          ) {
-            data[i].work_form_cd = "NM";
+          data[i].holiday_datetime = String((sec_end - sec_start) / 60);
+        } else {
+          data[i].holiday_datetime = "";
+          if (end_datetime <= "1830") {
+            data[i].normal_datetime = String((sec_end - sec_start) / 60);
+            data[i].over_datetime = "";
+            data[i].night_datetime = "";
+            data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 1);
+            if (end_datetime > "1800") data[i].normal_datetime = "540";
+          } else if (end_datetime >= "1830" && end_datetime <= "2200") {
+            data[i].normal_datetime = "540";
+            data[i].over_datetime = String((sec_end - 64800) / 60);
+            data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 2);
+          } else if (end_datetime > "2200" && end_datetime <= "2400") {
+            data[i].normal_datetime = "540";
+            data[i].over_datetime = "240";
+            data[i].night_datetime = String((sec_end - 79200) / 60);
+            data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 2);
+          } else if (end_datetime <= "0600") {
+            data[i].normal_datetime = "540";
+            data[i].over_datetime = "240";
+            data[i].night_datetime = String((7200 + sec_end) / 60);
+            data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 2);
           }
         }
       }
@@ -378,6 +393,19 @@ function AttendanceRegister() {
       });
     }
   };
+
+  function checkWorkForm(workFormCd, Flag) {
+    if (Flag == 1) {
+      if (isNullOrEmpty(workFormCd) || workFormCd == "EW") {
+        return "NM";
+      }
+    } else {
+      if (isNullOrEmpty(workFormCd) || workFormCd == "NM") {
+        return "EW";
+      }
+    }
+    return workFormCd;
+  }
 
   const onClickClosingButton = () => {
     let str =
@@ -404,7 +432,7 @@ function AttendanceRegister() {
     <div
       style={{
         width: "98%",
-        minHeight: "790px",
+        min_endHeight: "790px",
         background: "white",
       }}
     >

@@ -30,7 +30,7 @@ const App = () => {
             <button className="userHeader_logout">
               <BiLogOut size={"30px"} color={"gray"} />
             </button>
-            <div class="userHeader_dropdown">
+            <div className="userHeader_dropdown">
               <ul>
                 <li>
                   <Link to="/" className="userHeader_logout">

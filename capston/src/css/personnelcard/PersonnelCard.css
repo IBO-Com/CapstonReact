@@ -60,11 +60,10 @@
     margin-left: 10px;
 }
 
-
 .CardInfoTable .hrCardInfo table {
-    overflow: auto;
+    overflow-y: auto;
     border-collapse: collapse;
-    width: 600px;
+    min-width: 610px;
     border: 1px solid #D9D9D9;
     margin-top: 10px;
 }
@@ -125,7 +124,7 @@
 }
 
 .perCard_box {
-    overflow: auto;
+    overflow-y: auto;
     height: 100%;
 }
 

@@ -1,21 +1,165 @@
 import React, { useState, useEffect } from "react";
-
+import { useCookies } from "react-cookie";
 import "./css/hrMain.css";
 import axios from "axios";
 import Basic from "../src/img/basic.png";
 import Profile from "../src/img/profile.png";
 import User from "../src/img/user.png";
 import ApexCharts from "react-apexcharts";
-import * as Cookie from "./cookies/cookies";
+import * as GetYearOfWork from "./modules/getYearOfWork";
 import qs from "qs";
 
 const App = () => {
   let maxAnnual = 15;
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [today, setToday] = useState(new Date());
+  const [defaultYear, setDefaultYear] = useState("19");
+  const [workMonth, setWorkMonth] = useState("0");
+  const [workYear, setWorkYear] = useState("0");
+  const [workDay, setWorkDay] = useState("0");
   const [annual, setAnnual] = useState(12.5); //연차 개수
   const [picture, setPicture] = useState("null");
+  const [userData, setUserData] = useState({});
+  const [vacationData, setVacationData] = useState([]);
+
+  const annualData = {
+    "0": "연차",
+    "01": "오전반차",
+    "02": "오후반차",
+    "03": "경조휴가",
+    "04": "병결",
+    "05": "기타"
+  }
+
+  const todayTime = () => {
+    let now = new Date();
+    let todayYear = now.getFullYear();
+    let todayMonth = now.getMonth() + 1;
+    let toDayDate = now.getDate();
+
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    let dayOfWeek = week[now.getDay()];
+
+    return todayYear + "년 " + todayMonth + "월 " + toDayDate + "일 " + dayOfWeek + "요일";
+  }
+
+  const daytime = () => { //공지사항 월급날 전용 함수
+    let now = new Date();
+    let toDayDate = now.getDate();
+
+    return toDayDate;
+  }
+
+  const pay = () => {
+    if (daytime() >= 0) { //월급일은 매달 5일이기 때문에 5일에 보게함.
+      return (
+        <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+          <div style={{
+            lineHeight: "30px",
+            color: "white",
+            textAlign: "center",
+            width: "65px",
+            height: "30px",
+            backgroundColor: "cornflowerblue",
+            border: "1px solid cornflowerblue",
+            borderRadius: "5px",
+            boxShadow: "1px 1px 5px white",
+
+          }}>정보</div>
+          <p style={{ marginLeft: "10px", marginTop: "0px", lineHeight: "30px" }}> {todayTime().slice(0, 10)} 급여가 들어왔어요!</p>
+        </div>
+      );
+    } else {
+      return (<p>오늘도 좋은하루 되세요!</p>);
+    }
+  }
+  //0 연차, 01 오전반차, 02 오후반차, 03 경조휴가, 04 병결, 05기타
+  const annNotice = () => {
+    let component = [];
+    for (let i = 0; i < vacationData.length; i++) {
+      let data = vacationData[i];
+      if (data.ann_state == "0") { //0 대기 / 1 승인 
+        component.push(
+          <p></p>
+        )
+      } else if (data.ann_state == "1") {
+        component.push(
+          <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+            <div style={{
+              lineHeight: "30px",
+              color: "white",
+              textAlign: "center",
+              width: "65px",
+              height: "30px",
+              backgroundColor: "#21BF54",
+              border: "1px solid #21BF54", //3시얍
+              borderRadius: "5px",
+              boxShadow: "1px 1px 5px white",
+
+            }}>승인</div>
+            <p style={{ marginLeft: "10px", marginTop: "0px", lineHeight: "30px" }}> {annualData[data.vacation]} 신청이 승인됐어요!</p>
+          </div>
+        )
+      }
+    }
+    return component;
+  }
+
 
   useEffect(() => {
-    let empInfo = Cookie.getCookie("empInfo");
+    let data = cookies["loginInfo"];
+    let userInfo = {};
+
+    let postParam = qs.stringify({
+      sabunOrName: data["id"],
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((response) => {
+        userInfo = response.data.ITEMS[0];
+
+        let startDate = new Date(
+          userInfo["start_date"].slice(0, 4),
+          parseInt(userInfo["start_date"].slice(4, 6)) - 1, //Date 연산으로 인한 -1을 해주어야 함
+          userInfo["start_date"].slice(6, 8)
+        );
+        GetYearOfWork.getYearOfWork(
+          startDate,
+          today,
+          setWorkYear,
+          setWorkMonth,
+          setWorkDay
+        );
+        let identityBase = userInfo["identity"].slice(6, 7);
+        if (identityBase == "1" || identityBase == "2") {
+          setDefaultYear("19");
+        } else {
+          setDefaultYear("20");
+        }
+        setUserData(response.data.ITEMS[0]);
+      });
+
+    postParam = {
+      sabunOrName: cookies.loginInfo.id
+    }
+    postParam = qs.stringify(postParam);
+
+    axios
+      .post("http://43.200.115.198:8080/vacationCheck.jsp", postParam)
+      .then((res) => {
+        console.log("ressult : ", res);
+        setVacationData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }, []);
+
+
+
+  useEffect(() => {
+    let empInfo = cookies["empInfo"];
     let postParam = qs.stringify({
       id: empInfo["id"],
     });
@@ -125,11 +269,11 @@ const App = () => {
                 )}
               </div>
               <div className="hrMain_userDetail">
-                <li className="hrMain_userName">김명지</li>
-                <li>2022771010</li>
-                <li className="hrMain_dept">경영관리본부</li>
-                <li className="hrMain_subDept">경영기획부</li>
-                <li className="hrMain_Team">총무인사팀</li>
+                <li className="hrMain_userName">{userData["name"] ? userData["name"] : "로딩중"}</li>
+                <li>{userData["sabun"] ? userData["sabun"] : "로딩중"}</li>
+                <li className="hrMain_dept">{userData["centerKR"] ? userData["centerKR"] : "로딩중"}</li>
+                <li className="hrMain_subDept">{userData["deptKR"] ? userData["deptKR"] : "로딩중"}</li>
+                <li className="hrMain_Team">{userData["teamKR"] ? userData["teamKR"] : "로딩중"}</li>
               </div>
             </div>
           </div>
@@ -142,21 +286,20 @@ const App = () => {
                     padding: "15px",
                     fontSize: "20px",
                     fontWeight: "bold",
-                  }}
-                >
-                  2022.10.27 (목)
+                  }}>
+                  {todayTime()}
                 </div>
                 <div className="hrMain_workInfo_work">
                   <div className="hrMain_workState"> 출근 </div>
-                  <div className="hrMain_workDate"> 2022-07-29 </div>
-                  <div className="hrMain_workTime"> 08:49</div>
+                  <div className="hrMain_workDate"> {todayTime().slice(0, 4)}-{todayTime().slice(5, 8)}-{todayTime().slice(10, 12)} </div>
+                  <div className="hrMain_workTime">08:49</div>
                 </div>
 
                 <ApexCharts
                   options={data.options}
                   series={data.series}
                   type="radialBar"
-                  height={200}
+                  height={220}
                 />
                 <div className="hrMain_workBottomText">2022년 17개 갱신</div>
               </div>
@@ -165,31 +308,33 @@ const App = () => {
 
           <div className="hrMain_work_container">
             <div>
-              <h4>신청 내역</h4>
+              <h4>연차/휴가 신청 내역</h4>
               <div className="hrMain_workTable">
                 <table className="hrMain_table">
                   <thead>
                     <tr>
-                      <td>신청종류</td>
-                      <td>신청일자</td>
-                      <td>처리</td>
-                      <td>접수일자</td>
+                      <td>구분</td>
+                      <td>일시</td>
+                      <td>처리상태</td>
+                      <td>대체 업무자</td>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>연차휴가</td>
-                      <td>2022.07.28</td>
-                      <td>완료</td>
-                      <td>2022.07.28</td>
-                    </tr>
-
-                    <tr>
-                      <td>출장</td>
-                      <td>2022.03.15</td>
-                      <td>완료</td>
-                      <td>2022.03.15</td>
-                    </tr>
+                  {vacationData.map(function (item) {
+                      return (
+                        <>
+                          <tr>
+                            <td style={{ minWidth: "80px" }}>{annualData[item.vacation]}</td>
+                            <td>{item.ann_start_date.slice(0, 4)}년&nbsp;{" "}
+                              {item.ann_start_date.slice(4, 6)}월&nbsp;{" "}
+                              {item.ann_start_date.slice(6, 8)}일&nbsp; ~ &nbsp;
+                              {item.ann_end_date.slice(6, 8)}일</td>
+                            <td style={{ minWidth: "80px" }}>{item.ann_state === "0" ? "대기중" : "처리완료"}</td>
+                            <td style={{ minWidth: "100px" }}>{item.rep_name} {item.rep_rankKR}</td>
+                          </tr>
+                        </>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -198,8 +343,15 @@ const App = () => {
         </div>
 
         <div className="hrMain_notice_container">
-          <h4>공지사항</h4>
-          <div className="hrMain_notice"></div>
+          <h4>새로운 알림</h4>
+          <div className="hrMain_notice">
+            <p>{pay()}</p>
+            <p>{
+              annNotice().map((item, index) => (
+                item
+              ))
+            }</p>
+          </div>
         </div>
       </div>
     </div>

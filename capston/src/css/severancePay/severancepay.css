@@ -89,7 +89,7 @@
     width: 780px;
 }
 
-.retire_Btn,
+.retire_btn,
 .retireseverance_btn {
     width: 130px;
     color: #FFFFFF;
@@ -100,6 +100,10 @@
     border: none;
     background: #F09336;
     border-radius: 2px;
+}
+
+.retire_btn {
+    margin-left: 350px;
 }
 
 .severancePay_viewer {
@@ -146,8 +150,4 @@
     background: #537AAA;
     border-radius: 2px;
     margin-top: 1px;
-}
-
-.retire_Btn {
-    margin-left: 350px;
 }

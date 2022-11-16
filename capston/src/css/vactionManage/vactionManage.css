@@ -5,148 +5,171 @@ body {
 }
 
 .vactionManage_App {
-    width: 98%;
-    min-width: 1000px;
-    height: 790px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
+  width: 98%;
+  min-width: 1000px;
+  height: 790px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .vactionManage_line {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 96%;
-    min-width: 980px;
-    border-bottom: 3px solid lightgray;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  width: 96%;
+  min-width: 980px;
+  border-bottom: 3px solid lightgray;
 }
 
 .vactionManage_App .vm_searchBtn {
-    width: 97px;
-    color: #FFFFFF;
-    height: 36px;
-    border: none;
-    background: #537AAA;
-    margin-top: 2px;
-    border-radius: 2px;
+  width: 97px;
+  color: #ffffff;
+  height: 36px;
+  border: none;
+  background: #537aaa;
+  margin-top: 2px;
+  border-radius: 2px;
 }
 
 .vm_save_btn {
-    width: 97px;
-    color: #FFFFFF;
-    height: 36px;
-    border: none;
-    background: #F09336;
-    margin-top: 2px;
-    border-radius: 2px;
-    margin-bottom: 20px;
+  width: 97px;
+  color: #ffffff;
+  height: 36px;
+  border: none;
+  background: #f09336;
+  margin-top: 2px;
+  border-radius: 2px;
+  margin-bottom: 20px;
 }
 
 .vm_kind p {
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 25px;
-    /* identical to box height */
-    letter-spacing: 0.1em;
-    color: #5a6163;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  /* identical to box height */
+  letter-spacing: 0.1em;
+  color: #5a6163;
 }
 
 .vm_kind {
-    margin-left: 70px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-left: 70px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-.vm_yeon, .vm_ban, .vm_hu, .vm_sick, .vm_mon {
-    margin-right: 30px;
+.vm_yeon,
+.vm_ban,
+.vm_hu,
+.vm_sick,
+.vm_mon {
+  margin-right: 30px;
 }
 
 .vm_perInfo p {
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 25px;
-    /* identical to box height */
-    letter-spacing: 0.1em;
-    color: #5a6163;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  /* identical to box height */
+  letter-spacing: 0.1em;
+  color: #5a6163;
 }
 
 .vm_InfoTable {
-    overflow: auto;
-    width: 550px;
-    height: 70px;
-    margin-right: 50px;
+  overflow: auto;
+  width: 550px;
+  height: 70px;
+  margin-right: 50px;
 }
 
 .vm_InfoTable thead th {
-    border: 0px;
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 700;    
-    padding: 0px;
-    margin: 0px;
-    background-color: #EBEFF2;
+  border: 0px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  padding: 0px;
+  margin: 0px;
+  background-color: #ebeff2;
 }
 
-.vm_InfoTable tbody td{
-    text-align: center;
-    padding: 0px;
-    margin: 0px;
+.vm_InfoTable tbody td {
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .vm_reason {
-    resize: none;
+  resize: none;
 }
 
 .vm_viewer {
-    width: 700px;
-    height: 600px;
-    overflow: hidden;
-    margin-left: 800px;
-    border: 2px solid #D9D9D9;
-    border-radius: 3px;
+  width: 700px;
+  height: 600px;
+  overflow: hidden;
+  margin-left: 800px;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
 }
 
 .vmInfoTable {
-    min-width: 500px;
-    margin: 5px 0px 0px 120px;
-    overflow-y: auto;
-    height: 645px;
+  min-width: 500px;
+  margin: 5px 0px 0px 120px;
+  overflow-y: auto;
+  height: 645px;
 }
 
 .vmInfoTable p {
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 25px;
-    letter-spacing: 0.1em;
-    color: #5a6163;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  color: #5a6163;
 }
 
 form input {
-    height: 30px;
-    margin-bottom: 10px;
-    width: 100px;
+  height: 30px;
+  margin-bottom: 10px;
+  width: 100px;
+}
+.vm_radioItem {
+  height: 13px;
+  width: 13px;
+  margin-bottom: 10px;
 }
 
+.vm_date {
+  height: 30px;
+  width: 150px;
+  margin-bottom: 10px;
+}
+.vm_repName {
+  height: 30px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+.vm_emerTel {
+  height: 30px;
+  width: 150px;
+}
 .vm_bisang input {
-    height: 30px;
-    margin-bottom: 10px;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 #vm_select {
-    height: 30px;
-    margin-bottom: 10px;
-    width: 140px;
-    height: 35px;
+  height: 30px;
+  margin-bottom: 10px;
+  width: 140px;
+  height: 35px;
 }
 
 .vm_daesin {
-    font-size: 13px;
-    color: red;
+  font-size: 13px;
+  color: red;
 }
