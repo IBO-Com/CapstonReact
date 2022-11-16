@@ -57,7 +57,7 @@ const HRorganization = () => {
   };
 
   const sendSubmit = () => {
-    console.log("send submit")
+    console.log("send submit");
     /* 날짜 포멧 */
     let sYear = String(startDate.getFullYear());
     let sMonth = startDate.getMonth() + 1;
@@ -202,26 +202,26 @@ const HRorganization = () => {
                 보안취약점연구부
               </MenuItem>
             </Select>
-          </FormControl> 
-            <input
-              style={{
-                lineHeight: "33px",
-                width: "170px",
-                height: "33px"
-              }}
-              placeholder="사번 / 성명"
-              type="text"
-              className="HRorganization_input"
-              label="사번/성명"
-              variant="outlined"
-              size="small"
-              onChange={textNameHandle}
-            />
+          </FormControl>
+          <input
+            style={{
+              lineHeight: "33px",
+              width: "170px",
+              height: "33px",
+            }}
+            placeholder="사번 / 성명"
+            type="text"
+            className="HRorganization_input"
+            label="사번/성명"
+            variant="outlined"
+            size="small"
+            onChange={textNameHandle}
+          />
           <button
             className="HRorganization_btn"
             onClick={() => {
               sendSubmit();
-            }} 
+            }}
           >
             검색
           </button>

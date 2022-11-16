@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../css/vacationCheck/vacationCheck.css";
 import axios from "axios";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import koLocale from "date-fns/locale/ko";
+import format from "date-fns/format";
 import {
   FormControl,
   Select,
@@ -10,13 +14,19 @@ import {
 } from "@mui/material";
 import qs from "qs";
 
+class koLocalizedUtils extends DateFnsUtils {
+  getCalendarHeaderText(date) {
+    return format(date, "yyyy년　　 MM월", { locale: this.locale });
+  }
+}
+
 const App = () => {
   const [selectDepart, setSelectDepart] = useState("*");
   const [selectDep, setSelectDep] = useState("*");
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [textName, setNameText] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date("2022-11-01"));
+  const [endDate, setEndDate] = useState(new Date());
   const [vacationData, setVacationData] = useState([]);
   const [sabun, setSabun] = useState();
   const annualData = {
@@ -35,19 +45,19 @@ const App = () => {
     return year + "-" + month;
   }
 
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
+  // const onChange = (dates) => {
+  //   const [start, end] = dates;
+  //   setStartDate(start);
+  //   setEndDate(end);
+  // };
 
-  const handleChange = (event) => {
-    setSelectDep(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setSelectDep(event.target.value);
+  // };
 
-  const handleStartDateChange = (date) => {
-    setRetrieveDate(getFormatDate(date));
-  };
+  // const handleStartDateChange = (date) => {
+  //   setRetrieveDate(getFormatDate(date));
+  // };
 
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
@@ -55,6 +65,14 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setNameText(e.target.value);
+  };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDatetDateChange = (date) => {
+    setEndDate(date);
   };
 
   //  승인
@@ -154,11 +172,38 @@ const App = () => {
   // 검색
   const sendSubmit = () => {
     console.log("send submit");
+    /* 날짜 포멧 */
+    let sYear = String(startDate.getFullYear());
+    let sMonth = startDate.getMonth() + 1;
+    let sDay = startDate.getDate();
+
+    let eYear = String(endDate.getFullYear());
+    let eMonth = endDate.getMonth() + 1;
+    let eDay = endDate.getDate();
+
+    if (sMonth < 10) {
+      sMonth = "0" + sMonth;
+    }
+    if (sDay < 10) {
+      sDay = "0" + sDay;
+    }
+
+    if (eMonth < 10) {
+      eMonth = " 0" + eMonth;
+    }
+    if (eDay < 10) {
+      eDay = " 0" + eDay;
+    }
+
+    let sDate = sYear + sMonth + sDay;
+    let eDate = eYear + eMonth + eDay;
 
     /* 쿼리 문 작성 */
     let postParam = {};
     let query = {};
 
+    query["startDate"] = sDate;
+    query["retireDate"] = eDate;
     if (textName.trim() == "") {
       delete query["sabunOrName"];
     } else {
@@ -186,6 +231,40 @@ const App = () => {
     <div className="personnelCard_box">
       <div className="card_search_box">
         <div className="card_dateBox">
+          <span>기준일자</span>
+
+          <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
+            <DatePicker
+              autoOk
+              variant="inline"
+              views={["year", "month", "date"]}
+              format="yyyy-MM-dd"
+              value={startDate}
+              inputVariant="outlined"
+              showTodayButton
+              className="startDate"
+              size="small"
+              todayLabel="오늘"
+              onChange={handleStartDateChange}
+            />
+          </MuiPickersUtilsProvider>
+          <div className="vacationCheck_bar"></div>
+
+          <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
+            <DatePicker
+              autoOk
+              variant="inline"
+              views={["year", "month", "date"]}
+              format="yyyy-MM-dd"
+              value={endDate}
+              inputVariant="outlined"
+              className="startDate"
+              showTodayButton
+              size="small"
+              todayLabel="오늘"
+              onChange={handleEndDatetDateChange}
+            />
+          </MuiPickersUtilsProvider>
           <FormControl>
             <Select
               value={selectDepart || ""}
@@ -228,6 +307,7 @@ const App = () => {
           </FormControl>
           <FormControl>
             <TextField
+              className="vacationInput"
               id="outlined-card"
               label="사번/성명"
               variant="outlined"
@@ -245,7 +325,6 @@ const App = () => {
           </button>
         </div>
 
-        <hr className="card_lineBar"></hr>
         <div className="vc_Flex">
           <div className="vc_Request">
             <p className="vc_Request_title">연차/휴가 요청</p>

@@ -170,7 +170,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
         <p className="mbt">IBO</p>
         <p>신청자 &nbsp; (인)</p>
         <div className="formProofDiv">
-          {/*<img className="formProof" src={IBOstamp} alt="직인" /> */}
+          {/* <img className="formProof" src={IBOstamp} alt="직인" /> */}
         </div>
       </div>
     </div>

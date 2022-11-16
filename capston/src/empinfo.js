@@ -30,14 +30,12 @@ const App = () => {
   const [textName, setTextName] = useState("");
   const [peopleData, setPeopleData] = useState();
   const [sabun, setSabun] = useState();
-  
+
   const [picture, setPicture] = useState(
     window.sessionStorage.getItem("picture")
   );
   const [toogleState, setToggleState] = useState(1);
   const [userData, setUserData] = useState({});
-
-
 
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
@@ -59,7 +57,7 @@ const App = () => {
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
-      
+
         let identityBase = userInfo["identity"].slice(6, 7);
         if (identityBase == "1" || identityBase == "2") {
           setDefaultYear("19");
@@ -72,14 +70,14 @@ const App = () => {
         let postParam2 = qs.stringify({
           id: userInfo["sabun"],
         });
-      
+
         axios
           .post("http://43.200.115.198:8080/getpicture.jsp", postParam2)
           .then((response) => {
             setPicture(response.data.ITEMS[0].picture);
           });
       });
-  }
+  };
 
   useEffect(() => {
     let data = cookies["loginInfo"];
@@ -87,14 +85,14 @@ const App = () => {
     let userInfo = {};
 
     let postParam = qs.stringify({
-      sabunOrName: data['id']
+      sabunOrName: data["id"],
     });
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         userInfo = response.data.ITEMS[0];
-      
+
         let identityBase = userInfo["identity"].slice(6, 7);
         if (identityBase == "1" || identityBase == "2") {
           setDefaultYear("19");
@@ -103,12 +101,21 @@ const App = () => {
         }
         setUserData(response.data.ITEMS[0]);
 
-        let resData = response.data.ITEMS[0]; 
-        let date = new Date(resData["start_date"].slice(0, 4), parseInt(resData["start_date"].slice(4, 6))-1, resData["start_date"].slice(6, 8));
+        let resData = response.data.ITEMS[0];
+        let date = new Date(
+          resData["start_date"].slice(0, 4),
+          parseInt(resData["start_date"].slice(4, 6)) - 1,
+          resData["start_date"].slice(6, 8)
+        );
         console.log(response.data.ITEMS[0]);
-        GetYearOfWork.getYearOfWork(date, endDate, setWorkYear, setWorkMonth, setWorkDay);
+        GetYearOfWork.getYearOfWork(
+          date,
+          endDate,
+          setWorkYear,
+          setWorkMonth,
+          setWorkDay
+        );
       });
-
   }, []);
 
   const toggleTab = (index) => {
@@ -117,9 +124,8 @@ const App = () => {
 
   return (
     <div className="empInfo">
-      {
-        cookies["loginInfo"].authority == '1' ? ( //관리자일때
-          <>
+      {cookies["loginInfo"].authority == "1" ? ( //관리자일때
+        <>
           <div className="card_dateBox">
             <span>사원 조회 &nbsp;&nbsp;&nbsp;&nbsp;</span>
             <FormControl>
@@ -141,14 +147,10 @@ const App = () => {
               검색
             </button>
           </div>
-          </>
-        ) : (
-          <></>
-        )
-      }
-     
-
-      <hr className="empSearchBar"></hr>
+        </>
+      ) : (
+        <></>
+      )}
 
       <div className="plzEmp">
         <div>
@@ -167,7 +169,7 @@ const App = () => {
           </p>
 
           <p className="empinfoDept">
-          {userData["centerKR"] ? userData["centerKR"] : "로딩중"}
+            {userData["centerKR"] ? userData["centerKR"] : "로딩중"}
           </p>
         </div>
 
@@ -198,20 +200,20 @@ const App = () => {
                 <td>
                   {userData["identity"]
                     ? defaultYear +
-                    userData["identity"].slice(0, 2) +
-                    "-" +
-                    userData["identity"].slice(2, 4) +
-                    "-" +
-                    userData["identity"].slice(4, 6)
+                      userData["identity"].slice(0, 2) +
+                      "-" +
+                      userData["identity"].slice(2, 4) +
+                      "-" +
+                      userData["identity"].slice(4, 6)
                     : "로딩중"}
                 </td>
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                    "-" +
-                    userData["start_date"].slice(4, 6) +
-                    "-" +
-                    userData["start_date"].slice(6, 8)
+                      "-" +
+                      userData["start_date"].slice(4, 6) +
+                      "-" +
+                      userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td>
@@ -220,10 +222,10 @@ const App = () => {
                 <td>
                   {userData["start_date"]
                     ? userData["start_date"].slice(0, 4) +
-                    "-" +
-                    userData["start_date"].slice(4, 6) +
-                    "-" +
-                    userData["start_date"].slice(6, 8)
+                      "-" +
+                      userData["start_date"].slice(4, 6) +
+                      "-" +
+                      userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
                 <td></td>
@@ -281,14 +283,18 @@ const App = () => {
         <hr className="empFirstLine" align="left"></hr>
         <div>
           {toogleState === 1 ? (
-            <Empbase userData={userData} setUserData={setUserData} defaultYear={defaultYear} />
+            <Empbase
+              userData={userData}
+              setUserData={setUserData}
+              defaultYear={defaultYear}
+            />
           ) : (
             ""
           )}
-          {toogleState === 2 ? <Appointment userData={userData}/> : ""}
-          {toogleState === 3 ? <Account userData={userData}/> : ""}
-          {toogleState === 4 ? <Family userData={userData}/> : ""}
-          {toogleState === 5 ? <License userData={userData}/> : ""}
+          {toogleState === 2 ? <Appointment userData={userData} /> : ""}
+          {toogleState === 3 ? <Account userData={userData} /> : ""}
+          {toogleState === 4 ? <Family userData={userData} /> : ""}
+          {toogleState === 5 ? <License userData={userData} /> : ""}
         </div>
       </div>
     </div>

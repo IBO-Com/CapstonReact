@@ -161,8 +161,7 @@ const App = () => {
   return (
     <div className="personnelCard_box">
       <div className="card_search_box">
-        <div className="card_dateBox"></div>
-
+        <div className="card_dateSection"></div>
         <div className="personnelCard_Flex">
           <div className="vmInfoTable">
             <p>휴가 신청자 정보</p>
