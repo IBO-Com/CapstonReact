@@ -300,7 +300,7 @@ const App = () => {
                                 content={() => componentRef.current}
                             />
                             <button
-                                className="retire_btn"
+                                className="pay_retire_btn"
                                 onClick={() => {
                                     toggleTab(1);
                                 }}
