@@ -347,20 +347,21 @@ function AttendanceRegister() {
         let sec_end = (hour_end * 60 + min_end) * 60;
 
         if (data[i].work_form_cd == "RW") {
-          data[i].normal_datetime = "";
-          data[i].over_datetime = "";
-          data[i].night_datetime = "";
+          data[i].normal_datetime = "0";
+          data[i].over_datetime = "0";
+          data[i].night_datetime = "0";
           data[i].holiday_datetime = String((sec_end - sec_start) / 60);
         } else {
-          data[i].holiday_datetime = "";
+          data[i].holiday_datetime = "0";
           if (end_datetime <= "1830") {
             data[i].normal_datetime = String((sec_end - sec_start) / 60);
-            data[i].over_datetime = "";
-            data[i].night_datetime = "";
+            data[i].over_datetime = "0";
+            data[i].night_datetime = "0";
             data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 1);
             if (end_datetime > "1800") data[i].normal_datetime = "540";
           } else if (end_datetime >= "1830" && end_datetime <= "2200") {
             data[i].normal_datetime = "540";
+            data[i].night_datetime = "0";
             data[i].over_datetime = String((sec_end - 64800) / 60);
             data[i].work_form_cd = checkWorkForm(data[i].work_form_cd, 2);
           } else if (end_datetime > "2200" && end_datetime <= "2400") {
