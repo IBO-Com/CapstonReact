@@ -19,6 +19,9 @@ const App = () => {
   const [today, setToday] = useState(new Date());
   const [defaultYear, setDefaultYear] = useState("19");
   const [workMonth, setWorkMonth] = useState("0");
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -99,6 +102,11 @@ const App = () => {
           setDefaultYear("20");
         }
         setUserData(response.data.ITEMS[0]);
+
+        let resData = response.data.ITEMS[0]; 
+        let date = new Date(resData["start_date"].slice(0, 4), parseInt(resData["start_date"].slice(4, 6))-1, resData["start_date"].slice(6, 8));
+        console.log(response.data.ITEMS[0]);
+        GetYearOfWork.getYearOfWork(date, endDate, setWorkYear, setWorkMonth, setWorkDay);
       });
 
   }, []);
