@@ -281,17 +281,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
           </div>
           <div className="info_margin">
             재직상태
-            {
-              cookies["loginInfo"].authority == '1' ? ( //관리자일때
-                <select ref={retireClsRef} className="empbase_select" value={userData["retire_cls"]} onChange={(e) => {setUserData({...userData, "retire_cls": e.target.value})}}>
-                  <option value="0">재직</option>
-                  <option value="1">퇴직</option>
-                </select>
-                 ) : (
-                  <span>{userData["retire_cls"] == '0' ? "재직" : "퇴직"}</span>
-                )
-            }
-            
+                <input disabled ref={retireClsRef} className="empbase_select" value={userData["retire_cls"] == '0' ? "재직" : "퇴직"}></input>
           </div>
           <div className="info_margin">
             본부명
