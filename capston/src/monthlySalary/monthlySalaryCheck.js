@@ -10,7 +10,8 @@ import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import koLocale from "date-fns/locale/ko";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import * as GetFinalTax from "../modules/getFinalTax";
+import * as Utils from "../modules/utils";
+import { useCookies } from "react-cookie";
 
 class koLocalizedUtils extends DateFnsUtils {
    getCalendarHeaderText(date) {
@@ -26,25 +27,43 @@ class koLocalizedUtils extends DateFnsUtils {
  }
  
 const App = () => {
-   const todayTime = () => {
-      let now = new Date();
-      let todayYear = now.getFullYear();
-      let todayMonth = now.getMonth() + 1;
-      let toDayDate = now.getDate();
-
-      return todayYear + "-" + todayMonth + "-" + toDayDate;
-   }
-   
+   const [cookies, setCookie, removeCookie] = useCookies();
+   const [empInfo, setEmpInfo] = useState();
    const [textName, setTextName] = useState('');
    const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
    const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
-   const [tempPack, setTempPack] = useState({});
    const [taxPack, setTaxPack] = useState();
 
    //console.log(monthlyPayDebuct);
 
    const handleDateChange = (date) => {
       setRetrieveDate(getFormatDate(date));
+      axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+         sabunOrName: textName.trim()
+       })).then((res) => {
+         let data = res.data.ITEMS[0];
+         let sabun = "";
+         if(data == undefined) {
+            sabun = cookies["loginInfo"].id;
+         } else {
+            sabun = data.sabun;
+         }
+         
+         let postParam = {
+            sabun: sabun,
+            year: getFormatDate(date).slice(0, 4),
+            month: getFormatDate(date).slice(5, 7)
+          }
+          postParam = qs.stringify(postParam);
+          axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+             let data = res.data.ITEMS[0]; 
+             setTaxPack(data);
+          }).catch((Error) => {
+            console.log(Error);
+         });
+       }).catch((Err) => {
+         console.log(Err);
+      })
     };
 
    const textNameHandle = (e) => {
@@ -56,13 +75,48 @@ const App = () => {
          alert("사번/성명을 입력해주세요.");
          return;
       }
-      //taxPack의 내용은 로그를 확인할 것
-      GetFinalTax.getAllTaxToJsonFast(textName, retrieveDate.replace("-", "") + "01", retrieveDate.replace("-", "") + "32", setTaxPack);
+
+      axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+         sabunOrName: textName.trim()
+       })).then((res) => {
+         let data = res.data.ITEMS[0];
+         if(data == undefined) {
+            alert("해당 사원이 존재하지 않습니다.");
+            return;
+         }
+
+         let postParam = {
+            sabun:data.sabun,
+            year: retrieveDate.slice(0, 4),
+            month: retrieveDate.slice(5, 7)
+          }
+          postParam = qs.stringify(postParam);
+          axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+             let data = res.data.ITEMS[0]; 
+             setTaxPack(data);
+          }).catch((Error) => {
+            console.log(Error);
+         });
+       }).catch((Err) => {
+         console.log(Err);
+      })
    }
 
    useEffect(() => {
-      console.log("taxPack : ", taxPack);
-   }, [taxPack]);
+      let postParam = {
+        sabun: cookies["loginInfo"].id,
+        year: retrieveDate.slice(0, 4),
+        month: retrieveDate.slice(5, 7)
+      }
+      postParam = qs.stringify(postParam);
+      axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+         let data = res.data.ITEMS[0]; 
+         console.log(data);
+         setTaxPack(data);
+      }).catch((Error) => {
+        console.log(Error);
+      })
+    }, []);
 
    return (
       <div className="monthlyPay_background">
@@ -116,15 +170,15 @@ const App = () => {
             </div>
             <div className="monthlyPay_total">
                <p>총 급여</p>
-               <span className="totalPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalMoney.toLocaleString() : 0}원</span>
+               <span className="totalPay">{taxPack ? parseInt(taxPack["totalPay"]).toLocaleString() : 0}원</span>
             </div>
             <div className="monthlyPay_deduct">
                <p>공제액</p>
-               <span className="deductPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalDeductible.toLocaleString() : 0}원</span>
+               <span className="deductPay">{taxPack ? parseInt(taxPack["totalDud"]).toLocaleString() : 0}원</span>
             </div>
             <div className="monthlyPay_amount">
                <p>실수령액</p>
-               <span className="amountPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].finalUserMoney.toLocaleString() : 0}원</span>
+               <span className="amountPay">{taxPack ? (parseInt(taxPack["totalPay"]) - parseInt(taxPack["totalDud"])).toLocaleString() : 0}원</span>
             </div>
          </div>
 
@@ -135,27 +189,27 @@ const App = () => {
          <div className="monthlyWork_viewer">
             <div className="monthlyNormalWork_ment">
                <span>일반근무&nbsp;</span>
-               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].workTime.toFixed(1) : 0}시간</span>
+               <span>{taxPack ? (parseInt(taxPack["normal_datetime"]) / 60).toFixed(1): 0}시간</span>
             </div>
             <div className="monthlyOvertimeWork_ment">
                <span>연장근무&nbsp;</span>
-               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].overTime.toFixed(1) : 0}시간</span>
+               <span>{taxPack ? (parseInt(taxPack["over_datetime"]) / 60).toFixed(1): 0}시간</span>
             </div>
             <div className="monthlyNightWork_ment">
                <span>야간근무&nbsp;</span>
-               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].nightTime.toFixed(1) : 0}시간</span>
+               <span>{taxPack ? (parseInt(taxPack["night_datetime"]) / 60).toFixed(1): 0}시간</span>
             </div>
             <div className="monthlyHolidayWork_ment">
                <span>휴일근무&nbsp;</span>
-               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].restTime.toFixed(1) : 0}시간</span>
+               <span>{taxPack ? (parseInt(taxPack["holiday_datetime"]) / 60).toFixed(1) : 0}시간</span>
             </div>
             <div className="monthlytotalWork_ment">
                <span>총 근무일수&nbsp;</span>
-               <span>{taxPack ? taxPack[Object.keys(taxPack)[1]].day : 0}일</span>
+               <span>{taxPack ? parseInt(taxPack["day"]) : 0}일</span>
             </div>
             <div className="monthlyWorkTime_ment">
                <span>총 근로시간&nbsp;</span>
-               <span>{taxPack ? (taxPack[Object.keys(taxPack)[1]].workTime + taxPack[Object.keys(taxPack)[1]].overTime + taxPack[Object.keys(taxPack)[1]].nightTime + taxPack[Object.keys(taxPack)[1]].restTime).toFixed(1) : 0}시간</span>
+               <span>{taxPack ? (parseInt(taxPack["total_datetime"]) / 60).toFixed(1) : 0}시간</span>
             </div>
          </div>
 
@@ -182,33 +236,33 @@ const App = () => {
             </tr>
             <tr className="monthlyOne">
                <td>기본급</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].defaultMoney.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["pay_normal"]).toLocaleString() : 0}원</td>
                <td>국민연금</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].nationalPension.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["tax_annu"]).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyTwo">
                <td>연장근무</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].overMoney.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["pay_over"]).toLocaleString() : 0}원</td>
                <td>건강보험외</td>
-               <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].healthInsurance + taxPack[Object.keys(taxPack)[1]].longCare).toLocaleString() : 0}원</td>
+               <td>{taxPack ? (parseInt(taxPack["tax_health"]) - parseInt(taxPack["tax_insure"])).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyThree">
                <td>야간근무</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].overMoney.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["pay_night"]).toLocaleString() : 0}원</td>
                <td>고용보험</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].employmentInsurance.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["tax_hire"]).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyFour">
                <td>휴일근무</td>
-               <td>{taxPack ? taxPack[Object.keys(taxPack)[1]].restMoney.toLocaleString() : 0}원</td>
+               <td>{taxPack ? parseInt(taxPack["pay_off"]).toLocaleString() : 0}원</td>
                <td>근로소득세외</td>
-               <td>{taxPack ? (taxPack[Object.keys(taxPack)[1]].incomeTax + taxPack[Object.keys(taxPack)[1]].residentTax).toLocaleString() : 0}원</td>
+               <td>{taxPack ? (parseInt(taxPack["tax_soduk"]) - parseInt(taxPack["tax_resi"])).toLocaleString() : 0}원</td>
             </tr>
             <tr className="monthlyFive">
                <td className="TabletotalPay">총 지급액</td>
-               <td className="TabletotalPay">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalMoney.toLocaleString() : 0}원</td>
+               <td className="TabletotalPay">{taxPack ? parseInt(taxPack["totalPay"]).toLocaleString() : 0}원</td>
                <td className="TabletotalDeduct">총 공제액</td>
-               <td className="TabletotalDeduct">{taxPack ? taxPack[Object.keys(taxPack)[1]].totalDeductible.toLocaleString() : 0}원</td>
+               <td className="TabletotalDeduct">{taxPack ? parseInt(taxPack["totalDud"]).toLocaleString() : 0}원</td>
             </tr>
          </table>
       </div>
