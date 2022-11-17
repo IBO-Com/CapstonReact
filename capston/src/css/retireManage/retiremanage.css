@@ -3,6 +3,7 @@
     color: #FFFFFF;
     height: 36px;
     margin-left: 120px;
+    margin-top: 20px;
     border: none;
     background: #537AAA;
     border-radius: 2px;
@@ -72,5 +73,6 @@
 }
 
 .retire_reason_text {
-    margin-left: 20px
+    margin-left: 20px;
+    resize:none;
 }

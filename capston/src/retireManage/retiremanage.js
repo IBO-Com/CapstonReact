@@ -56,11 +56,50 @@ const App = () => {
     const [workMonth, setWorkMonth] = useState("0");
     const [workDay, setWorkDay] = useState("0");
 
+    const [sabun, setSabun] = useState();
+    const [retireData, setRetireData] = useState([]);
+    const [textRetireReasone, setRetireReason] = useState(""); // 퇴직 사유
 
-    const handleTextReason = (e) => {
+
+    const handleTextReason = (e) => { //사유 핸들러
         setTextReason(e.target.value);
     };
 
+    const handleRetDate = (e) => { //퇴직일 핸들러
+        console.log(e.target.value);
+        setRetDate(e.target.value);
+    }
+
+    // 퇴직 신청하기
+    const formRef = useRef();
+    const saveSubmit = (e) => {
+        e.preventDefault();
+        if (formRef.current.reportValidity()) {
+            if (window.confirm("퇴직을 신청하시겠습니까?")) {
+                let postParam3 = {
+                    sabun: retireData.sabun,
+                    name: retireData.name,
+                    ret_date: dateFormatString(startDate),
+                    ret_state: "0",
+                    dept: retireData.dept,
+                    rank: retireData.rank,
+                    ret_reason: textRetireReasone,
+                    team: retireData.team,
+                };
+                console.log(postParam3);
+                postParam3 = qs.stringify(postParam3);
+
+                axios
+                    .post("http://43.200.115.198:8080/retireregister.jsp", postParam3)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((Error) => {
+                        console.log(Error);
+                    });
+            }
+        }
+    };
 
     //console.log(monthlyPayDebuct);
 
@@ -72,15 +111,6 @@ const App = () => {
         setRetrieveDate(getFormatDate(date));
     };
 
-    // 부서 검색
-    const handleSelectDepart = (event) => {
-        setSelectDepart(event.target.value);
-    };
-
-    // 사번/성명 인풋
-    const handleTextName = (e) => {
-        setTextName(e.target.value);
-    };
 
     useEffect(() => {
         let loginInfo = cookies["loginInfo"];
@@ -94,7 +124,7 @@ const App = () => {
             .then((res) => {
                 let data = res.data.ITEMS[0];
                 setPeopleData(data);
-                date = new Date(data["start_date"].slice(0, 4),  parseInt(data["start_date"].slice(4, 6)) -1, data["start_date"].slice(6, 8)); 
+                date = new Date(data["start_date"].slice(0, 4), parseInt(data["start_date"].slice(4, 6)) - 1, data["start_date"].slice(6, 8));
                 GetYearOfWork.getYearOfWork(date, endDate, setWorkYear, setWorkMonth, setWorkDay);
             })
             .catch((Error) => {
@@ -116,7 +146,7 @@ const App = () => {
                 </div>
                 <div className="monthlyPay_amount">
                     <p>재직기간</p> {/* 입사일부터 오늘 날까지 계산 */}
-                    <span className="amountPay">{workYear}년 {workMonth}개월 {workDay}일</span> 
+                    <span className="amountPay">{workYear}년 {workMonth}개월 {workDay}일</span>
                 </div>
             </div>
 
@@ -162,7 +192,14 @@ const App = () => {
                 <p>! 퇴직 후 회사의 영업방식을 제 3자에게 공개하거나 누설하지 않습니다.</p>
             </div>{/*왔어욥  */}
 
-            <button className="retire_btn">신청하기</button>
+            <button className="retire_btn"
+                type={"button"}
+                onClick={(e) => {
+                    saveSubmit(e);
+                    submitSabun(retireData.sabun);
+                }}>
+                신청하기
+            </button>
         </div>
     );
 };
