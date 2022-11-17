@@ -32,6 +32,15 @@ const App = () => {
   const [startInfo, setStartInfo] = useState([]);
   const [endInfo, setEndInfo] = useState([]);
 
+  const todayTime = () => {
+    let now = new Date();
+    let todayYear = now.getFullYear();
+    let todayMonth = now.getMonth() + 2;
+    let toDayDate = now.getDate();
+
+    return todayYear + "년 " + todayMonth + "월 " + toDayDate + "일";
+ }
+
   let InfoIndex = 1;
 
   const handleDateChange = (date) => {
@@ -219,15 +228,7 @@ const App = () => {
               <tr>
                 <td className="SeverancePaycal_item">입사일</td>
                 <td>
-                  {startInfo ? startInfo["start_date"] : ""}
-                  {/* {startInfo
-                    ? startInfo["start_date"].slice(0, 4) +
-                      "년 " +
-                      startInfo["start_date"].slice(4, 6) +
-                      "월 " +
-                      startInfo["start_date"].slice(6, 8) +
-                      "일"
-                    : ""} */}
+                {startInfo ? startInfo["start_date"].slice(0,4) + "년 " + startInfo["start_date"].slice(4,6) + "월 " + startInfo["start_date"].slice(6,8) + "일" : ""}
                 </td>
                 <td className="SeverancePaycal_item">근속년수</td>
                 <td></td>
@@ -235,18 +236,10 @@ const App = () => {
               <tr>
                 <td className="SeverancePaycal_item">퇴직일</td>
                 <td>
-                  {endInfo ? endInfo["ret_date"] : ""}
-                  {/* {endInfo
-                    ? endInfo["ret_date"].slice(0, 4) +
-                      "년 " +
-                      endInfo["ret_date"].slice(4, 6) +
-                      "월 " +
-                      endInfo["ret_date"].slice(6, 8) +
-                      "일"
-                    : ""} */}
+                  {endInfo ? endInfo["ret_date"].slice(0,4) + "년 " + endInfo["ret_date"].slice(4,6) + "월 " + endInfo["ret_date"].slice(6,8) + "일" : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
-                <td></td>
+                <td>{todayTime().slice(0,9)} 5일</td>
               </tr>
             </table>
 
