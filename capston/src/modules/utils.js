@@ -2,6 +2,7 @@ import qs from "qs";
 import axios from "axios";
 
 export const AttendanceRegisterToPay = (data) => {
+    console.log(data);
     let userData = {};
     let keys = Object.keys(data);
     let normalSum = 0;
@@ -15,7 +16,6 @@ export const AttendanceRegisterToPay = (data) => {
         let total_datetime = normal_datetime + over_datetime + night_datetime + holiday_datetime;
         if(eachData.sabun == "1012210000") {
             normalSum += normal_datetime;
-            console.log(eachData.in_date + " normalData : ", normalSum);
         }
         //console.log(eachData.name, normal_datetime, over_datetime, night_datetime, holiday_datetime)
         if(userData[eachData.sabun]) { //데이터 있을 때
@@ -44,11 +44,12 @@ export const AttendanceRegisterToPay = (data) => {
         data: JSON.stringify(userData),
         length: Object.keys(userData).length
     }
-    console.log(normalSum);
-    console.log(postParam)
+    console.log(userData);
     
     postParam = qs.stringify(postParam);
-    axios.post("http://43.200.115.198:8080/AttendanceRegisterToPay.jsp", postParam).then((res) => {
+    //http://localhost:8080/CapstonProject/AttendanceRegisterToPay.jsp
+    //http://43.200.115.198:8080/AttendanceRegisterToPay.jsp
+    axios.post("http://localhost:8080/CapstonProject/AttendanceRegisterToPay.jsp", postParam).then((res) => {
         console.log(res);
     }).catch((Error) => {
         console.log(Error);
