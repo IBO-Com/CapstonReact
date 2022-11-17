@@ -1,15 +1,18 @@
 import { React, useState, useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import { Select, MenuItem } from "@material-ui/core";
-import * as GetFinalTax from "../modules/getFinalTax";
 import axios from "axios";
 import qs from "qs";
-import * as GetCDTR from "../modules/getCDTR";
 import ReactApexChart from "react-apexcharts";
 import "../css/PersonalSalary/PersonalSalary.css";
+import * as Utils from "../modules/utils";
+import { useCookies } from "react-cookie";
 
 const App = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [selectDepart, setSelectDepart] = useState("*");
+  const [searchDate, setSearchDate] = useState(new Date());
+  let defaultMonth = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
   };
@@ -28,58 +31,101 @@ const App = () => {
   };
 
   const [textName, setTextName] = useState("");
-  const [center, setCenter] = useState("");
-  const [dept, setDept] = useState("");
-  const [team, setTeam] = useState("");
-  const [empData, setEmpData] = useState();
-  const [rank, setRank] = useState("");
-  const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
-  const [taxPack, setTaxPack] = useState();
-  const [year, setYear] = useState(new Date().getFullYear())
+  const [taxPack, setTaxPack] = useState({});
+  const [empInfo, setEmpInfo] = useState();
+  const [account, setAccount] = useState();
 
-  function getFormatDate(date) {
-    var year = date.getFullYear(); //yyyy
-    var month = 1 + date.getMonth(); //M
-    month = month >= 10 ? month : "0" + month; //month 두자리로 저장
-    return year + "-" + month;
-  }
+  const sendSubmit = () => { //전송 
+    let todayString = Utils.dateFormatString(searchDate);
+    let empData = null;
+    axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+      sabunOrName: textName
+    })).then((res) => {
+      setEmpInfo(res.data.ITEMS[0]);
+      empData = res.data.ITEMS[0]; //동일 인물있을때는 첫번째 인물만
 
-  const sendSubmit = () => {
-    /* 쿼리 문 작성 */
-    let postParam = {};
-    let query = {};
+      axios.post("http://43.200.115.198:8080/getBank.jsp", qs.stringify({
+      sabun: empData.sabun
+    })).then((res) => {
+      setAccount(res.data.ITEMS[0]);
+    }).catch((Err) => {
+      console.log(Err);
+    })
 
-    if (textName.trim() == "") {
-      delete query["sabunOrName"];
-    } else {
-      query["sabunOrName"] = textName;
+   
+    let postParam = {
+      sabun: empData.sabun,
+      year: todayString.slice(0, 4)
     }
-
-    postParam = qs.stringify(query);
-
-    //1월 부터 12월까지 데이터 받아오는 함수
-    GetFinalTax.getAllTaxToJsonAllMonth(textName, year, setTaxPack);
-
-    axios
-      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
-      .then((res) => {
-        // setPeopleData(res.data.ITEMS);
-        setEmpData(res.data.ITEMS[0]);
-        let empInfo = res.data.ITEMS[0];
-
-        GetCDTR.getCDTR(
-          empInfo["center"],
-          empInfo["dept"],
-          empInfo["team"],
-          empInfo["rank"],
-          setCenter,
-          setDept,
-          setTeam,
-          setRank
-        );
-      });
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS; 
+      let tableData = {};
+      console.log(data);
+      for(let i = 12; i >= 1; i --) {
+        let monthStr = i < 10 ? "0" + i : String(i);
+        if(data.length > 0) {
+          let lastData = data[data.length - 1];
+          if(lastData.month == monthStr) {
+            tableData[lastData.year + lastData.month] = lastData;
+            data.pop();
+          }
+        }
+      }
+      setTaxPack(tableData);
+    }).catch((Error) => {
+      console.log(Error);
+    });
+  }).catch((Err) => {
+    console.log(Err);
+  })
   };
   
+  useEffect(() => {
+    let todayString = Utils.dateFormatString(searchDate);
+    
+    axios.post("http://43.200.115.198:8080/getBank.jsp", qs.stringify({
+      sabun: cookies["loginInfo"].id
+    })).then((res) => {
+      setAccount(res.data.ITEMS[0]);
+    }).catch((Err) => {
+      console.log(Err);
+    })
+
+    axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+      sabunOrName: cookies["loginInfo"].id
+    })).then((res) => {
+      setEmpInfo(res.data.ITEMS[0]);
+    }).catch((Err) => {
+      console.log(Err);
+    })
+
+    let postParam = {
+      sabun: cookies["loginInfo"].id,
+      year: todayString.slice(0, 4)
+    }
+    postParam = qs.stringify(postParam);
+    axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS; 
+      let tableData = {};
+      console.log(data);
+      for(let i = 12; i >= 1; i --) {
+        let monthStr = i < 10 ? "0" + i : String(i);
+        if(data.length > 0) {
+          let lastData = data[data.length - 1];
+          if(lastData.month == monthStr) {
+            tableData[lastData.year + lastData.month] = lastData;
+            data.pop();
+          }
+        }
+      }
+      console.log(tableData);
+      setTaxPack(tableData);
+    }).catch((Error) => {
+      console.log(Error);
+    })
+  }, []);
+
   useEffect(() => {
     if(!taxPack) return;
     setMonthlyBar(
@@ -88,18 +134,18 @@ const App = () => {
           {
             name: "실수령액",
             data: [
-              parseInt(taxPack["2022-01"].실수령액 / 10000), 
-              parseInt(taxPack["2022-02"].실수령액 / 10000),
-              parseInt(taxPack["2022-03"].실수령액 / 10000),
-              parseInt(taxPack["2022-04"].실수령액 / 10000),
-              parseInt(taxPack["2022-05"].실수령액 / 10000),
-              parseInt(taxPack["2022-06"].실수령액 / 10000),
-              parseInt(taxPack["2022-07"].실수령액 / 10000),
-              parseInt(taxPack["2022-08"].실수령액 / 10000),
-              parseInt(taxPack["2022-09"].실수령액 / 10000),
-              parseInt(taxPack["2022-10"].실수령액 / 10000),
-              parseInt(taxPack["2022-11"].실수령액 / 10000),
-              parseInt(taxPack["2022-12"].실수령액 / 10000),
+              taxPack[searchDate.getFullYear() + "01"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "01"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "01"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "02"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "02"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "02"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "03"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "03"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "03"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "04"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "04"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "04"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "05"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "05"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "05"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "06"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "06"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "06"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "07"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "07"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "07"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "08"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "08"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "08"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "09"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "09"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "09"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "10"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "10"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "10"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "11"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "11"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "11"].totalDud)) / 10000): 0,
+              taxPack[searchDate.getFullYear() + "12"] ? Math.floor((parseInt(taxPack[searchDate.getFullYear() + "12"].totalPay) - parseInt(taxPack[searchDate.getFullYear() + "12"].totalDud)) / 10000): 0
             ],
           },
         ],
@@ -199,7 +245,7 @@ const App = () => {
     series: [
       {
         name: "실수령액",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        data: [1, 20, 300, 400, 5000, 60, 700, 800,90, 1000, 1100, 120],
       },
     ],
     options: {
@@ -293,47 +339,10 @@ const App = () => {
 
   return (
     <div className="PersonalSalary_conatainer">
-      <div className="PersonalSalary_search">
-        <FormControl>
-          <Select
-            value={selectDepart || ""}
-            sx={{
-              minWidth: "153px",
-              height: 39,
-              marginLeft: "15px",
-              marginRight: "26px",
-            }}
-            onChange={handleSelectDepart}
-          >
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-              전체부서
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-              경영지원부
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-              경영관리부
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-              침해대응부
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-              관제센터
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-              보안연구부
-            </MenuItem>
-
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-              보안취약점연구부
-            </MenuItem>
-          </Select>
-        </FormControl>
+    {
+      cookies["loginInfo"].authority == '1' ? (
+        <div className="PersonalSalary_search">
+        
         <FormControl>
           <input
             style={{
@@ -359,21 +368,26 @@ const App = () => {
           검색
         </button>
       </div>
+      ) : (
+        <></>
+      )
+    }
+      
       <div className="PersonalSalary_basicInfo">
         <div className="personalSalary_userInfo">
           <span>기본정보</span>
           <table>
             <tr>
               <th>부서</th>
-              <td>{dept}</td>
+              <td>{empInfo ? empInfo["deptKR"] : "로딩중"}</td>
             </tr>
             <tr>
               <th>직책</th>
-              <td>{rank}</td>
+              <td>{empInfo ? empInfo["rankKR"] : "로딩중"}</td>
             </tr>
             <tr>
               <th>성명</th>
-              <td>{empData ? empData["name"] : ""}</td>
+              <td>{empInfo ? empInfo["name"] : "로딩중"}</td>
             </tr>
             <tr>
               <th>급여일자</th>
@@ -384,7 +398,7 @@ const App = () => {
             </tr>
             <tr>
               <th>급여계좌</th>
-              <td> </td>
+              <td>{account ? account["ac_number"] : "등록되지 않았습니다."}</td>
             </tr>
           </table>
         </div>
@@ -427,140 +441,78 @@ const App = () => {
             <tbody>
               <tr>
                 <th colSpan={2} className='perSal_total'>실수령액</th>
-                <td>{taxPack ? taxPack[year + "-01"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-08"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].실수령액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].실수령액.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].totalPay) - parseInt(taxPack[searchDate.getFullYear() + item].totalDud)).toLocaleString() : 0}원</td>
+                  ))
+                }
+                
               </tr>
               <tr>
                 <th rowSpan={4}>지급내역</th>
                 <th>기본급</th>
-                <td className="perSal_month1">{taxPack ? taxPack[year + "-01"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month2">{taxPack ? taxPack[year + "-02"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month3">{taxPack ? taxPack[year + "-03"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month4">{taxPack ? taxPack[year + "-04"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month5">{taxPack ? taxPack[year + "-05"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month6">{taxPack ? taxPack[year + "-06"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month7">{taxPack ? taxPack[year + "-07"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month8">{taxPack ? taxPack[year + "-08"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month9">{taxPack ? taxPack[year + "-09"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month10">{taxPack ? taxPack[year + "-10"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month11">{taxPack ? taxPack[year + "-11"].월급.toLocaleString() : 0}원</td>
-                <td className="perSal_month12">{taxPack ? taxPack[year + "-12"].월급.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td className={"perSal_month" + (index + 1)}>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].pay_normal)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>연장근무</th>
-                <td>{taxPack ? taxPack[year + "-01"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-01"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].연장근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].연장근무금액.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].pay_over)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>야간근무</th>
-                <td>{taxPack ? taxPack[year + "-01"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-08"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].야간근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].야간근무금액.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].pay_night)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>휴일근무</th>
-                <td>{taxPack ? taxPack[year + "-01"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-08"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].휴일근무금액.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].휴일근무금액.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].pay_off)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th rowSpan={4}>공제내역</th>
                 <th>국민연금</th>
-                <td>{taxPack ? taxPack[year + "-01"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-08"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].국민연금.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].국민연금.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].tax_annu)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>건강보험외</th>
-                <td>{taxPack ? (taxPack[year + "-01"].건강보험 + taxPack[year + "-01"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-02"].건강보험 + taxPack[year + "-02"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-03"].건강보험 + taxPack[year + "-03"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-04"].건강보험 + taxPack[year + "-04"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-05"].건강보험 + taxPack[year + "-05"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-06"].건강보험 + taxPack[year + "-06"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-07"].건강보험 + taxPack[year + "-07"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-08"].건강보험 + taxPack[year + "-08"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-09"].건강보험 + taxPack[year + "-09"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-10"].건강보험 + taxPack[year + "-10"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-11"].건강보험 + taxPack[year + "-11"].장기요양).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-12"].건강보험 + taxPack[year + "-12"].장기요양).toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].tax_health) + (parseInt(taxPack[searchDate.getFullYear() + item].tax_insure))).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>고용보험</th>
-                <td>{taxPack ? taxPack[year + "-01"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-02"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-03"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-04"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-05"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-06"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-07"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-08"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-09"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-10"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-11"].고용보험.toLocaleString() : 0}원</td>
-                <td>{taxPack ? taxPack[year + "-12"].고용보험.toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].tax_hire)).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
               <tr>
                 <th>근로소득세외</th>
-                <td>{taxPack ? (taxPack[year + "-01"].근로소득세 + taxPack[year + "-01"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-02"].근로소득세 + taxPack[year + "-02"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-03"].근로소득세 + taxPack[year + "-03"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-04"].근로소득세 + taxPack[year + "-04"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-05"].근로소득세 + taxPack[year + "-05"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-06"].근로소득세 + taxPack[year + "-06"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-07"].근로소득세 + taxPack[year + "-07"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-08"].근로소득세 + taxPack[year + "-08"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-09"].근로소득세 + taxPack[year + "-09"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-10"].근로소득세 + taxPack[year + "-10"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-11"].근로소득세 + taxPack[year + "-11"].주민세).toLocaleString() : 0}원</td>
-                <td>{taxPack ? (taxPack[year + "-12"].근로소득세 + taxPack[year + "-12"].주민세).toLocaleString() : 0}원</td>
+                {
+                  defaultMonth.map((item, index) => (
+                    <td>{taxPack[searchDate.getFullYear() + item] ? (parseInt(taxPack[searchDate.getFullYear() + item].tax_soduk) + (parseInt(taxPack[searchDate.getFullYear() + item].tax_resi))).toLocaleString() : 0}원</td>
+                  ))
+                }
               </tr>
             </tbody>
           </table>
