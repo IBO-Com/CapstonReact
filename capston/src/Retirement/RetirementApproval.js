@@ -21,13 +21,19 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
+
   const [peopleData, setPeopleData] = useState([]);
+  const [retireApprovalData, setRetireApprovalData] = useState([]);
+
+  const [retrieUserData, setRetrieUserData] = useState([]);
+
+  let InfoIndex = 1;
 
   useEffect(() => {
     axios
-      .post("http://43.200.115.198:8080/empselect.jsp")
+      .post("http://43.200.115.198:8080/retireselect.jsp")
       .then((res) => {
-        setPeopleData(res.data.ITEMS);
+        setRetireApprovalData(res.data.ITEMS);
       })
       .catch((Error) => {
         console.log(Error);
@@ -37,8 +43,8 @@ const App = () => {
   useEffect(() => {
     // 배열 : map, for, foreach
     // json : Object.keys(peopleData);
-    console.log(peopleData);
-  }, [peopleData]);
+    console.log(retireApprovalData);
+  }, [retireApprovalData]);
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -54,6 +60,41 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
+  };
+
+  const radioChange = (index) => {
+    setRetrieUserData(retireApprovalData[index]);
+    console.log(retrieUserData);
+  };
+  const approvalBtn = (retrieUserData) => {
+    if (window.confirm("승인하시겠습니까?")) {
+      let approvalData = retrieUserData;
+
+      let postParam2 = {
+        sabun: approvalData.sabun,
+        ret_state: approvalData.ret_state,
+      };
+
+      console.log(postParam2);
+      postParam2 = qs.stringify(postParam2);
+
+      axios
+        .post("http://43.200.115.198:8080/retireupdate.jsp", postParam2)
+        .then((res) => {
+          axios
+            .post("http://43.200.115.198:8080/retireselect.jsp")
+            .then((res) => {
+              setRetireApprovalData(res.data.ITEMS);
+            })
+            .catch((Error) => {
+              alert("에러");
+            });
+          console.log(res);
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    }
   };
 
   const sendSubmit = () => {
@@ -227,7 +268,14 @@ const App = () => {
           <span>퇴직승인</span>
           <div className="RetirementApproval_btns">
             <button className="RetirementApproval_batchBtn">일괄승인</button>
-            <button className="RetirementApproval_savetBtn">저장</button>
+            <button
+              className="RetirementApproval_savetBtn"
+              onClick={() => {
+                approvalBtn(retrieUserData);
+              }}
+            >
+              승인
+            </button>
           </div>
         </div>
 
@@ -237,46 +285,47 @@ const App = () => {
               <tr>
                 <td>번호</td>
                 <td>선택</td>
-                <td>신청일</td>
+                <td>퇴직 희망일</td>
                 <td>처리상태</td>
                 <td>사번</td>
                 <td>성명</td>
                 <td>부서명</td>
+                <td>팀명</td>
               </tr>
             </thead>
             <tbody>
-              {peopleData.map(function (name, index) {
+              {retireApprovalData.map(function (item, index) {
                 return (
                   <>
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          name="userSelect"
-                          className="retirement_radio"
-                        />
-                      </td>
-                      <td> </td>
-                      <td></td>
-                      <td>{name.sabun}</td>
-                      <td>{name.name}</td>
-                      <td>
-                        {name.dept === "01"
-                          ? "경영지원부"
-                          : "" || name.dept === "02"
-                          ? "경영관리"
-                          : "" || name.dept === "03"
-                          ? "침해대응부"
-                          : "" || name.dept === "04"
-                          ? "관제센터"
-                          : "" || name.dept === "05"
-                          ? "보안연구부"
-                          : "" || name.dept === "06"
-                          ? "보안취약점연구부"
-                          : ""}
-                      </td>
-                    </tr>
+                    {item.ret_state === "0" ? (
+                      <tr>
+                        <td className="reapp_index">{InfoIndex++}</td>
+                        <td className="reapp_radio">
+                          <input
+                            type="radio"
+                            name="userSelect"
+                            className="retirement_radio"
+                            onChange={() => {
+                              radioChange(index);
+                            }}
+                          />
+                        </td>
+                        <td className="reapp_date">
+                          {item.ret_date.slice(0, 4)}년{" "}
+                          {item.ret_date.slice(4, 6)}월{" "}
+                          {item.ret_date.slice(6, 8)}일
+                        </td>
+                        <td className="reapp_state">
+                          {item.ret_state === "0" ? "대기중" : "처리완료"}
+                        </td>
+                        <td className="reapp_sabun">{item.sabun}</td>
+                        <td className="reapp_name">{item.name}</td>
+                        <td className="reapp_dept">{item.deptKR}</td>
+                        <td className="reapp_team">{item.teamKR}</td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 );
               })}

@@ -2,6 +2,41 @@
   overflow-x: hidden;
   display: flex;
 }
+.card_dateBox {
+  padding: 15px 20px;
+  display: flex;
+  margin: 0 20px;
+  border-bottom: 2px solid #d9d9d9;
+}
+.card_dateBox span {
+  color: #5a6163;
+  width: 73px;
+  position: relative;
+  top: 3px;
+}
+.card_dateBox .startDate {
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #515966;
+  margin-right: 15px;
+  box-sizing: border-box;
+  width: 163px;
+  border-color: #d9d9d9;
+  outline: none;
+}
+.vacationCheck_bar {
+  width: 20px;
+  height: 2px;
+  background-color: #d9d9d9;
+  position: relative;
+  top: 15px;
+  margin-right: 10px;
+}
+.vacationInput {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  margin-top: 1px;
+}
 
 .vc_Request {
   width: 680px;

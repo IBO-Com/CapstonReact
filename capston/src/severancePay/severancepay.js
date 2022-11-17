@@ -32,7 +32,10 @@ const App = () => {
     const [textName, setTextName] = useState("");
     const [peopleData, setPeopleData] = useState();
     const [sabun, setSabun] = useState();
+    const [retireDate, setRetireDate] = useState([]);
     const componentRef = useRef(null);
+
+    let InfoIndex = 1;
 
     const [toogleState, setToggleState] = useState(1);
 
@@ -58,6 +61,18 @@ const App = () => {
                 console.log(Error);
             });
     }, []);
+
+    useEffect(() => {
+        axios
+          .post("http://43.200.115.198:8080/retireselect.jsp")
+          .then((res) => {
+            setRetireDate(res.data.ITEMS);
+            console.log(retireDate);
+          })
+          .catch((Error) => {
+            console.log(Error);
+          });
+      }, []);
 
     const radioBoxChange = (sabun) => {
         setSabun(sabun);
@@ -251,52 +266,51 @@ const App = () => {
                     <div className="severancePay_InfoTable">
                         <span>퇴직 사원 정보</span>
 
-                        <div className="severancePayInfo">
-                            {/*{!peopleData ? (
-                                "No data found"
-                            ) : (
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>선택</th>
-                                            <th>사번</th>
-                                            <th>성명</th>
-                                            <th>부서</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {peopleData.map(function (name, index) {
-                                            return (
-                                                <>
-                                                    <tr>
-                                                        <td>&nbsp;</td>
-                                                        <td>
-                                                            {/* <input
-                                                                type="radio"
-                                                                name="userSelect" className="Card_radio"
-                                                                onChange={() => {
-                                                                    radioBoxChange(name.sabun);
-                                                                }}
-                                                            /> 
-                                                        </td>
-                                                        <td>&nbsp;</td>
-                                                        <td>&nbsp;</td>
-                                                        <td>&nbsp;</td>
-                                                    </tr>
-                                                </>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            )} */}
-                        </div>
+                        <table className="SeverancePay_empTable">
+                            <thead>
+                                <tr>
+                                    <td>번호</td>
+                                    <td>선택</td>
+                                    <td>사번</td>
+                                    <td>성명</td>
+                                    <td>부서명</td>
+                                    <td>팀명</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {retireDate.map(function (item) {
+                                    return (
+                                        <>
+                                            {item.ret_state === "1" ? (
+                                                <tr>
+                                                    <td className="reform_index">{InfoIndex++}</td>
+                                                    <td className="reform_radio">
+                                                        <input
+                                                            type="radio"
+                                                            name="userSelect"
+                                                            className="retirement_radio"
+                                                        />
+                                                    </td>
+                                                    <td className="reform_sabun">{item.sabun}</td>
+                                                    <td className="reform_name">{item.name}</td>
+                                                    <td className="reform_dept">보안취약점연구부</td>
+                                                    <td className="reform_team">취약점분석팀</td>
+                                                </tr>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
 
                     <div className="severancePay_empCard">
                         <div className="severancePay_Btnbox">
                             <ReactToPrint
-                                trigger={() => <button className="print_Btn">인쇄</button>}
+                                trigger={() => <button className="re_print_Btn">인쇄</button>}
                                 content={() => componentRef.current}
                             />
                             <button

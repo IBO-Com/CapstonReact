@@ -1,218 +1,214 @@
 .mainContetnsBox {
-    overflow: hidden;
-    min-width: 1100px;
-} 
+  overflow: hidden;
+  min-width: 1100px;
+}
 
 .CardInfoTable {
-    min-width: 500px;
-    margin: 20px 0px 0px 120px;
-    overflow-y: auto;
-    height: 645px;
+  min-width: 500px;
+  margin: 20px 0px 0px 120px;
+  overflow-y: auto;
+  height: 645px;
 }
 
 .CardInfoTable span {
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 25px;
-    /* identical to box height */
-    letter-spacing: 0.1em;
-    color: #5a6163;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  /* identical to box height */
+  letter-spacing: 0.1em;
+  color: #5a6163;
 }
 
 .card_Btnbox {
-    width: 780px;
+  width: 780px;
 }
 
 .empSelect_Btn,
 .proof_of_emp_btn,
 .work_emp_btn {
-    width: 130px;
-    color: #FFFFFF;
-    height: 28px;
-    margin-left: 220px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border: none;
-    background: #F09336;
-    border-radius: 2px;
+  width: 130px;
+  color: #ffffff;
+  height: 28px;
+  margin-left: 220px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  background: #f09336;
+  border-radius: 2px;
 }
 
 .print_Btn {
-    width: 60px;
-    color: #FFFFFF;
-    height: 28px;
-    margin-left: 80px;
-    margin-top: 20px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border: none;
-    background: gray;
-    border-radius: 2px;
+  width: 60px;
+  color: #ffffff;
+  height: 28px;
+  margin-left: 80px;
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: none;
+  background: gray;
+  border-radius: 2px;
 }
 
 .proof_of_emp_btn {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .work_emp_btn {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .CardInfoTable .hrCardInfo table {
-    overflow-y: auto;
-    border-collapse: collapse;
-    min-width: 610px;
-    border: 1px solid #D9D9D9;
-    margin-top: 10px;
+  overflow-y: auto;
+  border-collapse: collapse;
+  min-width: 610px;
+  border: 1px solid #d9d9d9;
+  margin-top: 10px;
 }
 
 .CardInfoTable .hrCardInfo table thead tr {
-    font-size: 12px;
-    color: #515966;
-    font-family: "Noto Sans KR";
-    font-style: normal;
-    font-weight: 700;
-    background-color: #EBEFF2;
-
+  font-size: 12px;
+  color: #515966;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  background-color: #ebeff2;
 }
 
 .CardInfoTable .hrCardInfo table thead th {
-    padding: 10px;
+  padding: 10px;
 }
 
 .CardInfoTable .hrCardInfo table tbody td {
-    padding: 8px;
-    font-size: 12px;
+  padding: 8px;
+  font-size: 12px;
 }
 
 .CardInfoTable .hrCardInfo table th,
 .CardInfoTable .hrCardInfo table td {
-    border: 1px solid#D9D9D9;
-    text-align: center;
+  border: 1px solid#D9D9D9;
+  text-align: center;
 }
 
 .Card_Count {
-    width: 40px;
+  width: 40px;
 }
 
 .Card_Select {
-    width: 40px;
+  width: 40px;
 }
 
 .Card_Sabun {
-    width: 120px;
+  width: 120px;
 }
 
 .Card_Name {
-    width: 100px;
+  width: 100px;
 }
 
 .Card_Work {
-    width: 60px;
+  width: 60px;
 }
 
 .personnelCard_box {
-    height: 790px;
-    display: flex;
+  height: 790px;
+  display: flex;
 }
 
 .personnelCard_Flex {
-    overflow-x: hidden;
-    display: flex;
+  overflow-x: hidden;
+  display: flex;
 }
 
 .perCard_box {
-    overflow-y: auto;
-    height: 100%;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .Card_viewer {
-    width: 700px;
-    height: 600px;
-    overflow: hidden;
-    margin-left: 80px;
+  width: 700px;
+  height: 600px;
+  overflow: hidden;
+  margin-left: 80px;
 
-    border: 2px solid #D9D9D9;
-    border-radius: 3px;
+  border: 2px solid #d9d9d9;
+  border-radius: 3px;
 }
 
 .card_dateBox {
-    padding: 20px 20px;
-    margin-left: 83px;
+  padding: 20px 20px;
+  margin-left: 83px;
+  border-bottom: 1px solid #d9d9d9;
 }
 
 .card_lineBar {
-    border: 1px solid #D9D9D9;
-    margin-left: 60px;
-    width: 92%;
+  border: 1px solid #d9d9d9;
+  margin-left: 60px;
+  width: 92%;
 }
 
 .card_dateBox .card_search_btn {
-    width: 97px;
-    color: #FFFFFF;
-    height: 36px;
-    margin-left: 28px;
-    border: none;
-    background: #537AAA;
-    border-radius: 2px;
+  width: 97px;
+  color: #ffffff;
+  height: 36px;
+  margin-left: 28px;
+  border: none;
+  background: #537aaa;
+  border-radius: 2px;
 }
 
 .card_search_btn {
-    margin-top: 3px;
+  margin-top: 3px;
 }
 
-.card_dateBox #outlined-card{
-    width: 130px !important;
-    height: 22px;
+.card_dateBox #outlined-card {
+  width: 130px !important;
+  height: 22px;
 }
 
 .card_search_box {
-    width: 98%;
-    background-color: white;
+  width: 98%;
+  background-color: white;
 }
 
-.perCard_data table{
-    width: 100%;
-    border: 1px solid #D9D9D9;
-    border-collapse: collapse;
-    text-align: center;
+.perCard_data table {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-collapse: collapse;
+  text-align: center;
 }
 
-
-.perCard_data table thead tr td{
-    padding: 15px 10px;   
-    font-size: 12px;
-    background: #EBEFF2;
+.perCard_data table thead tr td {
+  padding: 15px 10px;
+  font-size: 12px;
+  background: #ebeff2;
 }
 
-
-.perCard_data table tbody td{
-    border: 1px solid #D9D9D9;
-    padding-right: 0;
-    width: 100px;
-    font-size: 12px;
-    height: 5px;
-    padding: 10px 5px !important;
-    box-sizing: border-box;
+.perCard_data table tbody td {
+  border: 1px solid #d9d9d9;
+  padding-right: 0;
+  width: 100px;
+  font-size: 12px;
+  height: 5px;
+  padding: 10px 5px !important;
+  box-sizing: border-box;
 }
 
-.perCard_data table tbody .firsttable td:nth-child(2n){
-    background: #EBEFF2;
-
+.perCard_data table tbody .firsttable td:nth-child(2n) {
+  background: #ebeff2;
 }
 
-.perCard_data table tbody .firsttable td:first-child{
-    width: 80px !important;
+.perCard_data table tbody .firsttable td:first-child {
+  width: 80px !important;
 }
 
 .perCard_data table tbody .table_bg td:nth-child(1),
-.perCard_data table tbody .table_bg td:nth-child(3)  {
-    background: #EBEFF2;
+.perCard_data table tbody .table_bg td:nth-child(3) {
+  background: #ebeff2;
 }
 
-.perCard_data table tbody .family_td td{
-    background: #EBEFF2 !important;
-
+.perCard_data table tbody .family_td td {
+  background: #ebeff2 !important;
 }

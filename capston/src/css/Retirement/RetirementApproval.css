@@ -3,12 +3,14 @@
   width: 98%;
   height: 790px;
 }
+
 .RetirementApproval_search {
   display: flex;
   height: 60px;
   border-bottom: 2px solid #d9d9d9;
   margin: 20px 20px 20px 20px;
 }
+
 .RetirementApproval_search span {
   margin-left: 20px;
   margin-right: 20px;
@@ -16,25 +18,30 @@
   font-size: 16px;
   color: #5a6163;
 }
+
 .RetirementApproval_search #outlined-card {
   width: 150px !important;
   height: 23px;
 }
+
 .RetirementApproval_bar {
   background-color: #d9d9d9;
   width: 20px;
   height: 2px;
   margin: 19px 5px 0px 5px;
 }
+
 .RetirementApproval_dept {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .RetirementApproval_input {
   border: 1px solid #c4c4c4;
   border-radius: 4px;
   margin-top: 1px;
 }
+
 .RetirementApproval_searchtBtn {
   width: 97px;
   height: 36px;
@@ -46,14 +53,17 @@
   border: 0;
   outline: 0;
 }
+
 .RetirementApproval_content {
   margin: 10px 50px 10px 50px;
 }
+
 .RetirementApproval_title {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 .RetirementApproval_title span {
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -63,6 +73,7 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
+
 .RetirementApproval_batchBtn {
   margin-right: 10px;
   width: 100px;
@@ -73,6 +84,7 @@
   border: 0;
   outline: 0;
 }
+
 .RetirementApproval_savetBtn {
   width: 100px;
   height: 30px;
@@ -82,6 +94,7 @@
   border: 0;
   outline: 0;
 }
+
 .RetirementApproval_table {
   height: 610px;
   overflow: auto;
@@ -92,6 +105,7 @@
   width: 100%;
   border: 1px solid #d9d9d9;
 }
+
 .RetirementApproval_table thead tr {
   font-size: 12px;
   color: #515966;
@@ -100,15 +114,46 @@
   font-weight: 700;
   background-color: #ebeff2;
 }
+
 .RetirementApproval_table thead td {
   padding: 10px;
 }
+
 .RetirementApproval_table tbody td {
   padding: 8px;
   font-size: 12px;
 }
+
 .RetirementApproval_table tr,
 .RetirementApproval_table td {
   border: 1px solid #d9d9d9;
   text-align: center;
+}
+
+.reapp_index, .reapp_radio {
+  width: 80px;
+}
+
+.reapp_date {
+  width: 250px;
+}
+
+.reapp_state {
+  width: 200px;
+}
+
+.reapp_sabun {
+  width: 200px;
+}
+
+.reapp_name {
+  width: 220px;
+}
+
+.reapp_dept {
+  width: 250px;
+}
+
+.reapp_team {
+  width: 250px;
 }

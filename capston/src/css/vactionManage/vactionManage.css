@@ -95,7 +95,9 @@ body {
   margin: 0px;
   background-color: #ebeff2;
 }
-
+.card_dateSection {
+  margin-bottom: 30px;
+}
 .vm_InfoTable tbody td {
   text-align: center;
   padding: 0px;
