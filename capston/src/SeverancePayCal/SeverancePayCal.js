@@ -1,10 +1,12 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import DateFnsUtils from "@date-io/date-fns";
 import koLocale from "date-fns/locale/ko";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import format from "date-fns/format";
 import { Select, MenuItem } from "@material-ui/core";
+import axios from "axios";
+import qs from "qs";
 import "../css/SeverancePayCal/SeverancePayCal.css";
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -24,6 +26,9 @@ const App = () => {
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
+  const [retireDate, setRetireDate] = useState([]);
+
+  let InfoIndex = 1;
 
   const handleDateChange = (date) => {
     setRetrieveDate(getFormatDate(date));
@@ -36,6 +41,18 @@ const App = () => {
   const textNameHandle = (e) => {
     setTextName(e.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .post("http://43.200.115.198:8080/retireselect.jsp")
+      .then((res) => {
+        setRetireDate(res.data.ITEMS);
+        console.log(retireDate);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }, []);
 
   return (
     <div className="SeverancePayCal_container">
@@ -132,14 +149,31 @@ const App = () => {
                 <td>부서명</td>
               </tr>
             </thead>
+
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+              {retireDate.map(function (item) {
+                return (
+                  <>
+                    {item.ret_state === "1" ? (
+                      <tr>
+                        <td className="reapp_index">{InfoIndex++}</td>
+                        <td className="reapp_radio">
+                          <input
+                            type="radio"
+                            name="userSelect"
+                            className="retirement_radio"
+                          />
+                        </td>
+                        <td className="reapp_sabun">{item.sabun}</td>
+                        <td className="reapp_name">{item.name}</td>
+                        <td className="reapp_dept">{item.deptKR}</td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -223,7 +257,9 @@ const App = () => {
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직 실수령액</td>
-                <td colSpan={3}>(마지막 달 급여 * 근속년수) + 퇴직수당 - 퇴직소득세 = 실지급액</td>
+                <td colSpan={3}>
+                  (마지막 달 급여 * 근속년수) + 퇴직수당 - 퇴직소득세 = 실지급액
+                </td>
               </tr>
             </table>
           </div>

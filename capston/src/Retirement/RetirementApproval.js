@@ -24,17 +24,18 @@ const App = () => {
   const [peopleData, setPeopleData] = useState([]);
   const [retireApprovalData, setRetireApprovalData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .post("http://43.200.115.198:8080/empselect.jsp")
-      .then((res) => {
-        setPeopleData(res.data.ITEMS);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-  }, []);
+  let InfoIndex = 1;
 
+  // useEffect(() => {
+  //   axios
+  //     .post("http://43.200.115.198:8080/empselect.jsp")
+  //     .then((res) => {
+  //       setPeopleData(res.data.ITEMS);
+  //     })
+  //     .catch((Error) => {
+  //       console.log(Error);
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios
@@ -46,7 +47,6 @@ const App = () => {
         console.log(Error);
       });
   }, []);
-
 
   useEffect(() => {
     // 배열 : map, for, foreach
@@ -260,25 +260,35 @@ const App = () => {
               </tr>
             </thead>
             <tbody>
-              {retireApprovalData.map(function (item, index) {
+              {retireApprovalData.map(function (item) {
                 return (
                   <>
-                    <tr>
-                      <td className="reapp_index">{index + 1}</td>
-                      <td className="reapp_radio">
-                        <input
-                          type="radio"
-                          name="userSelect"
-                          className="retirement_radio"
-                        />
-                      </td>
-                      <td className="reapp_date">{item.ret_date.slice(0,4)}년 {item.ret_date.slice(4,6)}월 {item.ret_date.slice(6,8)}일</td>
-                      <td className="reapp_state">{item.ret_state === "0" ? "대기중" : "처리완료"}</td>
-                      <td className="reapp_sabun">{item.sabun}</td>
-                      <td className="reapp_name">{item.name}</td>
-                      <td className="reapp_dept">{item.deptKR}</td>
-                      <td className="reapp_team">{item.teamKR}</td>
-                    </tr>
+                    {item.ret_state === "0" ? (
+                      <tr>
+                        <td className="reapp_index">{InfoIndex++}</td>
+                        <td className="reapp_radio">
+                          <input
+                            type="radio"
+                            name="userSelect"
+                            className="retirement_radio"
+                          />
+                        </td>
+                        <td className="reapp_date">
+                          {item.ret_date.slice(0, 4)}년{" "}
+                          {item.ret_date.slice(4, 6)}월{" "}
+                          {item.ret_date.slice(6, 8)}일
+                        </td>
+                        <td className="reapp_state">
+                          {item.ret_state === "0" ? "대기중" : "처리완료"}
+                        </td>
+                        <td className="reapp_sabun">{item.sabun}</td>
+                        <td className="reapp_name">{item.name}</td>
+                        <td className="reapp_dept">{item.deptKR}</td>
+                        <td className="reapp_team">{item.teamKR}</td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 );
               })}
