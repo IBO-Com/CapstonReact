@@ -35,9 +35,23 @@ const App = ({ componentRef, sabun }) => {
             sabunOrName: sabun
         });
 
-        axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then((response) => {
+        axios.post("http://43.200.115.198:8080/empselect.jsp", postParam).then(async (response) => {
             setUserData(response.data.ITEMS[0]);
             let userInfo = response.data.ITEMS[0];
+            let startDate = new Date(userInfo["start_date"].slice(0, 4), parseInt(userInfo["start_date"].slice(4, 6))-1, userInfo["start_date"].slice(6, 8));
+            let endDate = new Date();
+
+            await axios.post("http://43.200.115.198:8080/retireselect.jsp", qs.stringify({
+                sabunOrName: sabun
+            }))
+            .then((res) => {
+                let data = res.data.ITEMS[0];
+                endDate = new Date(data["ret_date"].slice(0, 4), parseInt(data["ret_date"].slice(4, 6))-1, data["ret_date"].slice(6, 8) );
+                console.log(data["ret_date"].slice(0, 4), parseInt(data["ret_date"].slice(4, 6)), data["ret_date"].slice(6, 8) );
+            })
+            .catch((Error) => {
+                console.log(Error);
+            });
 
             if (
                 today.getFullYear() - 2000 <
@@ -53,11 +67,6 @@ const App = ({ componentRef, sabun }) => {
             GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
                 setCenter, setDept, setTeam, setRank);
         });
-
-        axios.post("http://43.200.115.198:8080/getBank.jsp", postParam).then((res) => {
-            let data = res.data.ITEMS;
-            setGetBank(data);
-        })
     }, [sabun])
 
 

@@ -60,19 +60,18 @@ const App = () => {
             .catch((Error) => {
                 console.log(Error);
             });
-    }, []);
 
-    useEffect(() => {
+        
         axios
-          .post("http://43.200.115.198:8080/retireselect.jsp")
-          .then((res) => {
+        .post("http://43.200.115.198:8080/retireselect.jsp")
+        .then((res) => {
             setRetireDate(res.data.ITEMS);
             console.log(retireDate);
-          })
-          .catch((Error) => {
+        })
+        .catch((Error) => {
             console.log(Error);
-          });
-      }, []);
+        });
+    }, []);
 
     const radioBoxChange = (sabun) => {
         setSabun(sabun);
