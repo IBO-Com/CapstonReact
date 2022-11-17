@@ -8,6 +8,8 @@ import { Select, MenuItem } from "@material-ui/core";
 import axios from "axios";
 import qs from "qs";
 import "../css/SeverancePayCal/SeverancePayCal.css";
+import * as Utils from "../modules/utils";
+import * as GetYearOfWOrk from "../modules/getYearOfWork";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -23,14 +25,19 @@ function getFormatDate(date) {
 }
 
 const App = () => {
+  const [workYear, setWorkYear] = useState(0);
+  const [workMonth, setWorkMonth] = useState(0);
+  const [workDay, setWorkDay] = useState(0);
+
+  const [workInfo, setWorkInfo] = useState();
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [retireDate, setRetireDate] = useState([]); // 퇴직 사원 정보
 
   const [sabun, setSabun] = useState();
-  const [startInfo, setStartInfo] = useState([]);
-  const [endInfo, setEndInfo] = useState([]);
+  const [startInfo, setStartInfo] = useState();
+  const [endInfo, setEndInfo] = useState();
 
   const todayTime = () => {
     let now = new Date();
@@ -39,7 +46,7 @@ const App = () => {
     let toDayDate = now.getDate();
 
     return todayYear + "년 " + todayMonth + "월 " + toDayDate + "일";
- }
+  };
 
   let InfoIndex = 1;
 
@@ -55,9 +62,11 @@ const App = () => {
     setTextName(e.target.value);
   };
 
-  const radioChange = (sabun) => {
+  const radioChange = async (sabun) => {
     setSabun(sabun);
     console.log(sabun);
+    let sDate = "";
+    let eDate = "";
 
     if (sabun == null) return;
     console.log(sabun);
@@ -66,19 +75,38 @@ const App = () => {
       sabunOrName: sabun,
     });
 
-    axios
+    await axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         setStartInfo(response.data.ITEMS[0]);
-        console.log(startInfo);
+        sDate = response.data.ITEMS[0];
+        console.log("startInfo : ", startInfo);
       });
 
-    axios
+    await axios
       .post("http://43.200.115.198:8080/retireselect.jsp", postParam)
       .then((res) => {
         setEndInfo(res.data.ITEMS[0]);
+        eDate = res.data.ITEMS[0];
         console.log(endInfo);
       });
+
+    //근속연수 구하는 함수 (startDate, endDate, year, month, day)
+    GetYearOfWOrk.getYearOfWork(
+      new Date(
+        sDate["start_date"].slice(0, 4),
+        parseInt(sDate["start_date"].slice(4, 6)) - 1,
+        parseInt(sDate["start_date"].slice(6, 8))
+      ),
+      new Date(
+        eDate["ret_date"].slice(0, 4),
+        parseInt(eDate["ret_date"].slice(4, 6)) - 1,
+        parseInt(eDate["ret_date"].slice(6, 8))
+      ),
+      setWorkYear,
+      setWorkMonth,
+      setWorkDay
+    );
   };
 
   useEffect(() => {
@@ -228,18 +256,34 @@ const App = () => {
               <tr>
                 <td className="SeverancePaycal_item">입사일</td>
                 <td>
-                {startInfo ? startInfo["start_date"].slice(0,4) + "년 " + startInfo["start_date"].slice(4,6) + "월 " + startInfo["start_date"].slice(6,8) + "일" : ""}
+                  {startInfo
+                    ? startInfo["start_date"].slice(0, 4) +
+                      "년 " +
+                      startInfo["start_date"].slice(4, 6) +
+                      "월 " +
+                      startInfo["start_date"].slice(6, 8) +
+                      "일"
+                    : ""}
                 </td>
                 <td className="SeverancePaycal_item">근속년수</td>
-                <td></td>
+                <td>
+                  {workYear + "년 " + workMonth + "개월 " + workDay + "일"}
+                </td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직일</td>
                 <td>
-                  {endInfo ? endInfo["ret_date"].slice(0,4) + "년 " + endInfo["ret_date"].slice(4,6) + "월 " + endInfo["ret_date"].slice(6,8) + "일" : ""}
+                  {endInfo
+                    ? endInfo["ret_date"].slice(0, 4) +
+                      "년 " +
+                      endInfo["ret_date"].slice(4, 6) +
+                      "월 " +
+                      endInfo["ret_date"].slice(6, 8) +
+                      "일"
+                    : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
-                <td>{todayTime().slice(0,9)} 5일</td>
+                <td>{todayTime().slice(0, 9)} 5일</td>
               </tr>
             </table>
 
