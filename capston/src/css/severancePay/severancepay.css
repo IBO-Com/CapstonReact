@@ -1,7 +1,7 @@
 .severancePay_box {
-    background-color: white;
     width: 98%;
     display: flex;
+    background-color: white;
 }
 
 .severancePay_dateBox {
@@ -9,6 +9,12 @@
     margin-left: 83px;
     display: flex;
     margin-top: 5px;
+}
+
+.severancePay_search_box {
+    height: 790px;
+    background-color: white;
+    width: 95%;
 }
 
 .severancePay_dateBox .severancePay_search_btn {
@@ -29,7 +35,7 @@
 .severancePay_lineBar {
     border: 1px solid #D9D9D9;
     margin-left: 70px;
-    width: 100%;
+    width: 96%;
 }
 
 .severancePay_InfoTable {
@@ -103,7 +109,19 @@
 }
 
 .pay_retire_btn {
-    margin-left: 350px;
+    margin-left: 360px;
+}
+
+.re_print_Btn {
+    width: 60px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 50px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
 }
 
 .severancePay_viewer {
@@ -111,7 +129,7 @@
     width: 700px;
     height: 600px;
     overflow: auto;
-    margin-left: 80px;
+    margin-left: 50px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
     border-radius: 3px;
@@ -150,4 +168,55 @@
     background: #537AAA;
     border-radius: 2px;
     margin-top: 1px;
+}
+
+.SeverancePay_empTable {
+    border-collapse: collapse;
+    width: 90%;
+    border: 1px solid #d9d9d9;
+    margin-top: 13px;
+}
+
+.SeverancePay_empTable tr,
+.SeverancePay_empTable td {
+    border: 1px solid #d9d9d9;
+    text-align: center;
+}
+
+.SeverancePay_empTable thead tr {
+    font-size: 12px;
+    color: #515966;
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    background-color: #ebeff2;
+}
+
+.SeverancePay_empTable thead td {
+    padding: 10px;
+}
+
+.SeverancePay_empTable tbody td {
+    padding: 8px;
+    font-size: 12px;
+}
+
+.reform_index, .reform_radio {
+    width: 80px;   
+}
+
+.reform_sabun {
+    width: 100px;
+}
+
+.reform_name {
+    width: 80px;
+}
+
+.reform_dept {
+    width: 230px;
+}
+
+.reform_team {
+    width: 200px;
 }
