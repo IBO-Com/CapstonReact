@@ -4,6 +4,7 @@ import * as GetCDTR from "../modules/getCDTR";
 import axios from "axios";
 import qs from "qs";
 import IBOstamp from "../img/stamp.png";
+import bankCode from "../bankCode";
 
 const App = ({ componentRef, sabun }) => {
     const todayTime = () => {
@@ -18,10 +19,15 @@ const App = ({ componentRef, sabun }) => {
     const [today, setToday] = useState(new Date());
     const [defaultYear, setDefaultYear] = useState("19");
     const [userData, setUserData] = useState();
+    const [getBank, setGetBank] = useState([]);
     const [dept, setDept] = useState("");
     const [team, setTeam] = useState("");
     const [rank, setRank] = useState("");
     const [center, setCenter] = useState("");
+
+    const [workYear, setWorkYear] = useState("0");
+    const [workMonth, setWorkMonth] = useState("0");
+    const [workDay, setWorkDay] = useState("0");
 
     useEffect(() => {
         if (!sabun) return;
@@ -42,9 +48,16 @@ const App = ({ componentRef, sabun }) => {
                 setDefaultYear("20");
             }
 
+            GetYearOfWork.getYearOfWork(startDate, endDate, setWorkYear, setWorkMonth, setWorkDay);
+
             GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
                 setCenter, setDept, setTeam, setRank);
         });
+
+        axios.post("http://43.200.115.198:8080/getBank.jsp", postParam).then((res) => {
+            let data = res.data.ITEMS;
+            setGetBank(data);
+        })
     }, [sabun])
 
 
@@ -62,21 +75,21 @@ const App = ({ componentRef, sabun }) => {
                     <td>성명</td>
                     <td>{userData ? userData["name"] : ""}</td>
                     <td>입사년월일</td>
-                    <td></td>
+                    <td>{userData ? userData["start_date"].slice(0, 4) : ""}년 {userData ? userData["start_date"].slice(4, 6) : ""}월 {userData ? userData["start_date"].slice(6, 8) : ""}일</td>
                 </tr>
 
                 <tr className="formSeverance_Info">
                     <td>부서명</td>
-                    <td>{dept}</td>
+                    <td>{userData ? userData["deptKR"] : ""}</td>
                     <td>퇴사년월일</td>
                     <td></td>
                 </tr>
 
                 <tr className="formSeverance_Info">
                     <td>직책</td>
-                    <td>{rank}</td>
+                    <td>{userData ? userData["rankKR"] : ""}</td>
                     <td>근속년수</td>
-                    <td></td>
+                    <td>{workYear}년 {workMonth}개월 {workDay}일</td>
                 </tr>
 
 
