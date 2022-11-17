@@ -26,7 +26,11 @@ const App = () => {
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
-  const [retireDate, setRetireDate] = useState([]);
+  const [retireDate, setRetireDate] = useState([]); // 퇴직 사원 정보
+
+  const [sabun, setSabun] = useState();
+  const [startInfo, setStartInfo] = useState([]);
+  const [endInfo, setEndInfo] = useState([]);
 
   let InfoIndex = 1;
 
@@ -40,6 +44,32 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
+  };
+
+  const radioChange = (sabun) => {
+    setSabun(sabun);
+    console.log(sabun);
+
+    if (sabun == null) return;
+    console.log(sabun);
+
+    let postParam = qs.stringify({
+      sabunOrName: sabun,
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .then((response) => {
+        setStartInfo(response.data.ITEMS[0]);
+        console.log(startInfo);
+      });
+
+    axios
+      .post("http://43.200.115.198:8080/retireselect.jsp", postParam)
+      .then((res) => {
+        setEndInfo(res.data.ITEMS[0]);
+        console.log(endInfo);
+      });
   };
 
   useEffect(() => {
@@ -162,6 +192,9 @@ const App = () => {
                             type="radio"
                             name="userSelect"
                             className="retirement_radio"
+                            onChange={() => {
+                              radioChange(item.sabun);
+                            }}
                           />
                         </td>
                         <td className="reapp_sabun">{item.sabun}</td>
@@ -185,13 +218,33 @@ const App = () => {
             <table className="SeverancePaycal_FirstTable">
               <tr>
                 <td className="SeverancePaycal_item">입사일</td>
-                <td></td>
+                <td>
+                  {startInfo ? startInfo["start_date"] : ""}
+                  {/* {startInfo
+                    ? startInfo["start_date"].slice(0, 4) +
+                      "년 " +
+                      startInfo["start_date"].slice(4, 6) +
+                      "월 " +
+                      startInfo["start_date"].slice(6, 8) +
+                      "일"
+                    : ""} */}
+                </td>
                 <td className="SeverancePaycal_item">근속년수</td>
                 <td></td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직일</td>
-                <td></td>
+                <td>
+                  {endInfo ? endInfo["ret_date"] : ""}
+                  {/* {endInfo
+                    ? endInfo["ret_date"].slice(0, 4) +
+                      "년 " +
+                      endInfo["ret_date"].slice(4, 6) +
+                      "월 " +
+                      endInfo["ret_date"].slice(6, 8) +
+                      "일"
+                    : ""} */}
+                </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
                 <td></td>
               </tr>
