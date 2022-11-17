@@ -15,6 +15,7 @@ const App = ({ componentRef, sabun }) => {
         return todayYear + "-" + todayMonth + "-" + toDayDate;
     }
 
+    const [endDate, setEndDate] = useState(new Date());
     const [today, setToday] = useState(new Date());
     const [defaultYear, setDefaultYear] = useState("19");
     const [userData, setUserData] = useState();
@@ -22,6 +23,10 @@ const App = ({ componentRef, sabun }) => {
     const [team, setTeam] = useState("");
     const [rank, setRank] = useState("");
     const [center, setCenter] = useState("");
+
+    const [workYear, setWorkYear] = useState("0");
+    const [workMonth, setWorkMonth] = useState("0");
+    const [workDay, setWorkDay] = useState("0");
 
     useEffect(() => {
         if (!sabun) return;
@@ -41,6 +46,8 @@ const App = ({ componentRef, sabun }) => {
             } else {
                 setDefaultYear("20");
             }
+
+            GetYearOfWork.getYearOfWork(startDate, endDate, setWorkYear, setWorkMonth, setWorkDay);
 
             GetCDTR.getCDTR(userInfo["center"], userInfo["dept"], userInfo["team"], userInfo["rank"],
                 setCenter, setDept, setTeam, setRank);
@@ -74,7 +81,7 @@ const App = ({ componentRef, sabun }) => {
 
                 <tr className="formRetire_Info">
                     <td>주소</td>
-                    <td colSpan={3}>{userData ? userData["address"] : ""}</td>
+                    <td colSpan={3}>{userData ? userData["address"] : ""} {userData ? userData["address_detail"] : ""}</td>
                 </tr>
 
 
@@ -84,14 +91,15 @@ const App = ({ componentRef, sabun }) => {
 
                 <tr className="formRetire_Info">
                     <td>소속</td>
-                    <td>{dept}  {team}</td>
+                    <td>{userData ? userData["deptKR"] : ""} {userData ? userData["teamKR"] : ""}</td>
                     <td>직책</td>
-                    <td>{rank}</td>
+                    <td>{userData ? userData["rankKR"] : ""}</td>
                 </tr>
 
                 <tr className="formRetire_Info">
                     <td>근무기간</td>
-                    <td colSpan={3}>{userData ? userData["start_date"].slice(0, 4) + "년 " + userData["start_date"].slice(4, 6) + "월 " + userData["start_date"].slice(6, 8) + "일 부터" : ""}</td>
+                    <td colSpan={3}>{workYear}년 {workMonth}개월 {workDay}일</td>
+                    {/* <td colSpan={3}>{userData ? userData["start_date"].slice(0, 4) + "년 " + userData["start_date"].slice(4, 6) + "월 " + userData["start_date"].slice(6, 8) + "일 부터" : ""}</td> */}
                 </tr>
 
 

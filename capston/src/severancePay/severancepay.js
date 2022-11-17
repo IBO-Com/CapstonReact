@@ -290,12 +290,15 @@ const App = () => {
                                                             type="radio"
                                                             name="userSelect"
                                                             className="retirement_radio"
+                                                            onChange={() => {
+                                                                radioBoxChange(item.sabun);
+                                                              }}
                                                         />
                                                     </td>
                                                     <td className="reform_sabun">{item.sabun}</td>
                                                     <td className="reform_name">{item.name}</td>
-                                                    <td className="reform_dept">보안취약점연구부</td>
-                                                    <td className="reform_team">취약점분석팀</td>
+                                                    <td className="reform_dept">{item.deptKR}</td>
+                                                    <td className="reform_team">{item.teamKR}</td>
                                                 </tr>
                                             ) : (
                                                 <></>
