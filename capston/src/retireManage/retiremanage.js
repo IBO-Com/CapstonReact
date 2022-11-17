@@ -63,10 +63,9 @@ const App = () => {
     setRetireReason(e.target.value);
   };
 
-  const handleRetDate = (e) => {
+  const handleRetDate = (date) => {
     //퇴직일 핸들러
-    console.log(e.target.value);
-    setStartDate(e.target.value);
+    setStartDate(date);
   };
 
   // 퇴직 신청하기
