@@ -21,21 +21,13 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
+
   const [peopleData, setPeopleData] = useState([]);
   const [retireApprovalData, setRetireApprovalData] = useState([]);
 
-  let InfoIndex = 1;
+  const [retrieUserData, setRetrieUserData] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .post("http://43.200.115.198:8080/empselect.jsp")
-  //     .then((res) => {
-  //       setPeopleData(res.data.ITEMS);
-  //     })
-  //     .catch((Error) => {
-  //       console.log(Error);
-  //     });
-  // }, []);
+  let InfoIndex = 1;
 
   useEffect(() => {
     axios
@@ -51,8 +43,8 @@ const App = () => {
   useEffect(() => {
     // 배열 : map, for, foreach
     // json : Object.keys(peopleData);
-    console.log(peopleData);
-  }, [peopleData]);
+    console.log(retireApprovalData);
+  }, [retireApprovalData]);
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -68,6 +60,41 @@ const App = () => {
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
+  };
+
+  const radioChange = (index) => {
+    setRetrieUserData(retireApprovalData[index]);
+    console.log(retrieUserData);
+  };
+  const approvalBtn = (retrieUserData) => {
+    if (window.confirm("승인하시겠습니까?")) {
+      let approvalData = retrieUserData;
+
+      let postParam2 = {
+        sabun: approvalData.sabun,
+        ret_state: approvalData.ret_state,
+      };
+
+      console.log(postParam2);
+      postParam2 = qs.stringify(postParam2);
+
+      axios
+        .post("http://43.200.115.198:8080/retireupdate.jsp", postParam2)
+        .then((res) => {
+          axios
+            .post("http://43.200.115.198:8080/retireselect.jsp")
+            .then((res) => {
+              setRetireApprovalData(res.data.ITEMS);
+            })
+            .catch((Error) => {
+              alert("에러");
+            });
+          console.log(res);
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    }
   };
 
   const sendSubmit = () => {
@@ -241,7 +268,14 @@ const App = () => {
           <span>퇴직승인</span>
           <div className="RetirementApproval_btns">
             <button className="RetirementApproval_batchBtn">일괄승인</button>
-            <button className="RetirementApproval_savetBtn">저장</button>
+            <button
+              className="RetirementApproval_savetBtn"
+              onClick={() => {
+                approvalBtn(retrieUserData);
+              }}
+            >
+              승인
+            </button>
           </div>
         </div>
 
@@ -260,7 +294,7 @@ const App = () => {
               </tr>
             </thead>
             <tbody>
-              {retireApprovalData.map(function (item) {
+              {retireApprovalData.map(function (item, index) {
                 return (
                   <>
                     {item.ret_state === "0" ? (
@@ -271,6 +305,9 @@ const App = () => {
                             type="radio"
                             name="userSelect"
                             className="retirement_radio"
+                            onChange={() => {
+                              radioChange(index);
+                            }}
                           />
                         </td>
                         <td className="reapp_date">
