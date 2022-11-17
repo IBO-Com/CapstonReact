@@ -118,7 +118,7 @@
 
 .monthlyWork_viewer {
     width: 1240px;
-    height: 100px;
+    height: 110px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
     border-radius: 5px;
@@ -134,10 +134,10 @@
     font-family: 'Noto Sans KR';
     line-height: 22px;
     letter-spacing: 0.1em;
-    margin: 0px 0px 0px 45px;
-    padding: 20px 0px 0px 0px;
+    margin: 0px 0px 0px 30px;
+    padding: 25px 0px 0px 0px;
     display: flex;
-    width: 150px;
+    width: 200px;
 }
 
 .monthlytotalWork_ment {
@@ -146,10 +146,10 @@
     font-weight: bold;
     line-height: 22px;
     letter-spacing: 0.1em;
-    margin: 0px 40px 0px 50px;
+    margin: 0px 40px 0px 30px;
     padding-top: 60px;
     display: flex;
-    width: 170px;
+    width: 200px;
 }
 
 .monthlyWorkTime_ment {
@@ -161,7 +161,7 @@
     margin: 0px 30px 0px 0px;
     padding-top: 60px;
     display: flex;
-    width: 190px;
+    width: 230px;
 }
 
 .monthlyPayCheck_title {
