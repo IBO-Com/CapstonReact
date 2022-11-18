@@ -135,3 +135,47 @@ export const getYearOfWork = (sabun, saveData) => {
       console.log(Error);
     });
 };
+
+/** 
+ * 모든 회원의 급여 내역 확인
+ * @param {*} year 년도
+ * @param {*} setSaveData 저장 데이터
+ * @param {*} setTotalData Total 저장 데이터
+ */
+export const getPaymentAll = (year, dept, setSaveData, setTotalData) => {
+  let postParam = {};
+  if(dept == "*") {
+    postParam = {
+      year: year,
+    }
+  } else {
+    postParam = {
+      year: year,
+      dept: dept
+    }
+  }
+  console.log("postParam : ", postParam);
+  
+  let userData = {};
+  let totalData = {total:0, "01" : 0, "02" : 0, "03" : 0, "04" : 0, "05" : 0, "06" : 0, "07" : 0, "08" : 0, "09" : 0, "10" : 0, "11" : 0, "12" : 0};
+  postParam = qs.stringify(postParam);
+
+  axios.post("http://43.200.115.198:8080/getPayment.jsp", postParam).then((res) => {
+    let data = res.data.ITEMS;
+    for(let i = 0; i < data.length; i ++) {
+      userData[data[i].sabun] = {
+        ...userData[data[i].sabun],
+        [data[i].month]: data[i]
+      }
+
+      totalData[data[i].month] += parseInt(data[i].totalPay) - parseInt(data[i].totalDud);
+      totalData["total"] += parseInt(data[i].totalPay) - parseInt(data[i].totalDud);
+    }
+    setSaveData(userData);
+    setTotalData(totalData)
+    console.log("totalData : ", totalData);
+    console.log("userData : ", userData);
+  }).catch((Error) => {
+    console.log(Error);
+  })
+}
