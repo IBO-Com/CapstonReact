@@ -18,7 +18,7 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import testimg from "../img/user.png";
 import koLocale from "date-fns/locale/ko";
 import * as Cookie from "../cookies/cookies";
-import Postcode from 'react-daum-postcode';
+import Postcode from "react-daum-postcode";
 import { border } from "@mui/system";
 
 class koLocalizedUtils extends DateFnsUtils {
@@ -48,6 +48,7 @@ const HelloBaseTab = () => {
   const address_detail = useRef();
   const address = useRef();
   const postcode = useRef();
+  const salay = useRef();
   const [gender, setGender] = useState(0);
   const [married, setMarried] = useState(0);
   const [center, setCenter] = useState("H-경영관리본부");
@@ -56,7 +57,7 @@ const HelloBaseTab = () => {
   const [rank, setRank] = useState("1");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
   const [rankList, setRankList] = useState("");
-  const [isModal, setModal] = useState(false); //주소찾기 모달 
+  const [isModal, setModal] = useState(false); //주소찾기 모달
   const [picture, setPicture] = useState({
     img_base64: "",
     img: "",
@@ -180,13 +181,11 @@ const HelloBaseTab = () => {
         axios.post(urlSave, postParam).then((response) => {
           console.log(response);
           if (response.data.result === "success") {
-            setCookie(
-              "empRegister_userInfo", {
-                authority: "0",
-                id: response.data.sabun,
-                name: name.current.value
-              }
-            )
+            setCookie("empRegister_userInfo", {
+              authority: "0",
+              id: response.data.sabun,
+              name: name.current.value,
+            });
             alert("저장되었습니다.");
           } else {
             alert("error");
@@ -198,15 +197,16 @@ const HelloBaseTab = () => {
 
   return (
     <div>
-      {
-        isModal ? (
-          <KakaoAddressApi setModal={setModal} address={address} postcode={postcode}/>
-        ) : (
-          <>
-          </>
-        )
-      } 
-     
+      {isModal ? (
+        <KakaoAddressApi
+          setModal={setModal}
+          address={address}
+          postcode={postcode}
+        />
+      ) : (
+        <></>
+      )}
+
       <Button
         style={{
           marginLeft: "92%",
@@ -459,16 +459,22 @@ const HelloBaseTab = () => {
                     />
                   </td>
                   <td>
-                      <Button
-                        style={{width: "80px", height: "40px", color:"white", backgroundColor:"#1976d2", border:"0px", borderRadius: "5px"}}
-                        onClick={() => {
-                          setModal(true);
-                        }}
-                      >
+                    <Button
+                      style={{
+                        width: "80px",
+                        height: "40px",
+                        color: "white",
+                        backgroundColor: "#1976d2",
+                        border: "0px",
+                        borderRadius: "5px",
+                      }}
+                      onClick={() => {
+                        setModal(true);
+                      }}
+                    >
                       주소 찾기
-                      </Button>
+                    </Button>
                   </td>
-
                 </tr>
                 <tr>
                   <td className={styles.tdPaddingLeft}>
@@ -491,9 +497,22 @@ const HelloBaseTab = () => {
                     <TextField
                       required
                       InputProps={{ sx: { height: 40 } }}
-                      fullWidth                  
+                      fullWidth
                       inputRef={address_detail}
-                      />
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className={styles.tdPaddingLeft}>
+                    <strong className={styles.redStar}>*</strong>연봉
+                  </td>
+                  <td>
+                    <TextField
+                      required
+                      InputProps={{ sx: { height: 40 } }}
+                      fullWidth
+                      inputRef={salay}
+                    />
                   </td>
                 </tr>
               </tbody>
