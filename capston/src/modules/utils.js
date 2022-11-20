@@ -57,11 +57,12 @@ export const AttendanceRegisterToPay = (data) => {
   console.log(userData);
 
   postParam = qs.stringify(postParam);
+  
   //http://localhost:8080/CapstonProject/AttendanceRegisterToPay.jsp
   //http://43.200.115.198:8080/AttendanceRegisterToPay.jsp
   axios
     .post(
-      "http://localhost:8080/CapstonProject/AttendanceRegisterToPay.jsp",
+      "http://43.200.115.198:8080/AttendanceRegisterToPay.jsp",
       postParam
     )
     .then((res) => {
@@ -71,6 +72,7 @@ export const AttendanceRegisterToPay = (data) => {
       console.log(Error);
     });
   console.log(userData);
+  
 };
 
 export const dateFormatString = (date) => {
@@ -139,6 +141,7 @@ export const getYearOfWork = (sabun, saveData) => {
 /** 
  * 모든 회원의 급여 내역 확인
  * @param {*} year 년도
+ * @param {*} dept 부서
  * @param {*} setSaveData 저장 데이터
  * @param {*} setTotalData Total 저장 데이터
  */
