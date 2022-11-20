@@ -39,6 +39,16 @@ const App = () => {
   const [startInfo, setStartInfo] = useState();
   const [endInfo, setEndInfo] = useState();
 
+  const [payData, setPayData] = useState();
+  const [totalData, setTotalData] = useState();
+
+  const [pay1, setPay1] = useState();
+  const [pay2, setPay2] = useState();
+  const [pay3, setPay3] = useState();
+
+  const [sumDate, setSumDate] = useState();
+  const [sumPay, setSumPay] = useState();
+
   const todayTime = () => {
     let now = new Date();
     let todayYear = now.getFullYear();
@@ -107,9 +117,51 @@ const App = () => {
       setWorkMonth,
       setWorkDay
     );
+
+    // 근무내역
+    console.log("PayData : ", payData[sabun]);
+
+    //특정 달이 없는경우 판단
+    payData[sabun]["11"]
+      ? {}
+      : {
+          //없을때
+        };
+
+    //또는
+    if (payData[sabun]["11"]) {
+      console.log(payData[sabun]["11"].day);
+    } else {
+      //없을 때
+    }
   };
 
   useEffect(() => {
+    if (workYear == 0) return;
+    if (workYear <= 4) {
+      setPay1(
+        (
+          (payData[sabun][endInfo["ret_date"].slice(4, 6)].totalPay -
+            payData[sabun[endInfo["ret_date"].slice(4, 6)].totalDud]) *
+          1.5
+        ).toLocaleString() + "원"
+      );
+    } else if (workYear >= 5) {
+      setPay1(
+        (
+          (payData[sabun][endInfo["ret_date"].slice(4, 6)].totalPay -
+            payData[sabun[endInfo["ret_date"].slice(4, 6)].totalDud]) *
+          2
+        ).toLocaleString() + "원"
+      );
+    }
+  }, [workYear]);
+
+  console.log(pay1);
+
+  useEffect(() => {
+    Utils.getPaymentAll(2022, "*", setPayData, setTotalData);
+
     axios
       .post("http://43.200.115.198:8080/retireselect.jsp")
       .then((res) => {
@@ -305,19 +357,110 @@ const App = () => {
               </thead>
               <tbody className="SeverancePayCal_moneyList">
                 <tr>
-                  <td>월</td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    {endInfo
+                      ? endInfo["ret_date"].slice(0, 4) +
+                        "년 " +
+                        endInfo["ret_date"].slice(4, 6) +
+                        "월 "
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                          ? payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                              .day + "일"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                          ? (
+                              payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                                .totalPay -
+                              payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                                .totalDud
+                            ).toLocaleString() + "원"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
                 </tr>
                 <tr>
-                  <td>월</td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    {endInfo
+                      ? endInfo["ret_date"].slice(0, 4) +
+                        "년 " +
+                        (endInfo["ret_date"].slice(4, 6) - 1) +
+                        "월 "
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 1]
+                          ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 1]
+                              .day + "일"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 1]
+                          ? (
+                              payData[sabun][
+                                endInfo["ret_date"].slice(4, 6) - 1
+                              ].totalPay -
+                              payData[sabun][
+                                endInfo["ret_date"].slice(4, 6) - 1
+                              ].totalDud
+                            ).toLocaleString() + "원"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
                 </tr>
                 <tr>
-                  <td>월</td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    {endInfo
+                      ? endInfo["ret_date"].slice(0, 4) +
+                        "년 " +
+                        (endInfo["ret_date"].slice(4, 6) - 2) +
+                        "월 "
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 2]
+                          ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 2]
+                              .day + "일"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
+                  <td>
+                    {payData && endInfo
+                      ? payData[sabun]
+                        ? payData[sabun][endInfo["ret_date"].slice(4, 6) - 2]
+                          ? (
+                              payData[sabun][
+                                endInfo["ret_date"].slice(4, 6) - 2
+                              ].totalPay -
+                              payData[sabun][
+                                endInfo["ret_date"].slice(4, 6) - 2
+                              ].totalDud
+                            ).toLocaleString() + "원"
+                          : ""
+                        : ""
+                      : ""}
+                  </td>
                 </tr>
                 <tr>
                   <td>합계</td>
@@ -335,9 +478,23 @@ const App = () => {
             <table className="SeverancePaycal_SecondTable">
               <tr>
                 <td className="SeverancePaycal_item">마지막 달 급여</td>
-                <td></td>
+                <td>
+                  {payData && endInfo
+                    ? payData[sabun]
+                      ? payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                        ? (
+                            payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                              .totalPay -
+                            payData[sabun][endInfo["ret_date"].slice(4, 6)]
+                              .totalDud
+                          ).toLocaleString() + "원"
+                        : ""
+                      : ""
+                    : ""}
+                </td>
                 <td className="SeverancePaycal_item">퇴직수당</td>
-                <td>1년 미만 ~ 4년 : 1.5배 / 5년 이상 : 2배</td>
+                {/* 1년 미만 ~ 4년 : 1.5배 / 5년 이상 : 2배 */}
+                <td>{pay1 ? pay1 : "실패~"}</td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직총액</td>
