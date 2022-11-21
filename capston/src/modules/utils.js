@@ -179,3 +179,16 @@ export const getPaymentAll = (year, dept, setSaveData, setTotalData) => {
     console.log(Error);
   })
 }
+
+export const getRetirePayment = (sabun) => {
+  let postParam = {
+    sabun: sabun
+  }
+  postParam = qs.stringify(postParam);
+
+  axios.post("http://43.200.115.198:8080/getRetirePayment.jsp", postParam).then((res) => {
+    console.log("retirePayment Data : ", res.data.ITEMS[0]);
+  }).then((Error) => {
+    console.log(Error);
+  })
+}
