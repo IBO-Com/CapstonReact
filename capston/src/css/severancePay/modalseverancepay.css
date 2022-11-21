@@ -1,0 +1,94 @@
+.modalSeverancePay_Box {
+    position: absolute;
+    width: 360px;
+    height: 580px;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    top: 38%;
+    left: 50%;
+    transform: translate(33%, -15%); 
+    box-shadow: 0px 0px 10px rgb(169, 169, 169);
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 1; /*표 뒤로 안사라지게*/
+}
+
+.modalSeverancePay_ok {
+    width: 60px;
+    height: 30px;
+    background-color: #e78854;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 0;
+    outline: 0;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+.modalSeverancePayTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.modalSeverancePay p {
+    margin: 0;
+    padding: 0;
+}
+
+.modalSeverancePay_Box {
+    font-size: 15px;
+    overflow-y: scroll;
+}
+
+.modalSeverancePay_national1, .modalSeverancePay_health1,
+.modalSeverancePay_conval1, .modalSeverancePay_emp1, .modalSeverancePay_totalDe1 {
+    font-weight: bold;
+}
+
+.modalSeverancePay_btnBox {
+    margin-left: 280px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.modalSeverancePay_table tr th{
+    font-size: 15px;
+    color: #515966;
+    font-family: "Noto Sans KR";
+    background-color: #EBEFF2;
+    height: 35px;
+}
+
+.modalSeverancePay_tbody tr td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.modalSeverancePay_per {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    padding: 0;
+}
+
+.modalSeverancePay_tablededu {
+    width: 100px;
+    text-align: center;
+    padding: 0;
+}
+
+.modalSeverancePay_pay {
+    width: 180px;
+    text-align: center;
+    padding: 0;
+}
+
+.modalSeverancePay_table {
+    border-collapse: collapse;
+    border: 1px solid #D9D9D9;
+    margin-top: 10px;
+    text-align: center;
+}
