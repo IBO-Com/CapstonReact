@@ -14,6 +14,7 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import FormRetire from "./formRetire";
 import FormSeverancePay from "./formSeverancePay";
+import ModalSeverancePay from "./modalseverancepay";
 
 
 
@@ -34,6 +35,9 @@ const App = () => {
     const [sabun, setSabun] = useState();
     const [retireDate, setRetireDate] = useState([]);
     const componentRef = useRef(null);
+
+    const [severancePay, setSeverancePay] = useState(false);
+    console.log(severancePay);
 
     let InfoIndex = 1;
 
@@ -315,6 +319,19 @@ const App = () => {
                                 trigger={() => <button className="re_print_Btn">인쇄</button>}
                                 content={() => componentRef.current}
                             />
+                            <button
+                                className="severancePay"
+                                onClick={() => {
+                                    setSeverancePay(true);
+                                }}>
+                                공제액 도움말
+                            </button>
+                            {severancePay == true ? (
+                                <ModalSeverancePay setSeverancePay={setSeverancePay} />
+                            ) : (
+                                ""
+                            )}
+
                             <button
                                 className="pay_retire_btn"
                                 onClick={() => {

@@ -92,7 +92,7 @@
 }
 
 .severancePay_Btnbox {
-    width: 780px;
+    min-width: 780px;
 }
 
 .pay_retire_btn,
@@ -109,7 +109,7 @@
 }
 
 .pay_retire_btn {
-    margin-left: 360px;
+    margin-left: 235px;
 }
 
 .re_print_Btn {
@@ -219,4 +219,16 @@
 
 .reform_team {
     width: 200px;
+}
+
+.severancePay {
+    width: 120px;
+    color: #FFFFFF;
+    height: 28px;
+    margin-top: 16px;
+    margin-left: 10px;
+    border: none;
+    background: gray;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
 }
