@@ -35,6 +35,8 @@ const App = () => {
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [retireDate, setRetireDate] = useState([]); // 퇴직 사원 정보
 
+  const [retirePayment, setRetirePayment] = useState([]);
+
   const [sabun, setSabun] = useState();
   const [startInfo, setStartInfo] = useState();
   const [endInfo, setEndInfo] = useState();
@@ -261,7 +263,6 @@ const App = () => {
         <div className="SeverancePayCal_calInfo">
           <div className="SeverancePayCal_date">
             <div className="SeverancePayCal_btns">
-              <button className="SeverancePaycal_saveBtn">저장</button>
             </div>
             <table className="SeverancePaycal_FirstTable">
               <tr>
@@ -298,8 +299,6 @@ const App = () => {
               </tr>
             </table>
 
-            <span>! 근로기준법 일할계산 적용합니다.</span>
-
             <div>
               <span>&nbsp;</span>
             </div>
@@ -326,6 +325,7 @@ const App = () => {
                    
                   </td>
                 </tr>
+
                 <tr>
                   <td>
                    
@@ -337,6 +337,19 @@ const App = () => {
                   
                   </td>
                 </tr>
+
+                <tr>
+                  <td>
+                    
+                  </td>
+                  <td>
+                   
+                  </td>
+                  <td>
+                   
+                  </td>
+                </tr>
+
                 <tr>
                   <td>
                     

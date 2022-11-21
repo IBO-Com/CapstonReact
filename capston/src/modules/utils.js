@@ -180,6 +180,32 @@ export const getPaymentAll = (year, dept, setSaveData, setTotalData) => {
   })
 }
 
+const getPay = (data) => { //퇴직금
+  let before0Pay = parseInt(data.before0Pay);
+  let before1Pay = parseInt(data.before1Pay);
+  let before2Pay = parseInt(data.before2Pay);
+
+  let before0Month = date.before0Month;
+  let before1Month = date.before1Month;
+  let before2Month = date.before2Month;
+  
+  let lastDay0Month = new Date(before0Month.slice(0, 4), before0Month.slice(4, 6), before0Month.slice(6, 8));
+  let lastDay1Month = new Date(before1Month.slice(0, 4), before1Month.slice(4, 6), before1Month.slice(6, 8));
+  let lastDay2Month = new Date(before2Month.slice(0, 4), before2Month.slice(4, 6), before2Month.slice(6, 8));
+
+  let beforeTotal = before0Pay + before1Pay + before2Pay;
+  
+
+}
+
+const getPayTotal = (data) => {
+
+}
+
+const getPayTax = (data) => {
+
+}
+
 export const getRetirePayment = (sabun) => {
   let postParam = {
     sabun: sabun
@@ -187,7 +213,8 @@ export const getRetirePayment = (sabun) => {
   postParam = qs.stringify(postParam);
 
   axios.post("http://43.200.115.198:8080/getRetirePayment.jsp", postParam).then((res) => {
-    console.log("retirePayment Data : ", res.data.ITEMS[0]);
+    let data = res.data.ITEMS[0];
+    
   }).then((Error) => {
     console.log(Error);
   })
