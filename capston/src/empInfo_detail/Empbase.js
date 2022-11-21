@@ -376,7 +376,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
           <div className="info_margin">
             연봉
             <input
-              disabled
+              // disabled
               ref={salaryRef}
               className="empbase_select"
               value={"연봉값 넣어주세용"}

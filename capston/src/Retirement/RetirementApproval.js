@@ -72,6 +72,7 @@ const App = () => {
 
       let postParam2 = {
         sabun: approvalData.sabun,
+        ret_date: approvalData.ret_date,
         ret_state: approvalData.ret_state,
       };
 
