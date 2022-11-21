@@ -65,16 +65,16 @@ const App = () => {
                 console.log(Error);
             });
 
-        
+
         axios
-        .post("http://43.200.115.198:8080/retireselect.jsp")
-        .then((res) => {
-            setRetireDate(res.data.ITEMS);
-            console.log(retireDate);
-        })
-        .catch((Error) => {
-            console.log(Error);
-        });
+            .post("http://43.200.115.198:8080/retireselect.jsp")
+            .then((res) => {
+                setRetireDate(res.data.ITEMS);
+                console.log(retireDate);
+            })
+            .catch((Error) => {
+                console.log(Error);
+            });
     }, []);
 
     const radioBoxChange = (sabun) => {
@@ -295,7 +295,7 @@ const App = () => {
                                                             className="retirement_radio"
                                                             onChange={() => {
                                                                 radioBoxChange(item.sabun);
-                                                              }}
+                                                            }}
                                                         />
                                                     </td>
                                                     <td className="reform_sabun">{item.sabun}</td>
@@ -315,39 +315,45 @@ const App = () => {
 
                     <div className="severancePay_empCard">
                         <div className="severancePay_Btnbox">
-                            <ReactToPrint
-                                trigger={() => <button className="re_print_Btn">인쇄</button>}
-                                content={() => componentRef.current}
-                            />
-                            <button
-                                className="severancePay"
-                                onClick={() => {
-                                    setSeverancePay(true);
-                                }}>
-                                공제액 도움말
-                            </button>
-                            {severancePay == true ? (
-                                <ModalSeverancePay setSeverancePay={setSeverancePay} />
-                            ) : (
-                                ""
-                            )}
+                            <div className="severancePay_divBox">
+                                <div className="severancePay_gray">
+                                    <ReactToPrint
+                                        trigger={() => <button className="re_print_Btn">인쇄</button>}
+                                        content={() => componentRef.current}
+                                    />
+                                    <button
+                                        className="severancePay"
+                                        onClick={() => {
+                                            setSeverancePay(true);
+                                        }}>
+                                        공제액 도움말
+                                    </button>
+                                </div>
+                                {severancePay == true ? (
+                                    <ModalSeverancePay setSeverancePay={setSeverancePay} />
+                                ) : (
+                                    ""
+                                )}
 
-                            <button
-                                className="pay_retire_btn"
-                                onClick={() => {
-                                    toggleTab(1);
-                                }}
-                            >
-                                퇴직증명서
-                            </button>
-                            <button
-                                className="retireseverance_btn"
-                                onClick={() => {
-                                    toggleTab(2);
-                                }}
-                            >
-                                퇴직금명세서
-                            </button>
+                                <div className="severancePay_orange">
+                                    <button
+                                        className="pay_retire_btn"
+                                        onClick={() => {
+                                            toggleTab(1);
+                                        }}
+                                    >
+                                        퇴직증명서
+                                    </button>
+                                    <button
+                                        className="retireseverance_btn"
+                                        onClick={() => {
+                                            toggleTab(2);
+                                        }}
+                                    >
+                                        퇴직금명세서
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div className="severancePay_viewer">
                             {toogleState === 1 ? (

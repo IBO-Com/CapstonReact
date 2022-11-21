@@ -157,6 +157,14 @@ const App = ({ componentRef, sabun }) => {
                 </tr>
 
                 <tr className="formSeverance_boldcolor">
+                    <td colSpan={5}>퇴직 총 공제액</td>
+                </tr>
+
+                <tr>
+                    <td colSpan={5}>원</td>
+                </tr>
+
+                <tr className="formSeverance_boldcolor">
                     <td colSpan={5}>퇴직 실수령액</td>
                 </tr>
 

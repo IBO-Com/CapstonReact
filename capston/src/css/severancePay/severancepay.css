@@ -92,7 +92,12 @@
 }
 
 .severancePay_Btnbox {
-    min-width: 780px;
+    min-width: 750px;
+}
+
+.severancePay_divBox {
+    display: flex;
+    justify-content: space-between;
 }
 
 .pay_retire_btn,
@@ -106,10 +111,6 @@
     border: none;
     background: #F09336;
     border-radius: 2px;
-}
-
-.pay_retire_btn {
-    margin-left: 235px;
 }
 
 .re_print_Btn {
