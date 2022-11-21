@@ -7,6 +7,7 @@ import format from "date-fns/format";
 import { Select, MenuItem } from "@material-ui/core";
 import axios from "axios";
 import qs from "qs";
+import ModalseverancePayCal from "./modalseverancePayCal";
 import "../css/SeverancePayCal/SeverancePayCal.css";
 import * as Utils from "../modules/utils";
 import * as GetYearOfWOrk from "../modules/getYearOfWork";
@@ -25,6 +26,8 @@ function getFormatDate(date) {
 }
 
 const App = () => {
+  const [modalseverancePayCal, setModalseverancePayCal] = useState(false);
+
   const [workYear, setWorkYear] = useState(0);
   const [workMonth, setWorkMonth] = useState(0);
   const [workDay, setWorkDay] = useState(0);
@@ -270,11 +273,11 @@ const App = () => {
                 <td>
                   {startInfo
                     ? startInfo["start_date"].slice(0, 4) +
-                      "년 " +
-                      startInfo["start_date"].slice(4, 6) +
-                      "월 " +
-                      startInfo["start_date"].slice(6, 8) +
-                      "일"
+                    "년 " +
+                    startInfo["start_date"].slice(4, 6) +
+                    "월 " +
+                    startInfo["start_date"].slice(6, 8) +
+                    "일"
                     : ""}
                 </td>
                 <td className="SeverancePaycal_item">근속년수</td>
@@ -287,11 +290,11 @@ const App = () => {
                 <td>
                   {endInfo
                     ? endInfo["ret_date"].slice(0, 4) +
-                      "년 " +
-                      endInfo["ret_date"].slice(4, 6) +
-                      "월 " +
-                      endInfo["ret_date"].slice(6, 8) +
-                      "일"
+                    "년 " +
+                    endInfo["ret_date"].slice(4, 6) +
+                    "월 " +
+                    endInfo["ret_date"].slice(6, 8) +
+                    "일"
                     : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
@@ -316,49 +319,49 @@ const App = () => {
               <tbody className="SeverancePayCal_moneyList">
                 <tr>
                   <td>
-                  
+
                   </td>
                   <td>
-                    
+
                   </td>
                   <td>
-                   
+
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                   
+
                   </td>
                   <td>
-                   
+
                   </td>
                   <td>
-                  
+
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    
+
                   </td>
                   <td>
-                   
+
                   </td>
                   <td>
-                   
+
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    
+
                   </td>
                   <td>
-                   
+
                   </td>
                   <td>
-                   
+
                   </td>
                 </tr>
                 <tr>
@@ -374,15 +377,28 @@ const App = () => {
           </div>
           <div className="SeverancePayCal_calculator">
             <span>퇴직금 계산</span>
+            <button
+              className="modalseverancePayCal"
+              onClick={() => {
+                setModalseverancePayCal(true);
+              }}
+            >
+              공제액 도움말
+            </button>
+            {modalseverancePayCal == true ? (
+              <ModalseverancePayCal setModalseverancePayCal={setModalseverancePayCal} />
+            ) : (
+              ""
+            )}
             <table className="SeverancePaycal_SecondTable">
               <tr>
                 <td className="SeverancePaycal_item">마지막 달 급여</td>
                 <td>
-                 
+
                 </td>
                 <td className="SeverancePaycal_item">퇴직수당</td>
                 {/* 1년 미만 ~ 4년 : 1.5배 / 5년 이상 : 2배 */}
-                <td>{}</td>
+                <td>{ }</td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직총액</td>

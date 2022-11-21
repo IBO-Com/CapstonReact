@@ -96,6 +96,7 @@
 .SeverancePayCal_calInfo {
   width: 100%;
   height: 670px;
+  margin-top: 32px;
 }
 
 .SeverancePayCal_btns {
@@ -262,7 +263,7 @@
   width: 100px;
 }
 
-.SeverancePaycal_FirstTable tr td{
+.SeverancePaycal_FirstTable tr td {
   padding: 0px;
   margin: 0px;
   height: 40px;
@@ -274,6 +275,18 @@
   height: 40px;
 }
 
-.SeverancePayCal_moneyListTable thead tr td{
+.SeverancePayCal_moneyListTable thead tr td {
   height: 25px;
+}
+
+.modalseverancePayCal {
+  width: 120px;
+  color: #FFFFFF;
+  height: 28px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  border: none;
+  background: gray;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
 }
