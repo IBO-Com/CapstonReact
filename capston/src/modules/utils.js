@@ -180,42 +180,157 @@ export const getPaymentAll = (year, dept, setSaveData, setTotalData) => {
   })
 }
 
-const getPay = (data) => { //퇴직금
+const getPay = (data, userData) => { //퇴직금
   let before0Pay = parseInt(data.before0Pay);
   let before1Pay = parseInt(data.before1Pay);
   let before2Pay = parseInt(data.before2Pay);
 
-  let before0Month = date.before0Month;
-  let before1Month = date.before1Month;
-  let before2Month = date.before2Month;
+  let before0Month = data.before0Month;
+  let before1Month = data.before1Month;
+  let before2Month = data.before2Month;
   
   let lastDay0Month = new Date(before0Month.slice(0, 4), before0Month.slice(4, 6), before0Month.slice(6, 8));
   let lastDay1Month = new Date(before1Month.slice(0, 4), before1Month.slice(4, 6), before1Month.slice(6, 8));
   let lastDay2Month = new Date(before2Month.slice(0, 4), before2Month.slice(4, 6), before2Month.slice(6, 8));
 
   let beforeTotal = before0Pay + before1Pay + before2Pay;
+  let daySalary = before0Pay / 209 * 8; //하루 일당
+  let etcPay = 0;
+
+  let totalDay = lastDay0Month + lastDay1Month + lastDay2Month;
+  if(totalDay < 92) {
+    let difDay = 92 - totalDay;
+    etcPay = difDay * daySalary;
+  } else if(totalDay == 92) {
+    etcPay = 0;
+  }
+
+  let startDate = new Date(userData.start_date.slice(0, 4), userData.start_date.slice(4, 6), userData.start_date.slice(6, 8));
+  let endDate = new Date(userData.retire_date.slice(0, 4), userData.retire_date.slice(4, 6), userData.retire_date.slice(6, 8));
   
-
+  let diffDate = startDate.getTime() - endDate.getTime();
+  let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+  
+  let avgPay = parseInt(parseInt((beforeTotal + etcPay) / 92) * 30 * (diffDay / 365));
+  return avgPay;
 }
 
-const getPayTotal = (data) => {
+const getPayAllow = (data, userData) => { //퇴직수당
+  let startDate = new Date(userData.start_date.slice(0, 4), userData.start_date.slice(4, 6), userData.start_date.slice(6, 8));
+  let endDate = new Date(userData.retire_date.slice(0, 4), userData.retire_date.slice(4, 6), userData.retire_date.slice(6, 8));
+  
+  let diffDate = startDate.getTime() - endDate.getTime();
+  let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
 
+  let year = parseInt((diffDay / 30) / 12); //근속 년수
+  let ratio = 1.5;
+  if(year <= 4) {
+    ratio = 1.5;
+  } else if(year >= 5){
+    ratio = 2;
+  }
+
+  let lastPay = parseInt(data.before0Pay);
+  let allow = lastPay * year * ratio;
+  return allow;
 }
 
-const getPayTax = (data) => {
+const getPayTax = (retirePay, userData) => { //퇴직소득세
+  let startDate = new Date(userData.start_date.slice(0, 4), userData.start_date.slice(4, 6), userData.start_date.slice(6, 8));
+  let endDate = new Date(userData.retire_date.slice(0, 4), userData.retire_date.slice(4, 6), userData.retire_date.slice(6, 8));
+  
+  let diffDate = startDate.getTime() - endDate.getTime();
+  let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+  let year = parseInt((diffDay / 30) / 12); //근속 년수
+  //기본값 테스트
+  //year = 20;
+  //retirePay = 100000000;
 
+  let incomeDud = 0;
+  //퇴직소득공제
+  if(year <= 5) { //5년 이하
+    incomeDud = year * 300000;
+  } else if(year <= 10) { //10년 이하
+    incomeDud = 1500000 + (year - 5) * 500000;
+  } else if(year <= 20) { //20년 이하
+    incomeDud = 4000000 + (year - 10) * 800000;
+  }
+  console.log("퇴직소득공제 : ", incomeDud);
+
+  //환산 급여
+  let convertedSalary = (retirePay - incomeDud) * 12 / year;
+  console.log("환산 급여 : ", convertedSalary);
+
+  let convertedSalaryDud = 0;
+  if(convertedSalary <= 8000000) {
+    convertedSalaryDud = 0;
+  } else if(convertedSalary <= 70000000) {
+    convertedSalaryDud = 8000000 + (convertedSalary - 8000000) * 0.6;
+  } else if(convertedSalary <= 100000000) {
+    convertedSalaryDud = 45200000 + (convertedSalary - 70000000) * 0.55;
+  }
+  console.log("환산 급여 공제 : " + convertedSalaryDud);
+
+  //과세 표준
+  let taxBase = convertedSalary - convertedSalaryDud;
+  console.log("과세 표준 : ", taxBase);
+
+  //환산산출세액
+  let calculatedTaxAmount = 0;
+  if(taxBase <= 12000000) {
+    calculatedTaxAmount = taxBase * 0.06;
+  } else if(taxBase <= 46000000) {
+    calculatedTaxAmount = (taxBase * 0.15) - 1080000;
+  } else if(taxBase <= 88000000) {
+    calculatedTaxAmount = (taxBase * 0.24) - 5220000;
+  } else if(taxBase <= 150000000) {
+    calculatedTaxAmount = (taxBase * 0.35) - 14900000;
+  } else if(taxBase <= 300000000) {
+    calculatedTaxAmount = (taxBase * 0.38) - 19400000;
+  } else if(taxBase <= 500000000) {
+    calculatedTaxAmount = (taxBase * 0.4) - 25400000;
+  } else {
+    calculatedTaxAmount = (taxBase * 0.42) - 35400000;
+  }
+  console.log("환산산출세액 : ", calculatedTaxAmount);
+
+  //산출세액
+  let taxAmount = 0;
+  taxAmount = calculatedTaxAmount / 12 * year;
+  console.log("산출세액 : ", taxAmount);
+
+  return taxAmount;
 }
 
 export const getRetirePayment = (sabun) => {
-  let postParam = {
-    sabun: sabun
-  }
-  postParam = qs.stringify(postParam);
+  let returnData = {};
+  let userData = null;
+  axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
+    sabunOrName: sabun
+  })).then((retRes) => {
+    userData = retRes.data.ITEMS[0];
+    let postParam = {
+      sabun: sabun
+    }
+    postParam = qs.stringify(postParam);
+  
+    axios.post("http://43.200.115.198:8080/getRetirePayment.jsp", postParam).then((res) => {
+      let data = res.data.ITEMS[0];
+      let retirePay = parseInt(getPay(data, userData)); //퇴직금
+      let retireAllow = parseInt(getPayAllow(data, userData)); //퇴직수당
+      let retireTax = parseInt(getPayTax(retirePay + retireAllow, userData));  //퇴직소득세
 
-  axios.post("http://43.200.115.198:8080/getRetirePayment.jsp", postParam).then((res) => {
-    let data = res.data.ITEMS[0];
-    
-  }).then((Error) => {
+      returnData = {
+        ...data,
+        retirePay: retirePay,
+        retireAllow: retireAllow,
+        retireTax: retireTax
+      }
+      console.log("리턴 데이터 : ", returnData);
+    }).then((Error) => {
+      console.log(Error);
+    })
+  }).catch((Error) => {
     console.log(Error);
   })
 }
