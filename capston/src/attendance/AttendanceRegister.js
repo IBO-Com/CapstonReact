@@ -384,12 +384,11 @@ function AttendanceRegister() {
         data: JSON.stringify(data),
         lengths: lengths,
       });
-      Utils.AttendanceRegisterToPay(data); //근태에서 급여 테이블로
-
       axios.post(urlSave, postParam).then((response) => {
         if (response.data.result === "success") {
-          alert("저장되었습니다.");
+          Utils.AttendanceRegisterToPay(); //근태에서 급여 테이블로
           onClickRetrieveButton();
+          alert("저장되었습니다.");
         } else {
           alert("error");
         }
