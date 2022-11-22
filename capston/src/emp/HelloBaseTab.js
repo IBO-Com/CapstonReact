@@ -48,7 +48,7 @@ const HelloBaseTab = () => {
   const address_detail = useRef();
   const address = useRef();
   const postcode = useRef();
-  const salay = useRef();
+  const salary = useRef();
   const [gender, setGender] = useState(0);
   const [married, setMarried] = useState(0);
   const [center, setCenter] = useState("H-경영관리본부");
@@ -157,7 +157,11 @@ const HelloBaseTab = () => {
   const clickSaveButton = () => {
     if (formRef.current.reportValidity()) {
       if (window.confirm("저장하시겠습니까?")) {
-        let postParam = qs.stringify({
+        let update_date = dateComeIn;
+        update_date = update_date.replace("-", "");
+        update_date = update_date.replace("-", "");
+
+        let postParam = {
           name: name.current.value,
           englishName: englishName.current.value,
           identityNumberFront: identityNumberF.current.value,
@@ -176,21 +180,29 @@ const HelloBaseTab = () => {
           dateComeIn: dateComeIn,
           loginId: Cookie.getCookie("empInfo").id,
           img_base64: picture.img,
-        });
+          salary: salary.current.value,
+          update_date: update_date, 
+        };
+        postParam = qs.stringify(postParam);
 
-        axios.post(urlSave, postParam).then((response) => {
-          console.log(response);
-          if (response.data.result === "success") {
-            setCookie("empRegister_userInfo", {
-              authority: "0",
-              id: response.data.sabun,
-              name: name.current.value,
-            });
-            alert("저장되었습니다.");
-          } else {
-            alert("error");
-          }
-        });
+        axios
+          .post(
+            urlSave,
+            postParam
+          )
+          .then((response) => {
+            console.log(response);
+            if (response.data.result === "success") {
+              setCookie("empRegister_userInfo", {
+                authority: "0",
+                id: response.data.sabun,
+                name: name.current.value,
+              });
+              alert("저장되었습니다.");
+            } else {
+              alert("error");
+            }
+          });
       }
     }
   };
@@ -511,7 +523,7 @@ const HelloBaseTab = () => {
                       required
                       InputProps={{ sx: { height: 40 } }}
                       fullWidth
-                      inputRef={salay}
+                      inputRef={salary}
                     />
                   </td>
                 </tr>
