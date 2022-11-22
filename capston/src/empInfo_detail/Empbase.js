@@ -42,7 +42,22 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
     return year + month + day;
   };
 
+  function inputNumberFormat(obj) {
+    obj.target.value = comma(uncomma(obj.target.value));
+  }
+
+  function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+  }
+
+  function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+  }
+
   const saveBtnHandler = () => {
+    let today = new Date();
     let postParam = {
       sabun: userData["sabun"],
       name: nameRef.current.value,
@@ -50,7 +65,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
       birth: dateFormatString(birthDate),
       gender: genderRef.current.value,
       identity: identityLRef.current.value + identityRRef.current.value,
-      retire_cls: retireClsRef.current.value,
+      retire_cls: retireClsRef.current.value == "재직" ? "0" : "1",
       start_date: dateFormatString(startDate),
       foreign: foreign,
       married: married,
@@ -66,6 +81,8 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
       address: addressRef.current.value,
       address_detail: addressDetailRef.current.value,
       postcode: postcodeRef.current.value,
+      salary: salaryRef.current.value.replace(/\,/g, ""),
+      today: String(today.getFullYear()) + String(parseInt(today.getMonth()) + 1) + String(today.getDate())
     };
     console.log("postParam : ", postParam);
     postParam = qs.stringify(postParam);
@@ -375,12 +392,16 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
           </div>
           <div className="info_margin">
             연봉
-            <input
-              // disabled
-              ref={salaryRef}
-              className="empbase_select"
-              value={"연봉값 넣어주세용"}
-            ></input>
+            {cookies["loginInfo"].authority == "1" ? ( //관리자일때
+              <input
+                ref={salaryRef}
+                onChange={(e) => {inputNumberFormat(e)}}
+                className="empbase_input"
+                Value={comma(uncomma(parseInt(userData["salary"])))}
+              ></input>
+            ) : (
+              <span>{parseInt(userData["salary"]).toLocaleString() + "원"}</span>
+            )}
           </div>
         </div>
       </div>
