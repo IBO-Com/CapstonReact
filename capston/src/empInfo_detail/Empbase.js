@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import qs from "qs";
+import * as Utils from "../modules/utils";
 
 const Empbase = ({ userData, setUserData, defaultYear }) => {
   const [startDate, setStartDate] = useState(new Date()); //입사일
@@ -93,7 +94,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
           alert("오류가 발생했습니다.");
         } else {
           alert("저장이 완료되었습니다.");
-
+          Utils.AttendanceRegisterToPay();
           //수정 후 데이터 리로드
           axios
             .post(
