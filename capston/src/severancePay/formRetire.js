@@ -6,7 +6,7 @@ import qs from "qs";
 import IBOstamp from "../img/stamp.png";
 import * as GetYearOfWork from "../modules/getYearOfWork";
 
-const App = ({ componentRef, sabun }) => {
+const App = ({retirePayment, componentRef, sabun }) => {
     const todayTime = () => {
         let now = new Date();
         let todayYear = now.getFullYear();
@@ -38,16 +38,11 @@ const App = ({ componentRef, sabun }) => {
             setUserData(response.data.ITEMS[0]);
             let userInfo = response.data.ITEMS[0];
             let startDate = new Date(userInfo["start_date"].slice(0, 4), parseInt(userInfo["start_date"].slice(4, 6))-1, userInfo["start_date"].slice(6, 8));
-            let endDate = new Date();
+            let endDate = new Date(userInfo["retire_date"].slice(0, 4), parseInt(userInfo["retire_date"].slice(4, 6))-1, userInfo["retire_date"].slice(6, 8));
 
             await axios.post("http://43.200.115.198:8080/retireselect.jsp", qs.stringify({
                 sabunOrName: sabun
             }))
-            .then((res) => {
-                let data = res.data.ITEMS[0];
-                endDate = new Date(data["ret_date"].slice(0, 4), parseInt(data["ret_date"].slice(4, 6))-1, data["ret_date"].slice(6, 8) );
-                console.log(data["ret_date"].slice(0, 4), parseInt(data["ret_date"].slice(4, 6)), data["ret_date"].slice(6, 8) );
-            })
             .catch((Error) => {
                 console.log(Error);
             });
@@ -122,7 +117,13 @@ const App = ({ componentRef, sabun }) => {
                 </tr>
 
                 <tr>
-                    <td colSpan={5}>원</td>
+                    <td colSpan={5}>{
+                        retirePayment ? (
+                            (parseInt(retirePayment.retirePay) + parseInt(retirePayment.retireAllow) - parseInt(retirePayment.retireTax)).toLocaleString() + "원"
+                        ) : (
+                            ""
+                        )
+                    }</td>
                 </tr>
             </table>
 

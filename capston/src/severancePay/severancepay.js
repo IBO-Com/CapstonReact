@@ -11,6 +11,7 @@ import qs from "qs";
 import ReactToPrint from "react-to-print";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
+import * as Utils from "../modules/utils";
 
 import FormRetire from "./formRetire";
 import FormSeverancePay from "./formSeverancePay";
@@ -35,6 +36,7 @@ const App = () => {
     const [sabun, setSabun] = useState();
     const [retireDate, setRetireDate] = useState([]);
     const componentRef = useRef(null);
+    const [retirePayment, setRetirePayment] = useState();
 
     const [severancePay, setSeverancePay] = useState(false);
     console.log(severancePay);
@@ -79,6 +81,7 @@ const App = () => {
 
     const radioBoxChange = (sabun) => {
         setSabun(sabun);
+        Utils.getRetirePayment(sabun, setRetirePayment);
     };
 
     const sendSubmit = () => {
@@ -357,12 +360,12 @@ const App = () => {
                         </div>
                         <div className="severancePay_viewer">
                             {toogleState === 1 ? (
-                                <FormRetire componentRef={componentRef} sabun={sabun} />
+                                <FormRetire retirePayment={retirePayment} componentRef={componentRef} sabun={sabun} />
                             ) : (
                                 ""
                             )}
                             {toogleState === 2 ? (
-                                <FormSeverancePay componentRef={componentRef} sabun={sabun} />
+                                <FormSeverancePay retirePayment={retirePayment} componentRef={componentRef} sabun={sabun} />
                             ) : (
                                 ""
                             )}
