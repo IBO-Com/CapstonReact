@@ -37,6 +37,7 @@ const App = () => {
   const [selectDepart, setSelectDepart] = useState("*");
   const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
   const [retireDate, setRetireDate] = useState([]); // 퇴직 사원 정보
+  const [retireGetDay, setRetireGetDay] = useState("");
 
   const [retirePayment, setRetirePayment] = useState();
 
@@ -91,34 +92,30 @@ const App = () => {
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((response) => {
         setStartInfo(response.data.ITEMS[0]);
-        sDate = response.data.ITEMS[0];
+        sDate = response.data.ITEMS[0].start_date;
+        eDate = response.data.ITEMS[0].retire_date;
         console.log("startInfo : ", startInfo);
-      });
-
-    await axios
-      .post("http://43.200.115.198:8080/retireselect.jsp", postParam)
-      .then((res) => {
-        setEndInfo(res.data.ITEMS[0]);
-        eDate = res.data.ITEMS[0];
-        console.log(endInfo);
+        let ret_date = new Date(eDate.slice(0, 4), parseInt(eDate.slice(4, 6)) - 1, parseInt(eDate.slice(6, 8)) + 14);
+        setRetireGetDay(ret_date.getFullYear() + "년 " + (ret_date.getMonth() + 1) + "월 " + ret_date.getDate() + "일");
       });
 
     //근속연수 구하는 함수 (startDate, endDate, year, month, day)
     GetYearOfWOrk.getYearOfWork(
       new Date(
-        sDate["start_date"].slice(0, 4),
-        parseInt(sDate["start_date"].slice(4, 6)) - 1,
-        parseInt(sDate["start_date"].slice(6, 8))
+        sDate.slice(0, 4),
+        parseInt(sDate.slice(4, 6)) - 1,
+        parseInt(sDate.slice(6, 8))
       ),
       new Date(
-        eDate["ret_date"].slice(0, 4),
-        parseInt(eDate["ret_date"].slice(4, 6)) - 1,
-        parseInt(eDate["ret_date"].slice(6, 8))
+        eDate.slice(0, 4),
+        parseInt(eDate.slice(4, 6)) - 1,
+        parseInt(eDate.slice(6, 8))
       ),
       setWorkYear,
       setWorkMonth,
       setWorkDay
     );
+
 
     // 근무내역
     console.log("PayData : ", payData[sabun]);
@@ -288,17 +285,17 @@ const App = () => {
               <tr>
                 <td className="SeverancePaycal_item">퇴직일</td>
                 <td>
-                  {endInfo
-                    ? endInfo["ret_date"].slice(0, 4) +
+                  {startInfo
+                    ? startInfo["retire_date"].slice(0, 4) +
                     "년 " +
-                    endInfo["ret_date"].slice(4, 6) +
+                    startInfo["retire_date"].slice(4, 6) +
                     "월 " +
-                    endInfo["ret_date"].slice(6, 8) +
+                    startInfo["retire_date"].slice(6, 8) +
                     "일"
                     : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
-                <td>{todayTime().slice(0, 9)} 5일</td>
+                <td>{retireGetDay}</td>
               </tr>
             </table>
 

@@ -268,7 +268,6 @@ const App = () => {
         <div className="RetirementApproval_title">
           <span>퇴직승인</span>
           <div className="RetirementApproval_btns">
-            <button className="RetirementApproval_batchBtn">일괄승인</button>
             <button
               className="RetirementApproval_savetBtn"
               onClick={() => {
