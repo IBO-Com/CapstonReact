@@ -41,3 +41,36 @@
     width: 20px;
     background-color: #EBEFF2;
 }
+
+.formProofofempMain .footer_vcm_form{
+    margin-top: 120px;
+    text-align: center;
+    color:#515966;
+    margin-bottom: 100px;
+}
+
+
+.formProofofempMain .footer_vcm_form P:not(:last-of-type){
+    margin-bottom: 50px;
+}
+
+.formProofofempMain .footer_vcm_form .mbt{
+    margin-bottom: 10px !important; 
+}
+
+.formVCMDiv {
+    width: 100%;
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+
+.formVcm {
+    margin-top: -45px;
+    margin-left: 44px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0px 0px 4px #f00;
+}
