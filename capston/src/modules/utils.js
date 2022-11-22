@@ -189,9 +189,9 @@ const getPay = (data, userData) => { //퇴직금
   let before1Month = data.before1Month;
   let before2Month = data.before2Month;
   
-  let lastDay0Month = new Date(before0Month.slice(0, 4), before0Month.slice(4, 6), before0Month.slice(6, 8));
-  let lastDay1Month = new Date(before1Month.slice(0, 4), before1Month.slice(4, 6), before1Month.slice(6, 8));
-  let lastDay2Month = new Date(before2Month.slice(0, 4), before2Month.slice(4, 6), before2Month.slice(6, 8));
+  let lastDay0Month = new Date(before0Month.slice(0, 4), before0Month.slice(4, 6), 0).getDate();
+  let lastDay1Month = new Date(before1Month.slice(0, 4), before1Month.slice(4, 6), 0).getDate();
+  let lastDay2Month = new Date(before2Month.slice(0, 4), before2Month.slice(4, 6), 0).getDate();
 
   let beforeTotal = before0Pay + before1Pay + before2Pay;
   let daySalary = before0Pay / 209 * 8; //하루 일당
@@ -200,7 +200,7 @@ const getPay = (data, userData) => { //퇴직금
   let totalDay = lastDay0Month + lastDay1Month + lastDay2Month;
   if(totalDay < 92) {
     let difDay = 92 - totalDay;
-    etcPay = difDay * daySalary;
+    etcPay = parseInt(difDay * daySalary);
   } else if(totalDay == 92) {
     etcPay = 0;
   }
@@ -210,9 +210,23 @@ const getPay = (data, userData) => { //퇴직금
   
   let diffDate = startDate.getTime() - endDate.getTime();
   let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
-  
+  let year = parseInt((diffDay / 30) / 12); //근속 년수
+
   let avgPay = parseInt(parseInt((beforeTotal + etcPay) / 92) * 30 * (diffDay / 365));
-  return avgPay;
+  if(year == 0) {
+    avgPay = 0;
+  }
+  
+  let returnData = {
+    totalPay: before0Pay + before1Pay + before2Pay,
+    retirePay: avgPay,
+    lastDay0Month: lastDay0Month,
+    lastDay1Month: lastDay1Month,
+    lastDay2Month: lastDay2Month,
+    totalDay: totalDay,
+    etcPay: etcPay,
+  }
+  return returnData;
 }
 
 const getPayAllow = (data, userData) => { //퇴직수당
@@ -223,6 +237,9 @@ const getPayAllow = (data, userData) => { //퇴직수당
   let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
 
   let year = parseInt((diffDay / 30) / 12); //근속 년수
+  if(year == 0) {
+    return 0;
+  }
   let ratio = 1.5;
   if(year <= 4) {
     ratio = 1.5;
@@ -235,6 +252,8 @@ const getPayAllow = (data, userData) => { //퇴직수당
   return allow;
 }
 
+
+
 const getPayTax = (retirePay, userData) => { //퇴직소득세
   let startDate = new Date(userData.start_date.slice(0, 4), userData.start_date.slice(4, 6), userData.start_date.slice(6, 8));
   let endDate = new Date(userData.retire_date.slice(0, 4), userData.retire_date.slice(4, 6), userData.retire_date.slice(6, 8));
@@ -242,6 +261,10 @@ const getPayTax = (retirePay, userData) => { //퇴직소득세
   let diffDate = startDate.getTime() - endDate.getTime();
   let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
   let year = parseInt((diffDay / 30) / 12); //근속 년수
+
+  if(year == 0) { //1년이 안되었을 때
+    return 0;
+  }
   //기본값 테스트
   //year = 20;
   //retirePay = 100000000;
@@ -302,13 +325,20 @@ const getPayTax = (retirePay, userData) => { //퇴직소득세
   return taxAmount;
 }
 
-export const getRetirePayment = (sabun) => {
+export const getRetirePayment = (sabun, saveData) => {
   let returnData = {};
   let userData = null;
   axios.post("http://43.200.115.198:8080/empselect.jsp", qs.stringify({
     sabunOrName: sabun
   })).then((retRes) => {
     userData = retRes.data.ITEMS[0];
+    let startDate = new Date(userData.start_date.slice(0, 4), userData.start_date.slice(4, 6), userData.start_date.slice(6, 8));
+    let endDate = new Date(userData.retire_date.slice(0, 4), userData.retire_date.slice(4, 6), userData.retire_date.slice(6, 8));
+    
+    let diffDate = startDate.getTime() - endDate.getTime();
+    let diffDay = Math.abs(diffDate / (1000 * 60 * 60 * 24));
+    let year = parseInt((diffDay / 30) / 12); //근속 년수
+
     let postParam = {
       sabun: sabun
     }
@@ -316,17 +346,18 @@ export const getRetirePayment = (sabun) => {
   
     axios.post("http://43.200.115.198:8080/getRetirePayment.jsp", postParam).then((res) => {
       let data = res.data.ITEMS[0];
-      let retirePay = parseInt(getPay(data, userData)); //퇴직금
+      let retirePayJson = getPay(data, userData); //퇴직금
       let retireAllow = parseInt(getPayAllow(data, userData)); //퇴직수당
-      let retireTax = parseInt(getPayTax(retirePay + retireAllow, userData));  //퇴직소득세
+      let retireTax = parseInt(getPayTax(retirePayJson.retirePay + retireAllow, userData));  //퇴직소득세
 
       returnData = {
         ...data,
-        retirePay: retirePay,
+        ...retirePayJson,
         retireAllow: retireAllow,
         retireTax: retireTax
       }
       console.log("리턴 데이터 : ", returnData);
+      saveData(returnData);
     }).then((Error) => {
       console.log(Error);
     })

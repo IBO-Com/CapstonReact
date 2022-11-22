@@ -2,6 +2,7 @@
   background-color: #ffffff;
   height: 790px;
   width: 98%;
+  overflow: auto;
 }
 
 .SeverancePayCal_search {
@@ -154,7 +155,6 @@
 }
 
 .SeverancePayCal_total {
-  margin-top: 10px;
 }
 
 .SeverancePayCal_total span {
