@@ -4,6 +4,7 @@
   width: 98%;
   height: 790px;
   position: relative;
+  overflow: auto;
 }
 .PersonnelAppointment_search {
   height: 60px;
@@ -64,12 +65,9 @@
 .PersonnelAppointment_tables {
   margin-top: 10px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
-.PersonnelAppointment_dept {
-  min-width: 730px;
-  height: 600px;
-}
+
 .PersonnelAppointment_dept span {
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -79,14 +77,23 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
-.PersonnelAppointment_dept table {
+.PersonnelAppointment_dept {
+  min-width: 730px;
+  height: 600px;
+  margin-right: 100px;
+}
+.PersonnelAppointment_deptTable {
+  overflow-y: auto;
+  height: 550px;
+}
+.PersonnelAppointment_deptTable table {
   width: 100%;
   margin-top: 10px;
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #d9d9d9;
 }
-.PersonnelAppointment_dept thead tr {
+.PersonnelAppointment_deptTable thead tr {
   font-size: 12px;
   color: #515966;
   font-family: "Noto Sans KR";
@@ -95,15 +102,15 @@
   background-color: #ebeff2;
 }
 
-.PersonnelAppointment_dept thead td {
+.PersonnelAppointment_deptTable thead td {
   padding: 10px;
 }
-.PersonnelAppointment_dept tbody td {
+.PersonnelAppointment_deptTable tbody td {
   padding: 8px;
   font-size: 12px;
 }
-.PersonnelAppointment_dept tr,
-.PersonnelAppointment_dept td {
+.PersonnelAppointment_deptTable tr,
+.PersonnelAppointment_deptTable td {
   border: 1px solid#D9D9D9;
   text-align: center;
 }
@@ -120,14 +127,18 @@
   letter-spacing: 0.1em;
   color: #5a6163;
 }
-.PersonnelAppointment_rank table {
+.PersonnelAppointment_rankTable {
+  overflow-y: auto;
+  height: 550px;
+}
+.PersonnelAppointment_rankTable table {
   width: 100%;
   margin-top: 10px;
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #d9d9d9;
 }
-.PersonnelAppointment_rank thead tr {
+.PersonnelAppointment_rankTable thead tr {
   font-size: 12px;
   color: #515966;
   font-family: "Noto Sans KR";
@@ -136,15 +147,15 @@
   background-color: #ebeff2;
 }
 
-.PersonnelAppointment_rank thead td {
+.PersonnelAppointment_rankTable thead td {
   padding: 10px;
 }
-.PersonnelAppointment_rank tbody td {
+.PersonnelAppointment_rankTable tbody td {
   padding: 8px;
   font-size: 12px;
 }
-.PersonnelAppointment_rank tr,
-.PersonnelAppointment_rank td {
+.PersonnelAppointment_rankTable tr,
+.PersonnelAppointment_rankTable td {
   border: 1px solid#D9D9D9;
   text-align: center;
 }

@@ -177,132 +177,136 @@ const App = () => {
         <div className="PersonnelAppointment_tables">
           <div className="PersonnelAppointment_dept">
             <span>부서이동</span>
-            <table>
-              <thead>
-                <tr>
-                  <td>번호</td>
-                  <td>발령일자</td>
-                  <td>사번</td>
-                  <td>본부</td>
-                  <td>부서</td>
-                  <td>팀</td>
-                  <td>성명</td>
-                </tr>
-              </thead>
-              <tbody>
-                {appointmentData.map((item) => (
+            <div className="PersonnelAppointment_deptTable">
+              <table>
+                <thead>
                   <tr>
-                    {item.app_state === "1" ? (
-                      <>
-                        <td>{leftIndex++}</td>
-                        <td style={{ minWidth: "20px" }}>
-                          {item.app_date.slice(0, 4)}년&nbsp;{" "}
-                          {item.app_date.slice(4, 6)}월&nbsp;{" "}
-                          {item.app_date.slice(6, 8)}일&nbsp;
-                        </td>
-                        <td style={{ minWidth: "20px" }}>{item.sabun}</td>
-                        <td style={{ minWidth: "20px" }}>
-                          {item.center === "H"
-                            ? "경영관리본부"
-                            : "" || item.center === "C"
-                            ? "사이버보안본부"
-                            : "" || item.center === "S"
-                            ? "보안연구본부"
-                            : ""}
-                        </td>
-                        <td style={{ minWidth: "20px" }}>
-                          {deptObj[item.dept]}
-                        </td>
-                        <td style={{ minWidth: "20px" }}>
-                          {item.team === "101"
-                            ? "인사관리팀"
-                            : "" || item.team === "102"
-                            ? "마케팅팀"
-                            : "" || item.team === "201"
-                            ? "총무회계팀"
-                            : "" || item.team === "202"
-                            ? "경리팀"
-                            : "" || item.team === "301"
-                            ? "침해대응팀"
-                            : "" || item.team === "302"
-                            ? "위협분석팀"
-                            : "" || item.team === "401"
-                            ? "보안관제팀"
-                            : "" || item.team === "402"
-                            ? "정보보호팀"
-                            : "" || item.team === "501"
-                            ? "연구팀"
-                            : "" || item.team === "502"
-                            ? "연구기획팀"
-                            : "" || item.team === "601"
-                            ? "종합분석팀"
-                            : "" || item.team === "602"
-                            ? "취약점분석팀"
-                            : ""}
-                        </td>
-                        <td>{item.name}</td>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    <td>번호</td>
+                    <td>발령일자</td>
+                    <td>사번</td>
+                    <td>본부</td>
+                    <td>부서</td>
+                    <td>팀</td>
+                    <td>성명</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {appointmentData.map((item) => (
+                    <tr>
+                      {item.app_state === "1" ? (
+                        <>
+                          <td>{leftIndex++}</td>
+                          <td style={{ minWidth: "20px" }}>
+                            {item.app_date.slice(0, 4)}년&nbsp;{" "}
+                            {item.app_date.slice(4, 6)}월&nbsp;{" "}
+                            {item.app_date.slice(6, 8)}일&nbsp;
+                          </td>
+                          <td style={{ minWidth: "20px" }}>{item.sabun}</td>
+                          <td style={{ minWidth: "20px" }}>
+                            {item.center === "H"
+                              ? "경영관리본부"
+                              : "" || item.center === "C"
+                              ? "사이버보안본부"
+                              : "" || item.center === "S"
+                              ? "보안연구본부"
+                              : ""}
+                          </td>
+                          <td style={{ minWidth: "20px" }}>
+                            {deptObj[item.dept]}
+                          </td>
+                          <td style={{ minWidth: "20px" }}>
+                            {item.team === "101"
+                              ? "인사관리팀"
+                              : "" || item.team === "102"
+                              ? "마케팅팀"
+                              : "" || item.team === "201"
+                              ? "총무회계팀"
+                              : "" || item.team === "202"
+                              ? "경리팀"
+                              : "" || item.team === "301"
+                              ? "침해대응팀"
+                              : "" || item.team === "302"
+                              ? "위협분석팀"
+                              : "" || item.team === "401"
+                              ? "보안관제팀"
+                              : "" || item.team === "402"
+                              ? "정보보호팀"
+                              : "" || item.team === "501"
+                              ? "연구팀"
+                              : "" || item.team === "502"
+                              ? "연구기획팀"
+                              : "" || item.team === "601"
+                              ? "종합분석팀"
+                              : "" || item.team === "602"
+                              ? "취약점분석팀"
+                              : ""}
+                          </td>
+                          <td>{item.name}</td>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div className="PersonnelAppointment_rank">
             <span>승진</span>
-            <table>
-              <thead>
-                <tr>
-                  <td>번호</td>
-                  <td>발령일자</td>
-                  <td>직책</td>
-                  <td>사번</td>
-                  <td>성명</td>
-                </tr>
-              </thead>
-              <tbody>
-                {appointmentData.map((item, index) => (
+            <div className="PersonnelAppointment_rankTable">
+              <table>
+                <thead>
                   <tr>
-                    {item.app_state === "2" ? (
-                      <>
-                        <td>{rightIndex++}</td>
-                        <td style={{ minWidth: "20px" }}>
-                          {item.app_date.slice(0, 4)}년&nbsp;{" "}
-                          {item.app_date.slice(4, 6)}월&nbsp;{" "}
-                          {item.app_date.slice(6, 8)}일&nbsp;
-                        </td>
-                        <td>
-                          {" "}
-                          {item.rank === "1"
-                            ? "사원"
-                            : " " || item.rank === "2"
-                            ? "대리"
-                            : " " || item.rank === "3"
-                            ? "과장"
-                            : "" || item.rank === "4"
-                            ? "차장"
-                            : " " || item.rank === "5"
-                            ? "부장"
-                            : "" || item.rank === "6"
-                            ? "이사"
-                            : " " || item.rank === "7"
-                            ? "사장"
-                            : " " || item.rank === "8"
-                            ? "대표이사"
-                            : " "}
-                        </td>
-                        <td>{item.sabun}</td>
-                        <td>{item.name}</td>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    <td>번호</td>
+                    <td>발령일자</td>
+                    <td>직책</td>
+                    <td>사번</td>
+                    <td>성명</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {appointmentData.map((item, index) => (
+                    <tr>
+                      {item.app_state === "2" ? (
+                        <>
+                          <td>{rightIndex++}</td>
+                          <td style={{ minWidth: "20px" }}>
+                            {item.app_date.slice(0, 4)}년&nbsp;{" "}
+                            {item.app_date.slice(4, 6)}월&nbsp;{" "}
+                            {item.app_date.slice(6, 8)}일&nbsp;
+                          </td>
+                          <td>
+                            {" "}
+                            {item.rank === "1"
+                              ? "사원"
+                              : " " || item.rank === "2"
+                              ? "대리"
+                              : " " || item.rank === "3"
+                              ? "과장"
+                              : "" || item.rank === "4"
+                              ? "차장"
+                              : " " || item.rank === "5"
+                              ? "부장"
+                              : "" || item.rank === "6"
+                              ? "이사"
+                              : " " || item.rank === "7"
+                              ? "사장"
+                              : " " || item.rank === "8"
+                              ? "대표이사"
+                              : " "}
+                          </td>
+                          <td>{item.sabun}</td>
+                          <td>{item.name}</td>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
