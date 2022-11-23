@@ -20,7 +20,10 @@ class koLocalizedUtils extends DateFnsUtils {
 }
 
 const App = () => {
-  const [startDate, setStartDate] = useState(new Date("2020-10-01"));
+  let toDay = new Date();
+  const [startDate, setStartDate] = useState(
+    new Date(toDay.getFullYear(), toDay.getMonth(), 1)
+  );
   const [endDate, setEndDate] = useState(new Date());
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
@@ -55,30 +58,38 @@ const App = () => {
 
   const addZero = (date) => {
     if (date < 10) {
-      const zeroDate = ('00' + date).slice(-2);
+      const zeroDate = ("00" + date).slice(-2);
       return zeroDate;
     }
     return date;
-  }
+  };
   const submit = () => {
-    let start_date = String(startDate.getFullYear()) + String(addZero(startDate.getMonth()+1)) + String(addZero(startDate.getDate()));
-    let retire_date = String(endDate.getFullYear()) + String(addZero(endDate.getMonth() + 1)) + String(addZero(endDate.getDate()));
+    let start_date =
+      String(startDate.getFullYear()) +
+      String(addZero(startDate.getMonth() + 1)) +
+      String(addZero(startDate.getDate()));
+    let retire_date =
+      String(endDate.getFullYear()) +
+      String(addZero(endDate.getMonth() + 1)) +
+      String(addZero(endDate.getDate()));
     let param = {};
 
-    if(textName.trim().length != 0) { //사번/성명이 입력되었을 때
+    if (textName.trim().length != 0) {
+      //사번/성명이 입력되었을 때
       param["sabunOrName"] = textName;
     }
 
-    if(selectDepart != "*") { //선택 부서가 전체 부서일때
+    if (selectDepart != "*") {
+      //선택 부서가 전체 부서일때
       param["dept"] = selectDepart;
-    } 
+    }
 
     param["start_date"] = start_date;
     param["retire_date"] = retire_date;
 
-    let tempParam = {...param}; //객체 복사
+    let tempParam = { ...param }; //객체 복사
 
-    if(nowTab != "A") {
+    if (nowTab != "A") {
       tempParam["work_form"] = nowTab;
     }
 
@@ -88,68 +99,7 @@ const App = () => {
 
     console.log(param);
     axios
-    .post("http://43.200.115.198:8080/getAttendance.jsp", tempParam)
-    .then((response) => {
-      setAttendData(response.data.ITEMS);
-    })
-    .catch((Error) => {
-      console.log(Error);
-    });
-
-  //외근, 휴일 등등 개수
-  axios
-    .post("http://43.200.115.198:8080/getAttendance_workCount.jsp", param)
-    .then((response) => {
-      let data = response.data.ITEMS;
-      console.log("Data : ", data);
-      data["OW"] ? setOW(parseInt(data["OW"])) : setOW(0);
-      data["BT"] ? setBT(parseInt(data["BT"])) : setBT(0);
-      data["HW"] ? setHW(parseInt(data["HW"])) : setHW(0);
-      data["NM"] ? setNM(parseInt(data["NM"])) : setNM(0);
-      data["EW"] ? setEW(parseInt(data["EW"])) : setEW(0);
-      data["RW"] ? setRW(parseInt(data["RW"])) : setRW(0);
-      
-    }) 
-    .catch((Error) => {
-      console.log(Error);
-    });
-  }
-
-  const changeTap = (idx, tab) => {
-    setNowTab(tab)
-    let element = document.querySelectorAll(".AttendanceStatus_type > div");
-    for (let i = 0; i < element.length; i++) {
-      if (i == idx) {
-        element[i].className = "AttendanceStatus_type01";
-      } else {
-        element[i].className = "AttendanceStatus_type02";
-      }
-    }
-
-    let param = {...paramData};
-
-    if(tab != 'A') { //전체가 아닐 때 
-      param["work_form"] = tab;
-    }
-
-    param = qs.stringify(param);
-
-    axios
-    .post("http://43.200.115.198:8080/getAttendance.jsp", param)
-    .then((response) => {
-      setAttendData(response.data.ITEMS);
-    })
-    .catch((Error) => {
-      console.log(Error);
-    });
-    
-  }
-  
-
-  useEffect(() => {
-    //각종 정보
-    axios
-      .post("http://43.200.115.198:8080/getAttendance.jsp")
+      .post("http://43.200.115.198:8080/getAttendance.jsp", tempParam)
       .then((response) => {
         setAttendData(response.data.ITEMS);
       })
@@ -159,7 +109,86 @@ const App = () => {
 
     //외근, 휴일 등등 개수
     axios
-      .post("http://43.200.115.198:8080/getAttendance_workCount.jsp")
+      .post("http://43.200.115.198:8080/getAttendance_workCount.jsp", param)
+      .then((response) => {
+        let data = response.data.ITEMS;
+        console.log("Data : ", data);
+        data["OW"] ? setOW(parseInt(data["OW"])) : setOW(0);
+        data["BT"] ? setBT(parseInt(data["BT"])) : setBT(0);
+        data["HW"] ? setHW(parseInt(data["HW"])) : setHW(0);
+        data["NM"] ? setNM(parseInt(data["NM"])) : setNM(0);
+        data["EW"] ? setEW(parseInt(data["EW"])) : setEW(0);
+        data["RW"] ? setRW(parseInt(data["RW"])) : setRW(0);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+  const changeTap = (idx, tab) => {
+    setNowTab(tab);
+    let element = document.querySelectorAll(".AttendanceStatus_type > div");
+    for (let i = 0; i < element.length; i++) {
+      if (i == idx) {
+        element[i].className = "AttendanceStatus_type01";
+      } else {
+        element[i].className = "AttendanceStatus_type02";
+      }
+    }
+
+    let param = { ...paramData };
+
+    if (tab != "A") {
+      //전체가 아닐 때
+      param["work_form"] = tab;
+    }
+
+    param = qs.stringify(param);
+
+    axios
+      .post("http://43.200.115.198:8080/getAttendance.jsp", param)
+      .then((response) => {
+        setAttendData(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+  useEffect(() => {
+    let start_date =
+      String(startDate.getFullYear()) +
+      String(addZero(startDate.getMonth() + 1)) +
+      String(addZero(startDate.getDate()));
+    let retire_date =
+      String(endDate.getFullYear()) +
+      String(addZero(endDate.getMonth() + 1)) +
+      String(addZero(endDate.getDate()));
+
+    let postParam = {
+      start_date: start_date,
+      retire_date: retire_date,
+    };
+    console.log(postParam);
+    //각종 정보
+    axios
+      .post(
+        "http://43.200.115.198:8080/getAttendance.jsp",
+        qs.stringify(postParam)
+      )
+      .then((response) => {
+        setAttendData(response.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+
+    //외근, 휴일 등등 개수
+    axios
+      .post(
+        "http://43.200.115.198:8080/getAttendance_workCount.jsp",
+        qs.stringify(postParam)
+      )
       .then((response) => {
         let data = response.data.ITEMS;
         if (data["OW"]) {
@@ -292,7 +321,14 @@ const App = () => {
             onChange={textNameHandle}
           />
         </FormControl>
-        <button className="AttendanceStatus_searchBtn" onClick={() => {submit()}}>검색</button>
+        <button
+          className="AttendanceStatus_searchBtn"
+          onClick={() => {
+            submit();
+          }}
+        >
+          검색
+        </button>
       </div>
       <div className="AttendanceStatus_content">
         <span>근태/근무현황</span>
