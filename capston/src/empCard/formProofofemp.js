@@ -90,7 +90,7 @@ const App = ({ componentRef, sabun }) => {
         <tr className="formProofofeFirst">
           <td>부서</td>
           <td>{dept}</td>
-          <td>팀</td>
+          <td>팀명</td>
           <td>{team}</td>
         </tr>
 

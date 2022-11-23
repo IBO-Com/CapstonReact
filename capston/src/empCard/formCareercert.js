@@ -101,11 +101,11 @@ const App = ({ componentRef, sabun }) => {
           <td>
             {userData
               ? defaultYear +
-                userData["identity"].slice(0, 2) +
-                "-" +
-                userData["identity"].slice(2, 4) +
-                "-" +
-                userData["identity"].slice(4, 6)
+              userData["identity"].slice(0, 2) +
+              "-" +
+              userData["identity"].slice(2, 4) +
+              "-" +
+              userData["identity"].slice(4, 6)
               : ""}
           </td>
         </tr>
@@ -123,10 +123,10 @@ const App = ({ componentRef, sabun }) => {
           <td>
             {userData
               ? userData["start_date"].slice(0, 4) +
-                "-" +
-                userData["start_date"].slice(4, 6) +
-                "-" +
-                userData["start_date"].slice(6, 8)
+              "-" +
+              userData["start_date"].slice(4, 6) +
+              "-" +
+              userData["start_date"].slice(6, 8)
               : ""}
           </td>
           <td>부서</td>
@@ -136,13 +136,17 @@ const App = ({ componentRef, sabun }) => {
         <tr className="formProofofeFirst">
           <td>퇴사일자</td>
           <td>
-            {userData
-              ? userData["retire_date"].slice(0, 4) +
-                "-" +
-                userData["retire_date"].slice(4, 6) +
-                "-" +
-                userData["retire_date"].slice(6, 8)
-              : ""}
+            {userData ? (
+              <span>
+                {userData["retire_date"] ? (
+                  userData["retire_date"].slice(0,4) + "-" + userData["retire_date"].slice(4, 6) + "-" + userData["retire_date"].slice(6, 8)
+                ) : (
+                  "재직중"
+                )}
+              </span>
+            ) : (
+              <p>오류!</p>
+            )}
           </td>
           <td>직책</td>
           <td>{rank}</td>
@@ -161,11 +165,11 @@ const App = ({ componentRef, sabun }) => {
                 <p>
                   {userData
                     ? userData["start_date"].slice(0, 4) +
-                      "년 " +
-                      userData["start_date"].slice(4, 6) +
-                      "월 " +
-                      userData["start_date"].slice(6, 8) +
-                      "일 부터"
+                    "년 " +
+                    userData["start_date"].slice(4, 6) +
+                    "월 " +
+                    userData["start_date"].slice(6, 8) +
+                    "일 부터"
                     : ""}
                 </p>
                 <p>
