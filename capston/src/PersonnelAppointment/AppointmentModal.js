@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../css/PersonnelAppointment/AppointmentModal.css";
 import testimg from "../img/testimg.jpg";
 import FormControl from "@mui/material/FormControl";
@@ -16,61 +16,104 @@ class koLocalizedUtils extends DateFnsUtils {
     return format(date, "yyyy년　　 MM월", { locale: this.locale });
   }
 }
+
+const dateFormatString = (date) => {
+  // 20201010
+
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, "0");
+  let day = date.getDate().toString().padStart(2, "0");
+
+  return year + month + day;
+};
+
 const AppointmentModal = ({ setOpenModal }) => {
-  // 사번 성명 인풋
   const [textName, setTextName] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [selectType, setSelectType] = useState("*");
+  const [selectCenter, setSelectCenter] = useState("H-경영관리본부");
+  const [selectDepart, setSelectDepart] = useState("01-경영지원부");
+  const [selectTeam, setSelectTeam] = useState("101-인사관리팀");
+  const [selectRank, setSeletRank] = useState("1");
+  const [rankList, setRankList] = useState("");
+
+  useEffect(() => {
+    let array_center = [];
+    let array_dept = [];
+    let array_team = [];
+    let array_rank = [];
+
+    axios.get(urlGetCls).then((response) => {
+      for (let i = 0; i < response.data.ITEMS.length; i++) {
+        let items = response.data.ITEMS[i];
+        if (items.cls == "001") {
+          array_center.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "002") {
+          array_dept.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "003") {
+          array_team.push(items.code_cd + "-" + items.code_nm);
+        } else if (items.cls == "004") {
+          array_rank.push(items);
+        }
+      }
+      setRankList(array_rank);
+    });
+  }, []);
+
+  useEffect(() => {
+    let findDept = Object.keys(center_list[selectCenter])[0];
+    setSelectDepart(findDept);
+  }, [selectCenter]);
+
+  useEffect(() => {
+    let findTeam = center_list[selectCenter][selectDepart][0];
+    setSelectTeam(findTeam);
+  }, [selectDepart]);
+
+  const center_list = {
+    "H-경영관리본부": {
+      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
+      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
+    },
+    "C-사이버보안본부": {
+      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
+      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
+    },
+    "S-보안연구본부": {
+      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
+      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
+    },
+  };
+
+  const urlGetCls = "http://43.200.115.198:8080/empGetOrg.jsp";
+
   const textNameHandle = (e) => {
     setTextName(e.target.value);
     console.log(e.target.value);
   };
 
-  // 발령일자
-  const [startDate, setStartDate] = useState(new Date());
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
 
-  // 발령구분
-  const [selectType, setSelectType] = useState("*");
   const handleSelectType = (event) => {
     setSelectType(event.target.value);
   };
 
-  // 본부선택
-  const [selectCenter, setSelectCenter] = useState("H");
   const handleSelectCenter = (event) => {
     setSelectCenter(event.target.value);
   };
 
-  // 부서선택
-  const [selectDepart, setSelectDepart] = useState("01");
   const handleSelectDepart = (event) => {
     setSelectDepart(event.target.value);
   };
 
-  // 팀 선택
-  const [selectTeam, setSelectTeam] = useState("101");
   const handleSelectTeam = (event) => {
     setSelectTeam(event.target.value);
   };
 
-  // 직책선택
-  const [selectRank, setSeletRank] = useState("1");
   const handleSelectRank = (event) => {
     setSeletRank(event.target.value);
-  };
-
-  const dateFormatString = (dateString) => {
-    let year = dateString.getFullYear();
-    let month =
-      dateString.getMonth() < 10
-        ? "0" + (dateString.getMonth() + 1)
-        : dateString.getMonth() + 1;
-    let day =
-      dateString.getDate() < 10
-        ? "0" + dateString.getDate()
-        : dateString.getDate()();
-    return year + "" + month + "" + day;
   };
 
   // 등록
@@ -84,9 +127,9 @@ const AppointmentModal = ({ setOpenModal }) => {
           app_state: selectType,
           app_rank: selectRank,
           app_date: dateFormatString(startDate),
-          app_dept: selectDepart,
-          app_center: selectCenter,
-          app_team: selectTeam,
+          app_dept: selectDepart.split("-")[0],
+          app_center: selectCenter.split("-")[0],
+          app_team: selectTeam.split("-")[0],
         };
         console.log(postParm2);
         postParm2 = qs.stringify(postParm2);
@@ -249,33 +292,14 @@ const AppointmentModal = ({ setOpenModal }) => {
                   <td>
                     <FormControl>
                       <Select
-                        value={selectCenter || ""}
-                        sx={{
-                          minWidth: "153px",
-                          height: 39,
-                          marginLeft: "15px",
-                          marginRight: "26px",
-                        }}
+                        value={selectCenter}
+                        size="small"
+                        sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectCenter}
                       >
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"H"}
-                        >
-                          경영관리본부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"C"}
-                        >
-                          사이버보안본부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"S"}
-                        >
-                          보안연구본부
-                        </MenuItem>
+                        {Object.keys(center_list).map((e, i) => (
+                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </td>
@@ -286,51 +310,15 @@ const AppointmentModal = ({ setOpenModal }) => {
                   <td>
                     <FormControl>
                       <Select
-                        value={selectDepart || ""}
-                        sx={{
-                          minWidth: "153px",
-                          height: 39,
-                          marginLeft: "15px",
-                          marginRight: "26px",
-                        }}
+                        value={selectDepart}
+                        size="small"
+                        fullWidth
+                        sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectDepart}
                       >
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"01"}
-                        >
-                          경영지원부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"02"}
-                        >
-                          경영관리부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"03"}
-                        >
-                          침해대응부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"04"}
-                        >
-                          관제센터
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"05"}
-                        >
-                          보안연구부
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"06"}
-                        >
-                          보안취약점연구부
-                        </MenuItem>
+                        {Object.keys(center_list[selectCenter]).map((e, i) => (
+                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </td>
@@ -341,87 +329,20 @@ const AppointmentModal = ({ setOpenModal }) => {
                   <td>
                     <FormControl>
                       <Select
-                        value={selectTeam || ""}
-                        sx={{
-                          minWidth: "153px",
-                          height: 39,
-                          marginLeft: "15px",
-                          marginRight: "26px",
-                        }}
+                        value={selectTeam}
+                        size="small"
+                        sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectTeam}
                       >
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"101"}
-                        >
-                          인사관리팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"102"}
-                        >
-                          마케팅팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"201"}
-                        >
-                          총무회계팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"202"}
-                        >
-                          경리팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"301"}
-                        >
-                          침해대응팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"302"}
-                        >
-                          위협분석팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"401"}
-                        >
-                          보안관제팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"402"}
-                        >
-                          정보보호팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"501"}
-                        >
-                          연구팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"502"}
-                        >
-                          연구기획팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"601"}
-                        >
-                          종합분석팀
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"602"}
-                        >
-                          취약점분석팀
-                        </MenuItem>
+                        {center_list[selectCenter][selectDepart] ? (
+                          center_list[selectCenter][selectDepart].map(
+                            (e, i) => (
+                              <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                            )
+                          )
+                        ) : (
+                          <div></div>
+                        )}
                       </Select>
                     </FormControl>
                   </td>
@@ -432,63 +353,19 @@ const AppointmentModal = ({ setOpenModal }) => {
                   <td>
                     <FormControl>
                       <Select
-                        value={selectRank || ""}
-                        sx={{
-                          minWidth: "153px",
-                          height: 39,
-                          marginLeft: "15px",
-                          marginRight: "26px",
-                        }}
+                        value={selectRank}
+                        sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectRank}
                       >
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"1"}
-                        >
-                          사원
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"2"}
-                        >
-                          대리
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"3"}
-                        >
-                          과장
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"4"}
-                        >
-                          차장
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"5"}
-                        >
-                          부장
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"6"}
-                        >
-                          이사
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"7"}
-                        >
-                          사장
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ minWidth: "153px", height: 30 }}
-                          value={"8"}
-                        >
-                          대표이사
-                        </MenuItem>
+                        {rankList.length > 0 ? (
+                          rankList.map((item) => (
+                            <MenuItem value={item.code_cd}>
+                              {item.code_nm}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value={1} />
+                        )}
                       </Select>
                     </FormControl>
                   </td>
