@@ -95,8 +95,19 @@ const App = () => {
         sDate = response.data.ITEMS[0].start_date;
         eDate = response.data.ITEMS[0].retire_date;
         console.log("startInfo : ", startInfo);
-        let ret_date = new Date(eDate.slice(0, 4), parseInt(eDate.slice(4, 6)) - 1, parseInt(eDate.slice(6, 8)) + 14);
-        setRetireGetDay(ret_date.getFullYear() + "년 " + (ret_date.getMonth() + 1) + "월 " + ret_date.getDate() + "일");
+        let ret_date = new Date(
+          eDate.slice(0, 4),
+          parseInt(eDate.slice(4, 6)) - 1,
+          parseInt(eDate.slice(6, 8)) + 14
+        );
+        setRetireGetDay(
+          ret_date.getFullYear() +
+            "년 " +
+            (ret_date.getMonth() + 1) +
+            "월 " +
+            ret_date.getDate() +
+            "일"
+        );
       });
 
     //근속연수 구하는 함수 (startDate, endDate, year, month, day)
@@ -116,13 +127,11 @@ const App = () => {
       setWorkDay
     );
 
-
     // 근무내역
     console.log("PayData : ", payData[sabun]);
   };
 
   useEffect(() => {
-
     axios
       .post("http://43.200.115.198:8080/retireselect.jsp")
       .then((res) => {
@@ -262,19 +271,18 @@ const App = () => {
         </div>
         <div className="SeverancePayCal_calInfo">
           <div className="SeverancePayCal_date">
-            <div className="SeverancePayCal_btns">
-            </div>
+            <div className="SeverancePayCal_btns"></div>
             <table className="SeverancePaycal_FirstTable">
               <tr>
                 <td className="SeverancePaycal_item">입사일</td>
                 <td>
                   {startInfo
                     ? startInfo["start_date"].slice(0, 4) +
-                    "년 " +
-                    startInfo["start_date"].slice(4, 6) +
-                    "월 " +
-                    startInfo["start_date"].slice(6, 8) +
-                    "일"
+                      "년 " +
+                      startInfo["start_date"].slice(4, 6) +
+                      "월 " +
+                      startInfo["start_date"].slice(6, 8) +
+                      "일"
                     : ""}
                 </td>
                 <td className="SeverancePaycal_item">근속년수</td>
@@ -287,11 +295,11 @@ const App = () => {
                 <td>
                   {startInfo
                     ? startInfo["retire_date"].slice(0, 4) +
-                    "년 " +
-                    startInfo["retire_date"].slice(4, 6) +
-                    "월 " +
-                    startInfo["retire_date"].slice(6, 8) +
-                    "일"
+                      "년 " +
+                      startInfo["retire_date"].slice(4, 6) +
+                      "월 " +
+                      startInfo["retire_date"].slice(6, 8) +
+                      "일"
                     : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직금지급일</td>
@@ -316,151 +324,150 @@ const App = () => {
               <tbody className="SeverancePayCal_moneyList">
                 <tr>
                   <td>
-                    <div style={{fontSize:"13px", textAlign:"left", marginLeft:"15px", fontWeight:"bold"}}>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        textAlign: "left",
+                        marginLeft: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
                       1개월 전
                     </div>
-                    <div style={{textAlign:"left", marginLeft:"15px"}}>
-                      {
-                        retirePayment ? (
-                          retirePayment.before0Month.slice(0, 4) + "년 " + retirePayment.before0Month.slice(4, 6) + "월 01일 ~ " +
-                          retirePayment.before0Month.slice(0, 4) + "년 " + retirePayment.before0Month.slice(4, 6) + "월 " + retirePayment.lastDay0Month + "일"  
-                        ) : (
-                          ""
-                        )
-                      }
+                    <div style={{ textAlign: "left", marginLeft: "15px" }}>
+                      {retirePayment
+                        ? retirePayment.before0Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before0Month.slice(4, 6) +
+                          "월 01일 ~ " +
+                          retirePayment.before0Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before0Month.slice(4, 6) +
+                          "월 " +
+                          retirePayment.lastDay0Month +
+                          "일"
+                        : ""}
                     </div>
                   </td>
                   <td>
-                      {
-                        retirePayment ? (
-                          retirePayment.lastDay0Month + "일"
-                        ) : (
-                          ""
-                        )
-                      }
+                    {retirePayment ? retirePayment.lastDay0Month + "일" : ""}
                   </td>
                   <td>
-                      {
-                        retirePayment ? (
-                          parseInt(retirePayment.before0Pay).toLocaleString() + "원"
-                        ) : (
-                          ""
-                        )
-                      }
+                    {retirePayment
+                      ? parseInt(retirePayment.before0Pay).toLocaleString() +
+                        "원"
+                      : ""}
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                  <div style={{fontSize:"13px", textAlign:"left", marginLeft:"15px", fontWeight:"bold"}}>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        textAlign: "left",
+                        marginLeft: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
                       2개월 전
                     </div>
-                    <div style={{textAlign:"left", marginLeft:"15px"}}>
-                      {
-                        retirePayment ? (
-                          retirePayment.before1Month.slice(0, 4) + "년 " + retirePayment.before1Month.slice(4, 6) + "월 01일 ~ " +
-                          retirePayment.before1Month.slice(0, 4) + "년 " + retirePayment.before1Month.slice(4, 6) + "월 " + retirePayment.lastDay1Month + "일"  
-                        ) : (
-                          ""
-                        )
-                      }
+                    <div style={{ textAlign: "left", marginLeft: "15px" }}>
+                      {retirePayment
+                        ? retirePayment.before1Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before1Month.slice(4, 6) +
+                          "월 01일 ~ " +
+                          retirePayment.before1Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before1Month.slice(4, 6) +
+                          "월 " +
+                          retirePayment.lastDay1Month +
+                          "일"
+                        : ""}
                     </div>
                   </td>
                   <td>
-                      {
-                        retirePayment ? (
-                          retirePayment.lastDay1Month + "일"
-                        ) : (
-                          ""
-                        )
-                      }
+                    {retirePayment ? retirePayment.lastDay1Month + "일" : ""}
                   </td>
                   <td>
-                  {
-                    retirePayment ? (
-                      parseInt(retirePayment.before1Pay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-                  }
-                  </td>
-                </tr>
-                
-                
-                <tr>
-                  <td>
-                    <div style={{fontSize:"13px", textAlign:"left", marginLeft:"15px", fontWeight:"bold"}}>
-                      3개월 전
-                    </div>
-                    <div style={{textAlign:"left", marginLeft:"15px"}}>
-                      {
-                        retirePayment ? (
-                          retirePayment.before2Month.slice(0, 4) + "년 " + retirePayment.before2Month.slice(4, 6) + "월 01일 ~ " +
-                          retirePayment.before2Month.slice(0, 4) + "년 " + retirePayment.before2Month.slice(4, 6) + "월 " + retirePayment.lastDay2Month + "일"  
-                        ) : (
-                          ""
-                        )
-                      }
-                    </div>
-                  </td>
-                  <td>
-                  {
-                    retirePayment ? (
-                      retirePayment.lastDay2Month + "일"
-                    ) : (
-                      ""
-                    )
-                  }
-                  </td>
-                  <td>
-                  {
-                    retirePayment ? (
-                      parseInt(retirePayment.before2Pay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-                  }
+                    {retirePayment
+                      ? parseInt(retirePayment.before1Pay).toLocaleString() +
+                        "원"
+                      : ""}
                   </td>
                 </tr>
 
                 <tr>
                   <td>
-                    <div style={{fontSize:"13px", textAlign:"left", marginLeft:"15px", fontWeight:"bold"}}>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        textAlign: "left",
+                        marginLeft: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      3개월 전
+                    </div>
+                    <div style={{ textAlign: "left", marginLeft: "15px" }}>
+                      {retirePayment
+                        ? retirePayment.before2Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before2Month.slice(4, 6) +
+                          "월 01일 ~ " +
+                          retirePayment.before2Month.slice(0, 4) +
+                          "년 " +
+                          retirePayment.before2Month.slice(4, 6) +
+                          "월 " +
+                          retirePayment.lastDay2Month +
+                          "일"
+                        : ""}
+                    </div>
+                  </td>
+                  <td>
+                    {retirePayment ? retirePayment.lastDay2Month + "일" : ""}
+                  </td>
+                  <td>
+                    {retirePayment
+                      ? parseInt(retirePayment.before2Pay).toLocaleString() +
+                        "원"
+                      : ""}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        textAlign: "left",
+                        marginLeft: "15px",
+                        fontWeight: "bold",
+                      }}
+                    >
                       기타
                     </div>
                   </td>
                   <td>
-                  <div>
-                      {
-                        retirePayment ? (
-                          (92 - retirePayment.totalDay) + "일"
-                        ) : (
-                          ""
-                        )
-                      }
+                    <div>
+                      {retirePayment ? 92 - retirePayment.totalDay + "일" : ""}
                     </div>
                   </td>
                   <td>
-                  {
-                    retirePayment ? (
-                      parseInt(retirePayment.etcPay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-                  }
+                    {retirePayment
+                      ? parseInt(retirePayment.etcPay).toLocaleString() + "원"
+                      : ""}
                   </td>
                 </tr>
                 <tr>
                   <td>합계</td>
                   <td>92일</td>
-                  <td>{
-                    retirePayment ? (
-                      parseInt(retirePayment.totalPay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-
-                  }</td>
+                  <td>
+                    {retirePayment
+                      ? parseInt(retirePayment.totalPay).toLocaleString() + "원"
+                      : ""}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -479,67 +486,56 @@ const App = () => {
               공제액 도움말
             </button>
             {modalseverancePayCal == true ? (
-              <ModalseverancePayCal setModalseverancePayCal={setModalseverancePayCal} />
+              <ModalseverancePayCal
+                setModalseverancePayCal={setModalseverancePayCal}
+              />
             ) : (
               ""
             )}
             <table className="SeverancePaycal_SecondTable">
               <tr>
-                <td className="SeverancePaycal_item">마지막 달 급여</td>
+                <td className="SeverancePaycal_item">퇴직금</td>
                 <td>
-                  {
-                    retirePayment ? (
-                      parseInt(retirePayment.before0Pay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-                  }
+                  {retirePayment
+                    ? parseInt(retirePayment.retirePay).toLocaleString() + "원"
+                    : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직수당</td>
                 {/* 1년 미만 ~ 4년 : 1.5배 / 5년 이상 : 2배 */}
                 <td>
-                {
-                  retirePayment ? (
-                    parseInt(retirePayment.retireAllow).toLocaleString() + "원"
-                  ) : (
-                    ""
-                  )
-                }
+                  {retirePayment
+                    ? parseInt(retirePayment.retireAllow).toLocaleString() +
+                      "원"
+                    : ""}
                 </td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직총액</td>
                 <td>
-                {
-                    retirePayment ? (
-                      parseInt(retirePayment.retirePay).toLocaleString() + "원"
-                    ) : (
-                      ""
-                    )
-                  }
+                  {retirePayment
+                    ? (
+                        parseInt(retirePayment.retirePay) +
+                        parseInt(retirePayment.retireAllow)
+                      ).toLocaleString() + "원"
+                    : ""}
                 </td>
                 <td className="SeverancePaycal_item">퇴직소득세</td>
                 <td>
-                {
-                  retirePayment ? (
-                    parseInt(retirePayment.retireTax).toLocaleString() + "원"
-                  ) : (
-                    ""
-                  )
-                }
-
+                  {retirePayment
+                    ? parseInt(retirePayment.retireTax).toLocaleString() + "원"
+                    : ""}
                 </td>
               </tr>
               <tr>
                 <td className="SeverancePaycal_item">퇴직 실수령액</td>
                 <td colSpan={3}>
-                {
-                  retirePayment ? (
-                    (parseInt(retirePayment.retirePay) + parseInt(retirePayment.retireAllow) - parseInt(retirePayment.retireTax)).toLocaleString() + "원"
-                  ) : (
-                    ""
-                  )
-                }
+                  {retirePayment
+                    ? (
+                        parseInt(retirePayment.retirePay) +
+                        parseInt(retirePayment.retireAllow) -
+                        parseInt(retirePayment.retireTax)
+                      ).toLocaleString() + "원"
+                    : ""}
                   {/*(마지막 달 급여 * 근속년수) + 퇴직수당 - 퇴직소득세 = 실지급액*/}
                 </td>
               </tr>
