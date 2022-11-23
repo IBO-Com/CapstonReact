@@ -434,7 +434,7 @@ function AttendanceRegister() {
     <div
       style={{
         width: "98%",
-        min_endHeight: "790px",
+        minHeight: "790px",
         background: "white",
       }}
     >
