@@ -107,14 +107,14 @@ const nav_admin = {
   근태관리: {
     menu: [
       "근태등록",
-      "근태/근무신청",
+      //"근태/근무신청",
       "근태/근무현황",
       "휴가신청",
       "휴가현황",
     ],
     link: [
       "/mainNav/attendanceregister",
-      "/mainNav/attendancerequest",
+      //"/mainNav/attendancerequest",
       "/mainNav/attendancestatus",
       "/mainNav/vacationManage",
       "/mainNav/vacationCheck",      
@@ -151,9 +151,12 @@ const nav_user = {
     link: ["/mainNav/empinfo", "/mainNav/personnelcard"],
   },
   근태관리: {
-    menu: ["근태/근무신청", "근태/근무현황", "휴가신청"],
+    menu: [
+      //"근태/근무신청", 
+      "근태/근무현황", 
+      "휴가신청"],
     link: [
-      "/mainNav/attendancerequest",
+      //"/mainNav/attendancerequest",
       "/mainNav/attendancestatus",
       "/mainNav/vacationManage",
     ],

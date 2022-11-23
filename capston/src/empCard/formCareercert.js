@@ -147,7 +147,7 @@ const App = ({ componentRef, sabun }) => {
             ) : (
               <p>오류!</p>
             )}
-          </td>
+          </td> 
           <td>직책</td>
           <td>{rank}</td>
         </tr>
