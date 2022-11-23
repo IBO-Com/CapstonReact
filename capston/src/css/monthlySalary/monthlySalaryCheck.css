@@ -22,6 +22,7 @@
     background-color: white;
     height: 790px;
     width: 98%;
+    overflow: auto;
 }
 
 .monthlyPay_lineBar {

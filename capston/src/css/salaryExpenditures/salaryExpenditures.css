@@ -2,6 +2,7 @@
     background-color: #ffffff;
     width: 98%;
     height: 790px;
+    overflow: auto;
 }
 
 .SalaryEx_search {
@@ -71,7 +72,6 @@
 /* 여기부터 급여지출 현황 테이블 */
 .SalaryEx_payrollContainer {
    margin-left: 60px;
-   
 }
 
 .SalaryEx_payrollTitle {
@@ -186,4 +186,3 @@
     text-align: center;
     height: 40px;
 }
-

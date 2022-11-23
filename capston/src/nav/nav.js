@@ -138,10 +138,6 @@ const nav_admin = {
       "/mainNav/severancepay",
     ],
   },
-  테스트: {
-    menu: ["테스트 필요하면 쓰세욥"],
-    link: ["/mainNav/t1"],
-  },
 };
 
 // 일반유저 프로그램 리스트

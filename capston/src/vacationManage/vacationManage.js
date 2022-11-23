@@ -138,17 +138,20 @@ const App = () => {
           emer_tel: emerTel,
           emer_rel: emerRel,
         };
-        console.log(postParam2);
+        console.log("전송 : ", postParam2);
         postParam2 = qs.stringify(postParam2);
 
+        //http://43.200.115.198:8080/vacationregister.jsp
+        //http://localhost:8080/CapstonProject/vacationregister.jsp
         axios
-          .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
+          .post("http://localhost:8080/CapstonProject/vacationregister.jsp", postParam2)
           .then((response) => {
             console.log(response);
           })
           .catch((Error) => {
             console.log(Error);
           });
+          
       }
     }
   };

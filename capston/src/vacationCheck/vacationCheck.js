@@ -78,6 +78,8 @@ const App = () => {
   //  승인
   const approvalBtn = (index) => {
     if (window.confirm("승인하시겠습니까?")) {
+      console.log("상태 : ", ann_state);
+
       let tempVacationData = vacationData[index];
       let postParam2 = {
         sabun: tempVacationData.sabun,
@@ -100,6 +102,7 @@ const App = () => {
       console.log(postParam2);
       postParam2 = qs.stringify(postParam2);
 
+      /*
       axios
         .post("http://43.200.115.198:8080/vacationupdate.jsp", postParam2)
         .then((res) => {
@@ -116,6 +119,7 @@ const App = () => {
         .catch((Error) => {
           console.log(Error);
         });
+        */
     }
   };
 
