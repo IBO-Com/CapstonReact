@@ -30,7 +30,7 @@ const App = () => {
   const [vacationData, setVacationData] = useState([]);
   const [sabun, setSabun] = useState();
   const annualData = {
-    0: "연차",
+    "0": "연차",
     "01": "오전반차",
     "02": "오후반차",
     "03": "경조휴가",
@@ -78,9 +78,20 @@ const App = () => {
   //  승인
   const approvalBtn = (index) => {
     if (window.confirm("승인하시겠습니까?")) {
-      console.log("상태 : ", ann_state);
 
       let tempVacationData = vacationData[index];
+      let vacation_status = tempVacationData.vacation;
+      let ann_minus = 0;
+      if(vacation_status == "0") { //연차
+        ann_minus = 1;
+      } else {
+        ann_minus = 0.5;
+      }
+      let ann_start_date = new Date(tempVacationData.ann_start_date.slice(0, 4), parseInt(tempVacationData.ann_start_date.slice(4, 6))-1, tempVacationData.ann_start_date.slice(6, 8));
+      let ann_end_date = new Date(tempVacationData.ann_end_date.slice(0, 4), parseInt(tempVacationData.ann_end_date.slice(4, 6))-1, tempVacationData.ann_end_date.slice(6, 8));
+
+      
+
       let postParam2 = {
         sabun: tempVacationData.sabun,
         remain_annual: tempVacationData.remain_annual,
@@ -155,6 +166,8 @@ const App = () => {
     }
   };
 
+  //http://43.200.115.198:8080/vacationCheck.jsp
+  //http://localhost:8080/CapstonProject/vacationCheck.jsp
   useEffect(() => {
     axios
       .post("http://43.200.115.198:8080/vacationCheck.jsp")
@@ -163,7 +176,8 @@ const App = () => {
         console.log(vacationData);
       })
       .catch((Error) => {
-        alert("에러");
+        alert("Error Code 101 ");
+        console.log(Error);
       });
   }, []);
 

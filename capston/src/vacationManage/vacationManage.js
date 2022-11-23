@@ -144,7 +144,7 @@ const App = () => {
         //http://43.200.115.198:8080/vacationregister.jsp
         //http://localhost:8080/CapstonProject/vacationregister.jsp
         axios
-          .post("http://localhost:8080/CapstonProject/vacationregister.jsp", postParam2)
+          .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
           .then((response) => {
             console.log(response);
           })
