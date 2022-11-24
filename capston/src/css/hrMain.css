@@ -12,6 +12,23 @@ body {
   display: flex;
 }
 
+.hrMain_workInfo .hr_timeNwork {
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.hr_workstate {
+  font-weight: normal;
+  margin-left: 20px;
+  background-color: #21BF54;
+  padding: 5px 20px 5px 20px;
+  border-radius: 5px;
+  color: white;
+  font-size: 17px;
+}
+
 .hrMain_container {
   margin-left: 80px;
   margin-top: 30px;

@@ -34,44 +34,66 @@
 }
 
 .userHeader_logout {
-	margin-right: 10px;
 	border: 0;
+	border-radius: 100px;
 	margin-top: 5px;
 }
+.userHeader_logout:hover {
+	transition: 0.1s;
+	background-color: lightgray;
+}
 
-.userHeader_dropdown {
-	display: none;
+
+.userHeader_dropdown_hidden {
+	margin-left: 16px;
+	opacity: 0;
+	transition: 0.2s;
 	position: fixed;
 	background-color: #EBEFF2;
 	width: 160px;
-	height: 105px;
     transform: translate(-45%, -0%); 
-	z-index: 1;
+	z-index: 100;
 	text-align: center;
 	padding: 0;
 }
 
-.userHeader_dropdown ul li {
-	color: black;
-	padding: 10px 0px 10px 0px;
-	margin: 0;
-	display: block;
+.userHeader_dropdown_show {
+	margin-top: 14px;
+	margin-left: 16px;
+	opacity: 1;
+	transition: 0.1s ease;
+	display: flex;
+	flex-direction: column;
+	transition: 0.5s;
+	position: fixed;
+	background-color: #EBEFF2;
+	width: 160px;
+	transform: translate(-45%, -0%); 
+	z-index: 100;
 	text-align: center;
+	padding: 0;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	
 }
 
-.userHeader_dropdown ul {
-	list-style: none;
-	padding-left: 0px;
+.userHeader_dropdown_title {
+	height: 45px;
+	overflow: hidden;
+	line-height: 45px;
 }
 
-.userHeader_dropdown ul li:hover {
-	background-color: #D4DEDF;
-}
-
-.userHeader_sub_menu:hover .userHeader_dropdown {
-	display: block;
-}
-
-.userHeader_logout, .userHeader_changepw {
+.userHeader_dropdown_subtitle {
 	text-decoration: none;
+	color: black;
+	
+	font-size: 13px;
+
+	font-weight: bold;
+}
+
+.userHeader_dropdown_subtitle div:hover {
+	transition: 0.3s;
+	color: rgba(0, 0, 0, 0.61);
+	background-color: lightgray;
 }

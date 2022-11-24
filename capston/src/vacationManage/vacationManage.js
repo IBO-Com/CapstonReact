@@ -20,6 +20,7 @@ import ReactToPrint from "react-to-print";
 import FormVacationManage from "./formVacationManage";
 
 const App = () => {
+  const [submitData, setSubmitData] = useState();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [selectDepart, setSelectDepart] = useState("*");
 
@@ -122,9 +123,7 @@ const App = () => {
       if (window.confirm("신청하시겠습니까?")) {
         let postParam2 = {
           sabun: annualData.sabun,
-          remain_annual: annualData.remain_annual,
           ann_start_date: dateFormatString(startDate),
-          use_annual: annualData.use_annual,
           name: annualData.name,
           rank: annualData.rank,
           dept: annualData.dept,
@@ -146,6 +145,7 @@ const App = () => {
         axios
           .post("http://43.200.115.198:8080/vacationregister.jsp", postParam2)
           .then((response) => {
+            setSabun(annualData.sabun); //딱히 뭐 없고.. 입력됐다는 트리거를 주기 위함
             console.log(response);
           })
           .catch((Error) => {
@@ -157,7 +157,6 @@ const App = () => {
   };
 
   const submitSabun = (sabun) => {
-    setSabun(sabun);
     console.log(sabun);
   };
 

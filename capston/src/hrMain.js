@@ -10,17 +10,29 @@ import * as GetYearOfWork from "./modules/getYearOfWork";
 import qs from "qs";
 
 const App = () => {
-  let maxAnnual = 15;
   const [cookies, setCookie, removeCookie] = useCookies();
   const [today, setToday] = useState(new Date());
   const [defaultYear, setDefaultYear] = useState("19");
   const [workMonth, setWorkMonth] = useState("0");
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
-  const [annual, setAnnual] = useState(12.5); //연차 개수
+  const [annual, setAnnual] = useState(15);
+  const [maxAnnual, setMaxAnnual] = useState(15);
   const [picture, setPicture] = useState("null");
   const [userData, setUserData] = useState({});
   const [vacationData, setVacationData] = useState([]);
+
+  
+  axios.post("http://localhost:8080/CapstonProject/vacationcount.jsp", qs.stringify({
+    sabunOrName: cookies["loginInfo"].id
+  })).then((res) => {
+    let data = res.data.ITEMS[0];
+    let max_ = parseFloat(data.remain_annual) + parseFloat(data.use_annual);
+    let use_ = parseFloat(data.remain_annual);
+    
+  }).catch((Error) => {
+    console.log(Error);
+  }, []);
 
   const annualData = {
     "0": "연차",
@@ -84,7 +96,7 @@ const App = () => {
         )
       } else if (data.ann_state == "1") {
         component.push(
-          <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+          <div style={{ display: "flex", flexDirection: "row", marginLeft: "5px", marginBottom: "10px" }}>
             <div style={{
               lineHeight: "30px",
               color: "white",
@@ -171,6 +183,7 @@ const App = () => {
         setPicture(window.sessionStorage.getItem("picture"));
       });
   }, []);
+  
 
   const [data, setData] = useState({
     series: [(100 / maxAnnual) * annual], //100 -> 12
@@ -188,7 +201,7 @@ const App = () => {
           endAngle: 360,
           hollow: {
             margin: 0,
-            size: "85%",
+            size: "80%",
             background: "#fff",
             image: undefined,
             imageOffsetX: 0,
@@ -220,14 +233,14 @@ const App = () => {
             name: {
               offsetY: -10,
               show: true,
-              color: "#888",
+              color: "black",
               fontSize: "17px",
             },
             value: {
               formatter: function (val) {
                 return annual + "개";
               },
-              color: "#111",
+              color: "black",
               fontSize: "20px",
               show: true,
             },
@@ -281,27 +294,17 @@ const App = () => {
             <div>
               <h4>근무 정보</h4>
               <div className="hrMain_workInfo">
-                <div
-                  style={{
-                    padding: "15px",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                  }}>
+                <div className="hr_timeNwork">
                   {todayTime()}
+                  <span className="hr_workstate">출근</span>
                 </div>
-                <div className="hrMain_workInfo_work">
-                  <div className="hrMain_workState"> 출근 </div>
-                  <div className="hrMain_workDate"> {todayTime().slice(0, 4)}-{todayTime().slice(5, 8)}-{todayTime().slice(10, 12)} </div>
-                  <div className="hrMain_workTime">08:49</div>
-                </div>
-
                 <ApexCharts
                   options={data.options}
                   series={data.series}
                   type="radialBar"
-                  height={220}
+                  height={290}
                 />
-                <div className="hrMain_workBottomText">2022년 17개 갱신</div>
+                {/* <div className="hrMain_workBottomText"></div> */}
               </div>
             </div>
           </div>
@@ -320,7 +323,7 @@ const App = () => {
                     </tr>
                   </thead>
                   <tbody>
-                  {vacationData.map(function (item) {
+                    {vacationData.map(function (item) {
                       return (
                         <>
                           <tr>

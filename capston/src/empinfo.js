@@ -228,7 +228,16 @@ const App = () => {
                       userData["start_date"].slice(6, 8)
                     : "로딩중"}
                 </td>
-                <td></td>
+                <td>
+                {userData["retire_date"]
+                    ? userData["retire_date"].slice(0, 4) +
+                      "-" +
+                      userData["retire_date"].slice(4, 6) +
+                      "-" +
+                      userData["retire_date"].slice(6, 8)
+                    : "재직중"}
+
+                </td>
               </tr>
             </tbody>
           </table>

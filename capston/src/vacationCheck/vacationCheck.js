@@ -100,9 +100,9 @@ const App = () => {
 
       let postParam2 = {
         sabun: tempVacationData.sabun,
-        remain_annual: parseInt(tempVacationData.remain_annual) - useAnnual,
+        remain_annual: parseFloat(tempVacationData.remain_annual) - useAnnual,
         ann_start_date: tempVacationData.ann_start_date,
-        use_annual: useAnnual,
+        use_annual: parseFloat(tempVacationData.use_annual) + useAnnual,
         name: tempVacationData.name,
         rank: tempVacationData.rank,
         dept: tempVacationData.dept,
@@ -116,9 +116,8 @@ const App = () => {
         emer_tel: tempVacationData.emer_tel,
         emer_rel: tempVacationData.emer_rel,
       };
-      console.log(postParam2);
+      console.log("연차 승인 : ", postParam2);
       postParam2 = qs.stringify(postParam2);
-
       
       axios
         .post("http://localhost:8080/CapstonProject/vacationupdate.jsp", postParam2)

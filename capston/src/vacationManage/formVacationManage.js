@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "qs";
 import IBOstamp from "../img/stamp.png";
 
-const App = ({ componentRef, sabun, retrieveDate }) => {
+const App = ({ componentRef, sabun, retrieveDate}) => {
   const todayTime = () => {
     let now = new Date();
     let todayYear = now.getFullYear();
