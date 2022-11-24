@@ -75,28 +75,34 @@ const App = () => {
     setEndDate(date);
   };
 
+  const getDateDiff = (d1, d2) => {
+    
+    const diffDate = d1.getTime() - d2.getTime();
+    
+    return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
+  }
+
   //  승인
   const approvalBtn = (index) => {
     if (window.confirm("승인하시겠습니까?")) {
-
       let tempVacationData = vacationData[index];
       let vacation_status = tempVacationData.vacation;
       let ann_minus = 0;
       if(vacation_status == "0") { //연차
         ann_minus = 1;
       } else {
-        ann_minus = 0.5;
+        ann_minus = 0.5; 
       }
       let ann_start_date = new Date(tempVacationData.ann_start_date.slice(0, 4), parseInt(tempVacationData.ann_start_date.slice(4, 6))-1, tempVacationData.ann_start_date.slice(6, 8));
       let ann_end_date = new Date(tempVacationData.ann_end_date.slice(0, 4), parseInt(tempVacationData.ann_end_date.slice(4, 6))-1, tempVacationData.ann_end_date.slice(6, 8));
 
-      
+      let useAnnual = (getDateDiff(ann_end_date, ann_start_date) + 1) * ann_minus;
 
       let postParam2 = {
         sabun: tempVacationData.sabun,
-        remain_annual: tempVacationData.remain_annual,
+        remain_annual: parseInt(tempVacationData.remain_annual) - useAnnual,
         ann_start_date: tempVacationData.ann_start_date,
-        use_annual: tempVacationData.use_annual,
+        use_annual: useAnnual,
         name: tempVacationData.name,
         rank: tempVacationData.rank,
         dept: tempVacationData.dept,
@@ -113,9 +119,9 @@ const App = () => {
       console.log(postParam2);
       postParam2 = qs.stringify(postParam2);
 
-      /*
+      
       axios
-        .post("http://43.200.115.198:8080/vacationupdate.jsp", postParam2)
+        .post("http://localhost:8080/CapstonProject/vacationupdate.jsp", postParam2)
         .then((res) => {
           axios
             .post("http://43.200.115.198:8080/vacationCheck.jsp")
@@ -130,7 +136,7 @@ const App = () => {
         .catch((Error) => {
           console.log(Error);
         });
-        */
+        
     }
   };
 

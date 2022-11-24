@@ -2,6 +2,7 @@
   background-color: #ffffff;
   width: 98%;
   height: 790px;
+  overflow: auto;
 }
 
 .PersonalSalary_search {
