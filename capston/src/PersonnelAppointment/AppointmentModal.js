@@ -36,6 +36,9 @@ const AppointmentModal = ({ setOpenModal }) => {
   const [selectTeam, setSelectTeam] = useState("101-인사관리팀");
   const [selectRank, setSeletRank] = useState("1");
   const [rankList, setRankList] = useState("");
+  const [picture, setPicture] = useState(
+    window.sessionStorage.getItem("picture")
+  );
 
   useEffect(() => {
     let array_center = [];
@@ -181,6 +184,17 @@ const AppointmentModal = ({ setOpenModal }) => {
           setTeam,
           setRank
         );
+      });
+
+    let postParam3 = qs.stringify({
+      id: empData.sabun,
+    });
+
+    axios
+      .post("http://43.200.115.198:8080/getpicture.jsp", postParam3)
+      .then((response) => {
+        console.log(response);
+        setPicture(response.data.ITEMS[0].picture);
       })
       .catch((Error) => {
         console.log(Error);
@@ -219,7 +233,11 @@ const AppointmentModal = ({ setOpenModal }) => {
       <form ref={formRef}>
         <div className="AppointmentModal_userInfo">
           <div className="AppointmentModal_userImg">
-            <img className="AppointmentModal_img" src={testimg} alt="이미지" />
+            {picture === "null" ? (
+              <img className="empimg" src={testimg} alt="이미지" />
+            ) : (
+              <img className="empimg" src={picture} alt={"사진"} />
+            )}
           </div>
           <div className="AppointmentModal_infoTable">
             <table>
