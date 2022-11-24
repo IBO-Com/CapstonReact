@@ -67,7 +67,7 @@ const App = () => {
     console.log("query : ", postParam);
     postParam = qs.stringify(postParam);
 
-    axios
+    axios 
       .post("http://43.200.115.198:8080/vacationcount.jsp", postParam)
       .then((res) => {
         setAnnualData(res.data.ITEMS[0]);

@@ -30,7 +30,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
   const [annualData, setannualData] = useState();
 
   const vacationData = {
-    0: "연차",
+    0: "연차", 
     "01": "오전반차",
     "02": "오후반차",
     "03": "경조휴가",
