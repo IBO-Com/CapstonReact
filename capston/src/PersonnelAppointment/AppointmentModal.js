@@ -10,6 +10,9 @@ import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
+import userImg from "../img/user.png";
+import useFormInstance from "antd/lib/form/hooks/useFormInstance";
+import { dateTimePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -36,9 +39,13 @@ const AppointmentModal = ({ setOpenModal }) => {
   const [selectTeam, setSelectTeam] = useState("101-인사관리팀");
   const [selectRank, setSeletRank] = useState("1");
   const [rankList, setRankList] = useState("");
-  const [picture, setPicture] = useState(
-    window.sessionStorage.getItem("picture")
-  );
+
+  const [picture, setPicture] = useState(null);
+
+  function getParametersForUnsplash({ width, height, quality, format }) {
+    //이미지 최적화
+    return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
+  }
 
   useEffect(() => {
     let array_center = [];
@@ -151,10 +158,7 @@ const AppointmentModal = ({ setOpenModal }) => {
 
   // 검색
   const [empData, setEmpData] = useState([]);
-  const [dept, setDept] = useState("");
-  const [team, setTeam] = useState("");
-  const [rank, setRank] = useState("");
-  const [center, setCenter] = useState("");
+  const [rData, setRData] = useState();
 
   const sendSubmit = () => {
     console.log("send submit");
@@ -171,19 +175,8 @@ const AppointmentModal = ({ setOpenModal }) => {
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {
-        setEmpData(res.data.ITEMS[0]);
-        let empInfo = res.data.ITEMS[0];
-        console.log("data : ", empInfo);
-        GetCDTR.getCDTR(
-          empInfo["center"],
-          empInfo["dept"],
-          empInfo["team"],
-          empInfo["rank"],
-          setCenter,
-          setDept,
-          setTeam,
-          setRank
-        );
+        setEmpData(res.data);
+        console.log("데이터 확인 ", empData);
       });
 
     let postParam3 = qs.stringify({
@@ -194,12 +187,21 @@ const AppointmentModal = ({ setOpenModal }) => {
       .post("http://43.200.115.198:8080/getpicture.jsp", postParam3)
       .then((response) => {
         console.log(response);
-        setPicture(response.data.ITEMS[0].picture);
+        if (response.data) {
+          setPicture(response.data.ITEMS[0].picture);
+        }
+        setRData(response.data);
+        console.log("사진 : ", picture);
       })
       .catch((Error) => {
         console.log(Error);
       });
   };
+
+  useEffect(() => {
+    sendSubmit();
+  }, []);
+
   return (
     <div className="AppointmentModal_container">
       <div className="AppointmentModal_title">
@@ -234,9 +236,27 @@ const AppointmentModal = ({ setOpenModal }) => {
         <div className="AppointmentModal_userInfo">
           <div className="AppointmentModal_userImg">
             {picture === "null" ? (
-              <img className="empimg" src={testimg} alt="이미지" />
+              <img
+                className="empimg"
+                style={{ width: "110px", height: "150px", borderRadius: "0px" }}
+                src={
+                  userImg +
+                  getParametersForUnsplash({
+                    width: 110,
+                    height: 110,
+                    quality: 80,
+                    format: "jpg",
+                  })
+                }
+                alt="이미지"
+              />
             ) : (
-              <img className="empimg" src={picture} alt={"사진"} />
+              <img
+                className="empimg"
+                style={{ width: "110px", height: "150px", borderRadius: "0px" }}
+                src={picture}
+                alt={"사진"}
+              />
             )}
           </div>
           <div className="AppointmentModal_infoTable">
@@ -247,9 +267,9 @@ const AppointmentModal = ({ setOpenModal }) => {
                 <td>직책</td>
               </tr>
               <tr>
-                <td>{empData ? empData["sabun"] : ""}</td>
-                <td>{empData ? empData["name"] : ""}</td>
-                <td>{rank}</td>
+                {/* <td>{!empData ? "" : empData.ITEMS[0].sabun}</td>
+                <td>{!empData ? "" : empData.ITEMS[0].name}</td>
+                <td>{!empData ? "" : empData.ITEMS[0].rankKR}</td> */}
               </tr>
             </table>
           </div>
@@ -306,7 +326,7 @@ const AppointmentModal = ({ setOpenModal }) => {
               <tbody>
                 <tr>
                   <td>본부</td>
-                  <td>{center}</td>
+                  <td>{empData ? empData["centerKR"] : ""}</td>
                   <td>
                     <FormControl>
                       <Select
@@ -324,7 +344,7 @@ const AppointmentModal = ({ setOpenModal }) => {
                 </tr>
                 <tr>
                   <td>부서</td>
-                  <td>{dept}</td>
+                  <td>{empData ? empData["deptKR"] : ""}</td>
                   <td>
                     <FormControl>
                       <Select
@@ -343,7 +363,7 @@ const AppointmentModal = ({ setOpenModal }) => {
                 </tr>
                 <tr>
                   <td>팀</td>
-                  <td>{team}</td>
+                  <td>{empData ? empData["teamKR"] : ""}</td>
                   <td>
                     <FormControl>
                       <Select
@@ -367,7 +387,7 @@ const AppointmentModal = ({ setOpenModal }) => {
                 </tr>
                 <tr>
                   <td>직책</td>
-                  <td>{rank}</td>
+                  <td>{empData ? empData["rankKR"] : ""}</td>
                   <td>
                     <FormControl>
                       <Select
