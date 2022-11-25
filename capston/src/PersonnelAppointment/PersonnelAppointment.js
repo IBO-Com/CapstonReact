@@ -168,7 +168,8 @@ const App = () => {
             appointmentData={appointmentData}
             setAppointmentData={setAppointmentData}
             openModal={openModal}
-            setOpenModal={setOpenModal}
+            startDate={startDate}
+            endDate={endDate}
           />
         ) : (
           ""

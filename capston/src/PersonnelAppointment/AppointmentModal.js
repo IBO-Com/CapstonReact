@@ -13,6 +13,7 @@ import * as GetCDTR from "../modules/getCDTR";
 import userImg from "../img/user.png";
 import useFormInstance from "antd/lib/form/hooks/useFormInstance";
 import { dateTimePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
+import { useCookies } from "react-cookie";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -30,17 +31,23 @@ const dateFormatString = (date) => {
   return year + month + day;
 };
 
-const AppointmentModal = ({ setOpenModal }) => {
+const AppointmentModal = ({
+  setOpenModal,
+  setAppointmentData,
+  openModal,
+  startDate,
+  endDate,
+}) => {
   const [textName, setTextName] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
+  const [_startDate, _setStartDate] = useState(new Date());
   const [selectType, setSelectType] = useState("*");
   const [selectCenter, setSelectCenter] = useState("H-경영관리본부");
   const [selectDepart, setSelectDepart] = useState("01-경영지원부");
   const [selectTeam, setSelectTeam] = useState("101-인사관리팀");
   const [selectRank, setSeletRank] = useState("1");
   const [rankList, setRankList] = useState("");
-
   const [picture, setPicture] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   function getParametersForUnsplash({ width, height, quality, format }) {
     //이미지 최적화
@@ -126,17 +133,68 @@ const AppointmentModal = ({ setOpenModal }) => {
     setSeletRank(event.target.value);
   };
 
+  const reLoading = () => {
+    console.log("Re Loading");
+    /* 날짜 포멧 */
+    let sYear = String(startDate.getFullYear());
+    let sMonth = startDate.getMonth() + 1;
+    let sDay = startDate.getDate();
+
+    let eYear = String(endDate.getFullYear());
+    let eMonth = endDate.getMonth() + 1;
+    let eDay = endDate.getDate();
+
+    if (sMonth < 10) {
+      sMonth = "0" + sMonth;
+    }
+    if (sDay < 10) {
+      sDay = "0" + sDay;
+    }
+
+    if (eMonth < 10) {
+      eMonth = " 0" + eMonth;
+    }
+    if (eDay < 10) {
+      eDay = " 0" + eDay;
+    }
+
+    let sDate = sYear + sMonth + sDay;
+    let eDate = eYear + eMonth + eDay;
+
+    /* 쿼리 문 작성 */
+    let postParam2 = {};
+    let query = {};
+
+    query["startDate"] = sDate;
+    query["endDate"] = eDate;
+
+    postParam2 = qs.stringify(query);
+
+    axios
+      .post("http://43.200.115.198:8080/personnelAppointment.jsp", postParam2)
+      .then((res) => {
+        setAppointmentData(res.data.ITEMS);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
   // 등록
   const formRef = useRef();
   const saveBtn = () => {
     if (formRef.current.reportValidity()) {
       if (window.confirm("등록하시겠습니까?")) {
+        if (!empData) {
+          alert("사원을 찾을 수 없습니다.");
+          return;
+        }
+
         let postParm2 = {
           app_sabun: empData.sabun,
           app_name: empData.name,
           app_state: selectType,
           app_rank: selectRank,
-          app_date: dateFormatString(startDate),
+          app_date: dateFormatString(_startDate),
           app_dept: selectDepart.split("-")[0],
           app_center: selectCenter.split("-")[0],
           app_team: selectTeam.split("-")[0],
@@ -147,6 +205,7 @@ const AppointmentModal = ({ setOpenModal }) => {
         axios
           .post("http://43.200.115.198:8080/appointmentregister.jsp", postParm2)
           .then((response) => {
+            reLoading();
             console.log(response);
           })
           .catch((Error) => {
@@ -160,30 +219,32 @@ const AppointmentModal = ({ setOpenModal }) => {
   const [empData, setEmpData] = useState([]);
   const [rData, setRData] = useState();
 
-  const sendSubmit = () => {
+  const sendSubmit = async (sabun) => {
     console.log("send submit");
 
     let postParam = {};
     let query = {};
-    if (textName.trim() == "") {
+    if (sabun.trim() == "") {
       delete query["sabunOrName"];
     } else {
-      query["sabunOrName"] = textName;
+      query["sabunOrName"] = sabun;
     }
     console.log("query : ", query);
+    let getSabun = "";
     postParam = qs.stringify(query);
-    axios
+    await axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {
-        setEmpData(res.data);
-        console.log("데이터 확인 ", empData);
+        let _data = res.data.ITEMS[0];
+        setEmpData(_data);
+        getSabun = _data.sabun;
       });
 
     let postParam3 = qs.stringify({
-      id: empData.sabun,
+      id: getSabun,
     });
 
-    axios
+    await axios
       .post("http://43.200.115.198:8080/getpicture.jsp", postParam3)
       .then((response) => {
         console.log(response);
@@ -199,7 +260,7 @@ const AppointmentModal = ({ setOpenModal }) => {
   };
 
   useEffect(() => {
-    sendSubmit();
+    sendSubmit(cookies["loginInfo"].id);
   }, []);
 
   return (
@@ -226,7 +287,7 @@ const AppointmentModal = ({ setOpenModal }) => {
         <button
           className="AppointmentModal_searchBtn"
           onClick={() => {
-            sendSubmit();
+            sendSubmit(textName);
           }}
         >
           검색
@@ -267,9 +328,9 @@ const AppointmentModal = ({ setOpenModal }) => {
                 <td>직책</td>
               </tr>
               <tr>
-                {/* <td>{!empData ? "" : empData.ITEMS[0].sabun}</td>
-                <td>{!empData ? "" : empData.ITEMS[0].name}</td>
-                <td>{!empData ? "" : empData.ITEMS[0].rankKR}</td> */}
+                <td>{empData ? empData.sabun : ""}</td>
+                <td>{empData ? empData.name : ""}</td>
+                <td>{empData ? empData.rankKR : ""}</td>
               </tr>
             </table>
           </div>
@@ -282,7 +343,7 @@ const AppointmentModal = ({ setOpenModal }) => {
               variant="inline"
               views={["year", "month", "date"]}
               format="yyyy-MM-dd"
-              value={startDate}
+              value={_startDate}
               inputVariant="outlined"
               showTodayButton
               className="startDate"
