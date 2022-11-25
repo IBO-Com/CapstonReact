@@ -16,23 +16,12 @@ const App = () => {
   const [workMonth, setWorkMonth] = useState("0");
   const [workYear, setWorkYear] = useState("0");
   const [workDay, setWorkDay] = useState("0");
-  const [annual, setAnnual] = useState(15);
-  const [maxAnnual, setMaxAnnual] = useState(15);
+  const [annual, setAnnual] = useState(0);
+  const [maxAnnual, setMaxAnnual] = useState(0);
   const [picture, setPicture] = useState("null");
   const [userData, setUserData] = useState({});
   const [vacationData, setVacationData] = useState([]);
-
-  
-  axios.post("http://localhost:8080/CapstonProject/vacationcount.jsp", qs.stringify({
-    sabunOrName: cookies["loginInfo"].id
-  })).then((res) => {
-    let data = res.data.ITEMS[0];
-    let max_ = parseFloat(data.remain_annual) + parseFloat(data.use_annual);
-    let use_ = parseFloat(data.remain_annual);
-    
-  }).catch((Error) => {
-    console.log(Error);
-  }, []);
+  const [data, setData] = useState();
 
   const annualData = {
     "0": "연차",
@@ -42,6 +31,107 @@ const App = () => {
     "04": "병결",
     "05": "기타"
   }
+
+  
+  useEffect(() => {
+    axios.post("http://43.200.115.198:8080/vacationcount.jsp", qs.stringify({
+      sabunOrName: cookies["loginInfo"].id
+    })).then((res) => {
+      let data_ = res.data.ITEMS[0];
+      let _max = parseFloat(data_.remain_annual) + parseFloat(data_.use_annual);
+      let _use = parseFloat(data_.remain_annual);
+      
+      setMaxAnnual(_max);
+      setAnnual(_use);
+      
+      setData({
+        series: [(100 / _max) * _use], //100 -> 12
+        options: {
+          chart: {
+            height: 0,
+            type: "radialBar",
+            toolbar: {
+              show: true,
+            },
+          },
+          plotOptions: {
+            radialBar: {
+              startAngle: 0,
+              endAngle: 360,
+              hollow: {
+                margin: 0,
+                size: "80%",
+                background: "#fff",
+                image: undefined,
+                imageOffsetX: 0,
+                imageOffsetY: 0,
+                position: "front",
+                dropShadow: {
+                  enabled: true,
+                  top: 3,
+                  left: 0,
+                  blur: 4,
+                  opacity: 0.24,
+                },
+              },
+              track: {
+                background: "#fff",
+                strokeWidth: "50%",
+                margin: 0, // margin is in pixels
+                dropShadow: {
+                  enabled: true,
+                  top: -3,
+                  left: 0,
+                  blur: 4,
+                  opacity: 0.35,
+                },
+              },
+    
+              dataLabels: {
+                show: true,
+                name: {
+                  offsetY: -10,
+                  show: true,
+                  color: "black",
+                  fontSize: "17px",
+                },
+                value: {
+                  formatter: function (val) {
+                    return _use +  "개";
+                  },
+                  color: "black",
+                  fontSize: "20px",
+                  show: true,
+                },
+              },
+            },
+          },
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "dark",
+              type: "horizontal",
+              shadeIntensity: 0.5,
+              gradientToColors: ["#ABE5A1"],
+              inverseColors: true,
+              opacityFrom: 1,
+              opacityTo: 1,
+              stops: [0, 100],
+            },
+          },
+          stroke: {
+            lineCap: "round",
+          },
+          labels: ["잔여연차"],
+        },
+      })
+      
+    }).catch((Error) => {
+      console.log(Error);
+    });
+  }, []);
+
+
 
   const todayTime = () => {
     let now = new Date();
@@ -104,7 +194,7 @@ const App = () => {
               width: "65px",
               height: "30px",
               backgroundColor: "#21BF54",
-              border: "1px solid #21BF54", //3시얍
+              border: "1px solid #21BF54",
               borderRadius: "5px",
               boxShadow: "1px 1px 5px white",
 
@@ -185,87 +275,8 @@ const App = () => {
   }, []);
   
 
-  const [data, setData] = useState({
-    series: [(100 / maxAnnual) * annual], //100 -> 12
-    options: {
-      chart: {
-        height: 0,
-        type: "radialBar",
-        toolbar: {
-          show: true,
-        },
-      },
-      plotOptions: {
-        radialBar: {
-          startAngle: 0,
-          endAngle: 360,
-          hollow: {
-            margin: 0,
-            size: "80%",
-            background: "#fff",
-            image: undefined,
-            imageOffsetX: 0,
-            imageOffsetY: 0,
-            position: "front",
-            dropShadow: {
-              enabled: true,
-              top: 3,
-              left: 0,
-              blur: 4,
-              opacity: 0.24,
-            },
-          },
-          track: {
-            background: "#fff",
-            strokeWidth: "50%",
-            margin: 0, // margin is in pixels
-            dropShadow: {
-              enabled: true,
-              top: -3,
-              left: 0,
-              blur: 4,
-              opacity: 0.35,
-            },
-          },
 
-          dataLabels: {
-            show: true,
-            name: {
-              offsetY: -10,
-              show: true,
-              color: "black",
-              fontSize: "17px",
-            },
-            value: {
-              formatter: function (val) {
-                return annual + "개";
-              },
-              color: "black",
-              fontSize: "20px",
-              show: true,
-            },
-          },
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "dark",
-          type: "horizontal",
-          shadeIntensity: 0.5,
-          gradientToColors: ["#ABE5A1"],
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100],
-        },
-      },
-      stroke: {
-        lineCap: "round",
-      },
-      labels: ["잔여연차"],
-    },
-  });
+
 
   return (
     <div className="hrMain">
@@ -292,18 +303,26 @@ const App = () => {
           </div>
           <div className="hrMain_work_container">
             <div>
-              <h4>근무 정보</h4>
+              <h4>연차 정보</h4>
               <div className="hrMain_workInfo">
                 <div className="hr_timeNwork">
                   {todayTime()}
-                  <span className="hr_workstate">출근</span>
                 </div>
-                <ApexCharts
+                {
+                  data ? (
+                    <ApexCharts
                   options={data.options}
                   series={data.series}
                   type="radialBar"
                   height={290}
                 />
+                  ) : (
+                    <>
+                      <span>데이터를 불러올 수 없습니다.</span>
+                    </>
+                  )
+                }
+                
                 {/* <div className="hrMain_workBottomText"></div> */}
               </div>
             </div>
