@@ -3,7 +3,7 @@
 }
 
 .formSeverPay_footer {
-    margin-top: 55px;
+    margin-top: 35px;
     text-align: center;
     color: #515966;
 }
@@ -52,7 +52,7 @@
 .formSeverDiv {
     width: 100%;
     height: 30px;
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
     padding: 0px;
     position: relative;
 }

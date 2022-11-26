@@ -164,7 +164,7 @@ const App = ({ componentRef, sabun, retrieveDate}) => {
             <p>상기와 같이 휴가신청서를 제출하오니<br></br>허가하여 주시기 바랍니다.</p>
             <p>{todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 {todayTime().slice(8, 10)}일</p>
             <p className="mbt">IBO</p>
-            <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+            <p>대표이사 김  유  경 &nbsp;&nbsp; (인)</p>
             <div className="formVCMDiv">
                <img className="formVcm" src={IBOstamp} alt="직인" />
             </div>

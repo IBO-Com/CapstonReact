@@ -199,7 +199,7 @@ const App = ({ componentRef, sabun }) => {
           {todayTime().slice(8, 10)}일
         </p>
         <p className="mbt">IBO</p>
-        <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+        <p>대표이사 김  유  경 &nbsp;&nbsp; (인)</p>
         <div className="formProofDiv">
           <img className="formProof" src={IBOstamp} alt="직인" />
         </div>

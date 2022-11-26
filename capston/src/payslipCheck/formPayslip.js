@@ -128,7 +128,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
                     <p>귀하의 노고에 감사드립니다.</p>
                     <p>{retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</p>
                     <p className="mbt">IBO</p>
-                    <p>대표이사 담 당 자 &nbsp;&nbsp; (인)</p>
+                    <p>대표이사 김  유  경 &nbsp;&nbsp; (인)</p>
                     <div className="formProofDiv">
                         <img className="formProof" src={IBOstamp} alt="직인" />
                     </div>
