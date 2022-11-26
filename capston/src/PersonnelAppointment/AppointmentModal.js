@@ -51,7 +51,7 @@ const AppointmentModal = ({
 
   function getParametersForUnsplash({ width, height, quality, format }) {
     //이미지 최적화
-    return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
+    return `?w=${width}&h=${height}&q=${quality}&fm=${format}& fit=crop`;
   }
 
   useEffect(() => {
@@ -480,7 +480,7 @@ const AppointmentModal = ({
           className="AppointmentModal_cancelBtn"
           onClick={() => setOpenModal(false)}
         >
-          취소
+          발령취소
         </button>
         <button
           className="AppointmentModal_registerBtn"
@@ -489,7 +489,7 @@ const AppointmentModal = ({
             setOpenModal(false);
           }}
         >
-          등록
+          발령등록
         </button>
       </div>
     </div>

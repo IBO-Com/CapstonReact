@@ -142,6 +142,8 @@ const App = () => {
       //전체가 아닐 때
       param["work_form"] = tab;
     }
+    param["start_date"] = start_date;
+    param["retire_date"] = retire_date;
 
     param = qs.stringify(param);
 

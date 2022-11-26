@@ -103,24 +103,24 @@
 }
 .AppointmentModal_btns {
   margin-top: 20px;
-  margin-left: 74%;
+  /* margin-left: 74%; */
 }
 .AppointmentModal_cancelBtn {
   margin-right: 10px;
-  width: 60px;
+  width: 90px;
   height: 30px;
   background-color: #e78854;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 0;
   outline: 0;
 }
 .AppointmentModal_registerBtn {
-  width: 60px;
+  width: 90px;
   height: 30px;
   background-color: #e78854;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 0;
   outline: 0;
 }
