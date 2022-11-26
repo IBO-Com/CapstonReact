@@ -125,7 +125,7 @@ const App = () => {
       });
   };
 
-  const changeTap = (idx, tab) => {
+  const changeTap = async(idx, tab) => {
     let start_date =
     String(startDate.getFullYear()) +
     String(addZero(startDate.getMonth() + 1)) +
@@ -155,14 +155,22 @@ const App = () => {
 
     param = qs.stringify(param);
 
-    axios
+    let isBreak = false;
+    let cnt = 1;
+    while(!isBreak) {
+      await axios
       .post("http://43.200.115.198:8080/getAttendance.jsp", param)
       .then((response) => {
         setAttendData(response.data.ITEMS);
+        isBreak = true;
       })
       .catch((Error) => {
-        console.log(Error);
+        console.log("로딩 오류 - 재요청 시도 " + cnt);
+        cnt += 1;
       });
+    }
+
+   
   };
 
   useEffect(() => {
