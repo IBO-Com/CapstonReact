@@ -248,7 +248,7 @@ const AppointmentModal = ({
       .post("http://43.200.115.198:8080/getpicture.jsp", postParam3)
       .then((response) => {
         console.log(response);
-        if (response.data) {
+        if (response.data.ITEMS.length > 0) {
           setPicture(response.data.ITEMS[0].picture);
         }
         setRData(response.data);
@@ -296,7 +296,7 @@ const AppointmentModal = ({
       <form ref={formRef}>
         <div className="AppointmentModal_userInfo">
           <div className="AppointmentModal_userImg">
-            {picture === "null" ? (
+            {picture === null || picture === "" ? (
               <img
                 className="empimg"
                 style={{ width: "110px", height: "150px", borderRadius: "0px" }}
@@ -306,7 +306,7 @@ const AppointmentModal = ({
                     width: 110,
                     height: 110,
                     quality: 80,
-                    format: "jpg",
+                    format: "png",
                   })
                 }
                 alt="이미지"

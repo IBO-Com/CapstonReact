@@ -103,7 +103,8 @@
 }
 .AppointmentModal_btns {
   margin-top: 20px;
-  /* margin-left: 74%; */
+  margin-right: 42px;
+  text-align: right;
 }
 .AppointmentModal_cancelBtn {
   margin-right: 10px;

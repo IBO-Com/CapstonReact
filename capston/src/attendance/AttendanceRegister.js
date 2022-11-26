@@ -487,7 +487,7 @@ function AttendanceRegister() {
             </div>
             <TextField
               inputRef={name}
-              InputProps={{ sx: { width: 180, height: 40 } }}
+              InputProps={{ sx: { width: 150, height: 40 } }}
             />
           </div>
           <div

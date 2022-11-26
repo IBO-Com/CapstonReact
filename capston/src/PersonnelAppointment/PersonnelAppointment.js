@@ -170,6 +170,7 @@ const App = () => {
             openModal={openModal}
             startDate={startDate}
             endDate={endDate}
+            setOpenModal={setOpenModal}
           />
         ) : (
           ""

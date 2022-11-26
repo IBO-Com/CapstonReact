@@ -155,10 +155,10 @@ const App = () => {
       <div className="plzEmp">
         <div>
           <div className="empWrapimg">
-            {picture === "null" ? (
-              <img className="empimg" src={testimg} alt="이미지" />
+            {picture === null || picture === "" ? (
+              <img className="empimg" src={testimg} alt={"이미지"} /> //여긴 안해도 도ㅐ null이니깐
             ) : (
-              <img className="empimg" src={picture} alt={"사진"} />
+              <img className="empimg" src={picture} alt={"없음"} />
             )}
           </div>
         </div>
@@ -229,14 +229,13 @@ const App = () => {
                     : "로딩중"}
                 </td>
                 <td>
-                {userData["retire_date"]
+                  {userData["retire_date"]
                     ? userData["retire_date"].slice(0, 4) +
                       "-" +
                       userData["retire_date"].slice(4, 6) +
                       "-" +
                       userData["retire_date"].slice(6, 8)
                     : "재직중"}
-
                 </td>
               </tr>
             </tbody>

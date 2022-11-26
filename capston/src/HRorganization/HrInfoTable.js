@@ -9,6 +9,8 @@ const HrInfoTable = ({
 }) => {
   //console.log(peopleData);
 
+  let infoIndex = 1;
+
   return (
     <div className="HrInfoTable">
       <p>사원정보현황</p>
@@ -36,27 +38,32 @@ const HrInfoTable = ({
               {peopleData.map(function (name, index) {
                 return (
                   <>
-                    <tr>
-                      <td style={{ minWidth: "20px" }}>{index + 1}</td>
-                      <td style={{ minWidth: "60px" }}>{name.sabun}</td>
-                      <td style={{ minWidth: "50px" }}>{name.name}</td>
-                      <td style={{ minWidth: "80px" }}>{name.eng_name}</td>
-                      <td style={{ minWidth: "90px" }}>
-                        {name.identity.slice(0, 6)}-{name.identity.slice(6, 13)}
-                      </td>
-                      <td style={{ minWidth: "25px" }}>
-                        {name.gender === "0" ? "남자" : "여자"}
-                      </td>
-                      <td style={{ minWidth: "80px" }}>{name.deptKR}</td>
-                      <td style={{ minWidth: "80px" }}>{name.teamKR}</td>
-                      <td style={{ minWidth: "80px" }}>{name.rankKR}</td>
+                    {name.retire_cls == "0" ? (
+                      <tr>
+                        <td style={{ minWidth: "20px" }}>{infoIndex++}</td>
+                        <td style={{ minWidth: "60px" }}>{name.sabun}</td>
+                        <td style={{ minWidth: "50px" }}>{name.name}</td>
+                        <td style={{ minWidth: "80px" }}>{name.eng_name}</td>
+                        <td style={{ minWidth: "90px" }}>
+                          {name.identity.slice(0, 6)}-
+                          {name.identity.slice(6, 13)}
+                        </td>
+                        <td style={{ minWidth: "25px" }}>
+                          {name.gender === "0" ? "남자" : "여자"}
+                        </td>
+                        <td style={{ minWidth: "80px" }}>{name.deptKR}</td>
+                        <td style={{ minWidth: "80px" }}>{name.teamKR}</td>
+                        <td style={{ minWidth: "80px" }}>{name.rankKR}</td>
 
-                      <td style={{ minWidth: "80px" }}>
-                        {name.start_date.slice(0, 4)}년&nbsp;{" "}
-                        {name.start_date.slice(4, 6)}월&nbsp;{" "}
-                        {name.start_date.slice(6, 8)}일&nbsp;
-                      </td>
-                    </tr>
+                        <td style={{ minWidth: "80px" }}>
+                          {name.start_date.slice(0, 4)}년&nbsp;{" "}
+                          {name.start_date.slice(4, 6)}월&nbsp;{" "}
+                          {name.start_date.slice(6, 8)}일&nbsp;
+                        </td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 );
               })}

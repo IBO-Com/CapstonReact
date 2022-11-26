@@ -56,6 +56,14 @@ const App = ({ componentRef, sabun }) => {
           userInfo["start_date"].slice(6, 8)
         );
 
+        let retireDate = new Date();
+        if (userInfo["retire_date"]) {
+          let retireDate = new Date(
+            userInfo["retire_date"].slice(0, 4),
+            parseInt(userInfo["retire_date"].slice(4, 6)) - 1, //Date 연산으로 인한 -1을 해주어야 함
+            userInfo["retire_date"].slice(6, 8)
+          );
+        }
         if (userInfo["retire_cls"] == 1) {
           //퇴직일경우 EndDate를 퇴직일자로 변경
           setEndDate(
@@ -69,7 +77,7 @@ const App = ({ componentRef, sabun }) => {
 
         GetYearOfWork.getYearOfWork(
           startDate,
-          endDate,
+          retireDate,
           setWorkYear,
           setWorkMonth,
           setWorkDay
@@ -101,11 +109,11 @@ const App = ({ componentRef, sabun }) => {
           <td>
             {userData
               ? defaultYear +
-              userData["identity"].slice(0, 2) +
-              "-" +
-              userData["identity"].slice(2, 4) +
-              "-" +
-              userData["identity"].slice(4, 6)
+                userData["identity"].slice(0, 2) +
+                "-" +
+                userData["identity"].slice(2, 4) +
+                "-" +
+                userData["identity"].slice(4, 6)
               : ""}
           </td>
         </tr>
@@ -123,10 +131,10 @@ const App = ({ componentRef, sabun }) => {
           <td>
             {userData
               ? userData["start_date"].slice(0, 4) +
-              "-" +
-              userData["start_date"].slice(4, 6) +
-              "-" +
-              userData["start_date"].slice(6, 8)
+                "-" +
+                userData["start_date"].slice(4, 6) +
+                "-" +
+                userData["start_date"].slice(6, 8)
               : ""}
           </td>
           <td>부서</td>
@@ -138,16 +146,18 @@ const App = ({ componentRef, sabun }) => {
           <td>
             {userData ? (
               <span>
-                {userData["retire_date"] ? (
-                  userData["retire_date"].slice(0,4) + "-" + userData["retire_date"].slice(4, 6) + "-" + userData["retire_date"].slice(6, 8)
-                ) : (
-                  "재직중"
-                )}
+                {userData["retire_date"]
+                  ? userData["retire_date"].slice(0, 4) +
+                    "-" +
+                    userData["retire_date"].slice(4, 6) +
+                    "-" +
+                    userData["retire_date"].slice(6, 8)
+                  : "재직중"}
               </span>
             ) : (
               <p>오류!</p>
             )}
-          </td> 
+          </td>
           <td>직책</td>
           <td>{rank}</td>
         </tr>
@@ -165,25 +175,36 @@ const App = ({ componentRef, sabun }) => {
                 <p>
                   {userData
                     ? userData["start_date"].slice(0, 4) +
-                    "년 " +
-                    userData["start_date"].slice(4, 6) +
-                    "월 " +
-                    userData["start_date"].slice(6, 8) +
-                    "일 부터"
+                      "년 " +
+                      userData["start_date"].slice(4, 6) +
+                      "월 " +
+                      userData["start_date"].slice(6, 8) +
+                      "일 부터"
                     : ""}
                 </p>
                 <p>
                   {userData ? (
-                    <p>
-                      {endDate.getFullYear() +
-                        "년 " +
-                        (endDate.getMonth() + 1) +
-                        "월 " +
-                        endDate.getDate() +
-                        "일 까지"}
-                    </p>
+                    userData["retire_date"] ? (
+                      <p>
+                        {userData["retire_date"].slice(0, 4) +
+                          "년 " +
+                          userData["retire_date"].slice(4, 6) +
+                          "월 " +
+                          userData["retire_date"].slice(6, 8) +
+                          "일 까지"}
+                      </p>
+                    ) : (
+                      <p>
+                        {todayTime().slice(0, 4) +
+                          "년 " +
+                          todayTime().slice(5, 7) +
+                          "월 " +
+                          todayTime().slice(8, 10) +
+                          "일 까지"}
+                      </p>
+                    )
                   ) : (
-                    <></>
+                    <p>{todayTime()}</p>
                   )}
                 </p>
               </div>
@@ -199,7 +220,7 @@ const App = ({ componentRef, sabun }) => {
           {todayTime().slice(8, 10)}일
         </p>
         <p className="mbt">IBO</p>
-        <p>대표이사 김  유  경 &nbsp;&nbsp; (인)</p>
+        <p>대표이사 김 유 경 &nbsp;&nbsp; (인)</p>
         <div className="formProofDiv">
           <img className="formProof" src={IBOstamp} alt="직인" />
         </div>

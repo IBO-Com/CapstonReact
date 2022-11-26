@@ -100,6 +100,11 @@ const HelloBaseTab = () => {
           img_base64: file,
           img: reader.result,
         });
+        console.log("[이미지]");
+        console.log({
+          img_base64: testimg,
+          img: reader.result,
+        });
         console.log(reader.resultStrin);
       };
       reader.readAsDataURL(file);
@@ -181,28 +186,23 @@ const HelloBaseTab = () => {
           loginId: Cookie.getCookie("empInfo").id,
           img_base64: picture.img,
           salary: salary.current.value,
-          update_date: update_date, 
+          update_date: update_date,
         };
         postParam = qs.stringify(postParam);
 
-        axios
-          .post(
-            urlSave,
-            postParam
-          )
-          .then((response) => {
-            console.log(response);
-            if (response.data.result === "success") {
-              setCookie("empRegister_userInfo", {
-                authority: "0",
-                id: response.data.sabun,
-                name: name.current.value,
-              });
-              alert("저장되었습니다.");
-            } else {
-              alert("error");
-            }
-          });
+        axios.post(urlSave, postParam).then((response) => {
+          console.log(response);
+          if (response.data.result === "success") {
+            setCookie("empRegister_userInfo", {
+              authority: "0",
+              id: response.data.sabun,
+              name: name.current.value,
+            });
+            alert("저장되었습니다.");
+          } else {
+            alert("error");
+          }
+        });
       }
     }
   };
@@ -245,7 +245,7 @@ const HelloBaseTab = () => {
                             <img
                               className={styles.empimg}
                               src={testimg}
-                              alt="이미지"
+                              alt="이미지1"
                             />
                           </>
                         ) : (
@@ -253,7 +253,7 @@ const HelloBaseTab = () => {
                             <img
                               className={styles.empimg}
                               src={picture.img}
-                              alt="이미지"
+                              alt="이미지2"
                             />
                           </>
                         )}
