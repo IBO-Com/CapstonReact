@@ -126,6 +126,14 @@ const App = () => {
   };
 
   const changeTap = (idx, tab) => {
+    let start_date =
+    String(startDate.getFullYear()) +
+    String(addZero(startDate.getMonth() + 1)) +
+    String(addZero(startDate.getDate()));
+    let retire_date =
+      String(endDate.getFullYear()) +
+      String(addZero(endDate.getMonth() + 1)) +
+      String(addZero(endDate.getDate()));
     setNowTab(tab);
     let element = document.querySelectorAll(".AttendanceStatus_type > div");
     for (let i = 0; i < element.length; i++) {
