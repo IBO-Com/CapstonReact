@@ -20,15 +20,6 @@ const App = () => {
   const [appointmentData, setAppointmentData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  const deptObj = {
-    "01": "경영지원부",
-    "02": "경영관리부",
-    "03": "침해대응부",
-    "04": "관제센터",
-    "05": "보안연구부",
-    "06": "보안취약점연구부",
-  };
-
   let leftIndex = 1;
   let rightIndex = 1;
 
@@ -98,6 +89,7 @@ const App = () => {
       .post("http://43.200.115.198:8080/personnelAppointment.jsp", postParam2)
       .then((res) => {
         setAppointmentData(res.data.ITEMS);
+        console.log(appointmentData);
       })
       .catch((Error) => {
         console.log(Error);
@@ -204,45 +196,9 @@ const App = () => {
                             {item.app_date.slice(6, 8)}일&nbsp;
                           </td>
                           <td style={{ minWidth: "20px" }}>{item.sabun}</td>
-                          <td style={{ minWidth: "20px" }}>
-                            {item.center === "H"
-                              ? "경영관리본부"
-                              : "" || item.center === "C"
-                              ? "사이버보안본부"
-                              : "" || item.center === "S"
-                              ? "보안연구본부"
-                              : ""}
-                          </td>
-                          <td style={{ minWidth: "20px" }}>
-                            {deptObj[item.dept]}
-                          </td>
-                          <td style={{ minWidth: "20px" }}>
-                            {item.team === "101"
-                              ? "인사관리팀"
-                              : "" || item.team === "102"
-                              ? "마케팅팀"
-                              : "" || item.team === "201"
-                              ? "총무회계팀"
-                              : "" || item.team === "202"
-                              ? "경리팀"
-                              : "" || item.team === "301"
-                              ? "침해대응팀"
-                              : "" || item.team === "302"
-                              ? "위협분석팀"
-                              : "" || item.team === "401"
-                              ? "보안관제팀"
-                              : "" || item.team === "402"
-                              ? "정보보호팀"
-                              : "" || item.team === "501"
-                              ? "연구팀"
-                              : "" || item.team === "502"
-                              ? "연구기획팀"
-                              : "" || item.team === "601"
-                              ? "종합분석팀"
-                              : "" || item.team === "602"
-                              ? "취약점분석팀"
-                              : ""}
-                          </td>
+                          <td style={{ minWidth: "20px" }}>{item.centerKR}</td>
+                          <td style={{ minWidth: "20px" }}>{item.deptKR}</td>
+                          <td style={{ minWidth: "20px" }}>{item.teamKR}</td>
                           <td>{item.name}</td>
                         </>
                       ) : (
@@ -262,8 +218,8 @@ const App = () => {
                   <tr>
                     <td>번호</td>
                     <td>발령일자</td>
-                    <td>직책</td>
                     <td>사번</td>
+                    <td>직책</td>
                     <td>성명</td>
                   </tr>
                 </thead>
@@ -278,27 +234,8 @@ const App = () => {
                             {item.app_date.slice(4, 6)}월&nbsp;{" "}
                             {item.app_date.slice(6, 8)}일&nbsp;
                           </td>
-                          <td>
-                            {" "}
-                            {item.rank === "1"
-                              ? "사원"
-                              : " " || item.rank === "2"
-                              ? "대리"
-                              : " " || item.rank === "3"
-                              ? "과장"
-                              : "" || item.rank === "4"
-                              ? "차장"
-                              : " " || item.rank === "5"
-                              ? "부장"
-                              : "" || item.rank === "6"
-                              ? "이사"
-                              : " " || item.rank === "7"
-                              ? "사장"
-                              : " " || item.rank === "8"
-                              ? "대표이사"
-                              : " "}
-                          </td>
                           <td>{item.sabun}</td>
+                          <td>{item.rankKR}</td>
                           <td>{item.name}</td>
                         </>
                       ) : (
