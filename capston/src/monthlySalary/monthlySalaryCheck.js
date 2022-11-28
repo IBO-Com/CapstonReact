@@ -141,7 +141,10 @@ const App = () => {
 
   return (
     <div className="monthlyPay_background">
-      <div className="monthlyPay_searchBox">
+      {
+        cookies["loginInfo"].authority == "1" ? (
+          <>
+          <div className="monthlyPay_searchBox">
         <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
           <DatePicker
             style={{ marginLeft: "18px" }}
@@ -184,7 +187,18 @@ const App = () => {
           검색
         </button>
       </div>
-      <hr className="monthlyPay_lineBar"></hr>
+             <hr className="monthlyPay_lineBar"></hr>
+          </>
+         
+        ) : (
+          <>
+          <div style={{marginTop:"50px"}}>
+
+          </div>
+          </>
+        )
+      }
+      
 
       <div className="monthlyPay_title">
         <span>

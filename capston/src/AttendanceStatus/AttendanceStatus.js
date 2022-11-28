@@ -12,6 +12,7 @@ import axios from "axios";
 import * as GetAttendance from "../modules/GetAttendance";
 import * as GetCDTR from "../modules/getCDTR";
 import qs from "qs";
+import { useCookies } from "react-cookie";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -23,7 +24,8 @@ const App = () => {
   let toDay = new Date();
   const [startDate, setStartDate] = useState(
     new Date(toDay.getFullYear(), toDay.getMonth(), 1)
-  );
+  ); 
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [endDate, setEndDate] = useState(new Date());
   const [textName, setTextName] = useState("");
   const [selectDepart, setSelectDepart] = useState("*");
@@ -245,7 +247,10 @@ const App = () => {
 
   return (
     <div className="AttendanceStatus_container">
-      <div className="AttendacneStatus_search">
+      {
+        cookies["loginInfo"].authority == "1" ? (
+          <>
+          <div className="AttendacneStatus_search">
         <span>기준일자</span>
         <MuiPickersUtilsProvider utils={koLocalizedUtils} locale={koLocale}>
           <DatePicker
@@ -348,6 +353,14 @@ const App = () => {
           검색
         </button>
       </div>
+          </>
+        ) : (
+          <>
+            <div style={{marginTop: "50px"}}></div>
+          </>
+        )
+      }
+      
       <div className="AttendanceStatus_content">
         <span>근태/근무현황</span>
         <div className="AttendanceStatus_type">

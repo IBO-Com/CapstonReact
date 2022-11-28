@@ -8,6 +8,7 @@ function OrganizeSetting() {
   const detailGrid = useRef();
   const [itemListMaster, setItemListMaster] = useState([]);
   const [itemListDetail, setItemListDetail] = useState([]);
+  const [beforeData, setBeforeData] = useState();
 
   useEffect(() => {
     onClickRetrieveButton();
@@ -112,7 +113,11 @@ function OrganizeSetting() {
     const rowscount = detailGrid.current.getdatainformation().rowscount;
     if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
       const id = detailGrid.current.getrowid(selectedrowindex);
+      let data = [...beforeData];
+      data.splice(selectedrowindex, 1);
+      setBeforeData(data);
       detailGrid.current.deleterow(id);
+
     }
   };
 
@@ -127,6 +132,15 @@ function OrganizeSetting() {
   const onClickSaveButton = () => {
     let data = detailGrid.current.getrows();
     let lengths = data.length;
+    for(let i = 0; i < lengths; i ++) {
+      if(beforeData[i]) { //데이터가 있을 때 
+        data[i].before_code_cd = beforeData[i].code_cd;
+        data[i].before_code_nm = beforeData[i].code_nm;
+      } else { //데이터가 없을 때
+        data[i].before_code_cd = "";
+        data[i].before_code_nm = "";
+      }
+    }
     data = { ...data };
 
     for (let i = 0; i < lengths; i++) {
@@ -135,7 +149,8 @@ function OrganizeSetting() {
         return;
       }
     }
-
+    console.log("Edit After : ", data);
+    
     axios
       .get(urlSave, {
         params: {
@@ -151,6 +166,7 @@ function OrganizeSetting() {
           alert("error");
         }
       });
+      
   };
 
   const masterRowSelect = (event) => {
@@ -162,6 +178,7 @@ function OrganizeSetting() {
         records[records.length] = record;
       }
     }
+    setBeforeData(records);
     const dataSource = {
       datafields: sourceDetail.datafields,
       localdata: records,
