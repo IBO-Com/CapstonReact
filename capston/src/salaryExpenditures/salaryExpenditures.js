@@ -22,10 +22,20 @@ const App = () => {
     const [usersInfo, setUsersInfo] = useState([]);
     const [payData, setPayData] = useState();
     const [totalData, setTotalData] = useState();
+    const [codeData, setCodeData] = useState();
     let defaultMonth = ["01","02","03","04","05","06","07","08","09","10","11","12"];
 
 
     useEffect(() => {
+
+        axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
+        code_cls: "002"
+        })).then((res) => {
+            setCodeData(res.data.ITEMS);
+        }).catch((Error) => {
+
+        })
+
         axios
             .post("http://43.200.115.198:8080/empselect.jsp")
             .then((res) => {
@@ -290,33 +300,20 @@ const App = () => {
                         }}
                         onChange={handleSelectDepart}
                     >
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                            전체부서
+                    <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                        전체부서
+                    </MenuItem>
+                    {
+                    codeData ? (
+                        Object.keys(codeData).map((item, index) => (
+                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                        {codeData[item]}
                         </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-                            경영지원부
-                        </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                            경영관리부
-                        </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-                            침해대응부
-                        </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-                            관제센터
-                        </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-                            보안연구부
-                        </MenuItem>
-
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-                            보안취약점연구부
-                        </MenuItem>
+                        )) 
+                    ) : (
+                        <></>
+                    )
+                    } 
                     </Select>
                 </FormControl>
                 <button

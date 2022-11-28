@@ -34,6 +34,7 @@ const App = () => {
   const [paramData, setParamData] = useState({});
 
   const [codeData, setCodeData] = useState({});
+  const [codeData2, setCodeData2] = useState();
 
   const [oW, setOW] = useState(0); //외근
   const [bT, setBT] = useState(0); //출장
@@ -243,6 +244,15 @@ const App = () => {
       .catch((Error) => {
         console.log(Error);
       });
+
+      axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
+        code_cls: "002"
+      })).then((res) => {
+        setCodeData2(res.data.ITEMS);
+      }).catch((Error) => {
+
+      })
+
   }, []);
 
   return (
@@ -297,33 +307,20 @@ const App = () => {
               }}
               onChange={handleSelectDepart}
             >
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
                 전체부서
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-                경영지원부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                경영관리부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-                침해대응부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-                관제센터
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-                보안연구부
-              </MenuItem>
-
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-                보안취약점연구부
-              </MenuItem>
+            </MenuItem>
+            {
+              codeData2 ? (
+                Object.keys(codeData2).map((item, index) => (
+                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                  {codeData2[item]}
+                </MenuItem>
+                )) 
+              ) : (
+                <></>
+              )
+            } 
             </Select>
           </FormControl>
         </div>

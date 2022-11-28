@@ -31,6 +31,7 @@ const App = () => {
     const [peopleData, setPeopleData] = useState();
     const [sabun, setSabun] = useState();
     const componentRef = useRef(null);
+    const [codeData, setCodeData] = useState();
 
     const [payslip, setPayslip] = useState(false);
     console.log(payslip);
@@ -53,6 +54,15 @@ const App = () => {
     }
 
     useEffect(() => {
+
+        axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
+            code_cls: "002"
+        })).then((res) => {
+            setCodeData(res.data.ITEMS);
+        }).catch((Error) => {
+
+        })
+
         axios
             .post("http://43.200.115.198:8080/empselect.jsp")
             .then((res) => {
@@ -136,33 +146,20 @@ const App = () => {
                             }}
                             onChange={handleSelectDepart}
                         >
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                                전체부서
+                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                            전체부서
+                        </MenuItem>
+                        {
+                        codeData ? (
+                            Object.keys(codeData).map((item, index) => (
+                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                            {codeData[item]}
                             </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"01"}>
-                                경영지원부
-                            </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"02"}>
-                                경영관리부
-                            </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"03"}>
-                                침해대응부
-                            </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"04"}>
-                                관제센터
-                            </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"05"}>
-                                보안연구부
-                            </MenuItem>
-
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"06"}>
-                                보안취약점연구부
-                            </MenuItem>
+                            )) 
+                        ) : (
+                            <></>
+                        )
+                        } 
                         </Select>
                     </FormControl>
                     <FormControl>
@@ -229,7 +226,7 @@ const App = () => {
                                                         </td>
                                                         <td>{name.sabun}</td>
                                                         <td>{name.name}</td>
-                                                        <td>{name.dept === "01" ? "경영지원부" : "" || name.dept === "02" ? "경영관리" : "" || name.dept === "03" ? "침해대응부" : "" || name.dept === "04" ? "관제센터" : "" || name.dept === "05" ? "보안연구부" : "" || name.dept === "06" ? "보안취약점연구부" : ""}</td>
+                                                        <td>{name.deptKR}</td>
                                                     </tr>
                                                 </>
                                             );

@@ -449,3 +449,57 @@ export const getRetirePayment = (sabun, saveData) => {
       console.log(Error);
     });
 };
+
+export const codeNameFiltering = async(saveData) => {
+  
+  let center = {};
+  let dept = {};
+  let team = {};
+  let result = {};
+
+  await axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
+    code_cls: "003"
+  })).then((res) => {
+    let data = res.data.ITEMS;
+    let keys = Object.keys(data);
+    
+    keys.map((item, index) => {
+      team[item.split("-")[0]] = []
+    })
+
+    keys.map((item, index) => {
+      team[item.split("-")[0]].push(item.split("-")[1])
+    })
+
+    console.log("team : ", team);
+  }).catch((Error) => {
+    console.log(Error);
+  })
+
+  await axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
+    code_cls: "002"
+  })).then((res) => {
+    let data = res.data.ITEMS;
+    let keys = Object.keys(data);
+    
+    keys.map((item, index) => {
+      dept[item.split("-")[1]] = []
+    })
+
+    keys.map((item, index) => {
+      dept[item.split("-")[1]].push(item.split("-")[0]);
+     
+      result[item.split("-")[1]] = {
+        ...result[item.split("-")[1]],
+        [item.split("-")[0]]: team[item.split("-")[0]]
+      }
+    })
+
+    console.log("dept : ", dept);
+    console.log("result : ", result);
+    saveData(result);
+  }).catch((Error) => {
+    console.log(Error);
+  })
+
+}

@@ -6,6 +6,7 @@ import format from "date-fns/format";
 import axios from "axios";
 import KakaoAddressApi from "./KakaoAddressAPI";
 import { useCookies } from "react-cookie";
+import * as Utils from "../modules/utils";
 
 import {
   Button,
@@ -51,18 +52,21 @@ const HelloBaseTab = () => {
   const salary = useRef();
   const [gender, setGender] = useState(0);
   const [married, setMarried] = useState(0);
-  const [center, setCenter] = useState("H-경영관리본부");
-  const [dept, setDept] = useState("01-경영지원부");
-  const [team, setTeam] = useState("101-인사관리팀");
+  const [center, setCenter] = useState("H");
+  const [dept, setDept] = useState("01-H");
+  const [team, setTeam] = useState("01-101");
   const [rank, setRank] = useState("1");
   const [dateComeIn, setDateComeIn] = useState(getFormatDate(new Date()));
   const [rankList, setRankList] = useState("");
   const [isModal, setModal] = useState(false); //주소찾기 모달
+  const [codeData, setCodeData] = useState();
+  const [codeName, setCodeName] = useState();
   const [picture, setPicture] = useState({
     img_base64: "",
     img: "",
   });
 
+  const urlCode = "http://43.200.115.198:8080/getAllCodeNm.jsp";
   const urlSave = "http://43.200.115.198:8080/empregister.jsp";
   const urlGetCls = "http://43.200.115.198:8080/empGetOrg.jsp";
   //const urlSave = "http://localhost:8080/empregister.jsp";
@@ -78,10 +82,22 @@ const HelloBaseTab = () => {
     setMarried(event.target.value);
   };
   const handleSelectCenter = (event) => {
-    setCenter(event.target.value);
+    let data = event.target.value;
+    setCenter(data);
+    let key = Object.keys(codeData[data])[0];
+    setDept(key + "-" + data);
+
+    let subKey = key + "-" + codeData[data][key][0];
+    setTeam(subKey);
+    
   };
   const handleSelectDept = (event) => {
-    setDept(event.target.value);
+    let data = event.target.value;
+    setDept(data);
+    
+    let key = data.split("-")[0];
+    setTeam(key + "-" + codeData[center][key][0]);
+    
   };
   const handleSelectTeam = (event) => {
     setTeam(event.target.value);
@@ -132,32 +148,17 @@ const HelloBaseTab = () => {
       }
       setRankList(array_rank);
     });
+
+    axios.post(urlCode).then((res) => {
+      let data = res.data.ITEMS;
+      console.log("data : ",  data);
+      setCodeName(data);
+    }).catch((Error) => {
+
+    })
+    Utils.codeNameFiltering(setCodeData);
+    
   }, []);
-
-  useEffect(() => {
-    let findDept = Object.keys(center_list[center])[0];
-    setDept(findDept);
-  }, [center]);
-
-  useEffect(() => {
-    let findTeam = center_list[center][dept][0];
-    setTeam(findTeam);
-  }, [dept]);
-
-  const center_list = {
-    "H-경영관리본부": {
-      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
-      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
-    },
-    "C-사이버보안본부": {
-      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
-      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
-    },
-    "S-보안연구본부": {
-      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
-      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
-    },
-  };
 
   const clickSaveButton = () => {
     if (formRef.current.reportValidity()) {
@@ -178,9 +179,9 @@ const HelloBaseTab = () => {
           postcode: postcode.current.value,
           gender: gender,
           married: married,
-          center: center.split("-")[0],
-          dept: dept.split("-")[0],
-          team: team.split("-")[0],
+          center: center,
+          dept: dept,
+          team: team,
           rank: rank,
           dateComeIn: dateComeIn,
           loginId: Cookie.getCookie("empInfo").id,
@@ -188,6 +189,7 @@ const HelloBaseTab = () => {
           salary: salary.current.value,
           update_date: update_date,
         };
+        console.log("전송 : ", postParam);
         postParam = qs.stringify(postParam);
 
         axios.post(urlSave, postParam).then((response) => {
@@ -362,9 +364,17 @@ const HelloBaseTab = () => {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectCenter}
                       >
-                        {Object.keys(center_list).map((e, i) => (
-                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
-                        ))}
+                      
+                      {
+                        codeData && codeName ? (
+                          Object.keys(codeData).map((item, index) => (
+                            <MenuItem value={item}>{codeName[item]}</MenuItem>
+                          ))
+                        ) : (
+                          <> </>
+                        )
+                      }
+                  
                       </Select>
                     </FormControl>
                   </td>
@@ -378,9 +388,16 @@ const HelloBaseTab = () => {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectDept}
                       >
-                        {Object.keys(center_list[center]).map((e, i) => (
-                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
-                        ))}
+                      {
+                        codeData && codeName && codeData[center] ? (
+                            Object.keys(codeData[center]).map((item, index) => (
+                            <MenuItem value={item +"-" + center}>{codeName[item +"-" + center]}</MenuItem>
+                            )
+                          )
+                        ) : (
+                          <> </>
+                        )
+                      }
                       </Select>
                     </FormControl>
                   </td>
@@ -393,13 +410,16 @@ const HelloBaseTab = () => {
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectTeam}
                       >
-                        {center_list[center][dept] ? (
-                          center_list[center][dept].map((e, i) => (
-                            <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
+                      {
+                        codeData && codeName && codeData[center] && codeData[center][dept.split("-")[0]] ? (
+                          codeData[center][dept.split("-")[0]].map((item, index) => (
+                            <MenuItem value={dept.split("-")[0] + "-"  + item}>{codeName[dept.split("-")[0] + "-" + item]}</MenuItem>
                           ))
                         ) : (
-                          <div></div>
-                        )}
+                          <></>
+                        )
+                      }
+
                       </Select>
                     </FormControl>
                   </td>

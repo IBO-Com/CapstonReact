@@ -96,7 +96,7 @@ function OrganizeSetting() {
       cellsalign: "center",
       datafield: "code_cd",
       width: 300,
-    },
+    }, 
     { text: "코드명", align: "center", datafield: "code_nm", width: 400 },
   ]);
 

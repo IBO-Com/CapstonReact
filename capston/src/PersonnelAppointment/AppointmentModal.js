@@ -11,7 +11,6 @@ import axios from "axios";
 import qs from "qs";
 import * as GetCDTR from "../modules/getCDTR";
 import userImg from "../img/user.png";
-import useFormInstance from "antd/lib/form/hooks/useFormInstance";
 import { dateTimePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 import { useCookies } from "react-cookie";
 
