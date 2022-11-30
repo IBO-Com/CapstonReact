@@ -9,6 +9,7 @@ import qs from "qs";
 import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import "../css/Retirement/RetirementApproval.css";
+import RetirementModal from "./RetirementModal";
 
 class koLocalizedUtils extends DateFnsUtils {
   getCalendarHeaderText(date) {
@@ -24,6 +25,9 @@ const App = () => {
 
   const [peopleData, setPeopleData] = useState([]);
   const [retireApprovalData, setRetireApprovalData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [sabun, setSabun] = useState();
+  const [retInfo, setRetInfo] = useState();
 
   const [retrieUserData, setRetrieUserData] = useState([]);
   const [codeData, setCodeData] = useState();
@@ -31,23 +35,27 @@ const App = () => {
   let InfoIndex = 1;
 
   useEffect(() => {
-    
-    axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
-      code_cls: "002"
-    })).then((res) => {
+    axios
+      .post(
+        "http://43.200.115.198:8080/getAllCodeNm.jsp",
+        qs.stringify({
+          code_cls: "002",
+        })
+      )
+      .then((res) => {
         setCodeData(res.data.ITEMS);
-    }).catch((Error) => {
-
-    })
+      })
+      .catch((Error) => {});
     axios
       .post("http://43.200.115.198:8080/retireselect.jsp")
       .then((res) => {
-        setRetireApprovalData(res.data.ITEMS);
+        let data = res.data.ITEMS;
+        setRetireApprovalData(data);
+        console.log("퇴직 데이터 : ", data);
       })
       .catch((Error) => {
         console.log(Error);
       });
-
   }, []);
 
   useEffect(() => {
@@ -76,7 +84,6 @@ const App = () => {
     setRetrieUserData(retireApprovalData[index]);
     console.log(retrieUserData);
   };
-
 
   const approvalBtn = (retrieUserData) => {
     if (window.confirm("승인하시겠습니까?")) {
@@ -171,6 +178,16 @@ const App = () => {
 
   return (
     <div className="RetirementApproval_conatiner">
+      {retInfo ? (
+        <RetirementModal
+          setOpenModal={setOpenModal}
+          openModal={openModal}
+          retInfo={retInfo}
+        />
+      ) : (
+        <></>
+      )}
+
       <div className="RetirementApproval_search">
         <span>기준일자</span>
 
@@ -220,20 +237,18 @@ const App = () => {
               }}
               onChange={handleSelectDepart}
             >
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
                 전체부서
-            </MenuItem>
-            {
-              codeData ? (
+              </MenuItem>
+              {codeData ? (
                 Object.keys(codeData).map((item, index) => (
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
-                  {codeData[item]}
-                </MenuItem>
-                )) 
+                  <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                    {codeData[item]}
+                  </MenuItem>
+                ))
               ) : (
                 <></>
-              )
-            } 
+              )}
             </Select>
           </FormControl>
         </div>
@@ -290,6 +305,7 @@ const App = () => {
                 <td>성명</td>
                 <td>부서명</td>
                 <td>팀명</td>
+                <td>퇴직사유</td>
               </tr>
             </thead>
             <tbody>
@@ -314,6 +330,7 @@ const App = () => {
                           {item.ret_date.slice(4, 6)}월{" "}
                           {item.ret_date.slice(6, 8)}일
                         </td>
+
                         <td className="reapp_state">
                           {item.ret_state === "0" ? "대기중" : "처리완료"}
                         </td>
@@ -321,6 +338,22 @@ const App = () => {
                         <td className="reapp_name">{item.name}</td>
                         <td className="reapp_dept">{item.deptKR}</td>
                         <td className="reapp_team">{item.teamKR}</td>
+                        <td className="reapp_reason">
+                          <button
+                            className="reapp_reasonBtn"
+                            onClick={(e) => {
+                              setOpenModal(true);
+                              setRetInfo({
+                                teamKR: item.teamKR,
+                                name: item.name,
+                                sabun: item.sabun,
+                                ret_reason: item.ret_reason,
+                              });
+                            }}
+                          >
+                            보기
+                          </button>
+                        </td>
                       </tr>
                     ) : (
                       <></>

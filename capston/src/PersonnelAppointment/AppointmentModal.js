@@ -9,7 +9,7 @@ import format from "date-fns/format";
 import DateFnsUtils from "@date-io/date-fns";
 import axios from "axios";
 import qs from "qs";
-import * as GetCDTR from "../modules/getCDTR";
+import * as Utils from "../modules/utils";
 import userImg from "../img/user.png";
 import { dateTimePickerDefaultProps } from "@material-ui/pickers/constants/prop-types";
 import { useCookies } from "react-cookie";
@@ -40,13 +40,18 @@ const AppointmentModal = ({
   const [textName, setTextName] = useState("");
   const [_startDate, _setStartDate] = useState(new Date());
   const [selectType, setSelectType] = useState("*");
-  const [selectCenter, setSelectCenter] = useState("H-경영관리본부");
-  const [selectDepart, setSelectDepart] = useState("01-경영지원부");
-  const [selectTeam, setSelectTeam] = useState("101-인사관리팀");
+  const [selectCenter, setSelectCenter] = useState("");
+  const [selectDepart, setSelectDepart] = useState("");
+  const [selectTeam, setSelectTeam] = useState("");
   const [selectRank, setSeletRank] = useState("1");
   const [rankList, setRankList] = useState("");
   const [picture, setPicture] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [codeData, setCodeData] = useState();
+  const [codeName, setCodeName] = useState();
+  // 검색
+  const [empData, setEmpData] = useState([]);
+  const [rData, setRData] = useState();
 
   function getParametersForUnsplash({ width, height, quality, format }) {
     //이미지 최적화
@@ -54,6 +59,8 @@ const AppointmentModal = ({
   }
 
   useEffect(() => {
+    sendSubmit(cookies["loginInfo"].id);
+
     let array_center = [];
     let array_dept = [];
     let array_team = [];
@@ -74,34 +81,29 @@ const AppointmentModal = ({
       }
       setRankList(array_rank);
     });
+
+    axios
+      .post(urlCode)
+      .then((res) => {
+        let data = res.data.ITEMS;
+        console.log("data : ", data);
+        setCodeName(data);
+      })
+      .catch((Error) => {});
+    Utils.codeNameFiltering(setCodeData);
   }, []);
 
   useEffect(() => {
-    let findDept = Object.keys(center_list[selectCenter])[0];
-    setSelectDepart(findDept);
-  }, [selectCenter]);
+    if (empData.length == 0) return;
+    setSelectCenter(empData["center"]);
+    setSelectDepart(empData["dept"]);
+    setSelectTeam(empData["team"]);
 
-  useEffect(() => {
-    let findTeam = center_list[selectCenter][selectDepart][0];
-    setSelectTeam(findTeam);
-  }, [selectDepart]);
-
-  const center_list = {
-    "H-경영관리본부": {
-      "01-경영지원부": ["101-인사관리팀", "102-마케팅팀"],
-      "02-경영관리부": ["201-총무회계팀", "202-경리팀"],
-    },
-    "C-사이버보안본부": {
-      "03-침해대응부": ["301-침해대응팀", "302-위협분석팀"],
-      "04-관제센터": ["401-보안관제팀", "402-정보보호팀"],
-    },
-    "S-보안연구본부": {
-      "05-보안연구부": ["501-연구팀", "502-연구기획팀"],
-      "06-보안취약점분석부": ["601-종합분석팀", "602-취약점분석팀"],
-    },
-  };
+    console.log(empData["center"], empData["dept"], empData["team"]);
+  }, [empData]);
 
   const urlGetCls = "http://43.200.115.198:8080/empGetOrg.jsp";
+  const urlCode = "http://43.200.115.198:8080/getAllCodeNm.jsp";
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
@@ -117,11 +119,21 @@ const AppointmentModal = ({
   };
 
   const handleSelectCenter = (event) => {
-    setSelectCenter(event.target.value);
+    let data = event.target.value;
+    setSelectCenter(data);
+    let key = Object.keys(codeData[data])[0];
+    setSelectDepart(key + "-" + data);
+
+    let subKey = key + "-" + codeData[data][key][0];
+    setSelectTeam(subKey);
   };
 
   const handleSelectDepart = (event) => {
-    setSelectDepart(event.target.value);
+    let data = event.target.value;
+    setSelectDepart(data);
+
+    let key = data.split("-")[0];
+    setSelectTeam(key + "-" + codeData[selectCenter][key][0]);
   };
 
   const handleSelectTeam = (event) => {
@@ -194,9 +206,9 @@ const AppointmentModal = ({
           app_state: selectType,
           app_rank: selectRank,
           app_date: dateFormatString(_startDate),
-          app_dept: selectDepart.split("-")[0],
-          app_center: selectCenter.split("-")[0],
-          app_team: selectTeam.split("-")[0],
+          app_dept: selectDepart,
+          app_center: selectCenter,
+          app_team: selectTeam,
         };
         console.log(postParm2);
         postParm2 = qs.stringify(postParm2);
@@ -213,10 +225,6 @@ const AppointmentModal = ({
       }
     }
   };
-
-  // 검색
-  const [empData, setEmpData] = useState([]);
-  const [rData, setRData] = useState();
 
   const sendSubmit = async (sabun) => {
     console.log("send submit");
@@ -257,10 +265,6 @@ const AppointmentModal = ({
         console.log(Error);
       });
   };
-
-  useEffect(() => {
-    sendSubmit(cookies["loginInfo"].id);
-  }, []);
 
   return (
     <div className="AppointmentModal_container">
@@ -395,9 +399,13 @@ const AppointmentModal = ({
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectCenter}
                       >
-                        {Object.keys(center_list).map((e, i) => (
-                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
-                        ))}
+                        {codeData && codeName ? (
+                          Object.keys(codeData).map((item, index) => (
+                            <MenuItem value={item}>{codeName[item]}</MenuItem>
+                          ))
+                        ) : (
+                          <> </>
+                        )}
                       </Select>
                     </FormControl>
                   </td>
@@ -414,9 +422,17 @@ const AppointmentModal = ({
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectDepart}
                       >
-                        {Object.keys(center_list[selectCenter]).map((e, i) => (
-                          <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
-                        ))}
+                        {codeData && codeName && codeData[selectCenter] ? (
+                          Object.keys(codeData[selectCenter]).map(
+                            (item, index) => (
+                              <MenuItem value={item + "-" + selectCenter}>
+                                {codeName[item + "-" + selectCenter]}
+                              </MenuItem>
+                            )
+                          )
+                        ) : (
+                          <> </>
+                        )}
                       </Select>
                     </FormControl>
                   </td>
@@ -432,14 +448,25 @@ const AppointmentModal = ({
                         sx={{ minWidth: "222px", height: 40 }}
                         onChange={handleSelectTeam}
                       >
-                        {center_list[selectCenter][selectDepart] ? (
-                          center_list[selectCenter][selectDepart].map(
-                            (e, i) => (
-                              <MenuItem value={e}>{e.split("-")[1]}</MenuItem>
-                            )
-                          )
+                        {codeData &&
+                        codeName &&
+                        codeData[selectCenter] &&
+                        codeData[selectCenter][selectDepart.split("-")[0]] ? (
+                          codeData[selectCenter][
+                            selectDepart.split("-")[0]
+                          ].map((item, index) => (
+                            <MenuItem
+                              value={selectDepart.split("-")[0] + "-" + item}
+                            >
+                              {
+                                codeName[
+                                  selectDepart.split("-")[0] + "-" + item
+                                ]
+                              }
+                            </MenuItem>
+                          ))
                         ) : (
-                          <div></div>
+                          <></>
                         )}
                       </Select>
                     </FormControl>

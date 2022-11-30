@@ -130,12 +130,32 @@
   text-align: center;
 }
 
-.reapp_index, .reapp_radio {
+.reapp_index,
+.reapp_radio {
   width: 80px;
 }
 
 .reapp_date {
   width: 250px;
+}
+.reapp_reason {
+  width: 250px;
+  padding: 0px;
+}
+
+.reapp_reasonBtn {
+  transition: 0.3s;
+  box-shadow: 2px 2px 2px lightgray;
+  border-radius: 2px;
+  border: 0px;
+  width: 50px;
+  height: 28px;
+  background: #537aaa;
+  color: #ffffff;
+}
+
+.reapp_reasonBtn:hover {
+  background-color: #6385af;
 }
 
 .reapp_state {
