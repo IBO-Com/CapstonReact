@@ -5,7 +5,13 @@ import Findpw from "./login/findpw";
 import MainNav from "./mainNav";
 import Changepw from "./login/changepw";
 
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Route,
+  Router,
+  Routes,
+} from "react-router-dom";
 import NotFound from "./NotFound";
 import * as Cookie from "./cookies/cookies";
 
@@ -23,7 +29,7 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route
           path="/"
