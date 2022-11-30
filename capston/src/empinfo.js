@@ -71,11 +71,35 @@ const App = () => {
           id: userInfo["sabun"],
         });
 
+        let resData = response.data.ITEMS[0];
+        let date = new Date(
+          resData["start_date"].slice(0, 4),
+          parseInt(resData["start_date"].slice(4, 6)) - 1,
+          resData["start_date"].slice(6, 8)
+        );
+
+        let retDate = new Date();
+        if (resData["retire_date"]) {
+          retDate = new Date(
+            resData["retire_date"].slice(0, 4),
+            parseInt(resData["retire_date"].slice(4, 6)) - 1,
+            resData["retire_date"].slice(6, 8)
+          );
+        }
+
         axios
           .post("http://43.200.115.198:8080/getpicture.jsp", postParam2)
           .then((response) => {
             setPicture(response.data.ITEMS[0].picture);
           });
+
+        GetYearOfWork.getYearOfWork(
+          date,
+          retDate,
+          setWorkYear,
+          setWorkMonth,
+          setWorkDay
+        );
       });
   };
 
@@ -107,10 +131,19 @@ const App = () => {
           parseInt(resData["start_date"].slice(4, 6)) - 1,
           resData["start_date"].slice(6, 8)
         );
+        let retDate = new Date();
+        if (resData["retire_date"]) {
+          retDate = new Date(
+            resData["retire_date"].slice(0, 4),
+            parseInt(resData["retire_date"].slice(4, 6)) - 1,
+            resData["retire_date"].slice(6, 8)
+          );
+        }
+
         console.log(response.data.ITEMS[0]);
         GetYearOfWork.getYearOfWork(
           date,
-          endDate,
+          retDate,
           setWorkYear,
           setWorkMonth,
           setWorkDay

@@ -31,7 +31,7 @@ const App = () => {
   const [sabun, setSabun] = useState();
   const [codeData, setCodeData] = useState();
   const annualData = {
-    "0": "연차",
+    0: "연차",
     "01": "오전반차",
     "02": "오후반차",
     "03": "경조휴가",
@@ -77,11 +77,10 @@ const App = () => {
   };
 
   const getDateDiff = (d1, d2) => {
-    
     const diffDate = d1.getTime() - d2.getTime();
-    
+
     return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
-  }
+  };
 
   //  승인
   const approvalBtn = (index) => {
@@ -89,15 +88,25 @@ const App = () => {
       let tempVacationData = vacationData[index];
       let vacation_status = tempVacationData.vacation;
       let ann_minus = 0;
-      if(vacation_status == "0") { //연차
+      if (vacation_status == "0") {
+        //연차
         ann_minus = 1;
       } else {
-        ann_minus = 0.5; 
+        ann_minus = 0.5;
       }
-      let ann_start_date = new Date(tempVacationData.ann_start_date.slice(0, 4), parseInt(tempVacationData.ann_start_date.slice(4, 6))-1, tempVacationData.ann_start_date.slice(6, 8));
-      let ann_end_date = new Date(tempVacationData.ann_end_date.slice(0, 4), parseInt(tempVacationData.ann_end_date.slice(4, 6))-1, tempVacationData.ann_end_date.slice(6, 8));
+      let ann_start_date = new Date(
+        tempVacationData.ann_start_date.slice(0, 4),
+        parseInt(tempVacationData.ann_start_date.slice(4, 6)) - 1,
+        tempVacationData.ann_start_date.slice(6, 8)
+      );
+      let ann_end_date = new Date(
+        tempVacationData.ann_end_date.slice(0, 4),
+        parseInt(tempVacationData.ann_end_date.slice(4, 6)) - 1,
+        tempVacationData.ann_end_date.slice(6, 8)
+      );
 
-      let useAnnual = (getDateDiff(ann_end_date, ann_start_date) + 1) * ann_minus;
+      let useAnnual =
+        (getDateDiff(ann_end_date, ann_start_date) + 1) * ann_minus;
 
       let postParam2 = {
         sabun: tempVacationData.sabun,
@@ -119,9 +128,9 @@ const App = () => {
       };
       console.log("연차 승인 : ", postParam2);
       postParam2 = qs.stringify(postParam2);
-      
+
       axios
-        .post("http://localhost:8080/CapstonProject/vacationupdate.jsp", postParam2)
+        .post("http://43.200.115.198:8080/vacationupdate.jsp", postParam2)
         .then((res) => {
           axios
             .post("http://43.200.115.198:8080/vacationCheck.jsp")
@@ -136,7 +145,6 @@ const App = () => {
         .catch((Error) => {
           console.log(Error);
         });
-        
     }
   };
 
@@ -175,14 +183,17 @@ const App = () => {
   //http://43.200.115.198:8080/vacationCheck.jsp
   //http://localhost:8080/CapstonProject/vacationCheck.jsp
   useEffect(() => {
-
-    axios.post("http://43.200.115.198:8080/getAllCodeNm.jsp", qs.stringify({
-      code_cls: "002"
-    })).then((res) => {
+    axios
+      .post(
+        "http://43.200.115.198:8080/getAllCodeNm.jsp",
+        qs.stringify({
+          code_cls: "002",
+        })
+      )
+      .then((res) => {
         setCodeData(res.data.ITEMS);
-    }).catch((Error) => {
-
-    })
+      })
+      .catch((Error) => {});
 
     axios
       .post("http://43.200.115.198:8080/vacationCheck.jsp")
@@ -310,20 +321,18 @@ const App = () => {
               }}
               onChange={handleSelectDepart}
             >
-            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
                 전체부서
-            </MenuItem>
-            {
-              codeData ? (
+              </MenuItem>
+              {codeData ? (
                 Object.keys(codeData).map((item, index) => (
-                <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
-                  {codeData[item]}
-                </MenuItem>
-                )) 
+                  <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                    {codeData[item]}
+                  </MenuItem>
+                ))
               ) : (
                 <></>
-              )
-            } 
+              )}
             </Select>
           </FormControl>
           <FormControl>
