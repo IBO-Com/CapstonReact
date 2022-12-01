@@ -28,6 +28,7 @@ function getFormatDate(date) {
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [payDate, setPayDate] = useState(new Date());
   const [empInfo, setEmpInfo] = useState();
   const [textName, setTextName] = useState("");
   const [monthlyPayDebuct, setMonthlyPayDebuct] = useState(false);
@@ -74,6 +75,13 @@ const App = () => {
         console.log(Err);
       });
   };
+
+  useEffect(() => {
+    let getDate = new Date(retrieveDate.split("-")[0], parseInt(retrieveDate.split("-")[1]) - 1, "05"); 
+    console.log(getDate);
+    getDate.setMonth(getDate.getMonth() + 1);
+    setPayDate(getDate);
+}, [retrieveDate])
 
   const textNameHandle = (e) => {
     setTextName(e.target.value);
@@ -214,10 +222,7 @@ const App = () => {
         <div className="monthlyPay_ment">
           <span>
             급여지급일{" "}
-            {retrieveDate.split("-")[0] +
-              "년 " +
-              retrieveDate.split("-")[1] +
-              "월"}{" "}
+            {payDate.getFullYear() + "년 " + parseInt(payDate.getMonth() + 1) + "월"} 5일{" "}
             5일
           </span>
           <button className="monthlyPay_Btn">(주) IBO</button>

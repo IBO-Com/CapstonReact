@@ -18,12 +18,12 @@ class koLocalizedUtils extends DateFnsUtils {
 }
 
 const App = () => {
-  const [startDate, setStartDate] = useState(new Date("2020-01-01"));
+  const [startDate, setStartDate] = useState(new Date("2022-10-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
 
-  const [peopleData, setPeopleData] = useState([]);
+  // const [peopleData, setPeopleData] = useState([]);
   const [retireApprovalData, setRetireApprovalData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [sabun, setSabun] = useState();
@@ -119,7 +119,6 @@ const App = () => {
 
   const sendSubmit = () => {
     /* 날짜 포멧 */
-    console.log("isEnter????");
     let sYear = String(startDate.getFullYear());
     let sMonth = startDate.getMonth() + 1;
     let sDay = startDate.getDate();
@@ -167,9 +166,9 @@ const App = () => {
     console.log(query);
 
     axios
-      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .post("http://43.200.115.198:8080/retireselect.jsp", postParam)
       .then((res) => {
-        setPeopleData(res.data.ITEMS);
+        setRetireApprovalData(res.data.ITEMS);
       })
       .catch((Error) => {
         console.log(Error);

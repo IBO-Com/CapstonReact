@@ -20,7 +20,7 @@ class koLocalizedUtils extends DateFnsUtils {
   }
 }
 const HRorganization = () => {
-  const [startDate, setStartDate] = useState(new Date("2020-01-01"));
+  const [startDate, setStartDate] = useState(new Date("2000-01-01"));
   const [endDate, setEndDate] = useState(new Date());
 
   const [selectDepart, setSelectDepart] = useState("*");

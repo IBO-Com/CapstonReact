@@ -33,10 +33,12 @@ const App = () => {
     const componentRef = useRef(null);
     const [codeData, setCodeData] = useState();
 
+
     const [payslip, setPayslip] = useState(false);
     console.log(payslip);
 
     const [toogleState, setToggleState] = useState(1);
+    let Index = 1;
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -146,20 +148,20 @@ const App = () => {
                             }}
                             onChange={handleSelectDepart}
                         >
-                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                            전체부서
-                        </MenuItem>
-                        {
-                        codeData ? (
-                            Object.keys(codeData).map((item, index) => (
-                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
-                            {codeData[item]}
+                            <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
+                                전체부서
                             </MenuItem>
-                            )) 
-                        ) : (
-                            <></>
-                        )
-                        } 
+                            {
+                                codeData ? (
+                                    Object.keys(codeData).map((item, index) => (
+                                        <MenuItem sx={{ minWidth: "153px", height: 30 }} value={item}>
+                                            {codeData[item]}
+                                        </MenuItem>
+                                    ))
+                                ) : (
+                                    <></>
+                                )
+                            }
                         </Select>
                     </FormControl>
                     <FormControl>
@@ -210,24 +212,30 @@ const App = () => {
                                         {peopleData.map(function (name, index) {
                                             return (
                                                 <>
-                                                    <tr>
-                                                        <td>{index + 1}</td>
-                                                        <td>
-                                                            <input
-                                                                type="radio"
-                                                                name="userSelect" className="Card_radio"
-                                                                onChange={() => {
-                                                                    radioBoxChange(name.sabun);
-                                                                }}
-                                                                onClick={() => {
-                                                                    toggleTab(1);
-                                                                }}
-                                                            />
-                                                        </td>
-                                                        <td>{name.sabun}</td>
-                                                        <td>{name.name}</td>
-                                                        <td>{name.deptKR}</td>
-                                                    </tr>
+                                                    {name.retire_cls == "0" ? (
+                                                        <>
+                                                            <tr>
+                                                                <td>{Index++}</td>
+                                                                <td>
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="userSelect" className="Card_radio"
+                                                                        onChange={() => {
+                                                                            radioBoxChange(name.sabun);
+                                                                        }}
+                                                                        onClick={() => {
+                                                                            toggleTab(1);
+                                                                        }}
+                                                                    />
+                                                                </td>
+                                                                <td>{name.sabun}</td>
+                                                                <td>{name.name}</td>
+                                                                <td>{name.deptKR}</td>
+                                                            </tr>
+                                                        </>
+                                                    ) : (
+                                                        <></>
+                                                    )}
                                                 </>
                                             );
                                         })}
@@ -258,7 +266,7 @@ const App = () => {
                         </div>
                         <div className="payslip_viewer">
                             {toogleState === 1 ? (
-                                <FormPayslip componentRef={componentRef} sabun={sabun} retrieveDate={retrieveDate}/>
+                                <FormPayslip componentRef={componentRef} sabun={sabun} retrieveDate={retrieveDate} />
                             ) : (
                                 ""
                             )}

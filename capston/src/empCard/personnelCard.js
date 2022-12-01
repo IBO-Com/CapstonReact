@@ -74,8 +74,9 @@ const App = () => {
 
     postParam = qs.stringify(query);
 
-    //console.log(query);
-
+    console.log("query : ", query);
+    //http://43.200.115.198:8080/empselect.jsp
+    //http://localhost:8080/CapstonProject/empselect.jsp
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)
       .then((res) => {

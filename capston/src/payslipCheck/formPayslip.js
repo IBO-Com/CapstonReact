@@ -9,9 +9,16 @@ import * as GetFinalTax from "../modules/getFinalTax";
 const App = ({ componentRef, sabun, retrieveDate }) => {
 
     const [taxPack, setTaxPack] = useState();
-
+    const [today, setToday] = useState(new Date());
     const [userData, setUserData] = useState();
+    const [payDate, setPayDate] = useState(new Date());
 
+    function getFormatDate(date) {
+        var year = date.getFullYear(); //yyyy
+        var month = 1 + date.getMonth(); //M
+        month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+        return year + "-" + month;
+    }
 
     const todayTime = () => {
         let now = new Date();
@@ -21,8 +28,15 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
 
         return todayYear + "-" + todayMonth + "-" + toDayDate;
     }
+    useEffect(() => {
+        let getDate = new Date(retrieveDate.split("-")[0], parseInt(retrieveDate.split("-")[1]) - 1, "05"); 
+        console.log(getDate);
+        getDate.setMonth(getDate.getMonth() + 1);
+        setPayDate(getDate);
+    }, [retrieveDate])
 
     useEffect(() => {
+
         if (sabun == null) return;
         console.log(sabun);
 
@@ -67,7 +81,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
                     <p>성명 : {userData ? userData["name"] : ""}</p>
                     <p>부서명 : {userData ? userData["deptKR"] : ""}</p>
                     <p>직책 : {userData ? userData["rankKR"] : ""}</p>
-                    <p>지급일 : {retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</p>
+                    <p>지급일 : {payDate.getFullYear() + "년 " + parseInt(payDate.getMonth() + 1) + "월"} 5일</p>
                 </div>
 
                 <table className="formPayslipTable">
@@ -126,7 +140,7 @@ const App = ({ componentRef, sabun, retrieveDate }) => {
 
                 <div className="payslip_form_footer">
                     <p>귀하의 노고에 감사드립니다.</p>
-                    <p>{retrieveDate.split("-")[0] + "년 " + retrieveDate.split("-")[1] + "월"} 5일</p>
+                    <p>{today.getFullYear() + "년 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일"} </p>
                     <p className="mbt">IBO</p>
                     <p>대표이사 김  유  경 &nbsp;&nbsp; (인)</p>
                     <div className="formProofDiv">

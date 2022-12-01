@@ -34,6 +34,8 @@ const App = () => {
   const [taxPack, setTaxPack] = useState({});
   const [empInfo, setEmpInfo] = useState();
   const [account, setAccount] = useState();
+  const [payDate, setPayDate] = useState(new Date());
+  const [retrieveDate, setRetrieveDate] = useState(getFormatDate(new Date()));
 
   const sendSubmit = () => { //전송 
     let todayString = Utils.dateFormatString(searchDate);
@@ -81,9 +83,22 @@ const App = () => {
   })
   };
   
+  function getFormatDate(date) {
+    var year = date.getFullYear(); //yyyy
+    var month = 1 + date.getMonth(); //M
+    month = month >= 10 ? month : "0" + month; //month 두자리로 저장
+    return year + "-" + month;
+  }
+
+  useEffect(() => {
+    let getDate = new Date(retrieveDate.split("-")[0], parseInt(retrieveDate.split("-")[1]) - 1, "05"); 
+    console.log(getDate);
+    getDate.setMonth(getDate.getMonth() + 1);
+    setPayDate(getDate);
+}, [retrieveDate])
+  
   useEffect(() => {
     let todayString = Utils.dateFormatString(searchDate);
-    
     axios.post("http://43.200.115.198:8080/getBank.jsp", qs.stringify({
       sabun: cookies["loginInfo"].id
     })).then((res) => {
@@ -396,8 +411,7 @@ const App = () => {
             <tr>
               <th>급여일자</th>
               <td>
-                {" "}
-                {todayTime().slice(0, 4)}년 {todayTime().slice(5, 7)}월 5일
+                {payDate.getFullYear() + "년 " + parseInt(payDate.getMonth() + 1) + "월"} 5일
               </td>
             </tr>
             <tr>

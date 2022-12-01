@@ -39,7 +39,7 @@ const AppointmentModal = ({
 }) => {
   const [textName, setTextName] = useState("");
   const [_startDate, _setStartDate] = useState(new Date());
-  const [selectType, setSelectType] = useState("*");
+  const [selectType, setSelectType] = useState("1");
   const [selectCenter, setSelectCenter] = useState("");
   const [selectDepart, setSelectDepart] = useState("");
   const [selectTeam, setSelectTeam] = useState("");
@@ -108,7 +108,7 @@ const AppointmentModal = ({
   const textNameHandle = (e) => {
     setTextName(e.target.value);
     console.log(e.target.value);
-  };
+  }; 
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -367,9 +367,6 @@ const AppointmentModal = ({
                 marginRight: "26px",
               }}
             >
-              <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"*"}>
-                전체
-              </MenuItem>
               <MenuItem sx={{ minWidth: "153px", height: 30 }} value={"1"}>
                 부서이동
               </MenuItem>

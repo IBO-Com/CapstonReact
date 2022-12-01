@@ -76,6 +76,30 @@ const App = () => {
     setTextName(e.target.value);
   };
 
+  const submit = () => {
+    let query = {};
+    if (selectDepart != "*") {
+      query["dept"] = selectDepart;
+    }
+    if(textName.trim() != "") {
+      query["sabunOrName"] = textName
+    }
+    if(retireDate != null) {
+      query["startDate"] = retrieveDate.slice(0, 4) + retrieveDate.slice(5, 7) + "01";
+      query["retireDate"] = retrieveDate.slice(0, 4) + retrieveDate.slice(5, 7) + "32";
+    }
+
+    axios
+      .post("http://43.200.115.198:8080/retireselect.jsp", qs.stringify(query))
+      .then((res) => {
+        setRetireDate(res.data.ITEMS);
+        console.log(retireDate);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }
+
   const radioChange = async (sabun) => {
     setSabun(sabun);
     Utils.getRetirePayment(sabun, setRetirePayment);
@@ -134,8 +158,13 @@ const App = () => {
   };
 
   useEffect(() => {
+    let query = {};
+    if (selectDepart != "*") {
+      query["dept"] = selectDepart;
+    }
+
     axios
-      .post("http://43.200.115.198:8080/retireselect.jsp")
+      .post("http://43.200.115.198:8080/retireselect.jsp", qs.stringify(query))
       .then((res) => {
         setRetireDate(res.data.ITEMS);
         console.log(retireDate);
@@ -222,7 +251,8 @@ const App = () => {
             onChange={textNameHandle}
           />
         </FormControl>
-        <button className="SeverancePayCal_searchBtn">검색</button>
+        <button className="SeverancePayCal_searchBtn"
+        onClick={submit}>검색</button>
       </div>
       <div className="SeverancePayCal_contnet">
         <div className="SeverancePayCal_empInfo">

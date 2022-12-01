@@ -24,7 +24,7 @@ class koLocalizedUtils extends DateFnsUtils {
 }
 
 const App = () => {
-  const [startDate, setStartDate] = useState(new Date("2020-10-01"));
+  const [startDate, setStartDate] = useState(new Date("2022-10-01"));
   const [endDate, setEndDate] = useState(new Date());
   const [selectDepart, setSelectDepart] = useState("*");
   const [textName, setTextName] = useState("");
@@ -142,9 +142,9 @@ const App = () => {
     console.log(query);
 
     axios
-      .post("http://43.200.115.198:8080/empselect.jsp", postParam)
+      .post("http://43.200.115.198:8080/retireselect.jsp", postParam)
       .then((res) => {
-        setPeopleData(res.data.ITEMS);
+        setRetireDate(res.data.ITEMS);
       })
       .catch((Error) => {
         console.log(Error);
@@ -269,12 +269,12 @@ const App = () => {
             <table className="SeverancePay_empTable">
               <thead>
                 <tr>
-                  <td>번호</td>
-                  <td>선택</td>
-                  <td>사번</td>
-                  <td>성명</td>
-                  <td>부서명</td>
-                  <td>팀명</td>
+                  <td style={{minWidth:"50px"}}>번호</td>
+                  <td style={{minWidth:"50px"}}>선택</td>
+                  <td style={{minWidth:"130px"}}>사번</td>
+                  <td style={{minWidth:"80px"}}>성명</td>
+                  <td style={{minWidth:"150px"}}>부서명</td>
+                  <td style={{minWidth:"150px"}}>팀명</td>
                 </tr>
               </thead>
 

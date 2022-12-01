@@ -2,6 +2,8 @@
     width: 98%;
     display: flex;
     background-color: white;
+    overflow: auto;
+    margin:0px;
 }
 
 .severancePay_dateBox {
@@ -14,7 +16,7 @@
 .severancePay_search_box {
     height: 790px;
     background-color: white;
-    width: 95%;
+    width: 100%;
 }
 
 .severancePay_dateBox .severancePay_search_btn {
@@ -34,12 +36,11 @@
 
 .severancePay_lineBar {
     border: 1px solid #D9D9D9;
-    margin-left: 70px;
     width: 96%;
 }
 
 .severancePay_InfoTable {
-    margin: 20px 0px 0px 120px;
+    margin: 20px 0px 0px 100px;
 }
 
 .severancePay_InfoTable span {
@@ -98,6 +99,7 @@
 .severancePay_divBox {
     display: flex;
     justify-content: space-between;
+    overflow:hidden;
 }
 
 .pay_retire_btn,
@@ -113,12 +115,16 @@
     border-radius: 2px;
 }
 
+.retireseverance_btn {
+    margin-right: 28px;
+}
+
 .re_print_Btn {
     width: 60px;
     color: #FFFFFF;
     height: 28px;
     margin-top: 16px;
-    margin-left: 50px;
+    margin-left: 20px;
     border: none;
     background: gray;
     border-radius: 2px;
@@ -126,11 +132,10 @@
 }
 
 .severancePay_viewer {
-    position: absolute;
+    overflow: auto;
     width: 700px;
     height: 600px;
-    overflow: auto;
-    margin-left: 50px;
+    margin-left: 20px;
     background: #FDFDFD;
     border: 2px solid #D9D9D9;
     border-radius: 3px;
