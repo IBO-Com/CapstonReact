@@ -89,10 +89,10 @@ const HRorganization = () => {
     }
 
     if (eMonth < 10) {
-      eMonth = " 0" + eMonth;
+      eMonth = "0" + eMonth;
     }
     if (eDay < 10) {
-      eDay = " 0" + eDay;
+      eDay = "0" + eDay;
     }
 
     let sDate = sYear + sMonth + sDay;
@@ -117,7 +117,7 @@ const HRorganization = () => {
 
     postParam = qs.stringify(query);
 
-    //console.log(query);
+    console.log(query);
 
     axios
       .post("http://43.200.115.198:8080/empselect.jsp", postParam)

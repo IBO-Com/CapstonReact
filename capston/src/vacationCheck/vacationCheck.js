@@ -233,10 +233,10 @@ const App = () => {
     }
 
     if (eMonth < 10) {
-      eMonth = " 0" + eMonth;
+      eMonth = "0" + eMonth;
     }
     if (eDay < 10) {
-      eDay = " 0" + eDay;
+      eDay = "0" + eDay;
     }
 
     let sDate = sYear + sMonth + sDay;
