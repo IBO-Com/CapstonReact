@@ -301,8 +301,7 @@ const AppointmentModal = ({
           <div className="AppointmentModal_userImg">
             {picture === null || picture === "" ? (
               <img
-                className="empimg"
-                style={{ width: "110px", height: "150px", borderRadius: "0px" }}
+                className="ApppointmentModal_empImg"
                 src={
                   userImg +
                   getParametersForUnsplash({

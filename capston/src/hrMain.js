@@ -136,8 +136,10 @@ const App = () => {
       });
   }, []);
 
-  const todayTime = () => {
+  const todayTime = (type) => {
     let now = new Date();
+    if(type == true)
+      now.setMonth(now.getMonth() - 1);
     let todayYear = now.getFullYear();
     let todayMonth = now.getMonth() + 1;
     let toDayDate = now.getDate();
@@ -191,7 +193,7 @@ const App = () => {
             style={{ marginLeft: "10px", marginTop: "0px", lineHeight: "30px" }}
           >
             {" "}
-            {todayTime().slice(0, 10)} 급여가 들어왔어요!
+            {todayTime(true).slice(0, 10)} 급여가 들어왔어요!
           </p>
         </div>
       );

@@ -40,8 +40,13 @@
 .AppointmentModal_userImg {
   width: 125px;
   height: 125px;
+  margin-top: 25px;
+}
+
+.ApppointmentModal_empImg {
+  width: 125px;
+  height: 125px;
   overflow: hidden;
-  margin-top: 30px;
 }
 
 .AppointmentModal_infoTable {
