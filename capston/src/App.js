@@ -29,7 +29,7 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -53,7 +53,7 @@ const App = () => {
           </>
         )}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     //<Empinfo />
   );
 };
