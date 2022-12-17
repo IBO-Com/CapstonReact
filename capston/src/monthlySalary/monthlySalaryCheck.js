@@ -223,7 +223,6 @@ const App = () => {
           <span>
             급여지급일{" "}
             {payDate.getFullYear() + "년 " + parseInt(payDate.getMonth() + 1) + "월"} 5일{" "}
-            5일
           </span>
           <button className="monthlyPay_Btn">(주) IBO</button>
         </div>
