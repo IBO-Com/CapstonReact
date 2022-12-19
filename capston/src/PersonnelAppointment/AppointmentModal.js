@@ -111,7 +111,7 @@ const AppointmentModal = ({
   }; 
 
   const handleStartDateChange = (date) => {
-    setStartDate(date);
+    _setStartDate(date);
   };
 
   const handleSelectType = (event) => {
