@@ -27,6 +27,7 @@
 
 .empSelect_Btn,
 .proof_of_emp_btn,
+.proof_of_emp_btn_disabled,
 .work_emp_btn {
   width: 130px;
   color: #ffffff;
@@ -53,6 +54,11 @@
 }
 
 .proof_of_emp_btn {
+  margin-left: 10px;
+}
+
+.proof_of_emp_btn_disabled {
+  opacity: 0.5;
   margin-left: 10px;
 }
 

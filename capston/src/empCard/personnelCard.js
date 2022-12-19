@@ -20,7 +20,7 @@ const App = () => {
   const componentRef = useRef(null);
 
   const [toogleState, setToggleState] = useState(1);
-
+  const [radioIndex, setRadioIndex] = useState(-1);
   const [codeData, setCodeData] = useState();
 
   const toggleTab = (index) => {
@@ -31,6 +31,7 @@ const App = () => {
     axios
       .post("http://43.200.115.198:8080/empselect.jsp")
       .then((res) => {
+        console.log("ITMES : ", res.data.ITEMS);
         setPeopleData(res.data.ITEMS);
       })
       .catch((Error) => {
@@ -173,6 +174,7 @@ const App = () => {
                                 name="userSelect"
                                 className="Card_radio"
                                 onChange={() => {
+                                  setRadioIndex(index);
                                   radioBoxChange(name.sabun);
                                 }}
                               />
@@ -204,14 +206,29 @@ const App = () => {
               >
                 인사기록카드
               </button>
-              <button
-                className="proof_of_emp_btn"
-                onClick={() => {
-                  toggleTab(2);
-                }}
-              >
-                재직증명서
-              </button>
+
+              {
+                peopleData && peopleData[radioIndex] && peopleData[radioIndex].retire_cls === "0"? (
+                  <button
+                    className="proof_of_emp_btn"
+                    onClick={() => {
+                      toggleTab(2);
+                    }}
+                  >
+                  재직증명서
+                  </button>
+                ) : (
+                  <button
+                    className="proof_of_emp_btn_disabled"
+                    onClick={() => {
+                      alert("퇴직한 사원은 재직증명서를 확인할 수 없습니다.");
+                    }}
+                  >
+                  재직증명서
+                  </button>
+                )
+              }
+              
               <button
                 className="work_emp_btn"
                 onClick={() => {
