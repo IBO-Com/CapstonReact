@@ -83,7 +83,7 @@ const App = ({retirePayment, componentRef, sabun }) => {
 
                 <tr className="formRetire_Info">
                     <td>주민등록번호</td>
-                    <td>{userData ? userData["identity"].slice(0, 6) + "-" + userData["identity"].slice(6, 13) : ""}</td>
+                    <td>{userData ? userData["identity"].slice(0, 6) + " - " + "⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁" : ""}</td>
                     <td>전화번호</td>
                     <td>{userData ? userData["tel_no"].slice(0, 3) + "-" + userData["tel_no"].slice(3, 7) + "-" + userData["tel_no"].slice(7, 11) : ""}</td>
                 </tr>

@@ -45,8 +45,8 @@ const HrInfoTable = ({
                         <td style={{ minWidth: "50px" }}>{name.name}</td>
                         <td style={{ minWidth: "80px" }}>{name.eng_name}</td>
                         <td style={{ minWidth: "90px" }}>
-                          {name.identity.slice(0, 6)}-
-                          {name.identity.slice(6, 13)}
+                          {name.identity.slice(0, 6) + " - " + "⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁"}
+                          
                         </td>
                         <td style={{ minWidth: "25px" }}>
                           {name.gender === "0" ? "남자" : "여자"}

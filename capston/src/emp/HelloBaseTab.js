@@ -310,6 +310,7 @@ const HelloBaseTab = () => {
                     />
                     <span>-</span>
                     <TextField
+                      type={"password"}
                       required
                       InputProps={{ sx: { width: 108, height: 40 } }}
                       inputRef={identityNumberB}

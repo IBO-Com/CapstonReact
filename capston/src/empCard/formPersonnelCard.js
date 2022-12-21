@@ -228,8 +228,8 @@ const App = ({ componentRef, sabun }) => {
               <td>
                 {userData
                   ? userData["identity"].slice(0, 6) +
-                    "-" +
-                    userData["identity"].slice(6, 13)
+                    " - " +
+                    "⦁ ⦁ ⦁ ⦁ ⦁ ⦁ ⦁"
                   : ""}
               </td>
             </tr>

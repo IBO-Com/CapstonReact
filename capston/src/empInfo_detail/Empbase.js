@@ -288,6 +288,7 @@ const Empbase = ({ userData, setUserData, defaultYear }) => {
                 ></input>
                 &nbsp;-&nbsp;
                 <input
+                  type={"password"}
                   ref={identityRRef}
                   className="empbase_input"
                   style={{ margin: "0px", width: "100px" }}
